@@ -1,0 +1,13 @@
+name: RIK test
+on:
+  workflow_dispatch:
+  push:
+    paths: [".github/workflows/rik-test.yml","tools/rik_probe.py"]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: curl -s https://ipinfo.io/json || true
+      - run: python3 tools/rik_probe.py
