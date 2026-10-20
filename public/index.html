@@ -335,7 +335,7 @@ let MKS=[], LBL=[];
 function drawMap(){
   const nm=$('#nomap'); let html='';MKS=[];
   if(ST.lvl==='srb'){
-    const regs=Object.entries(GEO.regions);setProj([GEO.srbija]);
+    const regs=Object.entries(GEO.regions);setProj(regs.map(r=>r[1]));
     regs.forEach(([rid,g])=>html+=`<path class="reg" data-r="${rid}" d="${pathOf(g)}"><title>${esc(IDX.regions.find(r=>r.id===rid).name)}</title></path>`);
     Object.entries(GEO.units).forEach(([uid,u])=>html+=`<path d="${pathOf(u.shape)}" style="fill:none;stroke:var(--land-line);stroke-width:.4;pointer-events:none;opacity:.6"/>`);
     regs.forEach(([rid,g])=>{const [x,y]=cen(g);html+=`<text class="rlabel" x="${x.toFixed(0)}" y="${y.toFixed(0)}" style="font-size:${MOB?22:13}px">${esc(rlab(rid))}</text>`});
