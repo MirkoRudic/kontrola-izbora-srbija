@@ -62,6 +62,10 @@ LU = {}
 for uid in UNITS:
     f = f"{OUT}/u/{uid}.json"
     LU[uid] = json.load(open(f)) if os.path.exists(f) else {"bm": {}}
+LOGF = f"{OUT}/log.json"
+LOG = json.load(open(LOGF)) if os.path.exists(LOGF) else []
+def addlog(uid, sid, typ, detail, t):
+    LOG.append(dict(at=t, u=uid, s=sid, n=UNITS[uid]['st'][sid]['n'], type=typ, detail=detail))
 AGG = {}  # uid -> (processed, datetime) iz poslednjeg kruga
 CHECKED = {}  # (uid,sid) -> vreme poslednje provere
 SIMT0 = time.time()
@@ -89,8 +93,10 @@ def fetch_station(uid, sid):
 def checks(r, y23):
     """Aritmetičke provere – samo za dnevnik, ne za mapu."""
     w = []
-    if r["valid"] is not None and r["invalid"] is not None and r["valid"] + r["invalid"] != r["out"]:
-        w.append(f"važeći + nevažeći ({r['valid']}+{r['invalid']}) ≠ izašlo ({r['out']})")
+    if r["valid"] is not None and r["invalid"] is not None:
+        box = r["valid"] + r["invalid"]
+        if box - r["out"] >= 3: w.append(f"u kutiji više listića ({box}) nego birača koji su glasali ({r['out']})")
+        elif r["out"] - box > max(10, 0.02 * r["out"]): w.append(f"u kutiji {r['out']-box} listića manje nego birača koji su glasali")
     if sum(r["lists"]) != (r["valid"] or 0): w.append(f"zbir po listama ({sum(r['lists'])}) ≠ važeći ({r['valid']})")
     if r["voters"] and r["out"] > r["voters"]: w.append("izašlo više od upisanih")
     if r["voters"] and r["out"] / r["voters"] > 0.92: w.append(f"izlaznost {100*r['out']/r['voters']:.1f} %")
@@ -107,13 +113,17 @@ def apply(uid, sid, r, t):
     if old is None or not old.get("processed"):
         rec_ = dict(new, at=t, zap=[], alerts=[], chk=checks(r, y23))
         if r["zlink"]: rec_["zap"].append(dict(link=r["zlink"], at=t))
+        if rec_["chk"]: addlog(uid, sid, "provera", "; ".join(rec_["chk"]), t)
         L[sid] = rec_; return True
     diffk = [k for k in ("voters", "out", "valid", "invalid", "lists") if old.get(k) != new[k]]
     if diffk:
         old["alerts"].append(dict(type="rezultat", at=t, detail="RIK promenio: " + ", ".join(diffk), before={k: old.get(k) for k in diffk}))
+        addlog(uid, sid, "rezultat", "RIK promenio rezultat (" + ", ".join(diffk) + ")", t)
         old.update(new); old["chk"] = checks(r, y23); changed = True
     if r["zlink"] and (not old["zap"] or old["zap"][-1]["link"] != r["zlink"]):
-        if old["zap"]: old["alerts"].append(dict(type="zapisnik", at=t, detail="Zapisnik na RIK-u zamenjen novim fajlom"))
+        if old["zap"]:
+            old["alerts"].append(dict(type="zapisnik", at=t, detail="Zapisnik na RIK-u zamenjen novim fajlom"))
+            addlog(uid, sid, "zapisnik", "Zapisnik na RIK-u zamenjen novim fajlom", t)
         old["zap"].append(dict(link=r["zlink"], at=t)); changed = True
     return changed
 
@@ -140,6 +150,7 @@ def write(changed_units, t):
     for uid in changed_units:
         json.dump(LU[uid], open(f"{OUT}/u/{uid}.json", "w"), ensure_ascii=False, separators=(",", ":"))
     s = summary(t); json.dump(s, open(f"{OUT}/summary.json", "w"), ensure_ascii=False, separators=(",", ":"))
+    json.dump(LOG, open(LOGF, "w"), ensure_ascii=False, separators=(",", ":"))
     return s
 
 def push(msg):

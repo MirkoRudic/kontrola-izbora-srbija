@@ -469,11 +469,14 @@ function render(){
         ${list.map(s=>{const b=zOf(liveBM(ST.uid,s.sid));return `<tr data-k="s:${s.sid}"><td class="nm" title="${esc(s.name)}"><b>${s.n}</b> ${esc(s.name)}${alertsOf(ST.uid,s.sid).length?' <b style="color:var(--bad)">!</b>':''}</td><td class="n">${s.y23?pct(s.y23.out,s.y23.voters):'<span class="dim">nema para</span>'}</td><td class="n">${b?pct(b.out,b.voters):'<span class="dim">—</span>'}</td></tr>`}).join('')}</tbody></table></div></div>`
         +(ST.nas==null&&U.odb_general&&U.odb_general.length?`<div class="sec"><h3>Opšta rešenja o odborima</h3><div class="links col">${U.odb_general.map(d=>link(d.l,esc(d.t))).join('')}</div></div>`:'')}
   }
+  if(ST.view==='log'&&!ST.sid) body=logView(); else if(!ST.sid&&ST.view==='main') body+=`<button class="more" id="logb">Dnevnik promena →</button>`;
   const P=$('#panel'),keep=P.scrollTop;P.innerHTML=h+`<div class="pbody">${body}</div>`;P.scrollTop=render._keep?keep:0;render._keep=false;
   P.querySelectorAll('tr[data-k]').forEach(tr=>tr.onclick=()=>{const [t,v]=tr.dataset.k.split(':');
     if(t==='r')go({lvl:'reg',rid:v});else if(t==='u')go({lvl:'unit',rid:IDX.units[v].region,uid:v});else go({...ST,sid:v,view:'main'},true)});
   const toTop=()=>{if(matchMedia('(max-width:960px)').matches)P.scrollIntoView({block:'start'})};
   const mo=$('#more');if(mo)mo.onclick=()=>{ST.view='ballot';render();toTop()};
+  const lb=$('#logb');if(lb)lb.onclick=async()=>{ST.view='log';render();toTop();await loadLog();render._keep=true;render()};
+  P.querySelectorAll('[data-gu]').forEach(x=>x.onclick=async e=>{e.preventDefault();const uid=x.dataset.gu;await go({lvl:'unit',rid:IDX.units[uid].region,uid});go({...ST,sid:x.dataset.gs},true)});
   const b2=$('#back2');if(b2)b2.onclick=()=>{ST.view='main';render();toTop()};
   const bs=$('#bsort');if(bs)bs.onclick=()=>{bsort=!bsort;render._keep=true;render()};
   P.querySelectorAll('.tabs button[data-b]').forEach(b=>b.onclick=()=>{btab=b.dataset.b;render._keep=true;render()});
@@ -488,6 +491,15 @@ function zap26(uid,s){const b=liveBM(uid,s.sid),h=(b&&b.zap)||[];
   if(!h.length) return '<span class="small">Zapisnik 2026: još nije objavljen na RIK-u.</span>';
   return h.map((z,i)=>`<span>Zapisnik 2026${h.length>1?` – verzija ${i+1} (${esc(z.at)})`:''}: ${link(z.link,'RIK')}</span>`).join('')}
 
+// ---------- dnevnik ----------
+let LOG=null;
+const KIND={provera:'Provera',rezultat:'Rezultat',zapisnik:'Zapisnik',oboreno:'Oboreno',primedbe:'Primedbe'};
+function logView(){
+  const all=(LOG||[]).slice().reverse(), f=ST.uid?all.filter(e=>e.u===ST.uid):all;
+  return `<button class="back2" id="back2">← Nazad</button><div class="sec"><h3>Dnevnik promena${ST.uid?' – '+esc(IDX.units[ST.uid].short):''}</h3>
+   <div class="small" style="margin-bottom:8px">Izmenjeni rezultati i zamenjeni zapisnici na RIK-u, i automatske provere brojeva (npr. zbir po listama ≠ važeći, neobična izlaznost). Ovo su signali za proveru, ne dokaz nepravilnosti.</div>
+   ${LOG==null?'<div class="small">Učitavam…</div>':f.length?`<div class="tbl"><table class="log"><thead><tr><th>Vreme</th><th>BM</th><th>Šta</th></tr></thead><tbody>${f.slice(0,400).map(e=>`<tr><td class="n">${esc(e.at)}</td><td><a href="#o${e.u}" data-gu="${e.u}" data-gs="${e.s}">BM ${e.n}</a><div class="small">${esc(IDX.units[e.u]?.short||'')}</div></td><td><span class="chip">${KIND[e.type]||e.type}</span> ${esc(e.detail)}</td></tr>`).join('')}</tbody></table></div>${f.length>400?`<div class="small">Prikazano poslednjih 400 od ${f.length}.</div>`:''}`:'<div class="small"><i>Za sada nema nijedne promene.</i></div>'}</div>`}
+async function loadLog(){LOG=await get('data/live/log.json?t='+Date.now())||[]}
 // ---------- navigacija ----------
 async function go(n,keepMap){
   const prevU=ST.uid,prevLvl=ST.lvl,prevNas=ST.nas;
