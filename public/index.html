@@ -339,6 +339,7 @@ function drawMap(){
     regs.forEach(([rid,g])=>html+=`<path class="reg" data-r="${rid}" d="${pathOf(g)}"><title>${esc(IDX.regions.find(r=>r.id===rid).name)}</title></path>`);
     Object.entries(GEO.units).forEach(([uid,u])=>html+=`<path d="${pathOf(u.shape)}" style="fill:none;stroke:var(--land-line);stroke-width:.4;pointer-events:none;opacity:.6"/>`);
     regs.forEach(([rid,g])=>{const [x,y]=cen(g);html+=`<text class="rlabel" x="${x.toFixed(0)}" y="${y.toFixed(0)}" style="font-size:${MOB?22:13}px">${esc(rlab(rid))}</text>`});
+    html+=bangs(Object.keys(GEO.units).filter(id=>obOf(id)));
   } else if(ST.lvl==='reg'){
     const ids=regUnits(ST.rid).filter(id=>GEO.units[id]);
     if(!ids.length) return noMap('Za ovu celinu nema mape. Izaberi sa spiska desno.');
@@ -348,6 +349,7 @@ function drawMap(){
     ids.map(id=>{const [x,y]=cen(GEO.units[id].shape);const t=IDX.units[id].short.replace(/^Grad /,'');return {id,x,y,t,w:t.length*fs*.56,h:fs*1.1,n:IDX.units[id].nbm}})
       .sort((p,q)=>q.n-p.n).forEach(L=>{if(placed.some(P=>Math.abs(P.x-L.x)<(P.w+L.w)/2+2&&Math.abs(P.y-L.y)<(P.h+L.h)/2))return;placed.push(L);
         html+=`<text class="ulabel" x="${L.x.toFixed(0)}" y="${L.y.toFixed(0)}" style="font-size:${fs}px">${esc(L.t)}</text>`});
+    html+=bangs(ids.filter(id=>obOf(id)));
   } else {
     const U=UF[ST.uid]; if(!U) return noMap('Učitavam…');
     if(!U.detail) return noMap('Za ovu celinu nema mape. Biračka mesta su na spisku desno.');
@@ -366,12 +368,14 @@ function drawMap(){
   }
   nm.hidden=true;svg.style.display='';svg.setAttribute('viewBox',`0 0 ${W} ${PRJ.H}`);svg.innerHTML=html;
   LBL=[...svg.querySelectorAll('text.nlabel,text.ulabel,text.rlabel')].map(t=>[t,parseFloat(t.style.fontSize)||10]);
-  MKS=[...svg.querySelectorAll('.mk')].map(g=>{const c=g.querySelector(':scope>circle'),t=g.querySelector(':scope>text'),bc=g.querySelector('.bang circle'),bt=g.querySelector('.bang text');
+  MKS=[...svg.querySelectorAll('.mk:not(.bangu)')].map(g=>{const c=g.querySelector(':scope>circle'),t=g.querySelector(':scope>text'),bc=g.querySelector('.bang circle'),bt=g.querySelector('.bang text');
     return {c,t,bc,bt,x:+c.getAttribute('cx'),y:+c.getAttribute('cy'),r:+c.getAttribute('r'),tf:parseFloat(t.style.fontSize),bf:parseFloat(bt.style.fontSize)}});
   bindMap(); updateMarks();
   // fokus na izabrano naselje
   if(ST.lvl==='unit'&&ST.nas!=null&&UF[ST.uid].naselja[ST.nas]){focusGeom(UF[ST.uid].naselja[ST.nas].g)}
 }
+const obOf=id=>((LIVE.u[id]||{}).ob||[]).length;
+function bangs(ids){const r=MOB?14:7;return ids.map(id=>{const [x,y]=PRJ.P(GEO.units[id].c);return `<g class="mk bangu" data-bu="${id}" style="cursor:pointer"><circle cx="${(x+r*1.6).toFixed(1)}" cy="${(y-r*1.6).toFixed(1)}" r="${r}" style="fill:var(--bad);stroke:var(--panel);stroke-width:1.2"/><text x="${(x+r*1.6).toFixed(1)}" y="${(y-r*1.6).toFixed(1)}" style="fill:#fff;font:700 ${r*1.3}px var(--sans);text-anchor:middle;dominant-baseline:central">!</text><title>${esc(IDX.units[id].short)}: oboreno BM (${obOf(id)})</title></g>`}).join('')}
 function noMap(t){svg.style.display='none';const nm=$('#nomap');nm.hidden=false;nm.textContent=t;MKS=[];LBL=[]}
 const RLAB={'Beogradski region':'Beograd','Region Vojvodine':'Vojvodina','Region Šumadije i Zapadne Srbije':'Šumadija i Zapadna Srbija','Region Južne i Istočne Srbije':'Južna i Istočna Srbija','Region Kosovo i Metohija':'Kosovo i Metohija'};
 function rlab(rid){const n=IDX.regions.find(r=>r.id===rid).name;return RLAB[n]||n}
@@ -403,9 +407,10 @@ svg.addEventListener('pointerup',endPtr);svg.addEventListener('pointercancel',en
 svg.addEventListener('click',e=>{if(moved){e.stopPropagation();e.preventDefault();moved=false}},true);
 function bindMap(){
   svg.querySelectorAll('.reg').forEach(p=>p.onclick=()=>go({lvl:'reg',rid:p.dataset.r}));
+  svg.querySelectorAll('.bangu').forEach(g=>g.onclick=e=>{e.stopPropagation();const id=g.dataset.bu;go({lvl:'unit',rid:IDX.units[id].region,uid:id})});
   svg.querySelectorAll('.unit').forEach(p=>p.onclick=()=>go({lvl:'unit',rid:IDX.units[p.dataset.u].region,uid:p.dataset.u}));
   svg.querySelectorAll('.naselje.click').forEach(p=>p.onclick=()=>{const i=+p.dataset.nas;go({...ST,nas:ST.nas===i?null:i,sid:null,view:'main'},true)});
-  svg.querySelectorAll('.mk').forEach(g=>{const f=()=>go({...ST,sid:g.dataset.s,view:'main'},true);g.addEventListener('click',e=>{e.stopPropagation();f()});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}})});
+  svg.querySelectorAll('.mk:not(.bangu)').forEach(g=>{const f=()=>go({...ST,sid:g.dataset.s,view:'main'},true);g.addEventListener('click',e=>{e.stopPropagation();f()});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}})});
 }
 
 // ---------- 2026 uživo ----------
@@ -415,7 +420,7 @@ function alertsOf(uid,sid){const b=liveBM(uid,sid)||{},a=[];
   if(b.status&&b.status.oboreno) a.push({t:'BM oboreno'+(b.status.napomena?': '+b.status.napomena:''),at:b.status.at});
   else (b.alerts||[]).filter(x=>x.type==='oboreno').slice(-1).forEach(x=>a.push({t:'BM oboreno: '+(x.detail||''),at:x.at}));
   return a}
-function updateMarks(){if(ST.lvl!=='unit')return;svg.querySelectorAll('.mk').forEach(g=>{g.querySelector('.bang').style.display=alertsOf(ST.uid,g.dataset.s).length?'':'none'})}
+function updateMarks(){if(ST.lvl!=='unit')return;svg.querySelectorAll('.mk:not(.bangu)').forEach(g=>{g.querySelector('.bang').style.display=alertsOf(ST.uid,g.dataset.s).length?'':'none'})}
 function status26(done,n){const m=LIVE.meta;const sim=m&&m.sim?'<div class="note"><b>PROBA:</b> ovo su rezultati iz 2023. pušteni kao da stižu uživo, radi testa.</div>':'';
   return sim+status26b(done,n,m)}
 function status26b(done,n,m){
@@ -552,7 +557,7 @@ let SRC='';
 async function loadLive(){const [a,b]=await Promise.all([get('data/live/summary.json?t='+Date.now()),get(RAW+'data/live/summary.json')]);
   const s=(b&&(!a||tkey(b.meta)>tkey(a.meta)))?b:a; SRC=(s&&s===b&&b!==a)?RAW:'';
   if(s){LIVE.meta=s.meta||null;LIVE.u=s.u||{}}}
-async function loadLiveUnit(uid){if(!(LIVE.u[uid]&&LIVE.u[uid].done)&&!LU[uid]){addUnitIdx(uid);return}
+async function loadLiveUnit(uid){const L=LIVE.u[uid];if(!(L&&(L.done||(L.ob&&L.ob.length)))&&!LU[uid]){addUnitIdx(uid);return}
   const d=await get(SRC?SRC+'data/live/u/'+uid+'.json':'data/live/u/'+uid+'.json?t='+Date.now());if(d)LU[uid]=d;addUnitIdx(uid);if(ST.uid===uid){updateMarks();render._keep=true;render()}}
 (async()=>{
   [IDX,GEO]=await Promise.all([get('data/index.json'),get('data/geo.json')]);

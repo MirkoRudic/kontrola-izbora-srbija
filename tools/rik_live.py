@@ -135,6 +135,43 @@ def apply(uid, sid, r, t):
         old["zap"].append(dict(link=r["zlink"], at=t)); changed = True
     return changed
 
+# ---------- rešenja o poništavanju glasanja (RIK dokumenti, tip 1) ----------
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from translit import lat
+def _core(x): return re.sub(r'^(gradska opština|grad|opština)\s+', '', lat(x).lower()).strip()
+UCORE = {}
+for uid, u in IDX["units"].items(): UCORE.setdefault(_core(re.sub(r'\s*\(.*\)', '', u["name"])), []).append(uid)
+SEEN_DOCS = set(); LAST_DOCS = 0
+def annulments(t):
+    global LAST_DOCS
+    if A.sim or time.time() - LAST_DOCS < 600: return set()
+    LAST_DOCS = time.time(); changed = set()
+    for p in (1, 2, 3):
+        o = curl(["-G", R + "/get-additional-documents", "--data-urlencode", f"page={p}", "--data-urlencode", "filters[document-type]=1",
+                  "--data-urlencode", f"filters[election-round]={ROUND}", "--data-urlencode", "filters[municipality-id]=0",
+                  "--data-urlencode", "filters[election_station]=0", "--data-urlencode", "filters[additional-document]=0",
+                  "--data-urlencode", "order=0", "--data-urlencode", "sort=0", "--data-urlencode", "election_type=-1"], 60)
+        try: recs = json.loads(o)["records"]
+        except Exception: break
+        for d in recs:
+            name = (d.get("document_name") or "") + " " + (d.get("election_board_decision") or "")
+            links = re.findall(r'href="([^"]+)"', str(d.get("extfiles_link")))
+            key = links[0] if links else name
+            if key in SEEN_DOCS: continue
+            SEEN_DOCS.add(key)
+            if not re.search(r"ПОНИШТ|поништ", name): continue
+            uids = UCORE.get(_core(d.get("municipality_display_name") or ""), [])
+            m = re.match(r"\s*(\d+)", d.get("election_station_title") or "") or re.search(r"(?:БМ|бирачк\w* мест\w*)\s*(?:бр\.?|број)?\s*(\d+)", name)
+            if not uids or not m: log("rešenje o poništavanju bez BM:", name[:120]); continue
+            uid = uids[0]; n = int(m.group(1))
+            sid = next((s for s, x in UNITS[uid]["st"].items() if x["n"] == n), None)
+            if not sid: continue
+            b = LU[uid]["bm"].setdefault(sid, {"processed": False, "zap": [], "alerts": []})
+            b["status"] = dict(oboreno=True, napomena="RIK: " + re.sub(r"\s+", " ", name).strip()[:160], at=t, doc=(R + links[0]) if links else None)
+            b.setdefault("alerts", []).append(dict(type="oboreno", at=t, detail=b["status"]["napomena"]))
+            addlog(uid, sid, "oboreno", b["status"]["napomena"], t); changed.add(uid)
+    return changed
+
 def summary(t):
     U = {}; P = 0
     for uid, u in UNITS.items():
@@ -151,7 +188,8 @@ def summary(t):
                 for k in ("voters", "out", "valid", "invalid"): s23[k] += y.get(k) or 0
                 s23["lists"] = [a + b for a, b in zip(s23["lists"], y["lists"])]
         P += done
-        if done: U[uid] = dict(done=done, m=m, s26=s26, s23=s23, dt=(AGG.get(uid) or {}).get("dt"))
+        ob = [sid for sid, r in bm.items() if (r.get("status") or {}).get("oboreno")]
+        if done or ob: U[uid] = dict(done=done, m=m, s26=s26, s23=s23, dt=(AGG.get(uid) or {}).get("dt"), ob=ob)
     return dict(meta=dict(checked=t, processed=P, stations=sum(len(u["st"]) for u in UNITS.values()), sim=A.sim), u=U)
 
 def write(changed_units, t):
@@ -231,6 +269,7 @@ while time.time() < deadline:
         if apply(uid, sid, r, t):
             changed.add(uid)
             if not was and r: new += 1
+    changed |= annulments(t)
     s = write(changed, t)
     if changed: PENDING = True
     if PENDING and time.time() - LASTPUSH >= 120:  # Cloudflare gradi sajt posle svakog push-a (limit gradnji): ne češće od 2 min
