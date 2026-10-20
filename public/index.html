@@ -344,7 +344,10 @@ function drawMap(){
     if(!ids.length) return noMap('Za ovu celinu nema mape. Izaberi sa spiska desno.');
     setProj(ids.map(id=>GEO.units[id].shape));
     ids.forEach(id=>html+=`<path class="unit" data-u="${id}" d="${pathOf(GEO.units[id].shape)}"><title>${esc(IDX.units[id].short)}</title></path>`);
-    ids.forEach(id=>{const [x,y]=cen(GEO.units[id].shape);html+=`<text class="ulabel" x="${x.toFixed(0)}" y="${y.toFixed(0)}" style="font-size:${MOB?17:9.5}px">${esc(IDX.units[id].short.replace(/^Grad /,''))}</text>`});
+    const fs=MOB?15:9.5, placed=[];
+    ids.map(id=>{const [x,y]=cen(GEO.units[id].shape);const t=IDX.units[id].short.replace(/^Grad /,'');return {id,x,y,t,w:t.length*fs*.56,h:fs*1.1,n:IDX.units[id].nbm}})
+      .sort((p,q)=>q.n-p.n).forEach(L=>{if(placed.some(P=>Math.abs(P.x-L.x)<(P.w+L.w)/2+2&&Math.abs(P.y-L.y)<(P.h+L.h)/2))return;placed.push(L);
+        html+=`<text class="ulabel" x="${L.x.toFixed(0)}" y="${L.y.toFixed(0)}" style="font-size:${fs}px">${esc(L.t)}</text>`});
   } else {
     const U=UF[ST.uid]; if(!U) return noMap('Učitavam…');
     if(!U.detail) return noMap('Za ovu celinu nema mape. Biračka mesta su na spisku desno.');
