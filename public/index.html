@@ -499,7 +499,7 @@ function logView(){
   return `<button class="back2" id="back2">← Nazad</button><div class="sec"><h3>Dnevnik promena${ST.uid?' – '+esc(IDX.units[ST.uid].short):''}</h3>
    <div class="small" style="margin-bottom:8px">Izmenjeni rezultati i zamenjeni zapisnici na RIK-u, i automatske provere brojeva (npr. zbir po listama ≠ važeći, neobična izlaznost). Ovo su signali za proveru, ne dokaz nepravilnosti.</div>
    ${LOG==null?'<div class="small">Učitavam…</div>':f.length?`<div class="tbl"><table class="log"><thead><tr><th>Vreme</th><th>BM</th><th>Šta</th></tr></thead><tbody>${f.slice(0,400).map(e=>`<tr><td class="n">${esc(e.at)}</td><td><a href="#o${e.u}" data-gu="${e.u}" data-gs="${e.s}">BM ${e.n}</a><div class="small">${esc(IDX.units[e.u]?.short||'')}</div></td><td><span class="chip">${KIND[e.type]||e.type}</span> ${esc(e.detail)}</td></tr>`).join('')}</tbody></table></div>${f.length>400?`<div class="small">Prikazano poslednjih 400 od ${f.length}.</div>`:''}`:'<div class="small"><i>Za sada nema nijedne promene.</i></div>'}</div>`}
-async function loadLog(){LOG=await get('data/live/log.json?t='+Date.now())||[]}
+async function loadLog(){LOG=await get(SRC?SRC+'data/live/log.json':'data/live/log.json?t='+Date.now())||[]}
 // ---------- navigacija ----------
 async function go(n,keepMap){
   const prevU=ST.uid,prevLvl=ST.lvl,prevNas=ST.nas;
@@ -545,9 +545,15 @@ box.addEventListener('mousedown',e=>{const li=e.target.closest('li[data-i]');if(
 document.addEventListener('click',e=>{if(!e.target.closest('.search'))box.hidden=true});
 
 // ---------- učitavanje ----------
-async function loadLive(){const s=await get('data/live/summary.json?t='+Date.now());if(s){LIVE.meta=s.meta||null;LIVE.u=s.u||{}}}
+// rezerva: ako Cloudflare ne stigne da objavi, isti podaci se čitaju direktno sa GitHub-a (kasne do ~5 min)
+const RAW='https://raw.githubusercontent.com/MirkoRudic/kontrola-izbora-srbija/main/public/';
+const tkey=m=>{const x=/(\d+)\.(\d+)\.\s*(\d+):(\d+)/.exec(m&&m.checked||'');return x?((+x[2])*1e6+(+x[1])*1e4+(+x[3])*100+(+x[4])):0};
+let SRC='';
+async function loadLive(){const [a,b]=await Promise.all([get('data/live/summary.json?t='+Date.now()),get(RAW+'data/live/summary.json')]);
+  const s=(b&&(!a||tkey(b.meta)>tkey(a.meta)))?b:a; SRC=(s&&s===b&&b!==a)?RAW:'';
+  if(s){LIVE.meta=s.meta||null;LIVE.u=s.u||{}}}
 async function loadLiveUnit(uid){if(!(LIVE.u[uid]&&LIVE.u[uid].done)&&!LU[uid]){addUnitIdx(uid);return}
-  const d=await get('data/live/u/'+uid+'.json?t='+Date.now());if(d)LU[uid]=d;addUnitIdx(uid);if(ST.uid===uid){updateMarks();render._keep=true;render()}}
+  const d=await get(SRC?SRC+'data/live/u/'+uid+'.json':'data/live/u/'+uid+'.json?t='+Date.now());if(d)LU[uid]=d;addUnitIdx(uid);if(ST.uid===uid){updateMarks();render._keep=true;render()}}
 (async()=>{
   [IDX,GEO]=await Promise.all([get('data/index.json'),get('data/geo.json')]);
   await loadLive();buildIdx();

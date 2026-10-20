@@ -200,7 +200,7 @@ while time.time() < deadline:
             if not was and r: new += 1
     s = write(changed, t)
     if changed: PENDING = True
-    if PENDING and time.time() - LASTPUSH >= 90:  # Cloudflare gradi sajt posle svakog push-a: ne češće od 90 s
+    if PENDING and time.time() - LASTPUSH >= 120:  # Cloudflare gradi sajt posle svakog push-a (limit gradnji): ne češće od 2 min
         if push(f"Uživo: obrađeno {s['meta']['processed']}/{total} BM ({t})"): PENDING = False; LASTPUSH = time.time()
     # interval
     if s["meta"]["processed"] >= total: interval = 30.0
