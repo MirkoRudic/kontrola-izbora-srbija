@@ -1,0 +1,32 @@
+name: Izborna noć – RIK uživo
+on:
+  schedule:
+    # UTC: 25.10. 17:50–23:50 i 26.10. 00:00–06:50 (po beogradskom 19:50–08:50)
+    - cron: "50 17 25 10 *"
+    - cron: "*/10 18-23 25 10 *"
+    - cron: "*/10 0-6 26 10 *"
+  workflow_dispatch:
+    inputs:
+      sim:
+        description: "Proba na rezultatima 2023 (true/false)"
+        default: "false"
+      minutes:
+        description: "Koliko minuta da radi"
+        default: "50"
+permissions:
+  contents: write
+concurrency:
+  group: rik-live
+  cancel-in-progress: false
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Prati RIK
+        run: |
+          git config user.name "rik-uzivo"; git config user.email "rik-uzivo@users.noreply.github.com"
+          SIM=""; [ "${{ github.event.inputs.sim }}" = "true" ] && SIM="--sim"
+          python3 tools/rik_live.py --minutes "${{ github.event.inputs.minutes || '50' }}" $SIM

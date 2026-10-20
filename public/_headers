@@ -1,2 +1,4 @@
 /*
   X-Robots-Tag: noindex, nofollow
+/data/*
+  Cache-Control: no-cache

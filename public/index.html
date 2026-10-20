@@ -1,1 +1,559 @@
-<!doctype html><html lang="sr"><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kontrola izbora Srbija</title><body style="font-family:system-ui;padding:24px">Kontrola izbora · Srbija – u pripremi.</body></html>
+<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
+
+:root{
+  --bg:#f4f2ec; --panel:#fffdf8; --ink:#1c2228; --muted:#5f6973; --line:#d9d4c7; --soft:#ebe7dc;
+  --accent:#1d5c86; --accent-ink:#ffffff; --land:#e9e4d6; --land-line:#bfb6a0; --land-hi:#dcd3bd;
+  --warn:#9a5b00; --good:#2e7d4f; --warn-bg:#fbf0dc; --bad:#a3302a;
+  --q1:#d6e4ee; --q2:#a5c4da; --q3:#6c9ec3; --q4:#3a77a6; --q5:#174e7a;
+  --t1:#1c2228; --t2:#1c2228; --t3:#ffffff; --t4:#ffffff; --t5:#ffffff;
+  --mark-stroke:#ffffff; --sel:#d9481c;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#14181c; --panel:#1b2026; --ink:#e7e3da; --muted:#9aa3ab; --line:#2f363e; --soft:#242a31;
+  --accent:#7fb6dc; --accent-ink:#0f1a22; --land:#20262c; --land-line:#3b444d; --land-hi:#2a3138;
+  --warn:#f0b35a; --good:#6cc28f; --warn-bg:#2e2617; --bad:#f08a80;
+  --q1:#24384a; --q2:#2f5574; --q3:#3f78a3; --q4:#68a3cf; --q5:#a9d0ec;
+  --t1:#e7e3da; --t2:#e7e3da; --t3:#ffffff; --t4:#0f1a22; --t5:#0f1a22;
+  --mark-stroke:#14181c; --sel:#ff7a4d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14181c; --panel:#1b2026; --ink:#e7e3da; --muted:#9aa3ab; --line:#2f363e; --soft:#242a31;
+  --accent:#7fb6dc; --accent-ink:#0f1a22; --land:#20262c; --land-line:#3b444d; --land-hi:#2a3138;
+  --warn:#f0b35a; --good:#6cc28f; --warn-bg:#2e2617; --bad:#f08a80;
+  --q1:#24384a; --q2:#2f5574; --q3:#3f78a3; --q4:#68a3cf; --q5:#a9d0ec;
+  --t1:#e7e3da; --t2:#e7e3da; --t3:#ffffff; --t4:#0f1a22; --t5:#0f1a22;
+  --mark-stroke:#14181c; --sel:#ff7a4d; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45;margin:0}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 24px;max-width:1500px;margin:0 auto}
+header{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin-bottom:12px}
+h1{font-size:20px;margin:0;font-weight:700;letter-spacing:-.01em}
+header .sub{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:14px;align-items:start}
+@media (max-width:960px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;min-width:0}
+.mapcard{padding:10px;position:relative}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+.toolbar label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+select,input[type=search]{font:inherit;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:5px 8px}
+input[type=search]{min-width:0;flex:1 1 160px}
+svg#map{width:100%;height:auto;display:block;touch-action:manipulation}
+.naselje{fill:var(--land);stroke:var(--land-line);stroke-width:1}
+.naselje.hi{fill:var(--land-hi)}
+.outline{fill:none;stroke:var(--ink);stroke-width:1.6;opacity:.55}
+.nlabel{font-size:11px;fill:var(--muted);text-anchor:middle;pointer-events:none;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.mk{cursor:pointer}
+.mk circle{stroke:var(--mark-stroke);stroke-width:1.5}
+.mk text{font-family:var(--mono);font-size:10px;font-weight:500;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.mk:focus{outline:none}.mk:focus-visible circle{stroke:var(--sel);stroke-width:2}
+.mk.sel circle{stroke:var(--sel);stroke-width:3}
+.mk.dim{opacity:.25}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--muted);margin-top:6px;align-items:center}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.panel{padding:14px 16px;position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
+@media (max-width:960px){.panel{position:static;max-height:none}}
+.panel h2{font-size:18px;margin:0 0 2px;text-wrap:balance}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.small{font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:4px;margin:12px 0 10px;border-bottom:1px solid var(--line)}
+.tabs button{font:inherit;font-size:13px;font-weight:600;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:6px 10px;cursor:pointer;margin-bottom:-1px}
+.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--accent)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:10px}
+.kpi{background:var(--soft);border-radius:8px;padding:8px 10px}
+.kpi b{display:block;font-family:var(--mono);font-size:18px;font-weight:500}
+.kpi span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.kpi em{font-style:normal;font-size:12px;color:var(--muted);font-family:var(--mono)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+td.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+.bar{height:5px;background:var(--accent);border-radius:3px;margin-top:3px;opacity:.75}
+.note{background:var(--warn-bg);color:var(--ink);border-left:3px solid var(--warn);padding:7px 10px;border-radius:4px;font-size:12.5px;margin:10px 0}
+.note b{color:var(--warn)}
+a{color:var(--accent)}
+.links{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;margin-top:10px}
+.sec{margin-top:14px}
+.sec h3{font-size:13px;margin:0 0 6px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.chip{display:inline-block;font-size:11px;padding:1px 6px;border-radius:10px;background:var(--soft);color:var(--muted);margin:1px 2px 1px 0}
+.chip.miss{display:block;background:none;color:var(--ink);padding:1px 0;margin:0;font-size:12.5px;border-radius:0}
+.na{color:var(--muted);font-style:italic}
+.toggle{font:inherit;font-size:12px;background:none;border:0;color:var(--accent);cursor:pointer;padding:4px 0}
+.tbl{overflow-x:auto}
+.list tr{cursor:pointer}
+.list tr:hover td{background:var(--soft)}
+.foot{margin-top:14px;font-size:12px;color:var(--muted);max-width:90ch}
+.back{font:inherit;font-size:12px;background:none;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:3px 8px;cursor:pointer;float:right}
+header{position:relative;padding-right:34px}
+.bmno{display:inline-block;background:var(--accent);color:var(--accent-ink);font-family:var(--mono);font-size:14px;font-weight:500;padding:1px 8px;border-radius:5px;vertical-align:3px;margin-right:4px}
+table.res th[scope=row]{font-size:13.5px;text-transform:none;letter-spacing:0;color:var(--ink);font-weight:500}
+table.res td.n{font-size:14px}
+table.res td.n:last-child{color:var(--muted);font-size:12.5px;width:72px}
+tr.g{cursor:pointer}
+tr.g:hover th,tr.g:hover td{background:var(--soft)}
+.car{display:inline-block;width:12px;color:var(--muted);transition:transform .15s}
+tr.g.open .car{transform:rotate(90deg)}
+tr.sub td{background:var(--soft);padding:6px 10px}
+.li{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:2px 0}
+.li .n{font-family:var(--mono)}
+.panel{padding-top:0}
+.ph{position:sticky;top:0;z-index:2;background:var(--panel);padding:14px 0 10px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.ph1{display:flex;align-items:center;gap:8px;min-height:26px}
+.ph1 .place{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.ph1 .back{margin-left:auto;float:none}
+.ph2{font-size:18px;font-weight:700;line-height:1.3;margin-top:6px;height:calc(2 * 1.3em);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-wrap:balance}
+.bmno{margin-right:0;vertical-align:0}
+.more,.back2{font:inherit;font-size:13px;font-weight:600;margin-top:10px;background:var(--soft);color:var(--accent);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer}
+.back2{margin-top:6px;font-weight:500}
+tr.zero td{color:var(--muted)}
+tr.tot td{font-weight:600;border-bottom:0}
+@media (max-width:960px){.ph{position:static}}
+.search{position:relative;flex:1 1 100%;min-width:0}
+.search input{width:100%;padding:8px 10px;font-size:15px}
+#sugg{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:6;list-style:none;margin:0;padding:4px;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);max-height:360px;overflow:auto}
+#sugg li{display:flex;gap:10px;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer}
+#sugg li.act,#sugg li:hover{background:var(--soft)}
+#sugg li.none{color:var(--muted);cursor:default}
+#sugg b{font-weight:600;display:block}
+#sugg small{display:block;color:var(--muted);font-size:12px}
+#sugg mark{background:none;color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+#sugg .ic{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;font:500 11px var(--mono);background:var(--soft);color:var(--muted)}
+#sugg .ic.bm{background:var(--accent);color:var(--accent-ink)}
+table.cmp{table-layout:fixed;width:100%}
+table.cmp th,table.cmp td{vertical-align:middle}
+table.cmp tbody tr{height:50px}
+table.cmp thead th:first-child{width:31%}
+table.cmp th[scope=row]{overflow-wrap:anywhere}
+table.cmp th[scope=row] small.rs{display:block;font-size:11px;color:var(--muted);font-weight:400}
+table.cmp thead th.n{text-align:right}
+table.cmp td.yr,table.cmp td.df{width:23%;line-height:1.25}
+table.cmp td small{display:block;font-size:11.5px;color:var(--muted)}
+table.cmp td.df{font-size:13px!important;color:var(--muted)}
+table.res.cmp td.n:last-child{width:23%}
+.st{font-size:12.5px;color:var(--muted);background:var(--soft);border-radius:6px;padding:6px 10px;margin:10px 0 0}
+.st.live{color:var(--ink);border-left:3px solid var(--good)}
+.mk .bang circle{fill:var(--bad)!important;stroke:var(--panel);stroke-width:1.2}
+.mk .bang text{fill:#fff!important;font-weight:700;font-family:var(--sans)}
+.alert{display:flex;gap:10px;align-items:flex-start;background:color-mix(in srgb,var(--bad) 12%,var(--panel));border:1px solid var(--bad);border-radius:8px;padding:8px 12px;margin-top:10px;font-size:13px}
+.alert>b{flex:0 0 22px;height:22px;border-radius:50%;background:var(--bad);color:#fff;display:grid;place-items:center;font-size:14px}
+.alert a{color:var(--ink);font-weight:600}
+.links.col{flex-direction:column;gap:4px}
+.flagrow{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.flagrow input{flex:1 1 160px;min-width:0;font:inherit;font-size:13px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink)}
+.flagbtn{font:inherit;font-size:13px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid var(--bad);background:none;color:var(--bad);cursor:pointer;margin-top:10px}
+.flagrow .flagbtn{margin-top:0}
+.flagbtn.on{background:var(--bad);color:#fff}
+table.log td{font-size:12.5px}
+table.log td.n{white-space:nowrap;text-align:left}
+table.log .chip{margin-right:4px}
+.sortbtn{white-space:nowrap;font:inherit;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);background:none;border:0;padding:0;cursor:pointer}
+.zst{font-size:12.5px;margin-top:8px;padding:6px 10px;border-radius:6px;background:var(--soft);color:var(--muted)}
+.zst.ok{color:var(--ink)}
+.zst.warn{color:var(--ink);border-left:3px solid var(--warn)}
+.zst.bad{color:var(--ink);border-left:3px solid var(--bad)}
+.gear{position:absolute;right:0;top:0;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--muted);display:grid;place-items:center;cursor:pointer;padding:0}
+.gear:hover{color:var(--accent);border-color:var(--accent)}
+.overlay{position:fixed;inset:0;z-index:50;background:var(--bg);overflow:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:calc(env(safe-area-inset-top,0px) + 14px) 40px}
+.ovin{max-width:640px;margin:0 auto}
+.ovh{display:flex;align-items:center;gap:14px}
+.ovh h2{margin:6px 0 0;font-size:20px}
+.ovh .back2{margin-top:6px}
+.seg{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;width:max-content;max-width:100%}
+.seg button{font:inherit;font-size:13.5px;padding:8px 14px;border:0;background:var(--panel);color:var(--ink);cursor:pointer;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-checked=true]{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.about p,#installhelp p{margin:8px 0;font-size:13px;line-height:1.5}
+.about{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:4px 14px}
+table.cmp td.df.good,table.cmp td.df.good small{color:var(--good);font-weight:600}
+table.cmp td.df.bad,table.cmp td.df.bad small{color:var(--bad);font-weight:600}
+.mapwrap{position:relative}
+#map{touch-action:pan-y}
+.zoom{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:4px}
+.zoom button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:600 18px/1 var(--sans);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.zoom button:hover{border-color:var(--accent);color:var(--accent)}
+
+.crumbs{display:flex;flex-wrap:wrap;gap:2px 6px;align-items:center;font-size:13px;margin:0 0 8px;min-height:22px}
+.crumbs button{font:inherit;background:none;border:0;padding:2px 0;color:var(--accent);cursor:pointer}
+.crumbs span.sep{color:var(--muted)}
+.crumbs b{font-weight:600}
+.reg,.unit{fill:var(--land);stroke:var(--land-line);stroke-width:1;cursor:pointer;transition:fill .12s}
+.reg:hover,.unit:hover,.naselje.click:hover{fill:var(--land-hi)}
+.unit.sel,.naselje.sel{fill:color-mix(in srgb,var(--accent) 22%,var(--land));stroke:var(--accent)}
+.unit.ctx{fill:var(--soft);stroke:var(--line);cursor:pointer;opacity:.7}
+.naselje.click{cursor:pointer}
+.rlabel{font-size:13px;font-weight:700;fill:var(--ink);text-anchor:middle;pointer-events:none;letter-spacing:.02em;paint-order:stroke;stroke:var(--land);stroke-width:3px}
+.ulabel{font-size:9.5px;fill:var(--ink);text-anchor:middle;pointer-events:none;paint-order:stroke;stroke:var(--land);stroke-width:2.5px;font-weight:500}
+.extra{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.extra button{font:inherit;font-size:12.5px;background:var(--soft);border:1px solid var(--line);color:var(--ink);border-radius:16px;padding:4px 10px;cursor:pointer}
+.extra button:hover{border-color:var(--accent);color:var(--accent)}
+.nomap{display:grid;place-items:center;min-height:240px;color:var(--muted);font-size:13px;text-align:center;padding:20px}
+table.kids td,table.kids th{font-size:12.5px}
+table.kids tr{cursor:pointer}
+table.kids tr:hover td{background:var(--soft)}
+table.kids td.nm{max-width:0;width:46%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prog{display:inline-block;width:46px;height:6px;border-radius:3px;background:var(--soft);vertical-align:1px;margin-left:6px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--good)}
+.dim{color:var(--muted)}
+.tag{font-size:11px;color:var(--muted);font-style:italic}
+.loading{opacity:.55;pointer-events:none}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Kontrola izbora · Srbija</h1>
+  <span class="sub">Parlamentarni izbori 25. 10. 2026 · <span id="hn">191 jedinica · 8.392 biračka mesta</span></span>
+  <button class="gear" id="gear" aria-label="Podešavanja" title="Podešavanja"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M19.14 12.94a7.07 7.07 0 0 0 0-1.88l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7 7 0 0 0-1.63-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54a7 7 0 0 0-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.65 8.84a.5.5 0 0 0 .12.64l2.03 1.58a7.07 7.07 0 0 0 0 1.88l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96c.5.38 1.05.7 1.63.94l.36 2.54a.5.5 0 0 0 .5.42h3.84a.5.5 0 0 0 .5-.42l.36-2.54a7 7 0 0 0 1.63-.94l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64zM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7z"/></svg></button>
+</header>
+<div class="grid">
+  <div class="card mapcard">
+    <div class="toolbar">
+      <div class="search"><input type="search" id="q" placeholder="Kucaj opštinu, naselje ili broj BM…" aria-label="Pretraga" autocomplete="off" role="combobox" aria-controls="sugg">
+        <ul id="sugg" role="listbox" hidden></ul></div>
+    </div>
+    <nav class="crumbs" id="crumbs" aria-label="Putanja"></nav>
+    <div class="mapwrap"><svg id="map" role="img" aria-label="Mapa"></svg><div class="nomap" id="nomap" hidden></div>
+      <div class="zoom"><button id="zin" aria-label="Uvećaj">+</button><button id="zout" aria-label="Umanji">−</button><button id="zreset" aria-label="Cela mapa" title="Cela mapa">⤢</button></div></div>
+    <div class="extra" id="extra"></div>
+  </div>
+  <aside class="card panel" id="panel" aria-live="polite"></aside>
+</div>
+</div>
+
+<div class="overlay" id="settings" hidden>
+ <div class="ovin">
+  <div class="ovh"><button class="back2" id="setback">← Nazad</button><h2>Podešavanja</h2></div>
+  <section class="sec"><h3>Osvetljenje</h3>
+   <div class="seg" role="radiogroup" aria-label="Osvetljenje">
+    <button data-th="auto" role="radio">Kao na uređaju</button><button data-th="light" role="radio">Svetlo</button><button data-th="dark" role="radio">Tamno</button>
+   </div></section>
+  <section class="sec"><h3>Ikonica na početnom ekranu</h3>
+   <button class="more" id="install" hidden>Dodaj ikonicu na početni ekran</button>
+   <div class="small" id="installhelp">
+    <p><b>iPhone (Safari):</b> dugme Podeli <span aria-hidden="true">⬆︎</span> → „Dodaj na početni ekran” → Dodaj.</p>
+    <p><b>Android (Chrome):</b> meni ⋮ gore desno → „Dodaj na početni ekran” (ili „Instaliraj aplikaciju”) → Dodaj.</p>
+   </div></section>
+  <section class="sec"><h3>O podacima</h3><div class="about">
+      <p><b>Izvor:</b> Republička izborna komisija (rik.parlament.gov.rs) – rezultati po biračkim mestima, zapisnici i rešenja o biračkim odborima.</p>
+      <p><b>2023:</b> rezultati parlamentarnih izbora 17. 12. 2023. Biračko mesto iz 2026. upareno je sa onim iz 2023. ako ima isti broj i naziv, ili isti/vrlo sličan naziv. Gde para nema, to piše kod BM, a poređenje se ne prikazuje. Zbirovi po opštini, regionu i Srbiji porede se u celini (Vranjska Banja je 2023. bila posebna jedinica, ovde je sabrana sa Vranjem).</p>
+      <p><b>2026:</b> povlači se automatski sa RIK-a u izbornoj noći. Dok opština nije cela obrađena, razlika u procentima se računa prema istim (uparenim) biračkim mestima iz 2023.</p>
+      <p><b>Glasovi:</b> SNS = lista 1, SPS = lista 2, „Naši” = 2023. Srbija protiv nasilja (lista 7), 2026. Studentska lista (lista 3); „Najjača ostala” = lista sa najviše glasova među ostalima, posebno za svaku godinu.</p>
+      <p><b>Mapa:</b> granice opština i naselja su iz OpenStreetMap-a. Biračko mesto je prikazano u naselju čije se ime pojavljuje u nazivu BM; ostala su u sedištu opštine. Tačna lokacija BM nije prikazana.</p>
+      <p><b>Napravio:</b> Mirko &amp; Opus 5.5</p>
+    </div></section>
+ </div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const fmt=n=>n==null?'—':n.toLocaleString('sr-Latn-RS');
+const pct=(a,b,d=1)=>(a==null||!b)?'—':(100*a/b).toLocaleString('sr-Latn-RS',{minimumFractionDigits:d,maximumFractionDigits:d})+' %';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const link=(u,t)=>u?`<a href="${encodeURI(decodeURI(u))}" target="_blank" rel="noopener">${t}</a>`:'';
+const get=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
+let IDX=null, GEO=null, LIVE={meta:null,u:{}}; const UF={}, LU={};
+const ST={lvl:'srb',rid:null,uid:null,nas:null,sid:null,view:'main'};
+
+// ---------- agregati ----------
+const Z=()=>({voters:0,out:0,valid:0,invalid:0,lists:Array(18).fill(0)});
+function addTo(a,b){if(!b)return a;['voters','out','valid','invalid'].forEach(k=>a[k]+=b[k]||0);(b.lists||[]).forEach((v,i)=>a.lists[i]+=v||0);return a}
+function unitAgg(uid){const u=IDX.units[uid],L=LIVE.u[uid]||{};return {y:u.y23,z:L.done?L.s26:null,zc:L.done?L.s23:null,done:L.done||0,n:u.nbm,m:L.m||0}}
+function groupAgg(uids){const y=Z(),z=Z(),zc=Z();let done=0,n=0,m=0,any=false;
+  uids.forEach(id=>{const a=unitAgg(id);addTo(y,a.y);n+=a.n;if(a.z){addTo(z,a.z);addTo(zc,a.zc);done+=a.done;m+=a.m;any=true}});
+  return {y,z:any?z:null,zc:any?zc:null,done,n,m}}
+function regUnits(rid){return IDX.regions.find(r=>r.id===rid).units}
+const ALL=()=>Object.keys(IDX.units);
+
+// ---------- rezultati (tabela) ----------
+const VOTES=[['SNS',1,1,'lista 1',-1],['SPS',2,2,'lista 2',-1],['„Naši”',7,3,'2023: SPN (lista 7) · 2026: Studentska lista (lista 3)',1]];
+const sgn=(v,d)=>v==null?'':(v>0?'+':v<0?'−':'±')+Math.abs(v).toLocaleString('sr-Latn-RS',d!=null?{minimumFractionDigits:d,maximumFractionDigits:d}:{});
+function cell(n,base){return n==null?'<td class="n yr"><span class="na">—</span></td>':`<td class="n yr">${fmt(n)}${base?`<small>${pct(n,base)}</small>`:''}</td>`}
+// a=2023, b=2026; ca/cba = 2023 za ista BM (kad 2026 nije potpuno)
+function diff(a,b,ba,bb,good,ppOnly){
+  if(a==null||b==null) return '<td class="n df"><span class="na">—</span></td>';
+  let pp='',dv;
+  if(ba&&bb){const d=100*b/bb-100*a/ba;pp=`<small>${sgn(d,1)} p.p.</small>`;dv=d}else dv=b-a;
+  const cls=!good||!dv?'':(dv*good>0?'good':'bad');
+  return `<td class="n df ${cls}">${ppOnly?'':sgn(b-a)}${pp}</td>`}
+// r: {y (2023 cela), z (2026), zc (2023 istih BM), partial}
+function row(label,key,base,r,sub,good,listY,listZ){
+  const g=(o,k,i)=>o?(k==='list'?o.lists[i]:o[k]):null, gb=(o)=>o&&base?o[base]:null;
+  const a=key==='list'?g(r.y,'list',listY):g(r.y,key), b=key==='list'?g(r.z,'list',listZ):g(r.z,key);
+  const cmp=r.partial?r.zc:r.y, ca=key==='list'?g(cmp,'list',listY):g(cmp,key);
+  return `<tr><th scope="row">${label}${sub?`<small class="rs">${sub}</small>`:''}</th>${cell(a,gb(r.y))}${cell(b,gb(r.z))}${diff(ca,b,gb(cmp),gb(r.z),good,r.partial)}</tr>`}
+const shortL=t=>{t=String(t||'').replace(/\s+/g,' ').trim();return t.length>40?t.slice(0,38).trim()+'…':t};
+function topOther(arr,skip){let bi=-1,bv=-1;(arr||[]).forEach((v,i)=>{if(skip.includes(i+1))return;if((v||0)>bv){bv=v||0;bi=i}});return bi<0||bv<=0?null:{n:bi+1,v:bv}}
+function otherRow(r){
+  const a=r.y?topOther(r.y.lists,VOTES.map(v=>v[1])):null, b=r.z?topOther(r.z.lists,VOTES.map(v=>v[2])):null;
+  if(!a&&!b) return '';
+  const nm23=a?shortL(IDX.lists23[a.n-1])+' (lista '+a.n+')':'', nm26=b?shortL(IDX.lists26[b.n-1][1])+' (lista '+b.n+')':'';
+  const sub=b?(nm23?'2026: '+nm26+' · 2023: '+nm23:nm26):'2023: '+nm23;
+  const rr={y:r.y,z:r.z,zc:r.zc,partial:r.partial};
+  // razlika samo informativno (razlicite liste)
+  const ya=a?a.n-1:0, zb=b?b.n-1:0;
+  const A=a?r.y.lists[ya]:null,B=b?r.z.lists[zb]:null;
+  return `<tr><th scope="row">Najjača ostala<small class="rs">${esc(sub)}</small></th>${cell(A,r.y&&r.y.valid)}${cell(B,r.z&&r.z.valid)}<td class="n df"><span class="na">—</span></td></tr>`}
+function results(r,notes){
+  const H=`<thead><tr><th></th><th class="n">2023</th><th class="n">2026</th><th class="n">Razlika</th></tr></thead>`;
+  return `<div class="sec"><h3>Rezultati parlamentarnih izbora</h3><div class="tbl"><table class="res cmp">${H}<tbody>
+    ${row('Upisani birači','voters',null,r)}
+    ${row('Izašlo','out','voters',r,'',1)}
+    ${row('Važeći listići','valid','out',r)}
+    ${row('Nevažeći listići','invalid','out',r)}
+  </tbody></table></div>
+  <div class="small">% izašlih je od upisanih; ostali % od broja izašlih. ${r.partial?'2026 još nije potpuno: razlika je u procentnim poenima prema istim BM iz 2023.':'Razlika: 2026 minus 2023.'}${notes?' '+notes:''}</div></div>
+  <div class="sec"><h3>Glasovi</h3><div class="tbl"><table class="res cmp">${H}<tbody>
+    ${VOTES.slice(0,2).map(([g,n23,n26,sub,gd])=>row(g,'list','valid',r,sub,gd,n23-1,n26-1)).join('')}
+    ${otherRow(r)}
+    ${VOTES.slice(2).map(([g,n23,n26,sub,gd])=>row(g,'list','valid',r,sub,gd,n23-1,n26-1)).join('')}
+  </tbody></table></div>
+  <div class="small">% od važećih listića.</div>
+  <button class="more" id="more">Detaljno – ceo izborni listić →</button></div>`}
+let btab='2026', bsort=false;
+function ballot(r){
+  const tabs=`<div class="tabs" role="tablist"><button role="tab" data-b="2026" aria-selected="${btab==='2026'}">2026</button><button role="tab" data-b="2023" aria-selected="${btab==='2023'}">2023</button></div>`;
+  let lists,valid,note='';
+  if(btab==='2026'){lists=IDX.lists26.map(([k,l],i)=>[l,r.z?(r.z.lists[i]??0):null]);valid=r.z&&r.z.valid;if(!r.z)note='Rezultati za 2026. još nisu objavljeni na RIK-u.'}
+  else{if(!r.y){lists=[];note='Za ovo BM nema para iz 2023.'}else{lists=IDX.lists23.map((l,i)=>[l,r.y.lists[i]]);valid=r.y.valid}}
+  const max=Math.max(...lists.map(l=>l[1]||0),1), sumL=lists.reduce((a,l)=>a+(l[1]||0),0);
+  return `<button class="back2" id="back2">← Nazad</button>${tabs}
+  <div class="sec"><h3>Izborni listić ${btab} – svi glasovi</h3>${note?`<div class="small" style="margin-bottom:6px">${note}</div>`:''}${lists.length?`<div class="tbl"><table><thead><tr><th>#</th><th>Lista</th><th style="text-align:right"><button class="sortbtn" id="bsort">Glasova ${bsort?'▼':'↕'}</button></th><th style="text-align:right">%</th></tr></thead><tbody>
+  ${lists.map((l,i)=>[l,i]).sort((a,b)=>bsort?((b[0][1]||0)-(a[0][1]||0)||a[1]-b[1]):a[1]-b[1]).map(([l,i])=>`<tr${l[1]?'':' class="zero"'}><td class="n">${i+1}.</td><td>${esc(l[0])}${l[1]!=null?`<div class="bar" style="width:${((l[1]||0)/max*100).toFixed(1)}%"></div>`:''}</td><td class="n">${l[1]==null?'—':fmt(l[1])}</td><td class="n">${l[1]==null?'':pct(l[1],valid)}</td></tr>`).join('')}
+  ${valid!=null?`<tr class="tot"><td></td><td>Važeći listići</td><td class="n">${fmt(valid)}</td><td class="n"></td></tr>`:''}
+  </tbody></table></div>`:''}</div>`}
+
+// ---------- mapa ----------
+const svg=$('#map'), W=800, PAD=14; let PRJ=null, VB0=null, vb=null, MOB=innerWidth<700;
+const polysOf=g=>!g?[]:g.type==='MultiPolygon'?g.coordinates:[g.coordinates];
+function setProj(geoms){let a=1e9,b=-1e9,c=1e9,d=-1e9;geoms.forEach(g=>polysOf(g).forEach(p=>p[0].forEach(([x,y])=>{a=Math.min(a,x);b=Math.max(b,x);c=Math.min(c,y);d=Math.max(d,y)})));
+  const kx=Math.cos((c+d)/2*Math.PI/180), sc=(W-2*PAD)/Math.max((b-a)*kx,1e-6);let H=Math.round((d-c)*sc+2*PAD);
+  const maxH=MOB?820:560; let s2=sc; if(H>maxH){s2=sc*(maxH-2*PAD)/(H-2*PAD);H=maxH}
+  const ox=(W-(b-a)*kx*s2)/2;
+  PRJ={P:([x,y])=>[ox+(x-a)*kx*s2,PAD+(d-y)*s2],H};VB0={x:0,y:0,w:W,h:H};vb={...VB0}}
+const pathOf=g=>polysOf(g).map(poly=>poly.map(r=>'M'+r.map(c=>PRJ.P(c).map(v=>v.toFixed(1)).join(',')).join('L')+'Z').join('')).join('');
+function cen(g){let A=0,cx=0,cy=0;polysOf(g).forEach(poly=>{const r=poly[0].map(PRJ.P);for(let i=0,j=r.length-1;i<r.length;j=i++){const f=r[j][0]*r[i][1]-r[i][0]*r[j][1];A+=f;cx+=(r[j][0]+r[i][0])*f;cy+=(r[j][1]+r[i][1])*f}});
+  return A?[cx/(3*A),cy/(3*A)]:PRJ.P(polysOf(g)[0][0][0])}
+let MKS=[], LBL=[];
+function drawMap(){
+  const nm=$('#nomap'); let html='';MKS=[];
+  if(ST.lvl==='srb'){
+    const regs=Object.entries(GEO.regions);setProj([GEO.srbija]);
+    regs.forEach(([rid,g])=>html+=`<path class="reg" data-r="${rid}" d="${pathOf(g)}"><title>${esc(IDX.regions.find(r=>r.id===rid).name)}</title></path>`);
+    Object.entries(GEO.units).forEach(([uid,u])=>html+=`<path d="${pathOf(u.shape)}" style="fill:none;stroke:var(--land-line);stroke-width:.4;pointer-events:none;opacity:.6"/>`);
+    regs.forEach(([rid,g])=>{const [x,y]=cen(g);html+=`<text class="rlabel" x="${x.toFixed(0)}" y="${y.toFixed(0)}" style="font-size:${MOB?22:13}px">${esc(rlab(rid))}</text>`});
+  } else if(ST.lvl==='reg'){
+    const ids=regUnits(ST.rid).filter(id=>GEO.units[id]);
+    if(!ids.length) return noMap('Za ovu celinu nema mape. Izaberi sa spiska desno.');
+    setProj(ids.map(id=>GEO.units[id].shape));
+    ids.forEach(id=>html+=`<path class="unit" data-u="${id}" d="${pathOf(GEO.units[id].shape)}"><title>${esc(IDX.units[id].short)}</title></path>`);
+    ids.forEach(id=>{const [x,y]=cen(GEO.units[id].shape);html+=`<text class="ulabel" x="${x.toFixed(0)}" y="${y.toFixed(0)}" style="font-size:${MOB?17:9.5}px">${esc(IDX.units[id].short.replace(/^Grad /,''))}</text>`});
+  } else {
+    const U=UF[ST.uid]; if(!U) return noMap('Učitavam…');
+    if(!U.detail) return noMap('Za ovu celinu nema mape. Biračka mesta su na spisku desno.');
+    setProj([U.detail]);
+    if(U.naselja.length) U.naselja.forEach((n,i)=>html+=`<path class="naselje click${ST.nas===i?' sel':''}" data-nas="${i}" d="${pathOf(n.g)}"><title>${esc(n.name)}</title></path>`);
+    else html+=`<path class="naselje" d="${pathOf(U.detail)}"/>`;
+    html+=`<path class="outline" d="${pathOf(U.detail)}"/>`;
+    // markeri BM: po naselju (rp), raspoređeni
+    const R=MOB?19:10;
+    const grp={};U.stations.forEach(s=>{const k=s.nas==null?'c':s.nas;(grp[k]=grp[k]||[]).push(s)});
+    Object.entries(grp).forEach(([k,ss])=>{const [cx,cy]=k==='c'?PRJ.P(U.c||IDX.units[ST.uid].c||[0,0]):PRJ.P(U.naselja[+k].rp);
+      const cols=Math.ceil(Math.sqrt(ss.length));ss.forEach((s,i)=>{s._x=cx+((i%cols)-(cols-1)/2)*(2*R+2);s._y=cy+(Math.floor(i/cols)-(Math.ceil(ss.length/cols)-1)/2)*(2*R+2)})});
+    U.naselja.forEach((n,i)=>{if(!(U.stations.some(s=>s.nas===i)))return;const [x,y]=PRJ.P(n.rp);const ss=grp[i]||[];const rows=Math.ceil(ss.length/Math.ceil(Math.sqrt(ss.length)));
+      html+=`<text class="nlabel" x="${x.toFixed(0)}" y="${(y-rows*(R+1)-6).toFixed(0)}" style="font-size:${MOB?17:10}px">${esc(n.name)}</text>`});
+    html+='<g id="mks">'+U.stations.map(s=>`<g class="mk${ST.sid===s.sid?' sel':''}" data-s="${s.sid}" tabindex="0" role="button" aria-label="Biračko mesto ${s.n}"><circle cx="${s._x.toFixed(1)}" cy="${s._y.toFixed(1)}" r="${R}" style="fill:var(--accent)"/><text x="${s._x.toFixed(1)}" y="${s._y.toFixed(1)}" style="fill:var(--accent-ink);font-size:${MOB?(s.n>99?13:16):(s.n>99?7.5:9)}px">${s.n}</text><g class="bang" style="display:none"><circle cx="${(s._x+R*.8).toFixed(1)}" cy="${(s._y-R*.8).toFixed(1)}" r="${(R*.62).toFixed(1)}"/><text x="${(s._x+R*.8).toFixed(1)}" y="${(s._y-R*.8).toFixed(1)}" style="font-size:${MOB?15:8}px">!</text></g></g>`).join('')+'</g>';
+  }
+  nm.hidden=true;svg.style.display='';svg.setAttribute('viewBox',`0 0 ${W} ${PRJ.H}`);svg.innerHTML=html;
+  LBL=[...svg.querySelectorAll('text.nlabel,text.ulabel,text.rlabel')].map(t=>[t,parseFloat(t.style.fontSize)||10]);
+  MKS=[...svg.querySelectorAll('.mk')].map(g=>{const c=g.querySelector(':scope>circle'),t=g.querySelector(':scope>text'),bc=g.querySelector('.bang circle'),bt=g.querySelector('.bang text');
+    return {c,t,bc,bt,x:+c.getAttribute('cx'),y:+c.getAttribute('cy'),r:+c.getAttribute('r'),tf:parseFloat(t.style.fontSize),bf:parseFloat(bt.style.fontSize)}});
+  bindMap(); updateMarks();
+  // fokus na izabrano naselje
+  if(ST.lvl==='unit'&&ST.nas!=null&&UF[ST.uid].naselja[ST.nas]){focusGeom(UF[ST.uid].naselja[ST.nas].g)}
+}
+function noMap(t){svg.style.display='none';const nm=$('#nomap');nm.hidden=false;nm.textContent=t;MKS=[];LBL=[]}
+const RLAB={'Beogradski region':'Beograd','Region Vojvodine':'Vojvodina','Region Šumadije i Zapadne Srbije':'Šumadija i Zapadna Srbija','Region Južne i Istočne Srbije':'Južna i Istočna Srbija','Region Kosovo i Metohija':'Kosovo i Metohija'};
+function rlab(rid){const n=IDX.regions.find(r=>r.id===rid).name;return RLAB[n]||n}
+function focusGeom(g){let a=1e9,b=-1e9,c=1e9,d=-1e9;polysOf(g).forEach(p=>p[0].forEach(pt=>{const [x,y]=PRJ.P(pt);a=Math.min(a,x);b=Math.max(b,x);c=Math.min(c,y);d=Math.max(d,y)}));
+  const w=Math.max(b-a,d-c*0+0,60)*1.8, cw=Math.max(w,(d-c)*1.8*W/PRJ.H);const nw=Math.min(W,Math.max(W/12,cw)),nh=nw*PRJ.H/W;
+  vb={x:(a+b)/2-nw/2,y:(c+d)/2-nh/2,w:nw,h:nh};applyVB()}
+function applyVB(){const k=W/vb.w;svg.setAttribute('viewBox',`${vb.x.toFixed(1)} ${vb.y.toFixed(1)} ${vb.w.toFixed(1)} ${vb.h.toFixed(1)}`);
+  const kk=Math.max(1,Math.sqrt(k));
+  MKS.forEach(m=>{const r=m.r*kk/k;m.c.setAttribute('r',r.toFixed(2));m.t.style.fontSize=(m.tf*kk/k)+'px';
+    // pomeri marker oko centra grupe proporcionalno
+    m.c.style.strokeWidth=(1.5/k*kk)+'px';const bx=m.x+r*.8,by=m.y-r*.8;m.bc.setAttribute('cx',bx);m.bc.setAttribute('cy',by);m.bc.setAttribute('r',(r*.62).toFixed(2));m.bt.setAttribute('x',bx);m.bt.setAttribute('y',by);m.bt.style.fontSize=(m.bf*kk/k)+'px'});
+  LBL.forEach(([t,f])=>{t.style.fontSize=(f*kk/k)+'px';t.style.strokeWidth=(2.5/k)+'px'});
+  svg.querySelectorAll('.reg,.unit,.naselje,.outline').forEach(p=>p.style.strokeWidth=(p.classList.contains('outline')?1.6:1)/k+'px')}
+function zoomAt(f,cx,cy){const nw=Math.min(VB0.w,Math.max(VB0.w/16,vb.w/f)),nh=nw*VB0.h/VB0.w;if(cx==null){cx=vb.x+vb.w/2;cy=vb.y+vb.h/2}
+  vb={x:cx-(cx-vb.x)*nw/vb.w,y:cy-(cy-vb.y)*nh/vb.h,w:nw,h:nh};clampVB();applyVB()}
+function clampVB(){vb.x=Math.min(Math.max(vb.x,VB0.x-vb.w*.3),VB0.w-vb.w*.7);vb.y=Math.min(Math.max(vb.y,VB0.y-vb.h*.3),VB0.h-vb.h*.7)}
+const svgPt=(cx,cy)=>{const r=svg.getBoundingClientRect();return [vb.x+(cx-r.left)/r.width*vb.w,vb.y+(cy-r.top)/r.height*vb.h]};
+$('#zin').onclick=()=>zoomAt(1.6);$('#zout').onclick=()=>zoomAt(1/1.6);$('#zreset').onclick=()=>{vb={...VB0};applyVB()};
+svg.addEventListener('wheel',e=>{e.preventDefault();const [x,y]=svgPt(e.clientX,e.clientY);zoomAt(e.deltaY<0?1.25:.8,x,y)},{passive:false});
+const ptrs=new Map();let pan=null,pinch=null,moved=false;
+svg.addEventListener('pointerdown',e=>{ptrs.set(e.pointerId,[e.clientX,e.clientY]);moved=false;if(ptrs.size===1)pan={x:e.clientX,y:e.clientY,vb:{...vb}};
+  if(ptrs.size===2){const [a,b]=[...ptrs.values()];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),vb:{...vb},c:svgPt((a[0]+b[0])/2,(a[1]+b[1])/2)};pan=null}});
+svg.addEventListener('pointermove',e=>{if(!ptrs.has(e.pointerId))return;ptrs.set(e.pointerId,[e.clientX,e.clientY]);const r=svg.getBoundingClientRect();
+  if(pan){const dx=(e.clientX-pan.x)/r.width*vb.w,dy=(e.clientY-pan.y)/r.height*vb.h;if(Math.abs(e.clientX-pan.x)+Math.abs(e.clientY-pan.y)>6)moved=true;
+    if(moved&&vb.w<VB0.w){vb.x=pan.vb.x-dx;vb.y=pan.vb.y-dy;clampVB();applyVB()}}
+  else if(pinch&&ptrs.size===2){moved=true;const [a,b]=[...ptrs.values()];const f=Math.hypot(a[0]-b[0],a[1]-b[1])/pinch.d;vb={...pinch.vb};zoomAt(f,pinch.c[0],pinch.c[1])}});
+const endPtr=e=>{ptrs.delete(e.pointerId);if(ptrs.size<2)pinch=null;if(!ptrs.size)pan=null};
+svg.addEventListener('pointerup',endPtr);svg.addEventListener('pointercancel',endPtr);
+svg.addEventListener('click',e=>{if(moved){e.stopPropagation();e.preventDefault();moved=false}},true);
+function bindMap(){
+  svg.querySelectorAll('.reg').forEach(p=>p.onclick=()=>go({lvl:'reg',rid:p.dataset.r}));
+  svg.querySelectorAll('.unit').forEach(p=>p.onclick=()=>go({lvl:'unit',rid:IDX.units[p.dataset.u].region,uid:p.dataset.u}));
+  svg.querySelectorAll('.naselje.click').forEach(p=>p.onclick=()=>{const i=+p.dataset.nas;go({...ST,nas:ST.nas===i?null:i,sid:null,view:'main'},true)});
+  svg.querySelectorAll('.mk').forEach(g=>{const f=()=>go({...ST,sid:g.dataset.s,view:'main'},true);g.addEventListener('click',e=>{e.stopPropagation();f()});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}})});
+}
+
+// ---------- 2026 uživo ----------
+function liveBM(uid,sid){const L=LU[uid];return L&&L.bm?L.bm[sid]||null:null}
+function zOf(b){return b&&b.processed?b:null}
+function alertsOf(uid,sid){const b=liveBM(uid,sid)||{},a=[];
+  if(b.status&&b.status.oboreno) a.push({t:'BM oboreno'+(b.status.napomena?': '+b.status.napomena:''),at:b.status.at});
+  else (b.alerts||[]).filter(x=>x.type==='oboreno').slice(-1).forEach(x=>a.push({t:'BM oboreno: '+(x.detail||''),at:x.at}));
+  return a}
+function updateMarks(){if(ST.lvl!=='unit')return;svg.querySelectorAll('.mk').forEach(g=>{g.querySelector('.bang').style.display=alertsOf(ST.uid,g.dataset.s).length?'':'none'})}
+function status26(done,n){const m=LIVE.meta;const sim=m&&m.sim?'<div class="note"><b>PROBA:</b> ovo su rezultati iz 2023. pušteni kao da stižu uživo, radi testa.</div>':'';
+  return sim+status26b(done,n,m)}
+function status26b(done,n,m){
+  if(!done) return `<div class="st">2026: rezultati još nisu stigli${m&&m.checked?` · poslednja provera ${esc(m.checked)}`:''}.</div>`;
+  return `<div class="st live">2026: obrađeno ${fmt(done)}/${fmt(n)} BM po RIK-u${m&&m.checked?` · ažurirano ${esc(m.checked)}`:''}</div>`}
+
+// ---------- panel ----------
+const prog=(d,n)=>`<span class="prog" title="${d}/${n}"><i style="width:${n?Math.round(100*d/n):0}%"></i></span>`;
+function kidsTable(rows,head){return `<div class="sec"><h3>${head}</h3><div class="tbl"><table class="kids"><thead><tr><th>Naziv</th><th class="n" style="text-align:right">BM</th><th class="n" style="text-align:right">Izašlo 2023</th><th class="n" style="text-align:right">2026</th></tr></thead><tbody>
+  ${rows.map(r=>`<tr data-k="${esc(r.k)}"><td class="nm" title="${esc(r.name)}">${esc(r.name)}</td><td class="n">${fmt(r.n)}</td><td class="n">${r.y?pct(r.y.out,r.y.voters):'—'}</td><td class="n">${r.done?(r.done>=r.n?'✓':`${r.done}/${r.n}`):'<span class="dim">—</span>'}${prog(r.done||0,r.n)}</td></tr>`).join('')}</tbody></table></div></div>`}
+function head(eyebrow,title,no){return `<div class="ph"><div class="ph1">${no!=null?`<span class="bmno">BM ${no}</span>`:''}<span class="place">${esc(eyebrow)}</span></div><div class="ph2" title="${esc(title)}">${esc(title)}</div></div>`}
+function crumbs(){const c=[`<button data-c="srb">Srbija</button>`];
+  if(ST.rid){c.push('<span class="sep">›</span>',`<button data-c="reg">${esc(IDX.regions.find(r=>r.id===ST.rid).name)}</button>`)}
+  if(ST.uid){c.push('<span class="sep">›</span>',`<button data-c="unit">${esc(IDX.units[ST.uid].short)}</button>`)}
+  if(ST.uid&&ST.nas!=null&&UF[ST.uid]){c.push('<span class="sep">›</span>',`<button data-c="nas">${esc(UF[ST.uid].naselja[ST.nas].name)}</button>`)}
+  if(ST.sid&&UF[ST.uid]){const s=UF[ST.uid].stations.find(x=>x.sid===ST.sid);c.push('<span class="sep">›</span>',`<b>BM ${s.n}</b>`)}
+  $('#crumbs').innerHTML=c.join('');
+  $('#crumbs').querySelectorAll('button').forEach(b=>b.onclick=()=>{const k=b.dataset.c;
+    if(k==='srb')go({lvl:'srb'});else if(k==='reg')go({lvl:'reg',rid:ST.rid});else if(k==='unit')go({lvl:'unit',rid:ST.rid,uid:ST.uid});else go({...ST,sid:null,view:'main'},true)})}
+function stationAgg(U,list){const y=Z(),z=Z(),zc=Z();let done=0,m=0,yAll=0;
+  list.forEach(s=>{if(s.y23){addTo(y,s.y23);yAll++}const b=zOf(liveBM(ST.uid,s.sid));if(b){addTo(z,b);done++;if(s.y23){addTo(zc,s.y23);m++}}});
+  return {y:yAll?y:null,z:done?z:null,zc:done?zc:null,partial:done>0&&done<list.length,done,n:list.length,m,yAll}}
+function render(){
+  crumbs(); let h='',body='';
+  if(ST.lvl==='srb'){const a=groupAgg(ALL());const r={...a,partial:a.done>0&&a.done<a.n};
+    h=head('Srbija','Zbir svih '+fmt(a.n)+' biračkih mesta');
+    body=ST.view==='ballot'?ballot(r):status26(a.done,a.n)+results(r)+kidsTable(IDX.regions.map(g=>{const x=groupAgg(g.units);return {k:'r:'+g.id,name:g.name,n:x.n,y:x.y,done:x.done}}),'Regioni');
+  } else if(ST.lvl==='reg'){const g=IDX.regions.find(r=>r.id===ST.rid),a=groupAgg(g.units),r={...a,partial:a.done>0&&a.done<a.n};
+    h=head('Region',g.name);
+    body=ST.view==='ballot'?ballot(r):status26(a.done,a.n)+results(r)+kidsTable(g.units.map(id=>{const u=IDX.units[id],x=unitAgg(id);return {k:'u:'+id,name:u.short,n:u.nbm,y:u.y23,done:x.done}}).sort((p,q)=>p.name.localeCompare(q.name,'sr')),'Opštine i gradovi');
+  } else {const u=IDX.units[ST.uid],U=UF[ST.uid];
+    if(!U){h=head(u.name,'Učitavam…');}
+    else if(ST.sid){const s=U.stations.find(x=>x.sid===ST.sid),b=zOf(liveBM(ST.uid,s.sid));
+      const r={y:s.y23,z:b,zc:null,partial:false};
+      h=head(u.short+(s.nas!=null&&U.naselja[s.nas]?' · '+U.naselja[s.nas].name:''),s.name,s.n);
+      if(ST.view==='ballot') body=ballot(r);
+      else{const al=alertsOf(ST.uid,s.sid);
+        body=(al.length?`<div class="alert"><b>!</b><div>${al.map(x=>`<div>${esc(x.t)}${x.at?` <span class="small">(${esc(x.at)})</span>`:''}</div>`).join('')}</div></div>`:'')
+        +status26(b?1:0,1)+results(r,s.y23?(s.how&&s.how!=='isti broj i naziv'?`2023: BM ${s.n23} – ${s.name23}.`:''):'')
+        +(s.y23?'':'<div class="small tag">Ovo biračko mesto nema odgovarajuće BM iz 2023, pa poređenje nije moguće.</div>')
+        +`<div class="sec"><h3>Dokumenti</h3><div class="links col">${zap26(ST.uid,s)}${link(s.z23,'Zapisnik 2023 (PDF, RIK)')}</div></div>`
+        +`<div class="sec"><h3>Birački odbor 2026 – rešenja</h3>${s.odb.length?`<div class="links col">${s.odb.map(d=>link(d.l,esc(d.t))).join('')}</div>`:'<div class="small">Na RIK-u nema rešenja vezanog za ovo BM.</div>'}</div>`}
+    } else {const list=ST.nas!=null?U.stations.filter(s=>s.nas===ST.nas):U.stations;
+      let r;
+      if(ST.nas==null){const a=unitAgg(ST.uid);r={...a,partial:a.done>0&&a.done<a.n}}else r=stationAgg(U,list);
+      h=head(ST.nas!=null?u.short:IDX.regions.find(g=>g.id===u.region).name,ST.nas!=null?U.naselja[ST.nas].name:u.name);
+      const done=list.filter(s=>zOf(liveBM(ST.uid,s.sid))).length;
+      const note=ST.nas!=null?`Zbir 2023 je za ${r.yAll} od ${list.length} BM koja imaju par iz 2023.`:(u.nbm-u.matched?`${u.nbm-u.matched} od ${u.nbm} BM nema par iz 2023 (zbir opštine se poredi u celini).`:'');
+      body=ST.view==='ballot'?ballot(r):status26(done,list.length)+results(r,note)
+        +`<div class="sec"><h3>Biračka mesta (${list.length})</h3><div class="tbl"><table class="kids"><thead><tr><th>BM</th><th class="n" style="text-align:right">Izašlo 2023</th><th class="n" style="text-align:right">2026</th></tr></thead><tbody>
+        ${list.map(s=>{const b=zOf(liveBM(ST.uid,s.sid));return `<tr data-k="s:${s.sid}"><td class="nm" title="${esc(s.name)}"><b>${s.n}</b> ${esc(s.name)}${alertsOf(ST.uid,s.sid).length?' <b style="color:var(--bad)">!</b>':''}</td><td class="n">${s.y23?pct(s.y23.out,s.y23.voters):'<span class="dim">nema para</span>'}</td><td class="n">${b?pct(b.out,b.voters):'<span class="dim">—</span>'}</td></tr>`}).join('')}</tbody></table></div></div>`
+        +(ST.nas==null&&U.odb_general&&U.odb_general.length?`<div class="sec"><h3>Opšta rešenja o odborima</h3><div class="links col">${U.odb_general.map(d=>link(d.l,esc(d.t))).join('')}</div></div>`:'')}
+  }
+  const P=$('#panel'),keep=P.scrollTop;P.innerHTML=h+`<div class="pbody">${body}</div>`;P.scrollTop=render._keep?keep:0;render._keep=false;
+  P.querySelectorAll('tr[data-k]').forEach(tr=>tr.onclick=()=>{const [t,v]=tr.dataset.k.split(':');
+    if(t==='r')go({lvl:'reg',rid:v});else if(t==='u')go({lvl:'unit',rid:IDX.units[v].region,uid:v});else go({...ST,sid:v,view:'main'},true)});
+  const toTop=()=>{if(matchMedia('(max-width:960px)').matches)P.scrollIntoView({block:'start'})};
+  const mo=$('#more');if(mo)mo.onclick=()=>{ST.view='ballot';render();toTop()};
+  const b2=$('#back2');if(b2)b2.onclick=()=>{ST.view='main';render();toTop()};
+  const bs=$('#bsort');if(bs)bs.onclick=()=>{bsort=!bsort;render._keep=true;render()};
+  P.querySelectorAll('.tabs button[data-b]').forEach(b=>b.onclick=()=>{btab=b.dataset.b;render._keep=true;render()});
+  // dodatne celine bez mape
+  const ex=$('#extra');
+  if(ST.lvl==='srb') ex.innerHTML=IDX.regions.filter(r=>!GEO.regions[r.id]).map(r=>`<button data-r="${r.id}">${esc(r.name)}</button>`).join('');
+  else if(ST.lvl==='reg') ex.innerHTML=regUnits(ST.rid).filter(id=>!GEO.units[id]).map(id=>`<button data-u="${id}">${esc(IDX.units[id].short)}</button>`).join('');
+  else ex.innerHTML='';
+  ex.querySelectorAll('button').forEach(b=>b.onclick=()=>b.dataset.r?go({lvl:'reg',rid:b.dataset.r}):go({lvl:'unit',rid:ST.rid,uid:b.dataset.u}));
+}
+function zap26(uid,s){const b=liveBM(uid,s.sid),h=(b&&b.zap)||[];
+  if(!h.length) return '<span class="small">Zapisnik 2026: još nije objavljen na RIK-u.</span>';
+  return h.map((z,i)=>`<span>Zapisnik 2026${h.length>1?` – verzija ${i+1} (${esc(z.at)})`:''}: ${link(z.link,'RIK')}</span>`).join('')}
+
+// ---------- navigacija ----------
+async function go(n,keepMap){
+  const prevU=ST.uid,prevLvl=ST.lvl,prevNas=ST.nas;
+  Object.assign(ST,{lvl:'srb',rid:null,uid:null,nas:null,sid:null,view:'main'},n);
+  if(ST.uid&&!UF[ST.uid]){render();UF[ST.uid]=await get('data/u/'+ST.uid+'.json');loadLiveUnit(ST.uid)}
+  else if(ST.uid) loadLiveUnit(ST.uid);
+  const redraw=!keepMap||prevU!==ST.uid||prevLvl!==ST.lvl||prevNas!==ST.nas;
+  if(redraw){drawMap()} else {svg.querySelectorAll('.mk').forEach(g=>g.classList.toggle('sel',g.dataset.s===ST.sid))}
+  render();setHash();
+  if(ST.sid&&matchMedia('(max-width:960px)').matches)$('#panel').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function setHash(){let h='';if(ST.lvl==='reg')h='r'+ST.rid;else if(ST.lvl==='unit'){h='o'+ST.uid;if(ST.nas!=null)h+='-n'+ST.nas;if(ST.sid){const s=UF[ST.uid]&&UF[ST.uid].stations.find(x=>x.sid===ST.sid);if(s)h+='-bm'+s.n}}
+  try{history.replaceState(null,'',h?'#'+h:location.pathname+location.search)}catch(e){}}
+async function fromHash(){const m=/^#(?:r(\d+)|o(\d+)(?:-n(\d+))?(?:-bm(\d+))?)$/.exec(location.hash);
+  if(!m) return go({lvl:'srb'});
+  if(m[1]&&IDX.regions.some(r=>r.id===m[1])) return go({lvl:'reg',rid:m[1]});
+  if(m[2]&&IDX.units[m[2]]){const uid=m[2];await go({lvl:'unit',rid:IDX.units[uid].region,uid,nas:m[3]!=null?+m[3]:null});
+    if(m[4]){const s=UF[uid].stations.find(x=>x.n===+m[4]);if(s)go({...ST,sid:s.sid},true)}return}
+  go({lvl:'srb'})}
+
+// ---------- pretraga ----------
+const fold=t=>String(t??'').toLowerCase().replace(/đ/g,'dj').normalize('NFD').replace(/[̀-ͯ]/g,'');
+let SIDX=[];
+function buildIdx(){SIDX=[];IDX.regions.forEach(r=>SIDX.push({t:'r',id:r.id,label:r.name,sub:r.units.length+' jedinica',key:fold(r.name)}));
+  Object.entries(IDX.units).forEach(([id,u])=>SIDX.push({t:'u',id,label:u.short,sub:u.name+' · '+u.nbm+' BM',key:fold(u.name+' '+u.short)}))}
+function addUnitIdx(uid){const U=UF[uid];if(!U||U._idx)return;U._idx=1;const u=IDX.units[uid];
+  U.naselja.forEach((n,i)=>{if(U.stations.some(s=>s.nas===i))SIDX.push({t:'n',id:uid,i,label:n.name,sub:'naselje · '+u.short,key:fold(n.name)})});
+  U.stations.forEach(s=>SIDX.push({t:'s',id:uid,sid:s.sid,n:s.n,label:`BM ${s.n} · ${s.name}`,sub:u.short,key:fold(`bm ${s.n} ${s.name} ${u.short}`),cur:1}))}
+const q=$('#q'),box=$('#sugg');let hits=[],act=-1;
+function search(v){const f=fold(v).trim();if(!f)return[];const w=f.split(/\s+/);const num=/^(bm\s*)?(\d{1,3})$/.exec(f);
+  return SIDX.map(e=>{if(num&&e.t==='s'&&e.id===ST.uid&&e.n===+num[2])return{e,sc:200};if(!w.every(x=>e.key.includes(x)))return null;
+    let sc=0;if(e.key.startsWith(w[0]))sc+=30;if(e.t==='u')sc+=10;if(e.t==='r')sc+=12;if(e.t==='s'&&e.id===ST.uid)sc+=15;return{e,sc}}).filter(Boolean).sort((a,b)=>b.sc-a.sc||a.e.label.localeCompare(b.e.label,'sr')).slice(0,12).map(x=>x.e)}
+function showSugg(){const v=q.value;hits=search(v);act=hits.length?0:-1;if(!v.trim()){box.hidden=true;return}
+  box.innerHTML=hits.length?hits.map((h,i)=>`<li role="option" id="sg${i}" data-i="${i}" class="${i===act?'act':''}"><span class="ic ${h.t==='s'?'bm':''}">${h.t==='s'?h.n:h.t==='u'?'O':h.t==='r'?'R':'N'}</span><span><b>${esc(h.label)}</b><small>${esc(h.sub)}</small></span></li>`).join(''):'<li class="none">Nema rezultata</li>';box.hidden=false}
+async function pick(i){const h=hits[i];if(!h)return;box.hidden=true;q.value='';q.blur();
+  if(h.t==='r')go({lvl:'reg',rid:h.id});else if(h.t==='u')go({lvl:'unit',rid:IDX.units[h.id].region,uid:h.id});
+  else if(h.t==='n')go({lvl:'unit',rid:IDX.units[h.id].region,uid:h.id,nas:h.i});
+  else{await go({lvl:'unit',rid:IDX.units[h.id].region,uid:h.id});go({...ST,sid:h.sid},true)}}
+function setAct(i){act=i;box.querySelectorAll('li[data-i]').forEach(li=>li.classList.toggle('act',+li.dataset.i===act))}
+q.addEventListener('input',showSugg);q.addEventListener('focus',()=>{if(q.value.trim())showSugg()});
+q.addEventListener('keydown',e=>{if(box.hidden)return;if(e.key==='ArrowDown'){e.preventDefault();setAct(Math.min(act+1,hits.length-1))}else if(e.key==='ArrowUp'){e.preventDefault();setAct(Math.max(act-1,0))}else if(e.key==='Enter'){e.preventDefault();pick(act)}else if(e.key==='Escape')box.hidden=true});
+box.addEventListener('mousedown',e=>{const li=e.target.closest('li[data-i]');if(li){e.preventDefault();pick(+li.dataset.i)}});
+document.addEventListener('click',e=>{if(!e.target.closest('.search'))box.hidden=true});
+
+// ---------- učitavanje ----------
+async function loadLive(){const s=await get('data/live/summary.json?t='+Date.now());if(s){LIVE.meta=s.meta||null;LIVE.u=s.u||{}}}
+async function loadLiveUnit(uid){if(!(LIVE.u[uid]&&LIVE.u[uid].done)&&!LU[uid]){addUnitIdx(uid);return}
+  const d=await get('data/live/u/'+uid+'.json?t='+Date.now());if(d)LU[uid]=d;addUnitIdx(uid);if(ST.uid===uid){updateMarks();render._keep=true;render()}}
+(async()=>{
+  [IDX,GEO]=await Promise.all([get('data/index.json'),get('data/geo.json')]);
+  await loadLive();buildIdx();
+  const n=Object.values(IDX.units).reduce((a,u)=>a+u.nbm,0);$('#hn').textContent=`${Object.keys(IDX.units).length} jedinica · ${fmt(n)} biračkih mesta`;
+  await fromHash();
+  setInterval(async()=>{await loadLive();if(ST.uid)await loadLiveUnit(ST.uid);render._keep=true;render();updateMarks()},60000);
+})();
+// ---------- brojač poseta ----------
+try{let vid=null;try{vid=localStorage.getItem('kiz-vid')}catch(e){}
+  if(!vid){vid=(crypto.randomUUID?crypto.randomUUID():String(Math.random()).slice(2)+Date.now()).replace(/[^a-z0-9]/gi,'').toLowerCase().slice(0,32);try{localStorage.setItem('kiz-vid',vid)}catch(e){}}
+  let counted=false;try{counted=sessionStorage.getItem('kiz-counted')==='1'}catch(e){}
+  if(!counted&&location.protocol.startsWith('http')){fetch('/api/poseta',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({vid})}).then(r=>{if(r.ok)try{sessionStorage.setItem('kiz-counted','1')}catch(e){}}).catch(()=>{})}}catch(e){}
+// ---------- podešavanja ----------
+const ROOT=document.documentElement;
+function applyTheme(t){if(t==='light'||t==='dark')ROOT.setAttribute('data-theme',t);else ROOT.removeAttribute('data-theme');document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-checked',String(b.dataset.th===(t||'auto'))))}
+let THEME='auto';try{THEME=localStorage.getItem('kiz-theme')||'auto'}catch(e){}applyTheme(THEME);
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{THEME=b.dataset.th;applyTheme(THEME);try{localStorage.setItem('kiz-theme',THEME)}catch(e){}});
+let deferredInstall=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;$('#install').hidden=false});
+$('#install').onclick=async()=>{if(!deferredInstall)return;deferredInstall.prompt();try{await deferredInstall.userChoice}catch(e){}deferredInstall=null;$('#install').hidden=true};
+$('#gear').onclick=()=>{$('#settings').hidden=false;document.body.style.overflow='hidden'};
+$('#setback').onclick=()=>{$('#settings').hidden=true;document.body.style.overflow=''};
+if('serviceWorker' in navigator&&location.protocol.startsWith('http')){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
+</script>
+</body></html>
