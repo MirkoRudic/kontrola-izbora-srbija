@@ -1,0 +1,16 @@
+Tue Oct 20 21:16:02 UTC 2026
+{
+  "ip": "74.235.127.168",
+  "city": "Dulles Town Center",
+  "region": "Virginia",
+  "country": "US",
+  "loc": "39.0376,-77.4158",
+  "org": "AS8075 Microsoft Corporation",
+  "postal": "20164",
+  "timezone": "America/New_York",
+  "readme": "https://ipinfo.io/missingauth"
+}
+stranica: 200  1.32 s
+spisak BM Kursumlija 2023: 48 0.43 s
+20 x get_results: ukupno 10.2 s, prosek 0.51 s, max 0.62
+zbir opstine: {'available': '9.371', 'number_of_stations': '48', 'table_have_image': False, 'datetime': '09.01.2024 20:21:00', 'election_title': 'Парламентарни 2023', 'total_voters': '14.348', 'processed_stations': '48'} 0.41 s
