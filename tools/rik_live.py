@@ -4,21 +4,29 @@
 # + spora rotacija već obrađenih BM (provera izmena rezultata / zamenjenog zapisnika).
 # Interval: start 5 min; ima novih -> pola (min 1); nema -> x1.5 (max 15); sve obrađeno -> 30.
 # --sim: proba na izborima 2023 (stanica 2026 -> uparena stanica 2023), BM se "otkrivaju" postepeno.
-import json, os, sys, time, re, subprocess, random, datetime, argparse, hashlib
+import json, os, sys, time, re, subprocess, random, datetime, argparse, hashlib, tempfile
 from concurrent.futures import ThreadPoolExecutor
-from zoneinfo import ZoneInfo
+try:
+    from zoneinfo import ZoneInfo; _TZ = ZoneInfo("Europe/Belgrade")
+except Exception:  # Windows bez tzdata
+    _TZ = None
+def _tz():
+    if _TZ: return _TZ
+    n = datetime.datetime.utcnow()
+    return datetime.timezone(datetime.timedelta(hours=1 if n >= datetime.datetime(2026, 10, 25, 1, 0) else 2))
 ap = argparse.ArgumentParser()
 ap.add_argument('--minutes', type=float, default=55)
 ap.add_argument('--sim', action='store_true')
 ap.add_argument('--out', default='public/data/live')
 ap.add_argument('--no-push', action='store_true')
 ap.add_argument('--threads', type=int, default=8)
+ap.add_argument('--standby', action='store_true', help='rezerva (laptop): radi samo ako GitHub posao kasni > 3 min')
 ap.add_argument('--fast', action='store_true', help='kratki intervali (za test)')
 A = ap.parse_args()
-R = "https://www.rik.parlament.gov.rs"; CK = "/tmp/rik_ck"
+R = "https://www.rik.parlament.gov.rs"; CK = os.path.join(tempfile.gettempdir(), "rik_ck")
 ROUND = "341140" if A.sim else "680072"
 OUT = A.out; os.makedirs(OUT + "/u", exist_ok=True)
-now = lambda: datetime.datetime.now(ZoneInfo("Europe/Belgrade"))
+now = lambda: datetime.datetime.now(_tz())
 stamp = lambda: now().strftime("%d.%m. %H:%M")
 def log(*a): print(now().strftime("%H:%M:%S"), *a, flush=True)
 
@@ -169,7 +177,32 @@ deadline = time.time() + A.minutes * 60
 interval = 1.0 if A.fast else 5.0
 total = sum(len(u["st"]) for u in UNITS.values())
 PENDING = False; LASTPUSH = 0
+def gh_alive():
+    import urllib.request
+    try:
+        for st in ("in_progress", "queued"):
+            d = json.loads(urllib.request.urlopen(f"https://api.github.com/repos/MirkoRudic/kontrola-izbora-srbija/actions/workflows/izborna-noc.yml/runs?status={st}&per_page=1", timeout=20).read())
+            if d.get("total_count"): return True
+        return False
+    except Exception: return True  # ako ne možemo da proverimo, ne mešamo se (osim ako je objava stara)
+def remote_age_min():
+    subprocess.run(["git", "pull", "-q", "--rebase", "-X", "theirs"], check=False)
+    try:
+        m = json.load(open(f"{OUT}/summary.json"))["meta"]["checked"]
+        d, mo, h, mi = map(int, re.findall(r"\d+", m)[:4]); n = now()
+        t = n.replace(month=mo, day=d, hour=h, minute=mi, second=0, microsecond=0)
+        return (n - t).total_seconds() / 60
+    except Exception: return 999
 while time.time() < deadline:
+    if A.standby:
+        age = remote_age_min(); alive = gh_alive()
+        if alive or age < 3:
+            for uid in UNITS:  # preuzmi stanje sa GitHub-a
+                f = f"{OUT}/u/{uid}.json"
+                if os.path.exists(f): LU[uid] = json.load(open(f))
+            if os.path.exists(LOGF): LOG[:] = json.load(open(LOGF))
+            time.sleep(120); continue
+        log(f"GitHub posao ne radi (objava stara {age:.0f} min) – rezerva preuzima ovaj krug")
     t0 = time.time(); t = stamp()
     with ThreadPoolExecutor(A.threads) as ex:
         ags = dict(zip(UNITS, ex.map(unit_agg, UNITS)))
