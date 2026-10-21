@@ -17,7 +17,12 @@ def sim_lists():
 B = lambda t: f"<b>{t}</b>"
 SITE = "kontrola-izbora-srbija.pages.dev"
 
-def fnum(n): return f"{int(n):,}".replace(",", ".")
+def fnum(n):
+    """Kratko: 987 · 123.6k · 1.34M (da poruka ne puca u redu)"""
+    n = int(n)
+    if n >= 999_500: return f"{n/1e6:.2f}M"
+    if n >= 1000: return f"{n/1e3:.1f}k"
+    return str(n)
 def fpct(x, d=1): return f"{x:.{d}f}".replace(".", ",")
 def sgn(x): return ("+" if x > 0 else "−" if x < 0 else "±") + fpct(abs(x))
 def arrow(x): return "↗️" if x > 0 else "↘️" if x < 0 else "→"
