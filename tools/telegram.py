@@ -49,9 +49,11 @@ def message(T, hhmm):
     p = lambda i: 100 * z["lists"][i - 1] / z["valid"]
     sl, sns = p(SL), p(SNS)
     head = f"⏰ {hhmm}"
-    if sl > sns: head += " 🌈"
+    # 💋 SL vodi do 2 %, 💋💋 vodi 2 % i više, 💋💋💋 SL preko 50 %; ⚔️ razlika SL–SNS manja od 2
+    if sl > 50: head += " 💋💋💋"
+    elif sl - sns >= 2: head += " 💋💋"
+    elif sl > sns: head += " 💋"
     if abs(sl - sns) < 2: head += " ⚔️"
-    if sl > 50: head += " ❤️❤️‍🩹❤️❤️❤️‍🔥"
     L = [head, f"Obrađeno: {fpct(100*T['done']/T['n'])} % BM • {fpct(100*z['voters']/max(T['reg_est'],1))} % glasova"]
     turn = 100 * z["out"] / max(z["voters"], 1)
     t_line = f"Izlaznost: {fpct(turn)} %"
