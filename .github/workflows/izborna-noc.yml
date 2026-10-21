@@ -10,6 +10,9 @@ on:
       sim:
         description: "Proba na rezultatima 2023 (true/false)"
         default: "false"
+      reset:
+        description: "Kreni od nule – obriši prethodne rezultate (true/false)"
+        default: "false"
       tg_demo:
         description: "Samo pošalji probne Telegram poruke (true/false)"
         default: "false"
@@ -35,5 +38,6 @@ jobs:
         run: |
           git config user.name "rik-uzivo"; git config user.email "rik-uzivo@users.noreply.github.com"
           SIM=""; [ "${{ github.event.inputs.sim }}" = "true" ] && SIM="--sim"
+          [ "${{ github.event.inputs.reset }}" = "true" ] && SIM="$SIM --reset"
           [ "${{ github.event.inputs.tg_demo }}" = "true" ] && SIM="--tg-demo"
           python3 tools/rik_live.py --minutes "${{ github.event.inputs.minutes || '50' }}" $SIM

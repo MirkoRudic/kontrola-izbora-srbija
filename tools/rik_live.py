@@ -25,9 +25,12 @@ ap.add_argument('--out', default='public/data/live')
 ap.add_argument('--no-push', action='store_true')
 ap.add_argument('--threads', type=int, default=8)
 ap.add_argument('--standby', action='store_true', help='rezerva (laptop): radi samo ako GitHub posao kasni > 3 min')
+ap.add_argument('--reset', action='store_true', help='kreni od nule (obriši prethodno stanje, ne nastavljaj sa grane uzivo)')
 ap.add_argument('--tg-demo', action='store_true', help='pošalji probne Telegram poruke i izađi')
 ap.add_argument('--fast', action='store_true', help='kratki intervali (za test)')
 A = ap.parse_args()
+if A.reset:
+    import shutil; shutil.rmtree(A.out, ignore_errors=True)
 R = "https://www.rik.parlament.gov.rs"; CK = os.path.join(tempfile.gettempdir(), "rik_ck")
 ROUND = "341140" if A.sim else "680072"
 OUT = A.out; os.makedirs(OUT + "/u", exist_ok=True)
@@ -251,7 +254,7 @@ total = sum(len(u["st"]) for u in UNITS.values())
 PENDING = False; LASTPUSH = 0
 subprocess.run(["git", "fetch", "-q", "origin", "main"], check=False)
 LASTMAIN = last_main_push()
-sync_from_uzivo()
+if not A.reset: sync_from_uzivo()
 def gh_alive():
     import urllib.request
     try:
