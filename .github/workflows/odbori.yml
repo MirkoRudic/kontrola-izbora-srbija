@@ -1,8 +1,9 @@
 name: Nova rešenja o odborima
 on:
   schedule:
-    # na 3 sata, 08–23 h po beogradskom (UTC 6,9,…,21), 21–26. 10.
-    - cron: "10 6,9,12,15,18,21 21-26 10 *"
+    # u 9, 13 i 17 h po beogradskom do nedelje (do 24. 10. letnje vreme UTC+2, 25. 10. zimsko UTC+1)
+    - cron: "0 7,11,15 21-24 10 *"
+    - cron: "0 8,12,16 25 10 *"
   workflow_dispatch:
 permissions:
   contents: write
