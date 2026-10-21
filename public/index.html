@@ -299,7 +299,7 @@ function results(r,notes){
     ${row('Važeći listići','valid','out',r)}
     ${row('Nevažeći listići','invalid','out',r)}
   </tbody></table></div>
-  <div class="small">% izašlih je od upisanih; ostali % od broja izašlih. ${r.partial?'2026 još nije potpuno: razlika je u procentnim poenima prema istim BM iz 2023.':'Razlika: 2026 minus 2023.'}${notes?' '+notes:''}</div></div>
+  <div class="small">% izašlih je od upisanih; ostali % od broja izašlih. ${r.partial?'2026 još nije potpuno obrađeno, pa je razlika samo u procentnim poenima (p.p.) i računa se prema istim BM iz 2023.':'Razlika: 2026 minus 2023, u broju i u procentnim poenima (p.p.).'} p.p. = razlika dva procenta, npr. 25,0 % → 24,9 % je −0,1 p.p.${notes?' '+notes:''}</div></div>
   <div class="sec"><h3>Glasovi</h3><div class="tbl"><table class="res cmp">${H}<tbody>
     ${VOTES.slice(0,2).map(([g,n23,n26,sub,gd])=>row(g,'list','valid',r,sub,gd,n23-1,n26-1)).join('')}
     ${otherRow(r)}
@@ -360,7 +360,9 @@ function drawMap(){
     const R=MOB?19:10;
     const grp={};U.stations.forEach(s=>{const k=s.nas==null?'c':s.nas;(grp[k]=grp[k]||[]).push(s)});
     Object.entries(grp).forEach(([k,ss])=>{const [cx,cy]=k==='c'?PRJ.P(U.c||IDX.units[ST.uid].c||[0,0]):PRJ.P(U.naselja[+k].rp);
-      const cols=Math.ceil(Math.sqrt(ss.length));ss.forEach((s,i)=>{s._x=cx+((i%cols)-(cols-1)/2)*(2*R+2);s._y=cy+(Math.floor(i/cols)-(Math.ceil(ss.length/cols)-1)/2)*(2*R+2)})});
+      const loose=ss.filter(s=>!s.pt);const cols=Math.ceil(Math.sqrt(loose.length||1));
+      loose.forEach((s,i)=>{s._x=cx+((i%cols)-(cols-1)/2)*(2*R+2);s._y=cy+(Math.floor(i/cols)-(Math.ceil(loose.length/cols)-1)/2)*(2*R+2)});
+      ss.filter(s=>s.pt).forEach(s=>{const [x,y]=PRJ.P(s.pt);s._x=x;s._y=y})});
     {const S=U.stations,d0=2*R+2;for(let it=0;it<40;it++){let mv=false;for(let i=0;i<S.length;i++)for(let j=i+1;j<S.length;j++){const a=S[i],b=S[j],dx=b._x-a._x,dy=b._y-a._y,d=Math.hypot(dx,dy)||0.01;if(d<d0){const m=(d0-d)/2;a._x-=dx/d*m;a._y-=dy/d*m;b._x+=dx/d*m;b._y+=dy/d*m;mv=true}}if(!mv)break}}
     U.naselja.forEach((n,i)=>{if(!(U.stations.some(s=>s.nas===i)))return;const [x,y]=PRJ.P(n.rp);const ss=grp[i]||[];const rows=Math.ceil(ss.length/Math.ceil(Math.sqrt(ss.length)));
       html+=`<text class="nlabel" data-p="${ss.length}" x="${x.toFixed(0)}" y="${(y-rows*(R+1)-6).toFixed(0)}" style="font-size:${MOB?17:10}px">${esc(n.name)}</text>`});
