@@ -217,6 +217,7 @@ thead .ii svg,h3 .ii svg{width:14px;height:14px}
 .ii.on .pop{display:block}
 .nw{white-space:nowrap}
 .mapwrap{position:relative}
+.chip.nov{background:var(--accent);color:#fff;border-color:var(--accent);font-size:10.5px;padding:0 5px;cursor:help}
 .mapwrap.nm .zoom{display:none}.mapwrap.nm .nomap{min-height:110px}
 body>.wrap>header{position:sticky;top:0;z-index:30;background:var(--bg);margin:-14px -16px 12px;padding:14px 50px 10px 16px;border-bottom:1px solid var(--line)}
 body>.wrap>header .gear{top:10px;right:16px}
@@ -542,14 +543,16 @@ function render(){
 const LL=()=>Object.fromEntries(IDX.lists26.map(([k,l],i)=>[k,(i+1)+'. '+l]));
 const GRP={ADMIN:'Načelnik uprave',SNS:'SNS (A. Vučić – Srbija ne sme da stane)',SDPS:'SDPS',SPS:'SPS',STUD:'Poslanici uz studente',NPS:'NPS – Novo lice',SSP:'SSP',PSG:'PSG / SDA / PDD',ZLF:'Zeleno-levi front',SVM:'SVM',NADA:'NADA',SRCE:'SRCE',EU:'Ekološki ustanak',JS:'Jedinstvena Srbija',PUPS:'PUPS',ZS:'Zdrava Srbija',MI:'MI – Glas iz naroda',DS:'DS',ZAVET:'Zavetnici',RP_RS:'Radnička partija – Ruska stranka'};
 const nm=x=>x?esc(x):'<span class="na">nije imenovan</span>';
+const nov=c=>c&&c.at!==undefined?` <span class="chip nov" title="${esc((c.old?'umesto: '+c.old+' · ':'')+'rešenje '+(c.at||''))}">novo</span>`:'';
 const roleLbl=r=>esc(r).replace(/^zamenik /,'zamenik<br>').replace(/(\d\.) /,'$1&nbsp;');
 function boardView(s){const b=s.bd,L=LL(),docs=odbOf(ST.uid,s),nIzm=docs.filter(d=>isIzm(d.t)).length;let h='<div class="sec"><h3>Birački odbor 2026</h3>';
   if(!b||(!b.s&&!b.p)) h+='<div class="small">Sastav još nije pročitan iz rešenja. Rešenja na RIK-u su ispod.</div>';
   else{
     if(!b.ver) h+='<div class="small tag" style="margin-bottom:6px">Imena su automatski pročitana sa skeniranih rešenja – moguće su greške u slovima. Za proveru otvori rešenje.</div>';
-    if(nIzm) h+=`<div class="note"><b>Izmene:</b> posle osnovnog rešenja na RIK-u ima još ${nIzm} rešenja (izmena, dopuna, prestanak…). Sastav ispod je ${b.ver?'sa primenjenim izmenama do 20. 10.':'iz osnovnog rešenja'} – za tačan sastav pogledaj najnovije rešenje ispod.</div>`;
-    if(b.s&&b.s.length) h+=`<div class="tbl"><table><thead><tr><th>Stalni sastav</th><th>Ime</th><th>Predlagač</th></tr></thead><tbody>${b.s.map(x=>`<tr><td>${roleLbl(x.role)}</td><td>${nm(x.name)}</td><td class="small">${esc(GRP[x.key]||x.by||'')}</td></tr>`).join('')}</tbody></table></div>`;
-    if(b.p&&b.p.length){h+=`<div class="tbl" style="margin-top:8px"><table><thead><tr><th>Prošireni sastav (${b.p.length} lista)</th><th>Član</th><th>Zamenik</th></tr></thead><tbody>${b.p.map(x=>`<tr><td class="small">${esc(L[x.key]||x.list||'')}</td><td>${nm(x.member)}</td><td>${nm(x.deputy)}</td></tr>`).join('')}</tbody></table></div>`;
+    if(b.izmOk) h+=`<div class="note"><b>Izmene:</b> ${b.izmOk===1?'jedna promena iz novijeg rešenja je upisana':b.izmOk+' promena iz novijih rešenja je upisano'} (označeno sa <span class="chip nov">novo</span>; pređi mišem za staro ime).${b.izmMiss?` Za ${b.izmMiss} rešenja promena nije pročitana – pogledaj ih ispod.`:''}</div>`;
+    else if(nIzm) h+=`<div class="note"><b>Izmene:</b> posle osnovnog rešenja na RIK-u ima još ${nIzm} rešenja (izmena, dopuna, prestanak…). Sastav ispod je ${b.ver?'sa primenjenim izmenama do 20. 10.':'iz osnovnog rešenja'} – za tačan sastav pogledaj najnovije rešenje ispod.</div>`;
+    if(b.s&&b.s.length) h+=`<div class="tbl"><table><thead><tr><th>Stalni sastav</th><th>Ime</th><th>Predlagač</th></tr></thead><tbody>${b.s.map(x=>`<tr><td>${roleLbl(x.role)}</td><td>${nm(x.name)}${nov(x.chg)}</td><td class="small">${esc(GRP[x.key]||x.by||'')}</td></tr>`).join('')}</tbody></table></div>`;
+    if(b.p&&b.p.length){h+=`<div class="tbl" style="margin-top:8px"><table><thead><tr><th>Prošireni sastav (${b.p.length} lista)</th><th>Član</th><th>Zamenik</th></tr></thead><tbody>${b.p.map(x=>`<tr><td class="small">${esc(L[x.key]||x.list||'')}</td><td>${nm(x.member)}${nov(x.chg&&(x.chg.member||x.chg.base&&x.chg))}</td><td>${nm(x.deputy)}${nov(x.chg&&(x.chg.deputy||x.chg.base&&x.chg))}</td></tr>`).join('')}</tbody></table></div>`;
       const have=new Set(b.p.filter(x=>x.member||x.deputy).map(x=>x.key));const miss=IDX.lists26.map(([k,l],i)=>[k,i]).filter(([k])=>!have.has(k));
       h+=`<div style="margin-top:8px"><span class="small">Liste bez predstavnika na ovom BM:</span><br>${miss.map(([k,i])=>`<span class="chip miss">${esc(L[k])}</span>`).join('')||'<span class="small">nema</span>'}</div>`}
   }
@@ -584,7 +587,7 @@ async function go(n,keepMap){
   const prevU=ST.uid,prevLvl=ST.lvl,prevNas=ST.nas;
   Object.assign(ST,{lvl:'srb',rid:null,uid:null,nas:null,sid:null,view:'main'},n);
   if(ST.lvl==='reg'&&regUnits(ST.rid).length===1){ST.lvl='unit';ST.uid=regUnits(ST.rid)[0]}
-  if(ST.uid&&!UF[ST.uid]){render();UF[ST.uid]=await get('data/u/'+ST.uid+'.json');loadLiveUnit(ST.uid)}
+  if(ST.uid&&!UF[ST.uid]){render();UF[ST.uid]=await get('data/u/'+ST.uid+'.json');applyIzm(ST.uid,UF[ST.uid]);loadLiveUnit(ST.uid)}
   else if(ST.uid) loadLiveUnit(ST.uid);
   const redraw=!keepMap||prevU!==ST.uid||prevLvl!==ST.lvl||prevNas!==ST.nas;
   if(redraw){drawMap()} else {svg.querySelectorAll('.mk').forEach(g=>g.classList.toggle('sel',g.dataset.s===ST.sid))}
@@ -634,8 +637,29 @@ document.addEventListener('click',e=>{if(!e.target.closest('.search'))box.hidden
 const RAW='https://raw.githubusercontent.com/MirkoRudic/kontrola-izbora-srbija/uzivo/public/';
 const tkey=m=>{const x=/(\d+)\.(\d+)\.\s*(\d+):(\d+)/.exec(m&&m.checked||'');return x?((+x[2])*1e6+(+x[1])*1e4+(+x[3])*100+(+x[4])):0};
 let SRC='';
+// ---------- izmene sastava iz novijih rešenja (automatski pročitano) ----------
+let ODIZM={};
+const nsim=(a,b)=>{if(!a||!b)return 0;const A=fold(a).split(/\s+/).filter(w=>w.length>2).map(w=>w.slice(0,4)),B=fold(b).split(/\s+/).filter(w=>w.length>2).map(w=>w.slice(0,4));if(!A.length||!B.length)return 0;return A.filter(w=>B.includes(w)).length/Math.max(A.length,B.length)};
+function applyIzm(uid,U){if(!U||U._izm)return;U._izm=1;const X=ODIZM[uid]||{};
+  U.stations.forEach(s=>{const recs=(X[String(s.n)]||[]).slice().sort((a,b)=>(a.ts||0)-(b.ts||0));if(!recs.length)return;
+    const b=s.bd=JSON.parse(JSON.stringify(s.bd||{}));let ok=0,miss=0;
+    recs.forEach(r=>{const tag={at:r.at,l:r.l};
+      if(r.base){if(r.base.s&&r.base.s.length>=4){b.s=r.base.s.map(x=>({...x,chg:{...tag,base:1}}));ok++}
+        else if(r.base.p&&r.base.p.length){b.p=b.p||[];r.base.p.forEach(n=>{const i=b.p.findIndex(x=>x.key&&x.key===n.key);if(i>=0)b.p[i]={...n,chg:{...tag,base:1}};else b.p.push({...n,chg:{...tag,base:1}})});ok++}else miss++;return}
+      if(!r.ch||!r.ch.length){miss++;return}
+      r.ch.forEach(c0=>{const cl=x=>x&&x.replace(/^se\s+/i,'').replace(/\s+iz(\s.*)?$/i,'').trim()||null,c={...c0,old:cl(c0.old),new:cl(c0.new)};const nv=c.op==='brisi'?null:c.new;
+        if(r.k==='P'){b.p=b.p||[];const fld=/zamenik/.test(c.role||'')?'deputy':'member';
+          let row=b.p.find(x=>c.old&&(nsim(x[fld],c.old)>=.5))||(c.key&&b.p.find(x=>x.key===c.key));
+          if(!row&&c.old){for(const x of b.p){for(const f of ['member','deputy'])if(nsim(x[f],c.old)>=.5){row=x;}}}
+          if(!row){if(c.op==='novo'||c.key){row={key:c.key,list:c.by,member:null,deputy:null};b.p.push(row)}else{miss++;return}}
+          const f2=(c.old&&nsim(row.deputy,c.old)>=.5)?'deputy':(c.old&&nsim(row.member,c.old)>=.5)?'member':fld;
+          row.chg=Object.assign(row.chg||{},{[f2]:{...tag,old:row[f2]||c.old}});row[f2]=nv;ok++}
+        else{b.s=b.s||[];const gen=!c.role||/^(član|zamenik člana)$/.test(c.role);let x=(!gen&&b.s.find(y=>y.role===c.role))||b.s.find(y=>c.old&&nsim(y.name,c.old)>=.5);
+          if(!x){miss++;return}
+          x.chg={...tag,old:x.name||c.old};x.name=nv;if(c.key){x.key=c.key;x.by=c.by}ok++}})});
+    b.izmOk=ok;b.izmMiss=miss})}
 let ONOVI={},OLOG=[];
-async function loadOdb(){const [n,l]=await Promise.all([get('data/odbori_novi.json?t='+Date.now()),get('data/odbori_log.json?t='+Date.now())]);ONOVI=n||{};OLOG=l||[]}
+async function loadOdb(){const [n,l,z]=await Promise.all([get('data/odbori_novi.json?t='+Date.now()),get('data/odbori_log.json?t='+Date.now()),get('data/odbori_izm.json?t='+Date.now())]);ONOVI=n||{};OLOG=l||[];ODIZM=z||{}}
 function odbOf(uid,s){const extra=((ONOVI[uid]||{})[String(s.n)]||[]);const seen=new Set(s.odb.map(d=>d.l));return s.odb.concat(extra.filter(d=>!seen.has(d.l))).slice().sort((a,b)=>(b.ts||0)-(a.ts||0))}
 const isIzm=t=>/izmen|dopun|prestan|razrešen|odbacivanj|odbijanj/i.test(t);
 async function loadLive(){const [a,b]=await Promise.all([get('data/live/summary.json?t='+Date.now()),get(RAW+'data/live/summary.json')]);

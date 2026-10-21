@@ -13,12 +13,17 @@ concurrency:
 jobs:
   odbori:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
+      - name: Tesseract (srpski)
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-srp tesseract-ocr-srp-latn >/dev/null
+          python3 -m pip install -q --break-system-packages pypdfium2
       - run: |
           git config user.name "rik-odbori"; git config user.email "rik-odbori@users.noreply.github.com"
           python3 tools/odbori_novi.py | tee /tmp/out.txt
+          THREADS=4 python3 tools/odbori_izmene.py | tail -3 || true
           git add public/data/odbori_*.json
           if ! git diff --cached --quiet; then
             git commit -qm "Rešenja o odborima: $(cat /tmp/out.txt)"

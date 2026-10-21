@@ -1,0 +1,101 @@
+# Čita nova rešenja o odborima (OCR) i iz njih vadi promene sastava: "umesto X za ULOGU imenuje Y, na predlog Z", "briše X",
+# kao i nova osnovna rešenja (imenovanje u stalnom/proširenom sastavu). Rezultat: public/data/odbori_izm.json
+#   {uid: {n: [{l, ts, at, k:'S'|'P', ch:[{op:'zam'|'brisi'|'novo', role, old, new, key, by}] | base:{s|p}}]}}
+# Pokreće se posle tools/odbori_novi.py (GitHub Actions). Potrebno: tesseract (srp, srp_latn), pypdfium2.
+import json, os, re, sys, subprocess, tempfile, hashlib, urllib.parse
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from translit import lat
+from parse_odb import parse_stalni, parse_prosireni, gkey, lkey, nice
+D = "public/data"
+NOVI = json.load(open(f"{D}/odbori_novi.json")) if os.path.exists(f"{D}/odbori_novi.json") else {}
+OUT = f"{D}/odbori_izm.json"
+IZ = json.load(open(OUT)) if os.path.exists(OUT) else {}
+done = {e["l"] for u in IZ.values() for l in u.values() for e in l}
+def kind(t):
+    t = t.lower()
+    return "S" if "stalnom" in t else "P" if "prošir" in t else None
+import threading
+LOCK = threading.Lock()
+def ocr(url):
+    import pypdfium2 as P
+    with tempfile.TemporaryDirectory() as d:
+        f = os.path.join(d, "a.pdf")
+        u = urllib.parse.quote(url, safe=":/")
+        for a in range(4):
+            r = subprocess.run(["curl", "-sS", "--http1.1", "--max-time", "90", "-o", f, u])
+            if r.returncode == 0 and os.path.getsize(f) > 1000 and open(f, "rb").read(4) == b"%PDF": break
+        else: return None
+        txt = ""
+        with LOCK:  # pdfium nije bezbedan za više niti
+            pdf = P.PdfDocument(f); pngs = []
+            for k in range(min(len(pdf), 3)):
+                png = os.path.join(d, f"{k}.png"); pdf[k].render(scale=200 / 72, grayscale=True).to_pil().save(png); pngs.append(png)
+            pdf.close()
+        for png in pngs:
+            txt += subprocess.run(["tesseract", png, "-", "-l", "srp+srp_latn", "--psm", "6"], capture_output=True, text=True).stdout + "\n"
+        return txt
+ROLEW = [(r"заменика\s+председника", "zamenik predsednika"), (r"председника", "predsednik"), (r"заменика\s+(\d)\s*[.,]?\s*члана", "zamenik {}. člana"),
+         (r"(\d)\s*[.,]?\s*члана", "{}. član"), (r"заменика\s+члана", "zamenik člana"), (r"члана", "član")]
+def role_of(s):
+    for rx, r in ROLEW:
+        m = re.match(r"\s*" + rx, s, re.I)
+        if m: return r.format(*m.groups()) if "{}" in r else r
+    return None
+def changes(t):
+    t = re.split(r"\n\s*2\s*[.,]\s*Ово решење|\nОбразложење", t)[0]
+    m0 = re.search(r"тако\s+што\s+се", t); t = t[m0.end():] if m0 else t
+    out = []
+    for it in re.split(r"\n\s*\d{1,2}\s*\)\s*", "\n" + t)[1:]:
+        it = re.sub(r"\s+", " ", it)
+        by = re.search(r"на\s+пред?лог\s+(.*)$", it, re.I); by = by.group(1) if by else ""
+        by = re.sub(r"\s+од\s+\d.*$", "", by)
+        m = re.search(r"уместо\s+(.+?)\s*,?\s+за\s+(.+?)\s+именује\s*(?:се)?\s*[:;]?\s*(.+?)\s*,?\s+на\s+пред", it, re.I)
+        if m: out.append(dict(op="zam", old=nice(m.group(1)), role=role_of(m.group(2)), new=nice(m.group(3)), by=lat(by)[:140])); continue
+        m = re.search(r"брише\s+(?:се\s+)?(.+?)\s*,?\s+за\s+(\S+(?:\s+\S+)?)", it, re.I)
+        if m: out.append(dict(op="brisi", old=nice(m.group(1)), role=role_of(m.group(2)), by=lat(by)[:140])); continue
+        m = re.search(r"за\s+(.+?)\s+именује\s*(?:се)?\s*[:;]?\s*(.+?)\s*,?\s+на\s+пред", it, re.I)
+        if m: out.append(dict(op="novo", role=role_of(m.group(1)), new=nice(m.group(2)), by=lat(by)[:140]))
+    for c in out:
+        for f in ("old", "new"):
+            if c.get(f): c[f] = re.sub(r"\s+(?:Iz|Из)\s+.*$", "", re.sub(r"^(?:Se|Се)\s+", "", c[f])).strip() or None
+        c["key"] = (lkey(c["by"]) if c["role"] in ("član", "zamenik člana") else gkey(c["by"])) if c["by"] else None
+    return out
+# izvori: nova rešenja (odbori_novi.json) + starija rešenja o izmenama iz podataka opština (--stara)
+SRC = []
+for uid, x in NOVI.items():
+    for n, docs in x.items():
+        if n != "0": SRC += [(uid, n, e) for e in docs]
+if "--stara" in sys.argv:
+    import glob
+    for f in glob.glob(f"{D}/u/*.json"):
+        uid = os.path.basename(f)[:-5]
+        for st in json.load(open(f))["stations"]:
+            SRC += [(uid, str(st["n"]), d) for d in st.get("odb", []) if re.search(r"izmen|ispravk|dopun|razreš|prestan", d["t"].lower())]
+todo = []
+for uid, n, e in SRC:
+    if e["l"] in done: continue
+    t = e["t"].lower(); k = kind(t)
+    if not k or not re.search(r"imenovan|izmen|ispravk|dopun|razreš|prestan", t): continue
+    done.add(e["l"]); todo.append((uid, n, e, k, t))
+print("za čitanje:", len(todo), flush=True)
+def work(j):
+    uid, n, e, k, t = j
+    try: txt = ocr(e["l"])
+    except Exception: txt = None
+    if txt is None: return None
+    rec = dict(l=e["l"], ts=e.get("ts"), at=e.get("at"), k=k)
+    if re.search(r"izmen|ispravk|dopun|razreš|prestan", t): rec["ch"] = changes(txt)
+    else: rec["base"] = {"s": parse_stalni(txt)} if k == "S" else {"p": parse_prosireni(txt)}
+    return uid, n, rec
+from concurrent.futures import ThreadPoolExecutor
+n_new = 0
+with ThreadPoolExecutor(int(os.environ.get("THREADS", "4"))) as ex:
+    for r in ex.map(work, todo):
+        if not r: continue
+        uid, n, rec = r; IZ.setdefault(uid, {}).setdefault(n, []).append(rec); n_new += 1
+        if n_new % 25 == 0:
+            json.dump(IZ, open(OUT, "w"), ensure_ascii=False, separators=(",", ":")); print(n_new, flush=True)
+for u in IZ.values():
+    for l in u.values(): l.sort(key=lambda r: r.get("ts") or 0)
+json.dump(IZ, open(OUT, "w"), ensure_ascii=False, separators=(",", ":"))
+print("pročitano novih rešenja:", n_new)
