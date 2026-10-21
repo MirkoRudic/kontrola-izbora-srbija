@@ -345,10 +345,9 @@ function drawMap(){
     if(!ids.length) return noMap('Za ovu celinu nema mape. Izaberi sa spiska desno.');
     setProj(ids.map(id=>GEO.units[id].shape));
     ids.forEach(id=>html+=`<path class="unit" data-u="${id}" d="${pathOf(GEO.units[id].shape)}"><title>${esc(IDX.units[id].short)}</title></path>`);
-    const fs=MOB?15:9.5, placed=[];
-    ids.map(id=>{const [x,y]=cen(GEO.units[id].shape);const t=IDX.units[id].short.replace(/^Grad /,'');return {id,x,y,t,w:t.length*fs*.56,h:fs*1.1,n:IDX.units[id].nbm}})
-      .sort((p,q)=>q.n-p.n).forEach(L=>{if(placed.some(P=>Math.abs(P.x-L.x)<(P.w+L.w)/2+2&&Math.abs(P.y-L.y)<(P.h+L.h)/2))return;placed.push(L);
-        html+=`<text class="ulabel" x="${L.x.toFixed(0)}" y="${L.y.toFixed(0)}" style="font-size:${fs}px">${esc(L.t)}</text>`});
+    const fs=MOB?15:9.5;
+    ids.map(id=>{const [x,y]=cen(GEO.units[id].shape);const t=IDX.units[id].short.replace(/^Grad /,'');return {x,y,t,p:IDX.units[id].nbm}})
+      .forEach(L=>{html+=`<text class="ulabel" data-p="${L.p}" x="${L.x.toFixed(0)}" y="${L.y.toFixed(0)}" style="font-size:${fs}px">${esc(L.t)}</text>`});
     html+=bangs(ids.filter(id=>obOf(id)));
   } else {
     const U=UF[ST.uid]; if(!U) return noMap('Učitavam…');
@@ -364,14 +363,14 @@ function drawMap(){
       const cols=Math.ceil(Math.sqrt(ss.length));ss.forEach((s,i)=>{s._x=cx+((i%cols)-(cols-1)/2)*(2*R+2);s._y=cy+(Math.floor(i/cols)-(Math.ceil(ss.length/cols)-1)/2)*(2*R+2)})});
     {const S=U.stations,d0=2*R+2;for(let it=0;it<40;it++){let mv=false;for(let i=0;i<S.length;i++)for(let j=i+1;j<S.length;j++){const a=S[i],b=S[j],dx=b._x-a._x,dy=b._y-a._y,d=Math.hypot(dx,dy)||0.01;if(d<d0){const m=(d0-d)/2;a._x-=dx/d*m;a._y-=dy/d*m;b._x+=dx/d*m;b._y+=dy/d*m;mv=true}}if(!mv)break}}
     U.naselja.forEach((n,i)=>{if(!(U.stations.some(s=>s.nas===i)))return;const [x,y]=PRJ.P(n.rp);const ss=grp[i]||[];const rows=Math.ceil(ss.length/Math.ceil(Math.sqrt(ss.length)));
-      html+=`<text class="nlabel" x="${x.toFixed(0)}" y="${(y-rows*(R+1)-6).toFixed(0)}" style="font-size:${MOB?17:10}px">${esc(n.name)}</text>`});
+      html+=`<text class="nlabel" data-p="${ss.length}" x="${x.toFixed(0)}" y="${(y-rows*(R+1)-6).toFixed(0)}" style="font-size:${MOB?17:10}px">${esc(n.name)}</text>`});
     html+='<g id="mks">'+U.stations.map(s=>`<g class="mk${ST.sid===s.sid?' sel':''}" data-s="${s.sid}" tabindex="0" role="button" aria-label="Biračko mesto ${s.n}"><circle cx="${s._x.toFixed(1)}" cy="${s._y.toFixed(1)}" r="${R}" style="fill:var(--accent)"/><text x="${s._x.toFixed(1)}" y="${s._y.toFixed(1)}" style="fill:var(--accent-ink);font-size:${MOB?(s.n>99?13:16):(s.n>99?7.5:9)}px">${s.n}</text><g class="bang" style="display:none"><circle cx="${(s._x+R*.8).toFixed(1)}" cy="${(s._y-R*.8).toFixed(1)}" r="${(R*.62).toFixed(1)}"/><text x="${(s._x+R*.8).toFixed(1)}" y="${(s._y-R*.8).toFixed(1)}" style="font-size:${MOB?15:8}px">!</text></g></g>`).join('')+'</g>';
   }
   nm.hidden=true;svg.style.display='';svg.setAttribute('viewBox',`0 0 ${W} ${PRJ.H}`);svg.innerHTML=html;
-  LBL=[...svg.querySelectorAll('text.nlabel,text.ulabel,text.rlabel')].map(t=>[t,parseFloat(t.style.fontSize)||10]);
+  LBL=[...svg.querySelectorAll('text.nlabel,text.ulabel,text.rlabel')].map(t=>[t,parseFloat(t.style.fontSize)||10,+(t.dataset.p||0),+t.getAttribute('x'),+t.getAttribute('y'),t.textContent.length]).sort((p,q)=>q[2]-p[2]);
   MKS=[...svg.querySelectorAll('.mk:not(.bangu)')].map(g=>{const c=g.querySelector(':scope>circle'),t=g.querySelector(':scope>text'),bc=g.querySelector('.bang circle'),bt=g.querySelector('.bang text');
     return {c,t,bc,bt,x:+c.getAttribute('cx'),y:+c.getAttribute('cy'),r:+c.getAttribute('r'),tf:parseFloat(t.style.fontSize),bf:parseFloat(bt.style.fontSize)}});
-  bindMap(); updateMarks();
+  applyVB(); bindMap(); updateMarks();
   // fokus na izabrano naselje
   if(ST.lvl==='unit'&&ST.nas!=null&&UF[ST.uid].naselja[ST.nas]){focusGeom(UF[ST.uid].naselja[ST.nas].g)}
 }
@@ -388,7 +387,12 @@ function applyVB(){const k=W/vb.w;svg.setAttribute('viewBox',`${vb.x.toFixed(1)}
   MKS.forEach(m=>{const r=m.r*kk/k;m.c.setAttribute('r',r.toFixed(2));m.t.style.fontSize=(m.tf*kk/k)+'px';
     // pomeri marker oko centra grupe proporcionalno
     m.c.style.strokeWidth=(1.5/k*kk)+'px';const bx=m.x+r*.8,by=m.y-r*.8;m.bc.setAttribute('cx',bx);m.bc.setAttribute('cy',by);m.bc.setAttribute('r',(r*.62).toFixed(2));m.bt.setAttribute('x',bx);m.bt.setAttribute('y',by);m.bt.style.fontSize=(m.bf*kk/k)+'px'});
-  LBL.forEach(([t,f])=>{t.style.fontSize=(f*kk/k)+'px';t.style.strokeWidth=(2.5/k)+'px'});
+  const placed=[];
+  LBL.forEach(([t,f,p,x,y,len])=>{const fs=f*kk/k;t.style.fontSize=fs+'px';t.style.strokeWidth=(2.5/k)+'px';
+    if(t.classList.contains('rlabel')){t.style.display='';return}
+    const w=len*fs*0.58,h=fs*1.15, vis=x>vb.x-w&&x<vb.x+vb.w+w&&y>vb.y-h&&y<vb.y+vb.h+h;
+    const hit=!vis||placed.some(P=>Math.abs(P[0]-x)<(P[2]+w)/2+fs*0.3&&Math.abs(P[1]-y)<(P[3]+h)/2);
+    t.style.display=hit?'none':'';if(!hit)placed.push([x,y,w,h])});
   svg.querySelectorAll('.reg,.unit,.naselje,.outline').forEach(p=>p.style.strokeWidth=(p.classList.contains('outline')?1.6:1)/k+'px')}
 function zoomAt(f,cx,cy){const nw=Math.min(VB0.w,Math.max(VB0.w/16,vb.w/f)),nh=nw*VB0.h/VB0.w;if(cx==null){cx=vb.x+vb.w/2;cy=vb.y+vb.h/2}
   vb={x:cx-(cx-vb.x)*nw/vb.w,y:cy-(cy-vb.y)*nh/vb.h,w:nw,h:nh};clampVB();applyVB()}
