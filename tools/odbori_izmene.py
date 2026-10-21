@@ -8,12 +8,13 @@ from translit import lat
 from parse_odb import parse_stalni, parse_prosireni, gkey, lkey, nice
 D = "public/data"
 NOVI = json.load(open(f"{D}/odbori_novi.json")) if os.path.exists(f"{D}/odbori_novi.json") else {}
-OUT = f"{D}/odbori_izm.json"
+OUT = os.environ.get("IZM_OUT", f"{D}/odbori_izm.json")
 IZ = json.load(open(OUT)) if os.path.exists(OUT) else {}
 done = {e["l"] for u in IZ.values() for l in u.values() for e in l}
 def kind(t):
     t = t.lower()
     return "S" if "stalnom" in t else "P" if "prošir" in t else None
+TESS = os.environ.get("TESSERACT", "tesseract")
 import threading
 LOCK = threading.Lock()
 def ocr(url):
@@ -22,7 +23,7 @@ def ocr(url):
         f = os.path.join(d, "a.pdf")
         u = urllib.parse.quote(url, safe=":/")
         for a in range(4):
-            r = subprocess.run(["curl", "-sS", "--http1.1", "--max-time", "90", "-o", f, u])
+            r = subprocess.run([os.environ.get("CURL", "curl"), "-sS", "--http1.1", "--max-time", "90", "-o", f, u])
             if r.returncode == 0 and os.path.getsize(f) > 1000 and open(f, "rb").read(4) == b"%PDF": break
         else: return None
         txt = ""
@@ -32,7 +33,7 @@ def ocr(url):
                 png = os.path.join(d, f"{k}.png"); pdf[k].render(scale=200 / 72, grayscale=True).to_pil().save(png); pngs.append(png)
             pdf.close()
         for png in pngs:
-            txt += subprocess.run(["tesseract", png, "-", "-l", "srp+srp_latn", "--psm", "6"], capture_output=True, text=True).stdout + "\n"
+            txt += subprocess.run([TESS, png, "-", "-l", "srp+srp_latn", "--psm", "6"], capture_output=True).stdout.decode("utf-8", "replace") + "\n"
         return txt
 ROLEW = [(r"заменика\s+председника", "zamenik predsednika"), (r"председника", "predsednik"), (r"заменика\s+(\d)\s*[.,]?\s*члана", "zamenik {}. člana"),
          (r"(\d)\s*[.,]?\s*члана", "{}. član"), (r"заменика\s+члана", "zamenik člana"), (r"члана", "član")]
