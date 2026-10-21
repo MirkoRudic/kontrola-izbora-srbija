@@ -196,6 +196,13 @@ table.kids td.nm{max-width:0;width:46%;overflow:hidden;text-overflow:ellipsis;wh
 .dim{color:var(--muted)}
 .tag{font-size:11px;color:var(--muted);font-style:italic}
 .loading{opacity:.55;pointer-events:none}
+.ln{text-align:right;font-family:var(--sans);font-size:10.5px!important}
+.ph3{font-size:13px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+table.cmp tbody tr.subn{height:auto}
+tr.subn td{font-size:11.5px;color:var(--muted);padding:0 6px 8px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+tr.subn td{display:table-cell}
+tr.nob th,tr.nob td{border-bottom:0}
+.one{display:block!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 </style>
 
 <div class="wrap">
@@ -281,16 +288,12 @@ function row(label,key,base,r,sub,good,listY,listZ){
   return `<tr><th scope="row">${label}${sub?`<small class="rs">${sub}</small>`:''}</th>${cell(a,gb(r.y))}${cell(b,gb(r.z))}${diff(ca,b,gb(cmp),gb(r.z),good,r.partial)}</tr>`}
 const shortL=t=>{t=String(t||'').replace(/\s+/g,' ').trim();return t.length>40?t.slice(0,38).trim()+'…':t};
 function topOther(arr,skip){let bi=-1,bv=-1;(arr||[]).forEach((v,i)=>{if(skip.includes(i+1))return;if((v||0)>bv){bv=v||0;bi=i}});return bi<0||bv<=0?null:{n:bi+1,v:bv}}
+const S23=["SNS", "SPS", "Šešelj – SRS", "Zavetnici – Dveri", "NADA (Jovanović)", "SVM", "Srbija protiv nasilja", "Zukorlić – SPP", "SDA Sandžaka", "Zajedno za budućnost", "Narodna stranka", "DJB – SDS", "PDD (Kamberi)", "MI – Nestorović", "Srbija na zapadu", "Ruska stranka", "Č. Jovanović – LDP", "Albanska dem. alt."],S26=["SNS", "SPS", "Studentska lista", "Ljajić – Ljudski", "SVM", "Zukorlić – SPP", "Ruska stranka", "Autentična desnica", "Evropska Srbija", "SDA Sandžaka", "Karić – BK", "Liberalno zelena", "Bulić – Snaga", "Rusi i Srbi", "Ćale (Đurić)", "Gajić – Alternativa", "Albanska koalicija", "Majka Srbija"];
 function otherRow(r){
   const a=r.y?topOther(r.y.lists,VOTES.map(v=>v[1])):null, b=r.z?topOther(r.z.lists,VOTES.map(v=>v[2])):null;
   if(!a&&!b) return '';
-  const nm23=a?shortL(IDX.lists23[a.n-1])+' (lista '+a.n+')':'', nm26=b?shortL(IDX.lists26[b.n-1][1])+' (lista '+b.n+')':'';
-  const sub=b?(nm23?'2026: '+nm26+'\n2023: '+nm23:'2026: '+nm26):'2023: '+nm23;
-  const rr={y:r.y,z:r.z,zc:r.zc,partial:r.partial};
-  // razlika samo informativno (razlicite liste)
-  const ya=a?a.n-1:0, zb=b?b.n-1:0;
-  const A=a?r.y.lists[ya]:null,B=b?r.z.lists[zb]:null;
-  return `<tr><th scope="row">Najjača ostala<small class="rs">${esc(sub).replace(/\n/g,'<br>')}</small></th>${cell(A,r.y&&r.y.valid)}${cell(B,r.z&&r.z.valid)}<td class="n df"><span class="na">—</span></td></tr>`}
+  const lines=[b?`2026: ${b.n}. ${S26[b.n-1]}`:null,a?`2023: ${a.n}. ${S23[a.n-1]}`:null].filter(Boolean);
+  return `<tr class="nob"><th scope="row">Najjača ostala</th>${cell(a?a.v:null,r.y&&r.y.valid)}${cell(b?b.v:null,r.z&&r.z.valid)}<td class="n df"><span class="na">—</span></td></tr><tr class="subn"><td colspan="4">${lines.map(esc).join(' · ')}</td></tr>`}
 function results(r,notes){
   const H=`<thead><tr><th></th><th class="n">2023</th><th class="n">2026</th><th class="n">Razlika</th></tr></thead>`;
   return `<div class="sec"><h3>Rezultati parlamentarnih izbora</h3><div class="tbl"><table class="res cmp">${H}<tbody>
@@ -366,7 +369,7 @@ function drawMap(){
     {const S=U.stations,d0=2*R+2;for(let it=0;it<40;it++){let mv=false;for(let i=0;i<S.length;i++)for(let j=i+1;j<S.length;j++){const a=S[i],b=S[j],dx=b._x-a._x,dy=b._y-a._y,d=Math.hypot(dx,dy)||0.01;if(d<d0){const m=(d0-d)/2;a._x-=dx/d*m;a._y-=dy/d*m;b._x+=dx/d*m;b._y+=dy/d*m;mv=true}}if(!mv)break}}
     U.naselja.forEach((n,i)=>{if(!(U.stations.some(s=>s.nas===i)))return;const [x,y]=PRJ.P(n.rp);const ss=grp[i]||[];const rows=Math.ceil(ss.length/Math.ceil(Math.sqrt(ss.length)));
       html+=`<text class="nlabel" data-p="${ss.length}" x="${x.toFixed(0)}" y="${(y-rows*(R+1)-6).toFixed(0)}" style="font-size:${MOB?17:10}px">${esc(n.name)}</text>`});
-    html+='<g id="mks">'+U.stations.map(s=>`<g class="mk${ST.sid===s.sid?' sel':''}" data-s="${s.sid}" tabindex="0" role="button" aria-label="Biračko mesto ${s.n}"><circle cx="${s._x.toFixed(1)}" cy="${s._y.toFixed(1)}" r="${R}" style="fill:var(--accent)"/><text x="${s._x.toFixed(1)}" y="${s._y.toFixed(1)}" style="fill:var(--accent-ink);font-size:${MOB?(s.n>99?13:16):(s.n>99?7.5:9)}px">${s.n}</text><g class="bang" style="display:none"><circle cx="${(s._x+R*.8).toFixed(1)}" cy="${(s._y-R*.8).toFixed(1)}" r="${(R*.62).toFixed(1)}"/><text x="${(s._x+R*.8).toFixed(1)}" y="${(s._y-R*.8).toFixed(1)}" style="font-size:${MOB?15:8}px">!</text></g></g>`).join('')+'</g>';
+    html+='<g id="mks">'+U.stations.map(s=>`<g class="mk${ST.sid===s.sid?' sel':''}" data-s="${s.sid}" tabindex="0" role="button" aria-label="Biračko mesto ${s.n}"><circle cx="${s._x.toFixed(1)}" cy="${s._y.toFixed(1)}" r="${R}" style="fill:var(--accent)"/><text x="${s._x.toFixed(1)}" y="${s._y.toFixed(1)}" style="fill:var(--accent-ink);font-size:${MOB?(s.n>99?13:16):(s.n>99?7.5:9)}px">${s.n}</text>${s.moved?`<g class="wbang"><circle cx="${(s._x-R*.8).toFixed(1)}" cy="${(s._y-R*.8).toFixed(1)}" r="${(R*.62).toFixed(1)}" style="fill:#f2c200;stroke:var(--panel);stroke-width:1.2"/><text x="${(s._x-R*.8).toFixed(1)}" y="${(s._y-R*.8).toFixed(1)}" style="fill:#1c2228;font:700 ${MOB?15:8}px var(--sans);text-anchor:middle;dominant-baseline:central">!</text><title>Premešteno u: ${esc(s.moved)}</title></g>`:''}<g class="bang" style="display:none"><circle cx="${(s._x+R*.8).toFixed(1)}" cy="${(s._y-R*.8).toFixed(1)}" r="${(R*.62).toFixed(1)}"/><text x="${(s._x+R*.8).toFixed(1)}" y="${(s._y-R*.8).toFixed(1)}" style="font-size:${MOB?15:8}px">!</text></g></g>`).join('')+'</g>';
   }
   nm.hidden=true;svg.style.display='';svg.setAttribute('viewBox',`0 0 ${W} ${PRJ.H}`);svg.innerHTML=html;
   LBL=[...svg.querySelectorAll('text.nlabel,text.ulabel,text.rlabel')].map(t=>[t,parseFloat(t.style.fontSize)||10,+(t.dataset.p||0),+t.getAttribute('x'),+t.getAttribute('y'),t.textContent.length]).sort((p,q)=>q[2]-p[2]);
@@ -438,7 +441,7 @@ function status26b(done,n,m){
 const prog=(d,n)=>`<span class="prog" title="${d}/${n}"><i style="width:${n?Math.round(100*d/n):0}%"></i></span>`;
 function kidsTable(rows,head){return `<div class="sec"><h3>${head}</h3><div class="tbl"><table class="kids"><thead><tr><th>Naziv</th><th class="n" style="text-align:right">BM</th><th class="n" style="text-align:right">Izašlo 2023</th><th class="n" style="text-align:right">2026</th></tr></thead><tbody>
   ${rows.map(r=>`<tr data-k="${esc(r.k)}"><td class="nm" title="${esc(r.name)}">${esc(r.name)}</td><td class="n">${fmt(r.n)}</td><td class="n">${r.y?pct(r.y.out,r.y.voters):'—'}</td><td class="n">${r.done?(r.done>=r.n?'✓':`${r.done}/${r.n}`):'<span class="dim">—</span>'}${prog(r.done||0,r.n)}</td></tr>`).join('')}</tbody></table></div></div>`}
-function head(eyebrow,title,no){return `<div class="ph"><div class="ph1">${no!=null?`<span class="bmno">BM ${no}</span>`:''}<span class="place">${esc(eyebrow)}</span></div><div class="ph2" title="${esc(title)}">${esc(title)}</div></div>`}
+function head(eyebrow,title,no,adr){return `<div class="ph"><div class="ph1">${no!=null?`<span class="bmno">BM ${no}</span>`:''}<span class="place">${esc(eyebrow)}</span></div><div class="ph2" title="${esc(title)}">${esc(title)}</div>${adr!==undefined?`<div class="ph3" title="${esc(adr||'')}">${adr?esc(adr):'&nbsp;'}</div>`:''}</div>`}
 function crumbs(){const c=[`<button data-c="srb">Srbija</button>`];
   if(ST.rid){c.push('<span class="sep">›</span>',`<button data-c="reg">${esc(IDX.regions.find(r=>r.id===ST.rid).name)}</button>`)}
   if(ST.uid){c.push('<span class="sep">›</span>',`<button data-c="unit">${esc(IDX.units[ST.uid].short)}</button>`)}
@@ -462,11 +465,11 @@ function render(){
     if(!U){h=head(u.name,'Učitavam…');}
     else if(ST.sid){const s=U.stations.find(x=>x.sid===ST.sid),b=zOf(liveBM(ST.uid,s.sid));
       const r={y:s.y23,z:b,zc:null,partial:false};
-      h=head(u.short+(s.nas!=null&&U.naselja[s.nas]?' · '+U.naselja[s.nas].name:''),s.name,s.n);
+      h=head(u.short+(s.nas!=null&&U.naselja[s.nas]?' · '+U.naselja[s.nas].name:''),s.name,s.n,s.adr||'');
       if(ST.view==='ballot') body=ballot(r);
       else{const al=alertsOf(ST.uid,s.sid);
         body=(al.length?`<div class="alert"><b>!</b><div>${al.map(x=>`<div>${esc(x.t)}${x.at?` <span class="small">(${esc(x.at)})</span>`:''}</div>`).join('')}</div></div>`:'')
-        +status26(b?1:0,1)+results(r,s.y23?(s.how&&s.how!=='isti broj i naziv'?`2023: BM ${s.n23} – ${s.name23}.`:''):'')
+        +(s.moved?`<div class="note"><b>BM je premešteno:</b> glasa se u opštini ${esc(s.moved)}${s.adr?` (${esc(s.adr)})`:''}. Administrativno pripada opštini ${esc(u.short)}.</div>`:'')+status26(b?1:0,1)+results(r,s.y23?(s.how&&s.how!=='isti broj i naziv'?`2023: BM ${s.n23} – ${s.name23}.`:''):'')
         +(s.y23?'':'<div class="small tag">Ovo biračko mesto nema odgovarajuće BM iz 2023, pa poređenje nije moguće.</div>')
         +`<div class="sec"><h3>Dokumenti</h3><div class="links col">${zap26(ST.uid,s)}${link(s.z23,'Zapisnik 2023 (PDF, RIK)')}</div></div>`
         +boardView(s)}
