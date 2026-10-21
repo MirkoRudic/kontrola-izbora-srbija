@@ -147,7 +147,7 @@ def apply(uid, sid, r, t):
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from translit import lat
 import telegram as TG
-if A.sim: TG.sim_lists()
+if A.sim: TG.sim_lists(); TG.SITE = "PROBA (rezultati 2023) · " + TG.SITE
 if A.tg_demo: TG.demo(print); sys.exit(0)
 def _core(x): return re.sub(r'^(gradska opština|grad|opština)\s+', '', lat(x).lower()).strip()
 UCORE = {}
@@ -329,7 +329,6 @@ while time.time() < deadline:
     s = write(changed, t)
     try:
         T = TG.totals(UNITS, LU)
-        if A.sim and os.environ.get("TELEGRAM_TOKEN"): TG.SITE = "PROBA (rezultati 2023) · " + TG.SITE
         TG.maybe_send(T, now(), f"{OUT}/telegram.json", log)
     except Exception as e: log("telegram greška:", e)
     if changed: PENDING = True
