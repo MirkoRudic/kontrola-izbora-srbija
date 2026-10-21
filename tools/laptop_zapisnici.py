@@ -2,6 +2,9 @@
 #   python tools\laptop_zapisnici.py --dir D:\VAJB\kontrolaizbora\zapisnici [--until 2026-10-26T09:00] [--sim]
 # Samo standardna biblioteka Pythona (bez pip). Ne objavljuje ništa – to radi GitHub posao (rik_live.py).
 # Struktura: <dir>\2026\<opstina_id>\bm<NNN>_<sha10>.pdf  +  <dir>\index.json  +  <dir>\log.txt
+import sys, os
+if os.name == 'nt' and not sys.flags.utf8_mode:  # Windows: naša slova u fajlovima
+    os.execv(sys.executable, [sys.executable, '-X', 'utf8'] + sys.argv)
 import json, os, sys, time, re, hashlib, argparse, datetime, threading, random
 import urllib.request, urllib.parse, http.cookiejar
 from concurrent.futures import ThreadPoolExecutor
@@ -51,7 +54,7 @@ def getbin(url, tries=4):
     return None
 def getjson(url):
     if not url.startswith("http"): return json.load(open(url, encoding="utf-8"))
-    try: return json.loads(urllib.request.urlopen(url + "?t=" + str(int(time.time())), timeout=60).read())
+    try: return json.loads(urllib.request.urlopen(urllib.request.Request(url + "?t=" + str(int(time.time())), headers={"User-Agent": "Mozilla/5.0 (kontrola-izbora)"}), timeout=60).read())
     except Exception as e: log("ne mogu da učitam", url, e); return None
 num = lambda x: int(str(x).replace('.', '') or 0)
 

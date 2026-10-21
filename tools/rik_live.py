@@ -5,6 +5,9 @@
 # Objava: svaka promena (najviše na 2 min) na granu 'uzivo'; na main (Cloudflare) 21-02 h na 15 min, inače na sat.
 # Interval: start 5 min; ima novih -> pola (min 1); nema -> x1.5 (max 15); sve obrađeno -> 30.
 # --sim: proba na izborima 2023 (stanica 2026 -> uparena stanica 2023), BM se "otkrivaju" postepeno.
+import sys, os
+if os.name == 'nt' and not sys.flags.utf8_mode:  # Windows: naša slova u fajlovima
+    os.execv(sys.executable, [sys.executable, '-X', 'utf8'] + sys.argv)
 import json, os, sys, time, re, subprocess, random, datetime, argparse, hashlib, tempfile
 from concurrent.futures import ThreadPoolExecutor
 try:
