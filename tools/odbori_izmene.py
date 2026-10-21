@@ -86,7 +86,17 @@ def work(j):
     if txt is None: return None
     rec = dict(l=e["l"], ts=e.get("ts"), at=e.get("at"), k=k)
     if re.search(r"izmen|ispravk|dopun|razreš|prestan", t): rec["ch"] = changes(txt)
-    else: rec["base"] = {"s": parse_stalni(txt)} if k == "S" else {"p": parse_prosireni(txt)}
+    if not rec.get("ch"):
+        # drugačiji oblik rešenja: pročitaj ga kao osnovno (prošireni: liste se dopisuju; stalni: postavlja samo pročitane uloge)
+        rec.pop("ch", None)
+        if k == "P":
+            pp = [r for r in parse_prosireni(txt) if r.get("member") or r.get("deputy")]
+            if pp: rec["base"] = {"p": pp}
+        else:
+            ss = [x for x in parse_stalni(txt) if x.get("name")]
+            if len(ss) >= 4: rec["base"] = {"s": ss}
+            elif ss: rec["ch"] = [dict(op="novo", role=x["role"], new=x["name"], by=x.get("by"), key=x.get("key")) for x in ss]
+        if not rec.get("base") and not rec.get("ch"): rec["ch"] = []
     return uid, n, rec
 from concurrent.futures import ThreadPoolExecutor
 n_new = 0
