@@ -25,6 +25,7 @@ ap.add_argument('--out', default='public/data/live')
 ap.add_argument('--no-push', action='store_true')
 ap.add_argument('--threads', type=int, default=8)
 ap.add_argument('--standby', action='store_true', help='rezerva (laptop): radi samo ako GitHub posao kasni > 3 min')
+ap.add_argument('--tg-demo', action='store_true', help='pošalji probne Telegram poruke i izađi')
 ap.add_argument('--fast', action='store_true', help='kratki intervali (za test)')
 A = ap.parse_args()
 R = "https://www.rik.parlament.gov.rs"; CK = os.path.join(tempfile.gettempdir(), "rik_ck")
@@ -143,6 +144,8 @@ def apply(uid, sid, r, t):
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from translit import lat
 import telegram as TG
+if A.sim: TG.sim_lists()
+if A.tg_demo: TG.demo(print); sys.exit(0)
 def _core(x): return re.sub(r'^(gradska opština|grad|opština)\s+', '', lat(x).lower()).strip()
 UCORE = {}
 for uid, u in IDX["units"].items(): UCORE.setdefault(_core(re.sub(r'\s*\(.*\)', '', u["name"])), []).append(uid)

@@ -7,6 +7,14 @@ SL, SNS, SPS, AD, ES = 3, 1, 2, 8, 9
 MANJINE = [4, 5, 6, 7, 10, 13, 14, 17, 18]   # RIK: rešenja o položaju izborne liste nacionalne manjine (2026)
 OSTALI = [11, 12, 15, 16]
 SNS23 = 1
+
+def sim_lists():
+    """Proba na rezultatima 2023: liste 2023 raspoređene u iste grupe (SL ≈ Srbija protiv nasilja, AD ≈ NADA, ES ≈ Zavetnici/Dveri)."""
+    global SL, SNS, SPS, AD, ES, MANJINE, OSTALI
+    SL, SNS, SPS, AD, ES = 7, 1, 2, 5, 4
+    MANJINE = [6, 8, 9, 13, 16, 18]; OSTALI = [3, 10, 11, 12, 14, 15, 17]
+
+B = lambda t: f"<b>{t}</b>"
 SITE = "kontrola-izbora-srbija.pages.dev"
 
 def fnum(n): return f"{int(n):,}".replace(",", ".")
@@ -54,24 +62,24 @@ def message(T, hhmm):
     elif sl - sns >= 2: head += " 💋💋"
     elif sl > sns: head += " 💋"
     if abs(sl - sns) < 2: head += " ⚔️"
-    L = [head, f"Obrađeno: {fpct(100*T['done']/T['n'])} % BM • {fpct(100*z['voters']/max(T['reg_est'],1))} % glasova"]
+    L = [head, f"{B('Obrađeno:')} {fpct(100*T['done']/T['n'])} % BM • {fpct(100*z['voters']/max(T['reg_est'],1))} % glasova"]
     turn = 100 * z["out"] / max(z["voters"], 1)
-    t_line = f"Izlaznost: {fpct(turn)} %"
+    t_line = f"{B('Izlaznost:')} {fpct(turn)} %"
     if zm["voters"] and ym["voters"]:
         d = 100 * zm["out"] / zm["voters"] - 100 * ym["out"] / ym["voters"]
         t_line += f" • {arrow(d)} {sgn(d)}" + (" " + emo(d, "🔥") if emo(d, "🔥") else "")
     L += [t_line, ""]
     rk = emo(sl - sns, "🚀") if sl > sns else ""
-    L.append(f"SL: {fnum(z['lists'][SL-1])} – {fpct(sl)} %" + (" " + rk if rk else ""))
-    s_line = f"SNS: {fnum(z['lists'][SNS-1])} – {fpct(sns)} %"
+    L.append(f"{B('SL:')} {fnum(z['lists'][SL-1])} – {fpct(sl)} %" + (" " + rk if rk else ""))
+    s_line = f"{B('SNS:')} {fnum(z['lists'][SNS-1])} – {fpct(sns)} %"
     if zm["valid"] and ym["valid"]:
         d = 100 * zm["lists"][SNS-1] / zm["valid"] - 100 * ym["lists"][SNS23-1] / ym["valid"]
         s_line += f" • {arrow(d)} {sgn(d)}" + (" " + emo(-d, "❄️") if d < 0 and emo(-d, "❄️") else "")
     L.append(s_line)
     for name, idx in (("SPS", [SPS]), ("AD", [AD]), ("ES", [ES]), ("Manjine", MANJINE), ("Ostali", OSTALI)):
         v = sum(z["lists"][i - 1] for i in idx)
-        L.append(f"{name}: {fnum(v)} – {fpct(100*v/z['valid'])} %")
-    L += ["", f"Broj oborenih BM: {T['ob']}", SITE]
+        L.append(f"{B(name + ':')} {fnum(v)} – {fpct(100*v/z['valid'])} %")
+    L += ["", f"{B('Broj oborenih BM:')} {T['ob']}", SITE]
     return "\n".join(L)
 
 def slot(now):
@@ -113,12 +121,12 @@ def maybe_send(T, now, statef, log, test=False):
     if not reasons and not test: return False
     msg = message(T, now.strftime("%H:%M"))
     if not msg: return False
-    if "99" in reasons: msg = "✅ Obrađeno preko 99 % BM – poslednja poruka.\n\n" + msg; state["final"] = True
+    if "99" in reasons: msg = "✅ <b>Obrađeno preko 99 % BM – poslednja poruka.</b>\n\n" + msg; state["final"] = True
     if not token: log("telegram: nema TELEGRAM_TOKEN – poruka nije poslata:\n" + msg); return False
     c = chat_id(token, state)
     if not c: log("telegram: ne znam kome da šaljem (pošalji /start botu ili ga dodaj u grupu)"); return False
     try:
-        _api(token, "sendMessage", dict(chat_id=c, text=msg, disable_web_page_preview="true"))
+        _api(token, "sendMessage", dict(chat_id=c, text=msg, parse_mode="HTML", disable_web_page_preview="true"))
         log("telegram: poslato (" + ", ".join(reasons) + ")")
     except Exception as e:
         log("telegram: greška " + str(e)[:120]); return False
@@ -126,3 +134,20 @@ def maybe_send(T, now, statef, log, test=False):
     state["ob"] = T["ob"]
     json.dump(state, open(statef, "w"))
     return True
+
+
+def demo(log):
+    """Probne poruke sa izmišljenim brojevima da se vide svi emodžiji (ručno pokretanje)."""
+    token = os.environ.get("TELEGRAM_TOKEN")
+    if not token: log("telegram demo: nema tokena"); return
+    c = chat_id(token, {})
+    def fake(sl, sns, turn23, turn26, sns23):
+        L = [0] * 18; L[SL-1] = sl * 100; L[SNS-1] = sns * 100; L[SPS-1] = 500; L[AD-1] = 300; L[ES-1] = 200
+        rest = 10000 - sum(L); L[MANJINE[0]-1] = rest // 2; L[OSTALI[0]-1] = rest - rest // 2
+        z = dict(voters=17000, out=int(170 * turn26), valid=10000, lists=L)
+        y = dict(voters=17000, out=int(170 * turn23), valid=10000, lists=[0] * 18); y["lists"][SNS23-1] = sns23 * 100
+        return dict(z=z, zm=z, ym=y, done=410, n=1000, reg_est=40000, ob=1)
+    for name, T in (("tesna trka", fake(44, 43, 58, 61, 47)), ("SL vodi 5", fake(45, 40, 58, 64, 47)),
+                    ("SL preko 50", fake(53, 35, 58, 69, 47)), ("SNS vodi", fake(30, 52, 58, 57, 47))):
+        _api(token, "sendMessage", dict(chat_id=c, text="🧪 PROBA – " + name + "\n" + message(T, "22:30"), parse_mode="HTML", disable_web_page_preview="true"))
+        log("telegram demo poslato: " + name)
