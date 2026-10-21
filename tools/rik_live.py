@@ -2,6 +2,7 @@
 #   python3 tools/rik_live.py [--minutes 55] [--sim] [--out public/data/live] [--no-push]
 # Svaki krug: 191 upit za zbir po opštini (broj obrađenih + vreme ažuriranja) -> detaljno samo nova BM
 # + spora rotacija već obrađenih BM (provera izmena rezultata / zamenjenog zapisnika).
+# Objava: svaka promena (najviše na 2 min) na granu 'uzivo'; na main (Cloudflare) 21-02 h na 15 min, inače na sat.
 # Interval: start 5 min; ima novih -> pola (min 1); nema -> x1.5 (max 15); sve obrađeno -> 30.
 # --sim: proba na izborima 2023 (stanica 2026 -> uparena stanica 2023), BM se "otkrivaju" postepeno.
 import json, os, sys, time, re, subprocess, random, datetime, argparse, hashlib, tempfile
@@ -199,15 +200,41 @@ def write(changed_units, t):
     json.dump(LOG, open(LOGF, "w"), ensure_ascii=False, separators=(",", ":"))
     return s
 
-def push(msg):
+def main_gap_min():
+    """Objava na main (= Cloudflare gradnja, limit 500/mesec): 21-02 h na 15 min, inače na 60 min."""
+    h = now().hour
+    return 15 if (h >= 21 or h < 2) else 60
+def last_main_push():
+    try: return int(subprocess.run(["git", "log", "-1", "--format=%ct", "origin/main", "--", OUT], capture_output=True, text=True).stdout.strip() or 0)
+    except Exception: return 0
+def push(msg, force_main=False):
+    """Svaka promena -> grana 'uzivo' (bez Cloudflare gradnje; aplikacija je čita sa GitHub-a).
+    Na 'main' samo po rasporedu (main_gap_min)."""
+    global LASTMAIN
     if A.no_push: return True
     subprocess.run(["git", "add", OUT], check=False)
-    if subprocess.run(["git", "diff", "--cached", "--quiet"]).returncode == 0: return True
-    subprocess.run(["git", "commit", "-qm", msg], check=False)
-    for a in range(4):
-        if subprocess.run(["git", "push", "-q"]).returncode == 0: return True
-        subprocess.run(["git", "pull", "-q", "--rebase", "-X", "theirs"], check=False)  # pri rebase "theirs" = naše lokalne izmene live/
-    log("PUSH NIJE USPEO"); return False
+    if subprocess.run(["git", "diff", "--cached", "--quiet"]).returncode != 0:
+        subprocess.run(["git", "commit", "-qm", msg], check=False)
+    ok = subprocess.run(["git", "push", "-q", "-f", "origin", "HEAD:uzivo"]).returncode == 0
+    if not ok: log("push na uzivo nije uspeo")
+    if force_main or time.time() - LASTMAIN >= main_gap_min() * 60:
+        for a in range(4):
+            if subprocess.run(["git", "push", "-q", "origin", "HEAD:main"]).returncode == 0:
+                LASTMAIN = time.time(); log("objavljeno na main (Cloudflare)"); break
+            subprocess.run(["git", "pull", "-q", "--rebase", "-X", "theirs", "origin", "main"], check=False)
+        else: log("PUSH NA MAIN NIJE USPEO")
+    return ok
+
+def sync_from_uzivo():
+    """Nastavi od poslednjeg stanja sa grane 'uzivo' (ako je novija od main)."""
+    if A.no_push: return
+    if subprocess.run(["git", "fetch", "-q", "origin", "uzivo"]).returncode != 0: return
+    subprocess.run(["git", "checkout", "FETCH_HEAD", "--", OUT], check=False)
+    subprocess.run(["git", "reset", "-q"], check=False)
+    for uid in UNITS:
+        f = f"{OUT}/u/{uid}.json"
+        if os.path.exists(f): LU[uid] = json.load(open(f))
+    if os.path.exists(LOGF): LOG[:] = json.load(open(LOGF))
 
 # ---------- glavna petlja ----------
 cookie()
@@ -215,6 +242,9 @@ deadline = time.time() + A.minutes * 60
 interval = 1.0 if A.fast else 5.0
 total = sum(len(u["st"]) for u in UNITS.values())
 PENDING = False; LASTPUSH = 0
+subprocess.run(["git", "fetch", "-q", "origin", "main"], check=False)
+LASTMAIN = last_main_push()
+sync_from_uzivo()
 def gh_alive():
     import urllib.request
     try:
@@ -224,7 +254,7 @@ def gh_alive():
         return False
     except Exception: return True  # ako ne možemo da proverimo, ne mešamo se (osim ako je objava stara)
 def remote_age_min():
-    subprocess.run(["git", "pull", "-q", "--rebase", "-X", "theirs"], check=False)
+    sync_from_uzivo()
     try:
         m = json.load(open(f"{OUT}/summary.json"))["meta"]["checked"]
         d, mo, h, mi = map(int, re.findall(r"\d+", m)[:4]); n = now()
@@ -235,10 +265,6 @@ while time.time() < deadline:
     if A.standby:
         age = remote_age_min(); alive = gh_alive()
         if alive or age < 3:
-            for uid in UNITS:  # preuzmi stanje sa GitHub-a
-                f = f"{OUT}/u/{uid}.json"
-                if os.path.exists(f): LU[uid] = json.load(open(f))
-            if os.path.exists(LOGF): LOG[:] = json.load(open(LOGF))
             time.sleep(120); continue
         log(f"GitHub posao ne radi (objava stara {age:.0f} min) – rezerva preuzima ovaj krug")
     t0 = time.time(); t = stamp()

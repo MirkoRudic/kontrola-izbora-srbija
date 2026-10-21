@@ -551,8 +551,8 @@ box.addEventListener('mousedown',e=>{const li=e.target.closest('li[data-i]');if(
 document.addEventListener('click',e=>{if(!e.target.closest('.search'))box.hidden=true});
 
 // ---------- učitavanje ----------
-// rezerva: ako Cloudflare ne stigne da objavi, isti podaci se čitaju direktno sa GitHub-a (kasne do ~5 min)
-const RAW='https://raw.githubusercontent.com/MirkoRudic/kontrola-izbora-srbija/main/public/';
+// sveži podaci: grana 'uzivo' na GitHub-u (svaka 2 min, keš do 5 min); Cloudflare objava ide ređe (limit gradnji)
+const RAW='https://raw.githubusercontent.com/MirkoRudic/kontrola-izbora-srbija/uzivo/public/';
 const tkey=m=>{const x=/(\d+)\.(\d+)\.\s*(\d+):(\d+)/.exec(m&&m.checked||'');return x?((+x[2])*1e6+(+x[1])*1e4+(+x[3])*100+(+x[4])):0};
 let SRC='';
 async function loadLive(){const [a,b]=await Promise.all([get('data/live/summary.json?t='+Date.now()),get(RAW+'data/live/summary.json')]);
