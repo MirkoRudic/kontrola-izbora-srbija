@@ -285,12 +285,12 @@ function otherRow(r){
   const a=r.y?topOther(r.y.lists,VOTES.map(v=>v[1])):null, b=r.z?topOther(r.z.lists,VOTES.map(v=>v[2])):null;
   if(!a&&!b) return '';
   const nm23=a?shortL(IDX.lists23[a.n-1])+' (lista '+a.n+')':'', nm26=b?shortL(IDX.lists26[b.n-1][1])+' (lista '+b.n+')':'';
-  const sub=b?(nm23?'2026: '+nm26+' · 2023: '+nm23:nm26):'2023: '+nm23;
+  const sub=b?(nm23?'2026: '+nm26+'\n2023: '+nm23:'2026: '+nm26):'2023: '+nm23;
   const rr={y:r.y,z:r.z,zc:r.zc,partial:r.partial};
   // razlika samo informativno (razlicite liste)
   const ya=a?a.n-1:0, zb=b?b.n-1:0;
   const A=a?r.y.lists[ya]:null,B=b?r.z.lists[zb]:null;
-  return `<tr><th scope="row">Najjača ostala<small class="rs">${esc(sub)}</small></th>${cell(A,r.y&&r.y.valid)}${cell(B,r.z&&r.z.valid)}<td class="n df"><span class="na">—</span></td></tr>`}
+  return `<tr><th scope="row">Najjača ostala<small class="rs">${esc(sub).replace(/\n/g,'<br>')}</small></th>${cell(A,r.y&&r.y.valid)}${cell(B,r.z&&r.z.valid)}<td class="n df"><span class="na">—</span></td></tr>`}
 function results(r,notes){
   const H=`<thead><tr><th></th><th class="n">2023</th><th class="n">2026</th><th class="n">Razlika</th></tr></thead>`;
   return `<div class="sec"><h3>Rezultati parlamentarnih izbora</h3><div class="tbl"><table class="res cmp">${H}<tbody>
