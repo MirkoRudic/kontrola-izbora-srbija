@@ -1,0 +1,25 @@
+name: Nova rešenja o odborima
+on:
+  schedule:
+    # na 3 sata, 08–23 h po beogradskom (UTC 6,9,…,21), 21–26. 10.
+    - cron: "10 6,9,12,15,18,21 21-26 10 *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: odbori
+  cancel-in-progress: false
+jobs:
+  odbori:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          git config user.name "rik-odbori"; git config user.email "rik-odbori@users.noreply.github.com"
+          python3 tools/odbori_novi.py | tee /tmp/out.txt
+          git add public/data/odbori_*.json
+          if ! git diff --cached --quiet; then
+            git commit -qm "Rešenja o odborima: $(cat /tmp/out.txt)"
+            for i in 1 2 3; do git push -q && break; git pull -q --rebase -X theirs; done
+          fi

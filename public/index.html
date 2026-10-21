@@ -488,7 +488,7 @@ function render(){
   const toTop=()=>{if(matchMedia('(max-width:960px)').matches)P.scrollIntoView({block:'start'})};
   const mo=$('#more');if(mo)mo.onclick=()=>{ST.view='ballot';render();toTop()};
   const lb=$('#logb');if(lb)lb.onclick=async()=>{ST.view='log';render();toTop();await loadLog();render._keep=true;render()};
-  P.querySelectorAll('[data-gu]').forEach(x=>x.onclick=async e=>{e.preventDefault();const uid=x.dataset.gu;await go({lvl:'unit',rid:IDX.units[uid].region,uid});go({...ST,sid:x.dataset.gs},true)});
+  P.querySelectorAll('[data-gu]').forEach(x=>x.onclick=async e=>{e.preventDefault();const uid=x.dataset.gu;await go({lvl:'unit',rid:IDX.units[uid].region,uid});const sid=x.dataset.gs||(UF[uid].stations.find(s=>s.n===+x.dataset.gn)||{}).sid;if(sid)go({...ST,sid},true)});
   const b2=$('#back2');if(b2)b2.onclick=()=>{ST.view='main';render();toTop()};
   const bs=$('#bsort');if(bs)bs.onclick=()=>{bsort=!bsort;render._keep=true;render()};
   P.querySelectorAll('.tabs button[data-b]').forEach(b=>b.onclick=()=>{btab=b.dataset.b;render._keep=true;render()});
@@ -503,17 +503,17 @@ const LL=()=>Object.fromEntries(IDX.lists26.map(([k,l],i)=>[k,(i+1)+'. '+l]));
 const GRP={ADMIN:'Načelnik uprave',SNS:'SNS (A. Vučić – Srbija ne sme da stane)',SDPS:'SDPS',SPS:'SPS',STUD:'Poslanici uz studente',NPS:'NPS – Novo lice',SSP:'SSP',PSG:'PSG / SDA / PDD',ZLF:'Zeleno-levi front',SVM:'SVM',NADA:'NADA',SRCE:'SRCE',EU:'Ekološki ustanak',JS:'Jedinstvena Srbija',PUPS:'PUPS',ZS:'Zdrava Srbija',MI:'MI – Glas iz naroda',DS:'DS',ZAVET:'Zavetnici',RP_RS:'Radnička partija – Ruska stranka'};
 const nm=x=>x?esc(x):'<span class="na">nije imenovan</span>';
 const roleLbl=r=>esc(r).replace(/^zamenik /,'zamenik<br>').replace(/(\d\.) /,'$1&nbsp;');
-function boardView(s){const b=s.bd,L=LL();let h='<div class="sec"><h3>Birački odbor 2026</h3>';
+function boardView(s){const b=s.bd,L=LL(),docs=odbOf(ST.uid,s),nIzm=docs.filter(d=>isIzm(d.t)).length;let h='<div class="sec"><h3>Birački odbor 2026</h3>';
   if(!b||(!b.s&&!b.p)) h+='<div class="small">Sastav još nije pročitan iz rešenja. Rešenja na RIK-u su ispod.</div>';
   else{
     if(!b.ver) h+='<div class="small tag" style="margin-bottom:6px">Imena su automatski pročitana sa skeniranih rešenja – moguće su greške u slovima. Za proveru otvori rešenje.</div>';
-    if(s.izm) h+=`<div class="note"><b>Izmene:</b> posle osnovnog rešenja na RIK-u ima još ${s.izm} rešenja (izmena, dopuna, prestanak…). Sastav ispod je ${b.ver?'sa primenjenim izmenama':'iz osnovnog rešenja'} – proveri rešenja ispod.</div>`;
+    if(nIzm) h+=`<div class="note"><b>Izmene:</b> posle osnovnog rešenja na RIK-u ima još ${nIzm} rešenja (izmena, dopuna, prestanak…). Sastav ispod je ${b.ver?'sa primenjenim izmenama do 20. 10.':'iz osnovnog rešenja'} – za tačan sastav pogledaj najnovije rešenje ispod.</div>`;
     if(b.s&&b.s.length) h+=`<div class="tbl"><table><thead><tr><th>Stalni sastav</th><th>Ime</th><th>Predlagač</th></tr></thead><tbody>${b.s.map(x=>`<tr><td>${roleLbl(x.role)}</td><td>${nm(x.name)}</td><td class="small">${esc(GRP[x.key]||x.by||'')}</td></tr>`).join('')}</tbody></table></div>`;
     if(b.p&&b.p.length){h+=`<div class="tbl" style="margin-top:8px"><table><thead><tr><th>Prošireni sastav (${b.p.length} lista)</th><th>Član</th><th>Zamenik</th></tr></thead><tbody>${b.p.map(x=>`<tr><td class="small">${esc(L[x.key]||x.list||'')}</td><td>${nm(x.member)}</td><td>${nm(x.deputy)}</td></tr>`).join('')}</tbody></table></div>`;
       const have=new Set(b.p.filter(x=>x.member||x.deputy).map(x=>x.key));const miss=IDX.lists26.map(([k,l],i)=>[k,i]).filter(([k])=>!have.has(k));
       h+=`<div style="margin-top:8px"><span class="small">Liste bez predstavnika na ovom BM:</span><br>${miss.map(([k,i])=>`<span class="chip miss">${esc(L[k])}</span>`).join('')||'<span class="small">nema</span>'}</div>`}
   }
-  h+=`<div class="links col" style="margin-top:8px">${s.odb.map(d=>link(d.l,esc(d.t))).join('')||'<span class="small">Na RIK-u nema rešenja vezanog za ovo BM.</span>'}</div></div>`;
+  h+=`<div class="links col" style="margin-top:8px">${docs.map((d,i)=>`<span>${link(d.l,esc(d.t))}${d.ts?` <span class="small">(${new Date(d.ts*1000).toLocaleString('sr-Latn-RS',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})})</span>`:''}${i===0&&docs.length>1?' <span class="chip">najnovije</span>':''}</span>`).join('')||'<span class="small">Na RIK-u nema rešenja vezanog za ovo BM.</span>'}</div></div>`;
   return h}
 function covView(units,stations){ // units: lista id-jeva (agregat) ili stations (opština/naselje)
   const L=LL();let cov={},nb=0,n=0;
@@ -529,12 +529,15 @@ function zap26(uid,s){const b=liveBM(uid,s.sid),h=(b&&b.zap)||[];
 
 // ---------- dnevnik ----------
 let LOG=null;
-const KIND={provera:'Provera',rezultat:'Rezultat',zapisnik:'Zapisnik',oboreno:'Oboreno',primedbe:'Primedbe'};
+const KIND={odbor:'Odbor',provera:'Provera',rezultat:'Rezultat',zapisnik:'Zapisnik',oboreno:'Oboreno',primedbe:'Primedbe'};
+const akey=t=>{const x=/(\d+)\.(\d+)\.\s*(\d+):(\d+)/.exec(t||'');return x?((+x[2])*1e6+(+x[1])*1e4+(+x[3])*100+(+x[4])):0};
+function prevDoc(e){const U=UF[e.u];if(!U)return null;const s=U.stations.find(x=>x.n===e.n);if(!s)return null;const ds=odbOf(e.u,s).filter(d=>d.l!==e.l);
+  const t0=akey(e.at);return ds.find(d=>{const dt=new Date((d.ts||0)*1000);return akey(`${dt.getDate()}.${dt.getMonth()+1}. ${dt.getHours()}:${dt.getMinutes()}`)<=t0})||null}
 function logView(){
-  const all=(LOG||[]).slice().reverse(), f=ST.uid?all.filter(e=>e.u===ST.uid):all;
+  const all=(LOG||[]).concat(OLOG||[]).slice().sort((a,b)=>akey(b.at)-akey(a.at)), f=ST.uid?all.filter(e=>e.u===ST.uid):all;
   return `<button class="back2" id="back2">← Nazad</button><div class="sec"><h3>Dnevnik promena${ST.uid?' – '+esc(IDX.units[ST.uid].short):''}</h3>
-   <div class="small" style="margin-bottom:8px">Izmenjeni rezultati i zamenjeni zapisnici na RIK-u, i automatske provere brojeva (npr. zbir po listama ≠ važeći, neobična izlaznost). Ovo su signali za proveru, ne dokaz nepravilnosti.</div>
-   ${LOG==null?'<div class="small">Učitavam…</div>':f.length?`<div class="tbl"><table class="log"><thead><tr><th>Vreme</th><th>BM</th><th>Šta</th></tr></thead><tbody>${f.slice(0,400).map(e=>`<tr><td class="n">${esc(e.at)}</td><td><a href="#o${e.u}" data-gu="${e.u}" data-gs="${e.s}">BM ${e.n}</a><div class="small">${esc(IDX.units[e.u]?.short||'')}</div></td><td><span class="chip">${KIND[e.type]||e.type}</span> ${esc(e.detail)}</td></tr>`).join('')}</tbody></table></div>${f.length>400?`<div class="small">Prikazano poslednjih 400 od ${f.length}.</div>`:''}`:'<div class="small"><i>Za sada nema nijedne promene.</i></div>'}</div>`}
+   <div class="small" style="margin-bottom:8px">Nova rešenja o biračkim odborima (provera na RIK-u više puta dnevno), izmenjeni rezultati i zamenjeni zapisnici na RIK-u, i automatske provere brojeva (npr. zbir po listama ≠ važeći, neobična izlaznost). Ovo su signali za proveru, ne dokaz nepravilnosti.</div>
+   ${LOG==null?'<div class="small">Učitavam…</div>':f.length?`<div class="tbl"><table class="log"><thead><tr><th>Vreme</th><th>BM</th><th>Šta</th></tr></thead><tbody>${f.slice(0,400).map(e=>`<tr><td class="n">${esc(e.at)}</td><td>${e.n!=null?`<a href="#o${e.u}" data-gu="${e.u}" data-gs="${e.s||''}" data-gn="${e.n}">BM ${e.n}</a>`:'opšte'}<div class="small">${esc(IDX.units[e.u]?.short||'')}</div></td><td><span class="chip">${KIND[e.type]||e.type}</span> ${esc(e.detail)}${e.l?`<div class="links" style="margin-top:3px">${link(e.l,'novo rešenje')}${e.prev?link(e.prev,'prethodno rešenje'):(()=>{const p=prevDoc(e);return p?link(p.l,'prethodno rešenje'):''})()}</div>`:''}</td></tr>`).join('')}</tbody></table></div>${f.length>400?`<div class="small">Prikazano poslednjih 400 od ${f.length}.</div>`:''}`:'<div class="small"><i>Za sada nema nijedne promene.</i></div>'}</div>`}
 async function loadLog(){LOG=await get(SRC?SRC+'data/live/log.json':'data/live/log.json?t='+Date.now())||[]}
 // ---------- navigacija ----------
 async function go(n,keepMap){
@@ -590,6 +593,10 @@ document.addEventListener('click',e=>{if(!e.target.closest('.search'))box.hidden
 const RAW='https://raw.githubusercontent.com/MirkoRudic/kontrola-izbora-srbija/uzivo/public/';
 const tkey=m=>{const x=/(\d+)\.(\d+)\.\s*(\d+):(\d+)/.exec(m&&m.checked||'');return x?((+x[2])*1e6+(+x[1])*1e4+(+x[3])*100+(+x[4])):0};
 let SRC='';
+let ONOVI={},OLOG=[];
+async function loadOdb(){const [n,l]=await Promise.all([get('data/odbori_novi.json?t='+Date.now()),get('data/odbori_log.json?t='+Date.now())]);ONOVI=n||{};OLOG=l||[]}
+function odbOf(uid,s){const extra=((ONOVI[uid]||{})[String(s.n)]||[]);const seen=new Set(s.odb.map(d=>d.l));return s.odb.concat(extra.filter(d=>!seen.has(d.l))).slice().sort((a,b)=>(b.ts||0)-(a.ts||0))}
+const isIzm=t=>/izmen|dopun|prestan|razrešen|odbacivanj|odbijanj/i.test(t);
 async function loadLive(){const [a,b]=await Promise.all([get('data/live/summary.json?t='+Date.now()),get(RAW+'data/live/summary.json')]);
   const s=(b&&(!a||tkey(b.meta)>tkey(a.meta)))?b:a; SRC=(s&&s===b&&b!==a)?RAW:'';
   if(s){LIVE.meta=s.meta||null;LIVE.u=s.u||{}}}
@@ -597,7 +604,7 @@ async function loadLiveUnit(uid){const L=LIVE.u[uid];if(!(L&&(L.done||(L.ob&&L.o
   const d=await get(SRC?SRC+'data/live/u/'+uid+'.json':'data/live/u/'+uid+'.json?t='+Date.now());if(d)LU[uid]=d;addUnitIdx(uid);if(ST.uid===uid){updateMarks();render._keep=true;render()}}
 (async()=>{
   [IDX,GEO]=await Promise.all([get('data/index.json'),get('data/geo.json')]);
-  await loadLive();buildIdx();
+  await Promise.all([loadLive(),loadOdb()]);buildIdx();
   const n=Object.values(IDX.units).reduce((a,u)=>a+u.nbm,0);$('#hn').textContent=`${Object.keys(IDX.units).length} jedinica · ${fmt(n)} biračkih mesta`;
   await fromHash();
   setInterval(async()=>{await loadLive();if(ST.uid)await loadLiveUnit(ST.uid);render._keep=true;render();updateMarks()},60000);
