@@ -203,6 +203,24 @@ tr.subn td{font-size:11.5px;color:var(--muted);padding:0 6px 8px;line-height:1.3
 tr.subn td{display:table-cell}
 tr.nob th,tr.nob td{border-bottom:0}
 .one{display:block!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.ii{display:inline-grid;place-items:center;width:16px;height:16px;margin-left:5px;vertical-align:-3px;padding:0;border:0;background:none;color:var(--muted);cursor:pointer;position:relative;text-transform:none;letter-spacing:0}
+.ii svg{width:16px;height:16px;display:block}
+.ii:hover,.ii.on{color:var(--accent)}
+.ii .pop{display:none;position:absolute;left:-10px;top:22px;z-index:20;width:240px;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.18);padding:8px 10px;font:400 12.5px/1.45 var(--sans);color:var(--ink);text-align:left;white-space:normal}
+th.n .ii{margin:0 4px 0 0}
+th.n .ii .pop{left:auto;right:-60px}
+thead .ii,h3 .ii{width:14px;height:14px;vertical-align:-2px}
+thead .ii svg,h3 .ii svg{width:14px;height:14px}
+@media (max-width:380px){table.cmp th,table.cmp td{padding-left:4px;padding-right:4px}table.cmp thead th:first-child{width:27%!important}table.res.cmp td.n{font-size:12px!important}table.cmp td small{font-size:10px!important}table.cmp td.df{font-size:11px!important}table.cmp thead th{font-size:10px!important}table.res th[scope=row]{font-size:12.5px}thead .ii{margin-right:2px}}
+@media (max-width:420px){table.cmp thead th{letter-spacing:0;font-size:10.5px}table.cmp thead th:first-child{width:28%}table.res.cmp td.n{font-size:13px}table.cmp td.df{font-size:12px!important}table.cmp td small{font-size:11px}}
+@media (max-width:340px){table.cmp thead th{font-size:9.5px!important}thead .ii{margin-right:1px}table.cmp thead th:first-child{width:25%!important}table.cmp td.yr,table.cmp td.df,table.res.cmp td.n:last-child{width:25%!important}table.res th[scope=row]{font-size:12px}}
+.ii.on .pop{display:block}
+.nw{white-space:nowrap}
+.mapwrap{position:relative}
+.zhint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(28,34,40,.82);color:#fff;font:500 13px var(--sans);padding:8px 14px;border-radius:8px;pointer-events:none;opacity:0;transition:opacity .2s;white-space:nowrap}
+.zhint.on{opacity:1}
+@media (min-width:961px){svg#map{max-height:calc(100vh - 210px)}}
+.foot1{font-size:12px;color:var(--muted);margin-top:4px}
 </style>
 
 <div class="wrap">
@@ -270,6 +288,14 @@ function regUnits(rid){return IDX.regions.find(r=>r.id===rid).units}
 const ALL=()=>Object.keys(IDX.units);
 
 // ---------- rezultati (tabela) ----------
+const INFO_SVG='<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="4.9" r=".95" fill="currentColor"/><path d="M8 7.1v4.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+function info(t){return `<button type="button" class="ii" aria-label="Objašnjenje">${INFO_SVG}<span class="pop" role="tooltip">${t}</span></button>`}
+function lbl(text,t){const w=String(text).split(' ');const last=w.pop();return (w.length?w.join(' ')+' ':'')+`<span class="nw">${last}${info(t)}</span>`}
+const INFO_OUT='Procenat je od broja upisanih birača.', INFO_OF_OUT='Procenat je od broja birača koji su izašli.',
+  INFO_DIFF='Razlika = 2026 minus 2023: gore u broju, dole u procentnim poenima (razlika dva procenta: 25,0 % → 24,9 % je −0,1 %).<br>Dok 2026 nije potpuno obrađeno, prikazuje se samo razlika procenata, u odnosu na ista biračka mesta iz 2023.',
+  INFO_VOTES='Procenti su od broja važećih listića.';
+document.addEventListener('click',e=>{const b=e.target.closest('.ii');document.querySelectorAll('.ii.on').forEach(x=>{if(x!==b)x.classList.remove('on')});if(b){e.preventDefault();e.stopPropagation();b.classList.toggle('on')}},true);
+
 const VOTES=[['SNS',1,1,'lista 1',-1],['SPS',2,2,'lista 2',-1],['„Naši”',7,3,'2023: SPN (lista 7) · 2026: Studentska lista (lista 3)',1]];
 const sgn=(v,d)=>v==null?'':(v>0?'+':v<0?'−':'±')+Math.abs(v).toLocaleString('sr-Latn-RS',d!=null?{minimumFractionDigits:d,maximumFractionDigits:d}:{});
 function cell(n,base){return n==null?'<td class="n yr"><span class="na">—</span></td>':`<td class="n yr">${fmt(n)}${base?`<small>${pct(n,base)}</small>`:''}</td>`}
@@ -277,7 +303,7 @@ function cell(n,base){return n==null?'<td class="n yr"><span class="na">—</spa
 function diff(a,b,ba,bb,good,ppOnly){
   if(a==null||b==null) return '<td class="n df"><span class="na">—</span></td>';
   let pp='',dv;
-  if(ba&&bb){const d=100*b/bb-100*a/ba;pp=`<small>${sgn(d,1)} p.p.</small>`;dv=d}else dv=b-a;
+  if(ba&&bb){const d=100*b/bb-100*a/ba;pp=`<small>${sgn(d,1)} %</small>`;dv=d}else dv=b-a;
   const cls=!good||!dv?'':(dv*good>0?'good':'bad');
   return `<td class="n df ${cls}">${ppOnly?'':sgn(b-a)}${pp}</td>`}
 // r: {y (2023 cela), z (2026), zc (2023 istih BM), partial}
@@ -295,20 +321,19 @@ function otherRow(r){
   const lines=[b?`2026: ${b.n}. ${S26[b.n-1]}`:null,a?`2023: ${a.n}. ${S23[a.n-1]}`:null].filter(Boolean);
   return `<tr class="nob"><th scope="row">Najjača ostala</th>${cell(a?a.v:null,r.y&&r.y.valid)}${cell(b?b.v:null,r.z&&r.z.valid)}<td class="n df"><span class="na">—</span></td></tr><tr class="subn"><td colspan="4">${lines.map(esc).join(' · ')}</td></tr>`}
 function results(r,notes){
-  const H=`<thead><tr><th></th><th class="n">2023</th><th class="n">2026</th><th class="n">Razlika</th></tr></thead>`;
+  const H=`<thead><tr><th></th><th class="n">2023</th><th class="n">2026</th><th class="n">Razlika*</th></tr></thead>`;
   return `<div class="sec"><h3>Rezultati parlamentarnih izbora</h3><div class="tbl"><table class="res cmp">${H}<tbody>
     ${row('Upisani birači','voters',null,r)}
-    ${row('Izašlo','out','voters',r,'',1)}
-    ${row('Važeći listići','valid','out',r)}
-    ${row('Nevažeći listići','invalid','out',r)}
+    ${row(lbl('Izašlo',INFO_OUT),'out','voters',r,'',1)}
+    ${row(lbl('Važeći listići',INFO_OF_OUT),'valid','out',r)}
+    ${row(lbl('Nevažeći listići',INFO_OF_OUT),'invalid','out',r)}
   </tbody></table></div>
-  <div class="small">% izašlih je od upisanih; ostali % od broja izašlih. ${r.partial?'2026 još nije potpuno obrađeno, pa je razlika samo u procentnim poenima (p.p.) i računa se prema istim BM iz 2023.':'Razlika: 2026 minus 2023, u broju i u procentnim poenima (p.p.).'} p.p. = razlika dva procenta, npr. 25,0 % → 24,9 % je −0,1 p.p.${notes?' '+notes:''}</div></div>
-  <div class="sec"><h3>Glasovi</h3><div class="tbl"><table class="res cmp">${H}<tbody>
+  <div class="foot1">* Razlika = 2026 minus 2023: gore u broju, dole u procentnim poenima (razlika dva procenta: 25,0 % → 24,9 % je −0,1 %).${r.partial?' Dok 2026 nije potpuno obrađeno, prikazuje se samo razlika procenata, u odnosu na ista biračka mesta iz 2023.':''}${notes?' '+notes:''}</div></div></div>
+  <div class="sec"><h3><span class="nw">Glasovi${info(INFO_VOTES)}</span></h3><div class="tbl"><table class="res cmp">${H}<tbody>
     ${VOTES.slice(0,2).map(([g,n23,n26,sub,gd])=>row(g,'list','valid',r,sub,gd,n23-1,n26-1)).join('')}
     ${otherRow(r)}
     ${VOTES.slice(2).map(([g,n23,n26,sub,gd])=>row(g,'list','valid',r,sub,gd,n23-1,n26-1)).join('')}
   </tbody></table></div>
-  <div class="small">% od važećih listića.</div>
   <button class="more" id="more">Detaljno – ceo izborni listić →</button></div>`}
 let btab='2026', bsort=false;
 function ballot(r){
@@ -399,12 +424,13 @@ function applyVB(){const k=W/vb.w;svg.setAttribute('viewBox',`${vb.x.toFixed(1)}
     const hit=!vis||placed.some(P=>Math.abs(P[0]-x)<(P[2]+w)/2+fs*0.3&&Math.abs(P[1]-y)<(P[3]+h)/2);
     t.style.display=hit?'none':'';if(!hit)placed.push([x,y,w,h])});
   svg.querySelectorAll('.reg,.unit,.naselje,.outline').forEach(p=>p.style.strokeWidth=(p.classList.contains('outline')?1.6:1)/k+'px')}
-function zoomAt(f,cx,cy){const nw=Math.min(VB0.w,Math.max(VB0.w/16,vb.w/f)),nh=nw*VB0.h/VB0.w;if(cx==null){cx=vb.x+vb.w/2;cy=vb.y+vb.h/2}
+function zoomAt(f,cx,cy){const nw=Math.min(VB0.w,Math.max(VB0.w/10,vb.w/f)),nh=nw*VB0.h/VB0.w;if(cx==null){cx=vb.x+vb.w/2;cy=vb.y+vb.h/2}
   vb={x:cx-(cx-vb.x)*nw/vb.w,y:cy-(cy-vb.y)*nh/vb.h,w:nw,h:nh};clampVB();applyVB()}
-function clampVB(){vb.x=Math.min(Math.max(vb.x,VB0.x-vb.w*.3),VB0.w-vb.w*.7);vb.y=Math.min(Math.max(vb.y,VB0.y-vb.h*.3),VB0.h-vb.h*.7)}
+function clampVB(){vb.x=Math.min(Math.max(vb.x,0),VB0.w-vb.w);vb.y=Math.min(Math.max(vb.y,0),VB0.h-vb.h)}
 const svgPt=(cx,cy)=>{const r=svg.getBoundingClientRect();return [vb.x+(cx-r.left)/r.width*vb.w,vb.y+(cy-r.top)/r.height*vb.h]};
 $('#zin').onclick=()=>zoomAt(1.6);$('#zout').onclick=()=>zoomAt(1/1.6);$('#zreset').onclick=()=>{vb={...VB0};applyVB()};
-svg.addEventListener('wheel',e=>{e.preventDefault();const [x,y]=svgPt(e.clientX,e.clientY);zoomAt(e.deltaY<0?1.25:.8,x,y)},{passive:false});
+svg.addEventListener('wheel',e=>{if(!(e.ctrlKey||e.metaKey)){zoomHint();return}e.preventDefault();const [x,y]=svgPt(e.clientX,e.clientY);zoomAt(e.deltaY<0?1.15:1/1.15,x,y)},{passive:false});
+let _zh=null;function zoomHint(){const m=document.querySelector('.mapwrap');if(!m)return;let h=m.querySelector('.zhint');if(!h){h=document.createElement('div');h.className='zhint';h.textContent=(navigator.platform||'').includes('Mac')?'Za zumiranje drži ⌘ i okreni točkić, ili koristi + i −':'Za zumiranje drži Ctrl i okreni točkić, ili koristi + i −';m.appendChild(h)}h.classList.add('on');clearTimeout(_zh);_zh=setTimeout(()=>h.classList.remove('on'),1400)}
 const ptrs=new Map();let pan=null,pinch=null,moved=false;
 svg.addEventListener('pointerdown',e=>{ptrs.set(e.pointerId,[e.clientX,e.clientY]);moved=false;if(ptrs.size===1)pan={x:e.clientX,y:e.clientY,vb:{...vb}};
   if(ptrs.size===2){const [a,b]=[...ptrs.values()];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),vb:{...vb},c:svgPt((a[0]+b[0])/2,(a[1]+b[1])/2)};pan=null}});

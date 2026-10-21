@@ -142,6 +142,7 @@ def apply(uid, sid, r, t):
 # ---------- rešenja o poništavanju glasanja (RIK dokumenti, tip 1) ----------
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from translit import lat
+import telegram as TG
 def _core(x): return re.sub(r'^(gradska opština|grad|opština)\s+', '', lat(x).lower()).strip()
 UCORE = {}
 for uid, u in IDX["units"].items(): UCORE.setdefault(_core(re.sub(r'\s*\(.*\)', '', u["name"])), []).append(uid)
@@ -300,6 +301,11 @@ while time.time() < deadline:
             if not was and r: new += 1
     changed |= annulments(t)
     s = write(changed, t)
+    try:
+        T = TG.totals(UNITS, LU)
+        if A.sim and os.environ.get("TELEGRAM_TOKEN"): TG.SITE = "PROBA (rezultati 2023) · " + TG.SITE
+        TG.maybe_send(T, now(), f"{OUT}/telegram.json", log)
+    except Exception as e: log("telegram greška:", e)
     if changed: PENDING = True
     if PENDING and time.time() - LASTPUSH >= 120:  # Cloudflare gradi sajt posle svakog push-a (limit gradnji): ne češće od 2 min
         if push(f"Uživo: obrađeno {s['meta']['processed']}/{total} BM ({t})"): PENDING = False; LASTPUSH = time.time()
