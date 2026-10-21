@@ -217,6 +217,26 @@ def main_gap_min():
 def last_main_push():
     try: return int(subprocess.run(["git", "log", "-1", "--format=%ct", "origin/main", "--", OUT], capture_output=True, text=True).stdout.strip() or 0)
     except Exception: return 0
+def push_uzivo(msg):
+    """Na 'uzivo' ide samo folder sa rezultatima, na vrh postojeće grane – bez fajlova iz .github
+    (GitHub ne dozvoljava GITHUB_TOKEN-u da menja radne tokove, pa bi push cele grane bio odbijen)."""
+    import tempfile
+    env = dict(os.environ, GIT_INDEX_FILE=os.path.join(tempfile.gettempdir(), "uzivo.idx"))
+    g = lambda *a, **k: subprocess.run(["git", *a], capture_output=True, text=True, env=env, **k)
+    base = None
+    if g("fetch", "-q", "origin", "uzivo").returncode == 0:
+        base = g("rev-parse", "FETCH_HEAD").stdout.strip()
+        g("read-tree", base)
+    else:
+        g("read-tree", "--empty")
+    g("rm", "-r", "-q", "--cached", "--ignore-unmatch", OUT)
+    g("add", "-f", OUT)
+    tree = g("write-tree").stdout.strip()
+    c = g("commit-tree", tree, *(["-p", base] if base else []), "-m", msg).stdout.strip()
+    r = g("push", "-q", "-f", "origin", f"{c}:refs/heads/uzivo")
+    if r.returncode != 0: log("push na uzivo:", (r.stderr or "")[-300:])
+    return r.returncode == 0
+
 def push(msg, force_main=False):
     """Svaka promena -> grana 'uzivo' (bez Cloudflare gradnje; aplikacija je čita sa GitHub-a).
     Na 'main' samo po rasporedu (main_gap_min)."""
@@ -225,7 +245,7 @@ def push(msg, force_main=False):
     subprocess.run(["git", "add", OUT], check=False)
     if subprocess.run(["git", "diff", "--cached", "--quiet"]).returncode != 0:
         subprocess.run(["git", "commit", "-qm", msg], check=False)
-    ok = subprocess.run(["git", "push", "-q", "-f", "origin", "HEAD:uzivo"]).returncode == 0
+    ok = push_uzivo(msg)
     if not ok: log("push na uzivo nije uspeo")
     if force_main or time.time() - LASTMAIN >= main_gap_min() * 60:
         for a in range(4):
