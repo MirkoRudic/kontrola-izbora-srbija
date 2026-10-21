@@ -207,7 +207,7 @@ table.kids td.nm{max-width:0;width:46%;overflow:hidden;text-overflow:ellipsis;wh
 <div class="grid">
   <div class="card mapcard">
     <div class="toolbar">
-      <div class="search"><input type="search" id="q" placeholder="Kucaj opštinu, naselje ili broj BM…" aria-label="Pretraga" autocomplete="off" role="combobox" aria-controls="sugg">
+      <div class="search"><input type="search" id="q" placeholder="Kucaj opštinu, naselje, broj BM ili ime (u otvorenoj opštini)…" aria-label="Pretraga" autocomplete="off" role="combobox" aria-controls="sugg">
         <ul id="sugg" role="listbox" hidden></ul></div>
     </div>
     <nav class="crumbs" id="crumbs" aria-label="Putanja"></nav>
@@ -448,10 +448,10 @@ function render(){
   crumbs(); let h='',body='';
   if(ST.lvl==='srb'){const a=groupAgg(ALL());const r={...a,partial:a.done>0&&a.done<a.n};
     h=head('Srbija','Zbir svih '+fmt(a.n)+' biračkih mesta');
-    body=ST.view==='ballot'?ballot(r):status26(a.done,a.n)+results(r)+kidsTable(IDX.regions.map(g=>{const x=groupAgg(g.units);return {k:'r:'+g.id,name:g.name,n:x.n,y:x.y,done:x.done}}),'Regioni');
+    body=ST.view==='ballot'?ballot(r):status26(a.done,a.n)+results(r)+kidsTable(IDX.regions.map(g=>{const x=groupAgg(g.units);return {k:'r:'+g.id,name:g.name,n:x.n,y:x.y,done:x.done}}),'Regioni')+covView(ALL());
   } else if(ST.lvl==='reg'){const g=IDX.regions.find(r=>r.id===ST.rid),a=groupAgg(g.units),r={...a,partial:a.done>0&&a.done<a.n};
     h=head('Region',g.name);
-    body=ST.view==='ballot'?ballot(r):status26(a.done,a.n)+results(r)+kidsTable(g.units.map(id=>{const u=IDX.units[id],x=unitAgg(id);return {k:'u:'+id,name:u.short,n:u.nbm,y:u.y23,done:x.done}}).sort((p,q)=>p.name.localeCompare(q.name,'sr')),'Opštine i gradovi');
+    body=ST.view==='ballot'?ballot(r):status26(a.done,a.n)+results(r)+kidsTable(g.units.map(id=>{const u=IDX.units[id],x=unitAgg(id);return {k:'u:'+id,name:u.short,n:u.nbm,y:u.y23,done:x.done}}).sort((p,q)=>p.name.localeCompare(q.name,'sr')),'Opštine i gradovi')+covView(g.units);
   } else {const u=IDX.units[ST.uid],U=UF[ST.uid];
     if(!U){h=head(u.name,'Učitavam…');}
     else if(ST.sid){const s=U.stations.find(x=>x.sid===ST.sid),b=zOf(liveBM(ST.uid,s.sid));
@@ -463,7 +463,7 @@ function render(){
         +status26(b?1:0,1)+results(r,s.y23?(s.how&&s.how!=='isti broj i naziv'?`2023: BM ${s.n23} – ${s.name23}.`:''):'')
         +(s.y23?'':'<div class="small tag">Ovo biračko mesto nema odgovarajuće BM iz 2023, pa poređenje nije moguće.</div>')
         +`<div class="sec"><h3>Dokumenti</h3><div class="links col">${zap26(ST.uid,s)}${link(s.z23,'Zapisnik 2023 (PDF, RIK)')}</div></div>`
-        +`<div class="sec"><h3>Birački odbor 2026 – rešenja</h3>${s.odb.length?`<div class="links col">${s.odb.map(d=>link(d.l,esc(d.t))).join('')}</div>`:'<div class="small">Na RIK-u nema rešenja vezanog za ovo BM.</div>'}</div>`}
+        +boardView(s)}
     } else {const list=ST.nas!=null?U.stations.filter(s=>s.nas===ST.nas):U.stations;
       let r;
       if(ST.nas==null){const a=unitAgg(ST.uid);r={...a,partial:a.done>0&&a.done<a.n}}else r=stationAgg(U,list);
@@ -473,10 +473,16 @@ function render(){
       body=ST.view==='ballot'?ballot(r):status26(done,list.length)+results(r,note)
         +`<div class="sec"><h3>Biračka mesta (${list.length})</h3><div class="tbl"><table class="kids"><thead><tr><th>BM</th><th class="n" style="text-align:right">Izašlo 2023</th><th class="n" style="text-align:right">2026</th></tr></thead><tbody>
         ${list.map(s=>{const b=zOf(liveBM(ST.uid,s.sid));return `<tr data-k="s:${s.sid}"><td class="nm" title="${esc(s.name)}"><b>${s.n}</b> ${esc(s.name)}${alertsOf(ST.uid,s.sid).length?' <b style="color:var(--bad)">!</b>':''}</td><td class="n">${s.y23?pct(s.y23.out,s.y23.voters):'<span class="dim">nema para</span>'}</td><td class="n">${b?pct(b.out,b.voters):'<span class="dim">—</span>'}</td></tr>`}).join('')}</tbody></table></div></div>`
+        +covView(null,list)
         +(ST.nas==null&&U.odb_general&&U.odb_general.length?`<div class="sec"><h3>Opšta rešenja o odborima</h3><div class="links col">${U.odb_general.map(d=>link(d.l,esc(d.t))).join('')}</div></div>`:'')}
   }
   if(ST.view==='log'&&!ST.sid) body=logView(); else if(!ST.sid&&ST.view==='main') body+=`<button class="more" id="logb">Dnevnik promena →</button>`;
   const P=$('#panel'),keep=P.scrollTop;P.innerHTML=h+`<div class="pbody">${body}</div>`;P.scrollTop=render._keep?keep:0;render._keep=false;
+  P.querySelectorAll('tr[data-cov]').forEach(tr=>tr.onclick=()=>{const x=P.querySelector(`tr.covx[data-for="${tr.dataset.cov}"]`);if(!x)return;
+    const U=UF[ST.uid],list=ST.nas!=null?U.stations.filter(s=>s.nas===ST.nas):U.stations,k=tr.dataset.cov;
+    const miss=list.filter(s=>s.bd&&s.bd.p&&!s.bd.p.some(r=>r.key===k&&r.member));
+    x.firstElementChild.innerHTML=miss.length?'BM bez člana: '+miss.map(s=>`<a href="#" data-gs2="${s.sid}">${s.n}</a>`).join(', '):'Sva BM sa pročitanim sastavom imaju člana.';
+    x.hidden=!x.hidden;x.querySelectorAll('[data-gs2]').forEach(a=>a.onclick=e=>{e.preventDefault();go({...ST,sid:a.dataset.gs2,view:'main'},true)})});
   P.querySelectorAll('tr[data-k]').forEach(tr=>tr.onclick=()=>{const [t,v]=tr.dataset.k.split(':');
     if(t==='r')go({lvl:'reg',rid:v});else if(t==='u')go({lvl:'unit',rid:IDX.units[v].region,uid:v});else go({...ST,sid:v,view:'main'},true)});
   const toTop=()=>{if(matchMedia('(max-width:960px)').matches)P.scrollIntoView({block:'start'})};
@@ -493,6 +499,30 @@ function render(){
   else ex.innerHTML='';
   ex.querySelectorAll('button').forEach(b=>b.onclick=()=>b.dataset.r?go({lvl:'reg',rid:b.dataset.r}):go({lvl:'unit',rid:ST.rid,uid:b.dataset.u}));
 }
+const LL=()=>Object.fromEntries(IDX.lists26.map(([k,l],i)=>[k,(i+1)+'. '+l]));
+const GRP={ADMIN:'Načelnik uprave',SNS:'SNS (A. Vučić – Srbija ne sme da stane)',SDPS:'SDPS',SPS:'SPS',STUD:'Poslanici uz studente',NPS:'NPS – Novo lice',SSP:'SSP',PSG:'PSG / SDA / PDD',ZLF:'Zeleno-levi front',SVM:'SVM',NADA:'NADA',SRCE:'SRCE',EU:'Ekološki ustanak',JS:'Jedinstvena Srbija',PUPS:'PUPS',ZS:'Zdrava Srbija',MI:'MI – Glas iz naroda',DS:'DS',ZAVET:'Zavetnici',RP_RS:'Radnička partija – Ruska stranka'};
+const nm=x=>x?esc(x):'<span class="na">nije imenovan</span>';
+const roleLbl=r=>esc(r).replace(/^zamenik /,'zamenik<br>').replace(/(\d\.) /,'$1&nbsp;');
+function boardView(s){const b=s.bd,L=LL();let h='<div class="sec"><h3>Birački odbor 2026</h3>';
+  if(!b||(!b.s&&!b.p)) h+='<div class="small">Sastav još nije pročitan iz rešenja. Rešenja na RIK-u su ispod.</div>';
+  else{
+    if(!b.ver) h+='<div class="small tag" style="margin-bottom:6px">Imena su automatski pročitana sa skeniranih rešenja – moguće su greške u slovima. Za proveru otvori rešenje.</div>';
+    if(s.izm) h+=`<div class="note"><b>Izmene:</b> posle osnovnog rešenja na RIK-u ima još ${s.izm} rešenja (izmena, dopuna, prestanak…). Sastav ispod je ${b.ver?'sa primenjenim izmenama':'iz osnovnog rešenja'} – proveri rešenja ispod.</div>`;
+    if(b.s&&b.s.length) h+=`<div class="tbl"><table><thead><tr><th>Stalni sastav</th><th>Ime</th><th>Predlagač</th></tr></thead><tbody>${b.s.map(x=>`<tr><td>${roleLbl(x.role)}</td><td>${nm(x.name)}</td><td class="small">${esc(GRP[x.key]||x.by||'')}</td></tr>`).join('')}</tbody></table></div>`;
+    if(b.p&&b.p.length){h+=`<div class="tbl" style="margin-top:8px"><table><thead><tr><th>Prošireni sastav (${b.p.length} lista)</th><th>Član</th><th>Zamenik</th></tr></thead><tbody>${b.p.map(x=>`<tr><td class="small">${esc(L[x.key]||x.list||'')}</td><td>${nm(x.member)}</td><td>${nm(x.deputy)}</td></tr>`).join('')}</tbody></table></div>`;
+      const have=new Set(b.p.filter(x=>x.member||x.deputy).map(x=>x.key));const miss=IDX.lists26.map(([k,l],i)=>[k,i]).filter(([k])=>!have.has(k));
+      h+=`<div style="margin-top:8px"><span class="small">Liste bez predstavnika na ovom BM:</span><br>${miss.map(([k,i])=>`<span class="chip miss">${esc(L[k])}</span>`).join('')||'<span class="small">nema</span>'}</div>`}
+  }
+  h+=`<div class="links col" style="margin-top:8px">${s.odb.map(d=>link(d.l,esc(d.t))).join('')||'<span class="small">Na RIK-u nema rešenja vezanog za ovo BM.</span>'}</div></div>`;
+  return h}
+function covView(units,stations){ // units: lista id-jeva (agregat) ili stations (opština/naselje)
+  const L=LL();let cov={},nb=0,n=0;
+  if(stations){stations.forEach(s=>{n++;if(!(s.bd&&s.bd.p))return;nb++;s.bd.p.forEach(r=>{if(r.key&&r.member)cov[r.key]=(cov[r.key]||0)+1})})}
+  else units.forEach(id=>{const u=IDX.units[id];n+=u.nbm;nb+=u.nb||0;Object.entries(u.cov||{}).forEach(([k,v])=>cov[k]=(cov[k]||0)+v)});
+  if(!nb) return '';
+  const rows=IDX.lists26.map(([k,l],i)=>({k,l:L[k],c:cov[k]||0}));
+  return `<div class="sec"><h3>Prošireni sastav – BM sa članom liste</h3><div class="small" style="margin-bottom:6px">Od ${fmt(nb)} BM čiji je prošireni sastav pročitan${nb<n?` (ukupno ${fmt(n)} BM)`:''}.${stations?' Klikni na listu da vidiš BM bez njenog člana.':''}</div><div class="tbl"><table class="kids cov"><thead><tr><th>Lista</th><th class="n" style="text-align:right">BM</th><th class="n" style="text-align:right">%</th></tr></thead><tbody>
+   ${rows.map(r=>`<tr data-cov="${r.k}"${r.k==='STUD'?' style="font-weight:600"':''}><td class="nm" title="${esc(r.l)}">${esc(r.l)}</td><td class="n">${fmt(r.c)}</td><td class="n">${pct(r.c,nb,0)}</td></tr>${stations?`<tr class="covx" data-for="${r.k}" hidden><td colspan="3"></td></tr>`:''}`).join('')}</tbody></table></div></div>`}
 function zap26(uid,s){const b=liveBM(uid,s.sid),h=(b&&b.zap)||[];
   if(!h.length) return '<span class="small">Zapisnik 2026: još nije objavljen na RIK-u.</span>';
   return h.map((z,i)=>`<span>Zapisnik 2026${h.length>1?` – verzija ${i+1} (${esc(z.at)})`:''}: ${link(z.link,'RIK')}</span>`).join('')}
@@ -533,17 +563,22 @@ function buildIdx(){SIDX=[];IDX.regions.forEach(r=>SIDX.push({t:'r',id:r.id,labe
   Object.entries(IDX.units).forEach(([id,u])=>SIDX.push({t:'u',id,label:u.short,sub:u.name+' · '+u.nbm+' BM',key:fold(u.name+' '+u.short)}))}
 function addUnitIdx(uid){const U=UF[uid];if(!U||U._idx)return;U._idx=1;const u=IDX.units[uid];
   U.naselja.forEach((n,i)=>{if(U.stations.some(s=>s.nas===i))SIDX.push({t:'n',id:uid,i,label:n.name,sub:'naselje · '+u.short,key:fold(n.name)})});
-  U.stations.forEach(s=>SIDX.push({t:'s',id:uid,sid:s.sid,n:s.n,label:`BM ${s.n} · ${s.name}`,sub:u.short,key:fold(`bm ${s.n} ${s.name} ${u.short}`),cur:1}))}
+  U.stations.forEach(s=>{SIDX.push({t:'s',id:uid,sid:s.sid,n:s.n,label:`BM ${s.n} · ${s.name}`,sub:u.short,key:fold(`bm ${s.n} ${s.name} ${u.short}`),cur:1});
+    const b=s.bd;if(!b)return;const L=LL();
+    (b.s||[]).forEach(x=>x.name&&SIDX.push({t:'p',id:uid,sid:s.sid,n:s.n,label:x.name,sub:`BM ${s.n} ${u.short} · ${x.role}, stalni`,key:fold(x.name)}));
+    (b.p||[]).forEach(x=>{if(x.member)SIDX.push({t:'p',id:uid,sid:s.sid,n:s.n,label:x.member,sub:`BM ${s.n} ${u.short} · član, ${L[x.key]||''}`,key:fold(x.member)});
+      if(x.deputy)SIDX.push({t:'p',id:uid,sid:s.sid,n:s.n,label:x.deputy,sub:`BM ${s.n} ${u.short} · zamenik, ${L[x.key]||''}`,key:fold(x.deputy)})})})}
 const q=$('#q'),box=$('#sugg');let hits=[],act=-1;
 function search(v){const f=fold(v).trim();if(!f)return[];const w=f.split(/\s+/);const num=/^(bm\s*)?(\d{1,3})$/.exec(f);
   return SIDX.map(e=>{if(num&&e.t==='s'&&e.id===ST.uid&&e.n===+num[2])return{e,sc:200};if(!w.every(x=>e.key.includes(x)))return null;
     let sc=0;if(e.key.startsWith(w[0]))sc+=30;if(e.t==='u')sc+=10;if(e.t==='r')sc+=12;if(e.t==='s'&&e.id===ST.uid)sc+=15;return{e,sc}}).filter(Boolean).sort((a,b)=>b.sc-a.sc||a.e.label.localeCompare(b.e.label,'sr')).slice(0,12).map(x=>x.e)}
 function showSugg(){const v=q.value;hits=search(v);act=hits.length?0:-1;if(!v.trim()){box.hidden=true;return}
-  box.innerHTML=hits.length?hits.map((h,i)=>`<li role="option" id="sg${i}" data-i="${i}" class="${i===act?'act':''}"><span class="ic ${h.t==='s'?'bm':''}">${h.t==='s'?h.n:h.t==='u'?'O':h.t==='r'?'R':'N'}</span><span><b>${esc(h.label)}</b><small>${esc(h.sub)}</small></span></li>`).join(''):'<li class="none">Nema rezultata</li>';box.hidden=false}
+  box.innerHTML=hits.length?hits.map((h,i)=>`<li role="option" id="sg${i}" data-i="${i}" class="${i===act?'act':''}"><span class="ic ${h.t==='s'?'bm':''}">${h.t==='s'?h.n:h.t==='u'?'O':h.t==='r'?'R':h.t==='p'?'●':'N'}</span><span><b>${esc(h.label)}</b><small>${esc(h.sub)}</small></span></li>`).join(''):'<li class="none">Nema rezultata</li>';box.hidden=false}
 async function pick(i){const h=hits[i];if(!h)return;box.hidden=true;q.value='';q.blur();
   if(h.t==='r')go({lvl:'reg',rid:h.id});else if(h.t==='u')go({lvl:'unit',rid:IDX.units[h.id].region,uid:h.id});
   else if(h.t==='n')go({lvl:'unit',rid:IDX.units[h.id].region,uid:h.id,nas:h.i});
   else{await go({lvl:'unit',rid:IDX.units[h.id].region,uid:h.id});go({...ST,sid:h.sid},true)}}
+// osobe: t==='p' ide isto kao BM (sid)
 function setAct(i){act=i;box.querySelectorAll('li[data-i]').forEach(li=>li.classList.toggle('act',+li.dataset.i===act))}
 q.addEventListener('input',showSugg);q.addEventListener('focus',()=>{if(q.value.trim())showSugg()});
 q.addEventListener('keydown',e=>{if(box.hidden)return;if(e.key==='ArrowDown'){e.preventDefault();setAct(Math.min(act+1,hits.length-1))}else if(e.key==='ArrowUp'){e.preventDefault();setAct(Math.max(act-1,0))}else if(e.key==='Enter'){e.preventDefault();pick(act)}else if(e.key==='Escape')box.hidden=true});
