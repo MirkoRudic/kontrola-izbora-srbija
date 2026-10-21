@@ -24,7 +24,7 @@ jobs:
     timeout-minutes: 70
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 1 }
+        with: { fetch-depth: 200 }
       - name: Prati RIK
         run: |
           git config user.name "rik-uzivo"; git config user.email "rik-uzivo@users.noreply.github.com"
