@@ -90,7 +90,10 @@ print("za čitanje:", len(todo), flush=True)
 def work(j):
     uid, n, e, k, t = j
     try: txt = ocr(e["l"])
-    except Exception: txt = None
+    except Exception as ex:
+        FAILS.append("izuzetak: " + repr(ex)[:200])
+        if len(FAILS) <= 3: print("greška čitanja:", FAILS[-1], flush=True)
+        txt = None
     if txt is None: return None
     rec = dict(l=e["l"], ts=e.get("ts"), at=e.get("at"), k=k)
     if re.search(r"izmen|ispravk|dopun|razreš|prestan", t): rec["ch"] = changes(txt)
