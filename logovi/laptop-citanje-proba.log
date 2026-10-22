@@ -568,3 +568,12 @@
 22.10. 20:55:21 [laptop] nesigurno čitanje 56 219171 [('izašli', 0, None, 539), ('važeći', 0, 0, 519), ('nevažeći', 0, 0, 20)]
 22.10. 20:55:21 [laptop] nesmisleno čitanje -> oblak 56 219174 [624, 623, 11, 606]
 22.10. 20:55:21 [laptop] pročitano 2280, kandidata 331, u redu 7534
+22.10. 20:57:34 [laptop] sumnja na ! -> oblak: 56 BM 12 [['važeći', 709, 710]]
+22.10. 20:57:34 [laptop] sumnja na ! -> oblak: 56 BM 16 [['izašli', 0, 1113], ['važeći', 0, 1085], ['nevažeći', 0, 28]]
+22.10. 20:57:34 [laptop] greška 56 219219 HTTP Error 500: Internal Server Error
+22.10. 20:57:34 [laptop] greška 56 219222 <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+22.10. 20:57:34 [laptop] pročitano 2295, kandidata 333, u redu 7533
+22.10. 20:57:34 [laptop] pročitano 2310, kandidata 333, u redu 7533
+22.10. 20:57:34 [laptop] nesmisleno čitanje -> oblak 57 219288 [20, 19, 15, 704]
+22.10. 20:57:34 [laptop] nesmisleno čitanje -> oblak 57 219300 [940, 537, 11, 526]
+22.10. 20:57:34 [laptop] pročitano 2325, kandidata 335, u redu 7533
