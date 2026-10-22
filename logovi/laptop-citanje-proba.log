@@ -363,3 +363,7 @@
 22.10. 18:30:59 [laptop] ZNAK: 45 217728 {'pages': 4, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
 22.10. 18:30:59 [laptop] ZNAK: 45 217731 {'pages': 4, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
 22.10. 18:30:59 [laptop] pročitano ukupno 1380, u redu 6226
+22.10. 20:18:28 [laptop] start provere zapisnika, model qwen2.5vl:7b već pročitano 1395
+22.10. 20:18:28 [laptop] nesmisleno čitanje -> oblak 45 217782 [677, 677, 14, 660]
+22.10. 20:18:28 [laptop] ! RIK ≠ zapisnik: 45 BM 35 [['važeći', 538, 537]]
+22.10. 20:18:28 [laptop] pročitano 1410, kandidata 189, u redu 7590
