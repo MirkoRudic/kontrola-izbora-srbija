@@ -160,3 +160,9 @@
 22.10. 16:50:53 [laptop] ZNAK: 11 213432 {'pages': 3, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
 22.10. 16:50:53 [laptop] ZNAK: 11 213447 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
 22.10. 16:50:53 [laptop] pročitano ukupno 800, u redu 6806
+22.10. 16:54:32 [laptop] ZNAK: 11 213525 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 16:54:32 [laptop] ZNAK: 11 213528 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 16:54:32 [laptop] pročitano ukupno 820, u redu 6786
+22.10. 16:54:32 [laptop] ZNAK: 12 213603 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 16:54:32 [laptop] ZNAK: 12 213648 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 16:54:32 [laptop] pročitano ukupno 840, u redu 6766
