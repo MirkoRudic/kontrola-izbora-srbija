@@ -144,7 +144,7 @@ def changes(t):
             if w: out.append(dict(op="ime", old=nice(w[-1]), new=nice(m.group(2)), role=None, by=""))
     for c in out:
         for f in ("old", "new"):
-            if c.get(f): c[f] = re.sub(r"\s+(?:Iz|Из)\s+.*$", "", re.sub(r"^(?:Se|Се)\s+", "", c[f])).strip() or None
+            if c.get(f): c[f] = re.sub(r"\s+(?:Iz|Из|Sa|Са)\s+.*$", "", re.sub(r"^(?:Se|Се)\s+", "", c[f])).strip() or None
         c["key"] = (lkey(c["by"]) if c["role"] in ("član", "zamenik člana") else gkey(c["by"])) if c["by"] else None
     return out
 # izvori: nova rešenja (odbori_novi.json) + starija rešenja o izmenama iz podataka opština (--stara)
