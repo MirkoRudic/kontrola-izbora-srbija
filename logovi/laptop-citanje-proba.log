@@ -439,3 +439,20 @@
 22.10. 20:33:03 [laptop] nesmisleno čitanje -> oblak 51 218340 [1085, 1085, 36, 1059]
 22.10. 20:33:03 [laptop] nesmisleno čitanje -> oblak 51 218343 [717, 716, 699, 699]
 22.10. 20:33:03 [laptop] pročitano 1755, kandidata 241, u redu 7562
+22.10. 20:35:20 [laptop] sumnja na ! -> oblak: 51 BM 46 [['izašli', 0, 1297], ['važeći', 0, 1243], ['nevažeći', 0, 54]]
+22.10. 20:35:20 [laptop] sumnja na ! -> oblak: 51 BM 47 [['izašli', 0, 1130], ['važeći', 0, 1093], ['nevažeći', 0, 37]]
+22.10. 20:35:20 [laptop] sumnja na ! -> oblak: 51 BM 49 [['izašli', 1000, 1006]]
+22.10. 20:35:20 [laptop] sumnja na ! -> oblak: 51 BM 51 [['izašli', 0, 792], ['važeći', 0, 779], ['nevažeći', 0, 13]]
+22.10. 20:35:20 [laptop] greška 51 218391 HTTP Error 500: Internal Server Error
+22.10. 20:35:20 [laptop] pročitano 1770, kandidata 245, u redu 7561
+22.10. 20:35:20 [laptop] nesmisleno čitanje -> oblak 51 218424 [1000, 12, 0, 1212]
+22.10. 20:35:20 [laptop] sumnja na ! -> oblak: 51 BM 66 [['izašli', 0, 1260], ['važeći', 0, 1235], ['nevažeći', 0, 25]]
+22.10. 20:35:20 [laptop] nesmisleno čitanje -> oblak 51 218430 [7212, 7792, 20, 7772]
+22.10. 20:35:20 [laptop] nesmisleno čitanje -> oblak 51 218433 [None, 38, 1244, 114]
+22.10. 20:35:20 [laptop] sumnja na ! -> oblak: 51 BM 71 [['izašli', 0, 876], ['važeći', 0, 839], ['nevažeći', 0, 37]]
+22.10. 20:35:20 [laptop] sumnja na ! -> oblak: 51 BM 72 [['važeći', 1260, 1262]]
+22.10. 20:35:20 [laptop] pročitano 1785, kandidata 250, u redu 7560
+22.10. 20:35:20 [laptop] sumnja na ! -> oblak: 51 BM 73 [['izašli', 0, 849], ['važeći', 0, 833], ['nevažeći', 0, 16]]
+22.10. 20:35:20 [laptop] nesmisleno čitanje -> oblak 51 218481 [0, 0, 0, 1120]
+22.10. 20:35:20 [laptop] sumnja na ! -> oblak: 51 BM 87 [['izašli', 0, 802], ['važeći', 0, 768], ['nevažeći', 0, 34]]
+22.10. 20:35:20 [laptop] pročitano 1800, kandidata 253, u redu 7559
