@@ -23,5 +23,10 @@
   "vreme": "22.10. 14:51:47",
   "gde": "github",
   "poslednje": "pročitano novih rešenja: 0 | neuspelih preuzimanja: 0"
+ },
+ "laptop-nadzor": {
+  "vreme": "22.10. 14:57:55",
+  "gde": "laptop",
+  "poslednje": "nadzor start (PID 16936)"
  }
 }
