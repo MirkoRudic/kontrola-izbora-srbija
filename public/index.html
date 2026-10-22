@@ -777,9 +777,17 @@ async function fromHash(){const m=/^#(?:r(\d+)|o(\d+)(?:-n(\d+))?(?:-bm(\d+))?)$
 const CYR={'а':'a','б':'b','в':'v','г':'g','д':'d','ђ':'dj','е':'e','ж':'ž','з':'z','и':'i','ј':'j','к':'k','л':'l','љ':'lj','м':'m','н':'n','њ':'nj','о':'o','п':'p','р':'r','с':'s','т':'t','ћ':'ć','у':'u','ф':'f','х':'h','ц':'c','ч':'č','џ':'dž','ш':'š'};
 const fold=t=>String(t??'').toLowerCase().replace(/[а-џ]/g,c=>CYR[c]??c).replace(/đ/g,'dj').normalize('NFD').replace(/[̀-ͯ]/g,'');
 let SIDX=[];
-function buildIdx(){SIDX=[];IDX.regions.forEach(r=>SIDX.push({t:'r',id:r.id,label:r.name,sub:r.units.length+' jedinica',key:fold(r.name)}));
+function buildIdx(){SIDX=SIDX.filter(e=>e.t!=='r'&&e.t!=='u');IDX.regions.forEach(r=>SIDX.push({t:'r',id:r.id,label:r.name,sub:r.units.length+' jedinica',key:fold(r.name)}));
   Object.entries(IDX.units).forEach(([id,u])=>SIDX.push({t:'u',id,label:u.short,sub:u.name+' · '+u.nbm+' BM',key:fold(u.name+' '+u.short)}))}
-function addUnitIdx(uid){const U=UF[uid];if(!U||U._idx)return;U._idx=1;const u=IDX.units[uid];
+let GI=null;const GIU=new Set();
+async function loadGI(){if(GI!==null)return;GI=false;const d=await get('data/pretraga.json');if(!d||!d.u)return;GI=true;const L=LL(),LK=IDX.lists26.map(([k])=>L[k]);
+  Object.entries(d.u).forEach(([uid,x])=>{if(!IDX.units[uid]||(UF[uid]&&UF[uid]._idx))return;GIU.add(uid);const u=IDX.units[uid];
+    (x.n||[]).forEach(([i,nm])=>SIDX.push({t:'n',id:uid,i,label:nm,sub:'naselje · '+u.short,key:fold(nm)}));
+    (x.s||[]).forEach(([sid,n,nm])=>SIDX.push({t:'s',id:uid,sid,n,label:`BM ${n} · ${nm}`,sub:u.short,key:fold(`bm ${n} ${nm} ${u.short}`),cur:1}));
+    (x.p||[]).forEach(([i,nm,r])=>{const st=x.s[i];if(!st)return;const role=typeof r==='number'?(r>0?'član, ':'zamenik, ')+(LK[Math.abs(r)-1]||''):r+', stalni';
+      SIDX.push({t:'p',id:uid,sid:st[0],n:st[1],label:nm,sub:`BM ${st[1]} ${u.short} · ${role}`,key:fold(nm)})})});
+  if(q.value.trim())showSugg()}
+function addUnitIdx(uid){const U=UF[uid];if(!U||U._idx)return;U._idx=1;if(GIU.has(uid))return;const u=IDX.units[uid];
   U.naselja.forEach((n,i)=>{if(U.stations.some(s=>s.nas===i))SIDX.push({t:'n',id:uid,i,label:n.name,sub:'naselje · '+u.short,key:fold(n.name)})});
   U.stations.forEach(s=>{SIDX.push({t:'s',id:uid,sid:s.sid,n:s.n,label:`BM ${s.n} · ${s.name}`,sub:u.short,key:fold(`bm ${s.n} ${s.name} ${u.short}`),cur:1});
     const b=s.bd;if(!b)return;const L=LL();
@@ -798,7 +806,7 @@ async function pick(i){const h=hits[i];if(!h)return;box.hidden=true;q.value='';q
   else{await go({lvl:'unit',rid:IDX.units[h.id].region,uid:h.id});go({...ST,sid:h.sid},true)}}
 // osobe: t==='p' ide isto kao BM (sid)
 function setAct(i){act=i;box.querySelectorAll('li[data-i]').forEach(li=>li.classList.toggle('act',+li.dataset.i===act))}
-q.addEventListener('input',showSugg);q.addEventListener('focus',()=>{if(q.value.trim())showSugg()});
+q.addEventListener('input',()=>{showSugg();if(q.value.trim().length>=3&&GI===null)loadGI()});q.addEventListener('focus',()=>{if(q.value.trim())showSugg()});
 q.addEventListener('keydown',e=>{if(box.hidden)return;if(e.key==='ArrowDown'){e.preventDefault();setAct(Math.min(act+1,hits.length-1))}else if(e.key==='ArrowUp'){e.preventDefault();setAct(Math.max(act-1,0))}else if(e.key==='Enter'){e.preventDefault();pick(act)}else if(e.key==='Escape')box.hidden=true});
 box.addEventListener('mousedown',e=>{const li=e.target.closest('li[data-i]');if(li){e.preventDefault();pick(+li.dataset.i)}});
 document.addEventListener('click',e=>{if(!e.target.closest('.search'))box.hidden=true});
