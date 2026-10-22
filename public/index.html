@@ -1,4 +1,4 @@
-<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261022215048"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
+<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261022215312"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
 
 :root{
   --bg:#f4f2ec; --panel:#fffdf8; --ink:#1c2228; --muted:#5f6973; --line:#d9d4c7; --soft:#ebe7dc;
@@ -281,6 +281,7 @@ th .sbtn.on{color:var(--accent)}
 .mkc circle{fill:var(--panel);stroke:var(--accent)}.mkc text{fill:var(--accent);font-family:var(--sans)!important;font-weight:700!important}
 .mkc.sel circle{stroke:var(--sel)}
 .pbody .tbl td,.pbody .tbl th{vertical-align:middle}
+.shp{width:min(460px,100%)}.shimg{display:grid;place-items:center;min-height:200px;margin:8px 0 10px}.shimg img{width:100%;border-radius:8px;border:1px solid var(--line)}.shb{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.shb .more{margin-top:0;text-decoration:none}
 </style>
 
 <div class="wrap">
@@ -401,13 +402,14 @@ function results(r,notes){
   </tbody></table></div>
   <div style="display:flex;gap:8px"><button class="more" id="more">DETALJNO</button>${dnBtn}</div></div>`}
 let btab='2026', bsort=false;
-function ballot(r,extra){
+let _SHR=null;
+function ballot(r,extra){_SHR=r;
   const tabs=`<div class="tabs" role="tablist"><button role="tab" data-b="2026" aria-selected="${btab==='2026'}">2026</button><button role="tab" data-b="2023" aria-selected="${btab==='2023'}">2023</button></div>`;
   let lists,valid,note='';
   if(btab==='2026'){lists=IDX.lists26.map(([k,l],i)=>[l,r.z?(r.z.lists[i]??0):null]);valid=r.z&&r.z.valid;if(!r.z)note='Rezultati za 2026. još nisu objavljeni na RIK-u.'}
   else{if(!r.y){lists=[];note='Za ovo BM nema para iz 2023.'}else{lists=IDX.lists23.map((l,i)=>[l,r.y.lists[i]]);valid=r.y.valid}}
   const max=Math.max(...lists.map(l=>l[1]||0),1), sumL=lists.reduce((a,l)=>a+(l[1]||0),0);
-  return `<button class="back2" id="back2">← Nazad</button>${tabs}
+  return `<div style="display:flex;justify-content:space-between;align-items:center"><button class="back2" id="back2">← Nazad</button><button class="more" id="shareb" style="margin-top:6px">PODELI</button></div>${tabs}
   <div class="sec"><h3>Izborni listić ${btab} – svi glasovi</h3>${note?`<div class="small" style="margin-bottom:6px">${note}</div>`:''}${lists.length?`<div class="tbl"><table><thead><tr><th>#</th><th>Lista</th><th style="text-align:right"><button class="sortbtn" id="bsort">Glasova ${bsort?'▼':'↕'}</button></th><th style="text-align:right">%</th></tr></thead><tbody>
   ${lists.map((l,i)=>[l,i]).sort((a,b)=>bsort?((b[0][1]||0)-(a[0][1]||0)||a[1]-b[1]):a[1]-b[1]).map(([l,i])=>`<tr${l[1]?'':' class="zero"'}><td class="n">${i+1}.</td><td>${esc(l[0])}${l[1]!=null?`<div class="bar" style="width:${((l[1]||0)/max*100).toFixed(1)}%"></div>`:''}</td><td class="n">${l[1]==null?'—':fmt(l[1])}</td><td class="n">${l[1]==null?'':pct(l[1],valid)}</td></tr>`).join('')}
   ${valid!=null?(()=>{const o=btab==='2026'?r.z:r.y;const tr=(l,v,b)=>`<tr class="tot"><td></td><td>${l}</td><td class="n">${fmt(v)}</td><td class="n">${b?pct(v,b):''}</td></tr>`;
@@ -699,6 +701,7 @@ function render(){
   P.querySelectorAll('.cnt button').forEach(b=>b.onclick=()=>{const f=b.dataset.f;if(f==='p'){ST.tab='prim';ST.flt=null}else ST.flt=ST.flt===f?null:f;render._keep=true;render()});
   const sb=$('#sigb');if(sb)sb.onclick=e=>{e.stopPropagation();TIPON=!TIPON;$('#sigt').hidden=!TIPON};
   P.querySelectorAll('[data-gu]').forEach(x=>x.onclick=async e=>{e.preventDefault();const uid=x.dataset.gu;await go({lvl:'unit',rid:IDX.units[uid].region,uid});const sid=x.dataset.gs||(UF[uid].stations.find(s=>s.n===+x.dataset.gn)||{}).sid;if(sid)go({...ST,sid},true)});
+  const shb=$('#shareb');if(shb)shb.onclick=()=>{const d=shareData();if(d)shareOpen(d)};
   const b2=$('#back2');if(b2)b2.onclick=()=>{ST.view='main';render();toTop()};
   const bs=$('#bsort');if(bs)bs.onclick=()=>{bsort=!bsort;render._keep=true;render()};
   P.querySelectorAll('.tabs button[data-b]').forEach(b=>b.onclick=()=>{btab=b.dataset.b;render._keep=true;render()});
@@ -885,7 +888,51 @@ async function loadLiveUnit(uid){const L=LIVE.u[uid];if(!(L&&(L.done||(L.ob&&L.o
   setInterval(async()=>{await loadLive();await loadZap();await loadObl();if(ST.uid)await loadLiveUnit(ST.uid);render._keep=true;render();updateMarks()},60000);
 })();
 
-// ---------- nova verzija aplikacije ----------
+// ---------- PODELI: slika rezultata (1080×1350) za Viber, WhatsApp… (kao u Večnoj slavi) ----------
+async function shareImg(d){const W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  const C={bg:'#0f1317',card:'#181d23',line:'#2c333b',text:'#eef0f2',muted:'#9aa3ab',acc:'#7fb6dc',bar:'#3d6f93'};
+  const F='"IBM Plex Sans",system-ui,sans-serif',M='"IBM Plex Mono",ui-monospace,monospace';
+  try{await Promise.all([`700 44px ${F}`,`500 24px ${F}`,`500 24px ${M}`].map(f=>document.fonts.load(f)))}catch(e){}
+  const fmtn=n=>n==null?'—':Number(n).toLocaleString('sr-Latn-RS'),pc=(a,b)=>b?(100*a/b).toLocaleString('sr-Latn-RS',{minimumFractionDigits:1,maximumFractionDigits:1})+' %':'';
+  const fit=(t,w)=>{if(x.measureText(t).width<=w)return t;while(t.length>1&&x.measureText(t+'…').width>w)t=t.slice(0,-1);return t.trimEnd()+'…'};
+  x.fillStyle=C.bg;x.fillRect(0,0,W,H);const X=64,IW=W-2*X;
+  x.textBaseline='alphabetic';x.font=`700 30px ${F}`;x.fillStyle=C.acc;x.fillText('KONTROLA IZBORA · '+d.app.toUpperCase(),X,92);
+  x.font=`500 20px ${M}`;x.fillStyle=C.muted;x.textAlign='right';x.fillText('PARLAMENTARNI IZBORI',X+IW,78);x.fillText(d.year==='2026'?'25.10.2026.':'17.12.2023.',X+IW,104);x.textAlign='left';
+  x.font=`700 46px ${F}`;x.fillStyle=C.text;let y=176;const words=String(d.title).split(' ');let line='';const lines=[];
+  for(const w of words){const t=line?line+' '+w:w;if(x.measureText(t).width>IW&&line){lines.push(line);line=w}else line=t}lines.push(line);
+  lines.slice(0,2).forEach((l,i)=>{x.fillText(i===1&&lines.length>2?fit(l+'…',IW):l,X,y);y+=56});
+  if(d.sub){x.font=`500 24px ${F}`;x.fillStyle=C.muted;x.fillText(fit(d.sub,IW),X,y-12);y+=26}
+  y+=10;x.fillStyle=C.line;x.fillRect(X,y,IW,2);y+=26;
+  const rows=d.rows.filter(r=>r[1]).sort((a,b)=>b[1]-a[1]),top=rows.slice(0,11),rest=rows.slice(11).reduce((a,r)=>a+r[1],0);if(rest)top.push(['Ostale liste',rest]);
+  const mx=Math.max(1,...top.map(r=>r[1])),RH=Math.min(62,(H-y-300)/Math.max(top.length,1));
+  top.forEach(([n,v])=>{x.font=`500 25px ${F}`;x.fillStyle=C.text;x.fillText(fit(n,IW-250),X,y+26);
+    x.font=`500 25px ${M}`;x.textAlign='right';x.fillStyle=C.text;x.fillText(pc(v,d.valid),X+IW,y+26);x.fillStyle=C.muted;x.fillText(fmtn(v),X+IW-150,y+26);x.textAlign='left';
+    x.fillStyle=C.bar;x.fillRect(X,y+36,Math.max(3,(IW)*v/mx),7);y+=RH});
+  y=Math.max(y+10,H-270);x.fillStyle=C.line;x.fillRect(X,y,IW,2);y+=20;
+  const box=[['IZAŠLO',pc(d.out,d.voters),fmtn(d.out)+' od '+fmtn(d.voters)],['VAŽEĆI',fmtn(d.valid),pc(d.valid,d.out)+' izašlih'],['NEVAŽEĆI',fmtn(d.invalid),pc(d.invalid,d.out)+' izašlih']];
+  const bw=(IW-2*18)/3;box.forEach((b,i)=>{const bx=X+i*(bw+18);x.fillStyle=C.card;x.beginPath();x.roundRect(bx,y,bw,128,16);x.fill();
+    x.font=`500 17px ${M}`;x.fillStyle=C.muted;x.fillText(b[0],bx+22,y+36);x.font=`700 40px ${F}`;x.fillStyle=C.text;x.fillText(b[1],bx+22,y+84);x.font=`500 18px ${F}`;x.fillStyle=C.muted;x.fillText(fit(b[2],bw-40),bx+22,y+112)});
+  y+=160;x.font=`500 20px ${F}`;x.fillStyle=C.muted;x.fillText(fit(d.note||'',IW),X,y);
+  x.font=`500 20px ${M}`;x.fillStyle=C.acc;x.textAlign='right';x.fillText(d.host,X+IW,H-40);x.textAlign='left';
+  return await new Promise(r=>c.toBlob(r,'image/png'))}
+async function shareOpen(d){const el=document.createElement('div');el.className='flyd';el.innerHTML=`<div class="fly shp" role="dialog" aria-label="Podeli"><button class="x" aria-label="Zatvori">✕</button><h4>Podeli rezultate</h4><div class="shimg"><span class="small">Pravim sliku…</span></div><div class="shb"></div></div>`;
+  const close=()=>{el.remove();document.removeEventListener('keydown',esc_)},esc_=e=>{if(e.key==='Escape')close()};el.onclick=e=>{if(e.target===el||e.target.closest('.x'))close()};document.addEventListener('keydown',esc_);document.body.appendChild(el);
+  try{const b=await shareImg(d);const u=URL.createObjectURL(b),ime='kontrola-izbora-'+String(d.title).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').slice(0,40)+'.png';
+    const f=new File([b],ime,{type:'image/png'}),can=typeof navigator.canShare==='function'&&navigator.canShare({files:[f]});
+    el.querySelector('.shimg').innerHTML=`<img src="${u}" alt="Slika rezultata">`;
+    el.querySelector('.shb').innerHTML=(can?'<button class="more shgo">PODELI</button>':'')+`<a class="more" href="${u}" download="${ime}">${can?'Sačuvaj sliku':'SAČUVAJ SLIKU'}</a><button class="more shcp">Kopiraj link</button>`+(can?'<div class="small" style="margin-top:6px">Viber, WhatsApp i ostale aplikacije su u meniju „Podeli”.</div>':'');
+    const g=el.querySelector('.shgo');if(g)g.onclick=async()=>{try{await navigator.share({files:[f],text:d.url})}catch(e){}};
+    el.querySelector('.shcp').onclick=async e=>{try{await navigator.clipboard.writeText(d.url);e.target.textContent='Kopirano'}catch(_){}}}
+  catch(e){el.querySelector('.shimg').innerHTML='<span class="small">Slika nije napravljena. Pokušaj ponovo.</span>'}}
+
+function shareData(){const r=_SHR,o=btab==='2026'?r.z:r.y;if(!o)return null;let title,sub='';
+  if(ST.lvl==='srb')title='Srbija';else if(ST.lvl==='reg')title=IDX.regions.find(g=>g.id===ST.rid).name;
+  else{const u=IDX.units[ST.uid],U=UF[ST.uid];if(ST.sid){const st=U.stations.find(x=>x.sid===ST.sid);title=`BM ${st.n} · ${st.name}`;sub=u.short+(st.nas!=null&&U.naselja[st.nas]&&!fold(U.naselja[st.nas].name).includes(fold(u.short))?' · '+U.naselja[st.nas].name:'')+(st.adr?' · '+st.adr:'')}
+    else if(ST.nas!=null){title=U.naselja[ST.nas].name;sub=u.short}else title=u.name}
+  const names=btab==='2026'?IDX.lists26.map(([k,l])=>l):IDX.lists23;const m=LIVE.meta;
+  const note=btab==='2026'?((m&&m.sim?'PROBA (rezultati 2023) · ':'')+(r.partial?'Delimični rezultati':'Rezultati')+' sa RIK-a'+(m&&m.checked?' · stanje '+m.checked:'')):'Rezultati RIK-a, parlamentarni izbori 17. 12. 2023.';
+  return {app:'Srbija',title,sub,year:btab,rows:names.map((n,i)=>[n,o.lists[i]||0]),valid:o.valid,invalid:o.invalid,out:o.out,voters:o.voters,note,url:location.href,host:location.host}}
+
 (function(){const m=document.querySelector('meta[name=appv]');if(!m||!location.protocol.startsWith('http'))return;const v0=m.content;
   const chk=async()=>{try{const r=await fetch('version.txt?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const v=(await r.text()).trim();if(!v||v===v0)return;
     if(document.hidden){location.reload();return}
