@@ -256,6 +256,15 @@ header h1{cursor:pointer}
 .lnk{font-size:13px;margin:10px 0 0}.prov{margin:12px 0 10px}
 .ok-c{background:var(--good)}.org-c{background:var(--org)}
 :root{--org:#e8912d}
+
+html{scrollbar-gutter:stable}.panel{scrollbar-gutter:stable;overflow-y:auto}
+.ph1{height:26px}.phm{height:78px;display:flex;flex-direction:column;justify-content:center;margin-top:4px}
+.phm .ph2{height:auto;margin-top:0}
+.phm .ph3{margin-top:3px}
+.badge.nt{background:var(--soft);color:var(--ink);border:1px solid var(--line);min-width:16px;height:16px;font-size:10.5px}
+table.kids.nc tr{cursor:default}table.kids.nc tr:hover td{background:none}
+th .sbtn{font:inherit;background:none;border:0;padding:0;color:inherit;cursor:pointer;text-transform:inherit;letter-spacing:inherit}
+th .sbtn.on{color:var(--accent)}
 </style>
 
 <div class="wrap">
@@ -507,7 +516,7 @@ function status26b(done,n,m){
 const prog=(d,n)=>`<span class="prog" title="${d}/${n}"><i style="width:${n?Math.round(100*d/n):0}%"></i></span>`;
 function kidsTable(rows,head){return `<div class="sec"><h3>${head}</h3><div class="tbl"><table class="kids"><thead><tr><th>Naziv</th><th class="n" style="text-align:right">BM</th><th class="n" style="text-align:right">Izašlo 2023</th><th class="n" style="text-align:right">2026</th></tr></thead><tbody>
   ${rows.map(r=>`<tr data-k="${esc(r.k)}"><td class="nm" title="${esc(r.name)}">${esc(r.name)}</td><td class="n">${fmt(r.n)}</td><td class="n">${r.y?pct(r.y.out,r.y.voters):'—'}</td><td class="n">${r.done?(r.done>=r.n?'✓':`${r.done}/${r.n}`):'<span class="dim">—</span>'}${prog(r.done||0,r.n)}</td></tr>`).join('')}</tbody></table></div></div>`}
-function head(eyebrow,title,no,adr,sig,tabs){return `<div class="ph">${no!=null||eyebrow||sig?`<div class="ph1">${no!=null?`<span class="bmno">BM ${no}</span>`:''}<span class="place">${esc(eyebrow)}</span>${sig||''}</div>`:''}<div class="ph2" title="${esc(title)}">${esc(title)}</div>${adr!==undefined?`<div class="ph3" title="${esc(adr||'')}">${adr?esc(adr):'&nbsp;'}</div>`:''}${tabs||''}</div>`}
+function head(eyebrow,title,no,adr,sig,tabs){return `<div class="ph"><div class="ph1">${no!=null?`<span class="bmno">BM ${no}</span>`:''}<span class="place">${esc(eyebrow||'')}</span>${sig||''}</div><div class="phm"><div class="ph2" title="${esc(title)}">${esc(title)}</div>${adr?`<div class="ph3" title="${esc(adr)}">${esc(adr)}</div>`:''}</div>${tabs||''}</div>`}
 // ---------- signali (zapisnici) ----------
 let OBL=null,OBLT=0,OPROV=null,TIPON=false;
 async function loadObl(force){if(!force&&Date.now()-OBLT<170000)return;OBLT=Date.now();const z=await get(RAW+'data/zap/oblak.json?t='+Math.floor(Date.now()/60000));if(z)OBL=z}
@@ -527,7 +536,7 @@ function cntHtml(c){const f=(k,num,ic,lb)=>`<button type="button" data-f="${k}"$
   return `<div class="cnt">${f('ok',c.n<1000?`${fmt(c.ok)}<small>/${fmt(c.n)}</small>`:fmt(c.ok),'<i class="ok-c"></i>','provereno')}${f('chk',fmt(c.chk),'<i class="org-c"></i>','u proveri')}${f('p',fmt(c.p),'<span style="color:var(--org)">P</span>','primedbe')}${f('e',fmt(c.e),'<span style="color:var(--bad)">!</span>','ne slaže se')}${f('x',fmt(c.x),'<span style="color:var(--bad)">✕</span>','poništeno')}</div>`}
 const FLT={ok:g=>g.ok,chk:g=>g.chk,p:g=>g.p,e:g=>g.e,x:g=>g.x};
 function stMatch(uid,s){if(!ST.flt)return true;const g=sigOf(uid,s.sid);return ST.flt==='ok'?g.st==='ok':ST.flt==='chk'?g.st==='chk':ST.flt==='p'?g.p>0:ST.flt==='e'?g.ne.length>0:g.x}
-function ptabs(np,no){const t=(k,l,n)=>`<button type="button" class="${ST.tab===k?'on':''}" data-t="${k}">${l}${n?`<span class="badge">${n>99?'99+':n}</span>`:''}</button>`;
+function ptabs(np,no){const t=(k,l,n)=>`<button type="button" class="${ST.tab===k?'on':''}" data-t="${k}">${l}${n?`<span class="badge${k==='odb'?' nt':''}">${n>99?'99+':n}</span>`:''}</button>`;
   return `<div class="ptabs" role="tablist">${t('rez','Rezultati')}${t('prim','Primedbe',np)}${t('odb','Odbori',no)}</div>`}
 function primView(pairs){
   const neIt=pairs.map(([uid,sid])=>{const g=rawSig(uid,sid);if(!g.ne.length)return null;const o=oblR(uid,sid),r=zapR(uid,sid),at=(o&&o.at)||(r&&r.at)||'';
@@ -571,7 +580,9 @@ const dnItem=(e,l2)=>`<div class="it"><div class="d1">${esc(e.at||'')}</div><div
 const dnBtn='<button class="more" id="dnb">DNEVNIK</button>';
 function dnView(items){items=items.filter(e=>e.at).sort((a,b)=>akey(b.at)-akey(a.at));
   return `<button class="back2" id="back2">← Nazad</button><div class="sec" style="margin-top:8px"><h3>Dnevnik rezultata</h3>${items.length?items.slice(0,400).map(e=>dnItem(e,e.l2)).join(''):'<div class="small">Još nema upisa.</div>'}</div>`}
-const olIzm=uids=>{const S=new Set(uids);return (OLOG||[]).filter(e=>S.has(e.u)&&isIzm(e.detail||'')).length};
+const CUT=Date.parse('2026-10-23T00:00:00+02:00')/1000,CUTK=10230000; // akey('23.10. 00:00')
+const isNewD=d=>(d.ts||0)>=CUT;
+const olIzm=uids=>{const S=new Set(uids);return (OLOG||[]).filter(e=>S.has(e.u)&&akey(e.at)>=CUTK).length};
 const provLine=()=>`<div class="small prov">Provereno: ${esc(OPROV||'—')}</div>`;
 const tsF=ts=>{if(!ts)return '';const d=new Date(ts*1000),p=x=>String(x).padStart(2,'0');return `${d.getDate()}.${d.getMonth()+1}. ${p(d.getHours())}:${p(d.getMinutes())}`};
 const bibBtn='<button class="more" id="bibb">BIBLIOTEKA</button>';
@@ -603,7 +614,7 @@ function render(){
     if(!U){h=head(u.name,'Učitavam…');}
     else if(ST.sid){const s=U.stations.find(x=>x.sid===ST.sid),b=zOf(liveBM(ST.uid,s.sid)),g=sigOf(ST.uid,s.sid);
       const r={y:s.y23,z:b,zc:null,partial:false},docs=odbOf(ST.uid,s);
-      h=head(u.short+(s.nas!=null&&U.naselja[s.nas]?' · '+U.naselja[s.nas].name:''),s.name,s.n,s.adr||'',sigHtml(g),ptabs(g.p+(g.ne.length?1:0),docs.filter(d=>isIzm(d.t)).length));
+      h=head(u.short+(s.nas!=null&&U.naselja[s.nas]?' · '+U.naselja[s.nas].name:''),s.name,s.n,s.adr||'',sigHtml(g),ptabs(g.p+(g.ne.length?1:0),docs.filter(isNewD).length));
       if(ST.tab==='prim') body=primView([[ST.uid,s.sid]]);
       else if(ST.tab==='odb') body=ST.view==='bib'?bibBM(s,docs):provLine()+boardView(s,docs);
       else if(ST.view==='dn') body=dnView(dnBM(liveBM(ST.uid,s.sid),zapR(ST.uid,s.sid)).map(e=>({...e,l2:`BM ${s.n} · ${esc(placeOf(ST.uid,s.n))}`})));
@@ -615,7 +626,7 @@ function render(){
       let r;
       if(ST.nas==null){const a=unitAgg(ST.uid);r={...a,partial:a.done>0&&a.done<a.n}}else r=stationAgg(U,list);
       const c=cntStations(ST.uid,list);
-      h=head(ST.nas!=null?u.short:regUnits(u.region).length===1?'':IDX.regions.find(g=>g.id===u.region).name,ST.nas!=null?U.naselja[ST.nas].name:u.name,null,undefined,'',ptabs(c.p+c.e,list.reduce((a,st)=>a+odbOf(ST.uid,st).filter(d=>isIzm(d.t)).length,0)));
+      h=head(ST.nas!=null?u.short:regUnits(u.region).length===1?'':IDX.regions.find(g=>g.id===u.region).name,ST.nas!=null?U.naselja[ST.nas].name:u.name,null,undefined,'',ptabs(c.p+c.e,list.reduce((a,st)=>a+odbOf(ST.uid,st).filter(isNewD).length,0)));
       const done=list.filter(s=>zOf(liveBM(ST.uid,s.sid))).length;
       const note=ST.nas!=null?`Zbir 2023 je za ${r.yAll} od ${list.length} BM koja imaju par iz 2023.`:(u.nbm-u.matched?`${u.nbm-u.matched} od ${u.nbm} BM nema par iz 2023 (zbir opštine se poredi u celini).`:'');
       const fl=list.filter(s=>stMatch(ST.uid,s));
@@ -639,6 +650,7 @@ function render(){
   const toTop=()=>{if(matchMedia('(max-width:960px)').matches)P.scrollIntoView({block:'start'})};
   const mo=$('#more');if(mo)mo.onclick=()=>{ST.view='ballot';render();toTop()};
   P.querySelectorAll('[data-ne]').forEach(x=>x.onclick=()=>{const [u,sd]=x.dataset.ne.split('|');neFly(u,sd)});
+  P.querySelectorAll('[data-cs]').forEach(b=>b.onclick=()=>{const k=b.dataset.cs;COVS=COVS.k===k&&k!=='i'?{k,d:-COVS.d}:{k,d:1};render._keep=true;render()});
   const db=$('#dnb');if(db)db.onclick=async()=>{ST.view='dn';render();toTop();if(LOG==null&&!ST.uid){await loadLog();render._keep=true;render()}};
   const bb=$('#bibb');if(bb)bb.onclick=()=>{ST.view='bib';render();toTop()};
   P.querySelectorAll('.ptabs button').forEach(b=>b.onclick=()=>{ST.tab=b.dataset.t;ST.view='main';TIPON=false;render._keep=true;render()});
@@ -671,17 +683,19 @@ function boardView(s,docs){const b=s.bd,L=LL();let h='<div class="sec">';
       h+=`<div style="margin-top:8px"><span class="small">Liste bez predstavnika na ovom BM:</span><br>${miss.map(([k,i])=>`<span class="chip miss">${esc(L[k])}</span>`).join('')||'<span class="small">nema</span>'}</div>`}
   }
   const d=docs[0];
-  if(d) h+=`<div class="lnk">${d.ts&&Date.now()/1000-d.ts<3*86400?'<span class="nov2">NOVO</span>':''}${link(d.l,esc(d.t))}${d.ts?` <span class="small">(${tsF(d.ts)})</span>`:''}</div>`;
+  if(d) h+=`<div class="lnk">${isNewD(d)?'<span class="nov2">NOVO</span>':''}${link(d.l,esc(d.t))}${d.ts?` <span class="small">(${tsF(d.ts)})</span>`:''}</div>`;
   else h+='<div class="small" style="margin-top:8px">Na RIK-u nema rešenja vezanog za ovo BM.</div>';
   return h+bibBtn+'</div>'}
+let COVS={k:'i',d:1};
 function covView(units,stations){ // units: lista id-jeva (agregat) ili stations (opština/naselje)
   const L=LL();let cov={},nb=0,n=0;
   if(stations){stations.forEach(s=>{n++;if(!(s.bd&&s.bd.p))return;nb++;s.bd.p.forEach(r=>{if(r.key&&r.member)cov[r.key]=(cov[r.key]||0)+1})})}
   else units.forEach(id=>{const u=IDX.units[id];n+=u.nbm;nb+=u.nb||0;Object.entries(u.cov||{}).forEach(([k,v])=>cov[k]=(cov[k]||0)+v)});
   if(!nb) return '';
-  const rows=IDX.lists26.map(([k,l],i)=>({k,l:L[k],c:cov[k]||0}));
-  return `<div class="sec"><h3>Prošireni sastav – BM sa članom liste</h3><div class="small" style="margin-bottom:6px">Od ${fmt(nb)} BM čiji je prošireni sastav pročitan${nb<n?` (ukupno ${fmt(n)} BM)`:''}.${stations?' Klikni na listu da vidiš BM bez njenog člana.':''}</div><div class="tbl"><table class="kids cov"><thead><tr><th>Lista</th><th class="n" style="text-align:right">BM</th><th class="n" style="text-align:right">%</th></tr></thead><tbody>
-   ${rows.map(r=>`<tr data-cov="${r.k}"${r.k==='STUD'?' style="font-weight:600"':''}><td class="nm" title="${esc(r.l)}">${esc(r.l)}</td><td class="n">${fmt(r.c)}</td><td class="n">${pct(r.c,nb,0)}</td></tr>${stations?`<tr class="covx" data-for="${r.k}" hidden><td colspan="3"></td></tr>`:''}`).join('')}</tbody></table></div></div>`}
+  const rows=IDX.lists26.map(([k,l],i)=>({k,i,l:L[k],c:cov[k]||0})).sort((a,b)=>COVS.k==='i'?a.i-b.i:(COVS.d*(b.c-a.c)||a.i-b.i));
+  const sb=(k,l)=>`<button type="button" class="sbtn${COVS.k===k?' on':''}" data-cs="${k}">${l}${COVS.k===k&&k!=='i'?(COVS.d>0?' ▼':' ▲'):''}</button>`;
+  return `<div class="sec"><h3>Prošireni sastav – BM sa članom liste</h3><div class="small" style="margin-bottom:6px">Od ${fmt(nb)} BM čiji je prošireni sastav pročitan${nb<n?` (ukupno ${fmt(n)} BM)`:''}.${stations?' Klikni na listu da vidiš BM bez njenog člana.':''}</div><div class="tbl"><table class="kids cov${stations?'':' nc'}"><thead><tr><th>${sb('i','Lista')}</th><th class="n" style="text-align:right">${sb('c','BM')}</th><th class="n" style="text-align:right">${sb('c','%')}</th></tr></thead><tbody>
+   ${rows.map(r=>`<tr data-cov="${r.k}"><td class="nm" title="${esc(r.l)}">${esc(r.l)}</td><td class="n">${fmt(r.c)}</td><td class="n">${pct(r.c,nb,0)}</td></tr>${stations?`<tr class="covx" data-for="${r.k}" hidden><td colspan="3"></td></tr>`:''}`).join('')}</tbody></table></div></div>`}
 function zap26(uid,s){const b=liveBM(uid,s.sid),h=(b&&b.zap)||[];
   if(!h.length) return '<span class="small">Zapisnik 2026: još nije objavljen na RIK-u.</span>';
   return h.map((z,i)=>`<span>Zapisnik 2026${h.length>1?` – verzija ${i+1} (${esc(z.at)})`:''}: ${link(z.link,'RIK')}</span>`).join('')}
