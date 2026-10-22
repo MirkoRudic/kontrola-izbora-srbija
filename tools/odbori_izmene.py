@@ -49,8 +49,8 @@ def ocr(url):
         for png in pngs:
             txt += subprocess.run([TESS, png, "-", "-l", "srp+srp_latn", "--psm", "6"], capture_output=True).stdout.decode("utf-8", "replace") + "\n"
         return txt
-ROLEW = [(r"заменика\s+председника", "zamenik predsednika"), (r"председника", "predsednik"), (r"заменика\s+члана\s*(\d)", "zamenik {}. člana"), (r"члана\s*(\d)", "{}. član"), (r"заменика\s+(\d)\s*[.,]?\s*члана", "zamenik {}. člana"),
-         (r"(\d)\s*[.,]?\s*члана", "{}. član"), (r"заменика\s+члана", "zamenik člana"), (r"члана", "član")]
+ROLEW = [(r"заменик\w*\s+председник\w*", "zamenik predsednika"), (r"председник\w*", "predsednik"), (r"заменик\w*\s+члан\w*\s*(\d)", "zamenik {}. člana"), (r"члан\w*\s*(\d)", "{}. član"), (r"заменика\s+члана\s*(\d)", "zamenik {}. člana"), (r"члана\s*(\d)", "{}. član"), (r"заменика\s+(\d)\s*[.,]?\s*члана", "zamenik {}. člana"),
+         (r"(\d)\s*[.,]?\s*члана", "{}. član"), (r"заменик\w*\s+члан\w*", "zamenik člana"), (r"заменик\w*", "zamenik člana"), (r"члан\w*", "član")]
 def role_of(s):
     for rx, r in ROLEW:
         m = re.match(r"\s*" + rx, s, re.I)
@@ -59,7 +59,8 @@ def role_of(s):
 def changes(t):
     t = re.split(r"\n\s*[|]?\s*2\s*[.,)]\s*Ово решење|\nОбразложење", t)[0]
     m0 = re.search(r"тако\s+што\s+се", t); t = t[m0.end():] if m0 else t
-    t = re.sub(r"[|]", " ", t); T = re.sub(r"\s+", " ", t)
+    t = re.sub(r"[|]", " ", t); t = re.sub(r"\((?:име и презиме|функција[^)]*|назив предлагача[^)]*)\)", " ", t); t = re.sub(r"_+", " ", t)
+    T = re.sub(r"\s+", " ", t); T = re.sub(r"на\s+пред?лог\s*:", "на предлог ", T, flags=re.I)
     out = []
     # „уместо X за ULOGU именује Y, на предлог Z (од …)“ – u bilo kom obliku (sa ili bez rednih brojeva, dvotačaka, zareza)
     for m in re.finditer(r"уместо\s*:?\s*(.+?)\s*,?\s+за\s+(.+?)\s+именуј\w*\s*(?:се)?\s*[:;]?\s*(.+?)\s*,?\s+на\s+пред?лог\s+(.+?)(?=\s+од\s+\d|\s+\d{1,2}\s*[.)]\s|\s+уместо|\.\s|$)", T, re.I):
@@ -67,6 +68,12 @@ def changes(t):
     for m in re.finditer(r"брише\s+(?:се\s+)?(.+?)\s*,?\s+за\s+(\S+(?:\s+\S+)?)", T, re.I):
         by = re.search(r"на\s+пред?лог\s+(.+?)(?=\s+од\s+\d|$)", T[m.end():m.end()+200], re.I)
         out.append(dict(op="brisi", old=nice(m.group(1)), role=role_of(m.group(2)), by=lat(by.group(1))[:140] if by else ""))
+    # „утврђује се да X по сили закона престаје функција ULOGE“
+    for m in re.finditer(r"утврђује\s+се\s*,?\s*да\s+(.+?)\s+(?:из\s+\S+\s+)?(?:по\s+сили\s+закона\s+)?престаје\s+функција\s+(.{0,40})", T, re.I):
+        out.append(dict(op="brisi", old=nice(m.group(1)), role=role_of(m.group(2)), by=""))
+    if not out:  # „у бирачки одбор: 1) именује X, на предлог Z“ (bez uloge)
+        for m in re.finditer(r"(?:одбор\s*:?\s*\d?\s*\)?|\d\s*\))\s*именуј\w*\s*(?:се)?\s*[:;]?\s*(.+?)\s*,?\s+на\s+предлог\s+(.+?)(?=\s+од\s+\d|,\s+који|\s+\d{1,2}\s*[.)]\s|\.\s|$)", T, re.I):
+            out.append(dict(op="novo", role=None, new=nice(m.group(1)), by=lat(m.group(2))[:140]))
     if not out:
         for m in re.finditer(r"за\s+(\S+(?:\s+\S+){0,3}?)\s+именуј\w*\s*(?:се)?\s*[:;]?\s*(.+?)\s*,?\s+на\s+пред?лог\s+(.+?)(?=\s+од\s+\d|\s+\d{1,2}\s*[.)]\s|\.\s|$)", T, re.I):
             out.append(dict(op="novo", role=role_of(m.group(1)), new=nice(m.group(2)), by=lat(m.group(3))[:140]))
