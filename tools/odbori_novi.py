@@ -39,6 +39,12 @@ for dt in (4, 1):
                 known.add(h); fresh += 1; new.append((dt, d, l))
         if not recs or fresh == 0: break
 UFC = {}
+CITY = {"niš": ["136", "137", "138", "139", "140"], "požarevac": ["80", "81"], "užice": ["110", "111"]}
+_ST = {}
+def _stations(u):
+    if u not in _ST: _ST[u] = json.load(open(f"{D}/u/{u}.json"))["stations"]
+    return _ST[u]
+_nm = lambda t: re.sub(r"\s+", " ", re.sub(r'["„“”«»]', "", t or "")).strip().lower()
 def kind(t):
     t = (t or '').lower()
     return 'S' if 'stalnom' in t else 'P' if 'prošir' in t else None
@@ -54,6 +60,17 @@ for dt, d, l in sorted(new, key=lambda x: int(x[1].get('datetime') or 0)):
     uids = UC.get(_core(mn), [])
     if len(uids) > 1: uids = [u for u in uids if ("Niš" in IDX["units"][u]["name"]) == ("Ниш" in (d.get("document_bearer") or ""))] or uids
     m = re.match(r"\s*(\d+)", d.get("election_station_title") or "")
+    # gradske komisije (Niš, Požarevac+Kostolac, Užice+Sevojno): BM po tačnom nazivu
+    cm = CITY.get(_core(mn))
+    if cm and m:
+        tt = _nm(lat(d.get("election_station_title") or ""))
+        hit = [u for u in cm if any(_nm(f"{x['n']} - {x['name']}") == tt for x in _stations(u))] or [u for u in cm if any(x['n'] == int(m.group(1)) for x in _stations(u))]
+        uids = hit[:1] if len(hit) == 1 or hit else []
+    # RIK: rešenja za zavode i inostranstvo (RESENJA ZAVODI|INOSTRANSTVO - ..._PartN.pdf)
+    rm = re.search(r"RESENJA (ZAVODI|INOSTRANSTVO) - (STALNI|PROSIRENI) SASTAV_Part(\d+)", l)
+    if rm:
+        uids = ["169" if rm.group(1) == "ZAVODI" else "198"]
+        m = re.match(r"(\d+)", rm.group(3))
     title = re.sub(r"<[^>]+>", "", d.get("election_board_decision") or d.get("document_name") or "Rešenje")
     title = lat(re.sub(r"\s+", " ", title).strip())
     ts = int(d.get("datetime") or 0)
