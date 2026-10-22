@@ -21,6 +21,7 @@ on:
         default: "50"
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: rik-live
   cancel-in-progress: false
@@ -41,3 +42,12 @@ jobs:
           [ "${{ github.event.inputs.reset }}" = "true" ] && SIM="$SIM --reset"
           [ "${{ github.event.inputs.tg_demo }}" = "true" ] && SIM="--tg-demo"
           python3 tools/rik_live.py --minutes "${{ github.event.inputs.minutes || '50' }}" $SIM
+      - name: Sledeći krug (ne čeka GitHub raspored)
+        if: always() && github.event.inputs.sim != 'true' && github.event.inputs.tg_demo != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          now=$(date -u +%s); a=$(date -u -d 2026-10-25T17:40:00Z +%s); b=$(date -u -d 2026-10-26T05:00:00Z +%s)
+          if [ $now -ge $a ] && [ $now -le $b ]; then
+            gh api -X POST repos/${{ github.repository }}/actions/workflows/izborna-noc.yml/dispatches -f ref=main -f 'inputs[sim]=false' -f 'inputs[minutes]=55' && echo "pokrenut sledeći krug"
+          else echo "van izborne noći – ne pokrećem dalje"; fi
