@@ -1,2 +1,13 @@
 22.10. 13:28:16 [laptop] start čitanja zapisnika, model qwen2.5vl:7b već pročitano 0
 22.10. 14:58:08 [laptop] start čitanja zapisnika, model qwen2.5vl:7b već pročitano 0
+22.10. 15:40:00 [laptop] ZNAK: 2 211026 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 15:40:00 [laptop] ZNAK: 11 213285 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 15:40:00 [laptop] ZNAK: 17 214329 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 15:40:00 [laptop] pročitano ukupno 20, u redu 7567
+22.10. 15:40:00 [laptop] ZNAK: 45 217716 {'pages': 4, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 15:40:00 [laptop] ZNAK: 25 215670 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 15:40:00 [laptop] ZNAK: 39 217110 {'pages': 10, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 15:40:00 [laptop] ZNAK: 142 231774 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 15:40:00 [laptop] ZNAK: 156 233604 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 15:40:00 [laptop] ZNAK: 138 231294 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 15:40:00 [laptop] pročitano ukupno 40, u redu 7561
