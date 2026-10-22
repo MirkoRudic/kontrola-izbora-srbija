@@ -303,3 +303,35 @@
 22.10. 18:21:40 [laptop] ZNAK: 40 217152 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
 22.10. 18:21:40 [laptop] ZNAK: 40 217164 {'pages': 1, 'prekid': 'NE', 'kontrolni_list': 'NE', 'primedbe': None}
 22.10. 18:21:40 [laptop] pročitano ukupno 1280, u redu 6326
+22.10. 18:25:21 [laptop] ZNAK: 40 217167 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 18:25:21 [laptop] ZNAK: 40 217179 {'pages': 1, 'prekid': 'NE', 'kontrolni_list': 'NE', 'primedbe': None}
+22.10. 18:25:21 [laptop] ZNAK: 40 217185 {'pages': 1, 'prekid': 'NE', 'kontrolni_list': 'NE', 'primedbe': None}
+22.10. 18:25:21 [laptop] ZNAK: 40 217194 {'pages': 1, 'prekid': 'NE', 'kontrolni_list': 'NE', 'primedbe': None}
+22.10. 18:25:21 [laptop] ZNAK: 40 217197 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217632 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217635 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217638 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217641 {'pages': 6, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217644 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217647 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217650 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217653 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] pročitano ukupno 1300, u redu 6306
+22.10. 18:25:21 [laptop] ZNAK: 44 217656 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217659 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217662 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217665 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217668 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217671 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217674 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217677 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217680 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217683 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217686 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217689 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217692 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217695 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 44 217698 {'pages': 1, 'prekid': 'NE', 'kontrolni_list': 'NE', 'primedbe': None}
+22.10. 18:25:21 [laptop] ZNAK: 44 217701 {'pages': 6, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 18:25:21 [laptop] ZNAK: 18 214647 {'pages': 4, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 18:25:21 [laptop] pročitano ukupno 1320, u redu 6286
