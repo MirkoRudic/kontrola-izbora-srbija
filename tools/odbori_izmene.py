@@ -86,6 +86,7 @@ for uid, n, e in SRC:
     t = e["t"].lower(); k = kind(t)
     if not k or not re.search(r"imenovan|izmen|ispravk|dopun|razreš|prestan", t): continue
     done.add(e["l"]); todo.append((uid, n, e, k, t))
+todo.sort(key=lambda j: 0 if re.search(r"izmen|ispravk|dopun|razreš|prestan", j[4]) else 1)  # prvo izmene
 print("za čitanje:", len(todo), flush=True)
 def work(j):
     uid, n, e, k, t = j
