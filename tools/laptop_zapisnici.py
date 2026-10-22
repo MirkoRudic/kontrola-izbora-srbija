@@ -117,6 +117,7 @@ def save_index():
     with open(tmp, "w", encoding="utf-8") as f: json.dump(INDEX, f, ensure_ascii=False)
     os.replace(tmp, IXF)
 
+_LASTIX = [time.time()]
 T0 = time.time()
 def unit_processed(uid):
     if A.sim:
@@ -168,7 +169,11 @@ while now() < UNTIL:
         return k, link
     with ThreadPoolExecutor(A.threads) as ex:
         for (uid, sid), link in ex.map(job, todo):
-            if link and link != "ERR" and save_pdf(uid, sid, link): new += 1
+            if link and link != "ERR" and save_pdf(uid, sid, link):
+                new += 1
+                if time.time() - _LASTIX[0] > 30:  # čitanje (laptop_citanje) ne sme da čeka kraj dugog kruga
+                    save_index(); mirror("index.json"); _LASTIX[0] = time.time()
+                    if new % 100 < 5: log(f"  … u toku kruga: novih {new} od {len(todo)} upita")
     save_index(); mirror("index.json")
     if MIR_PEND:
         with LOCK: pend = MIR_PEND[:]; MIR_PEND.clear()
