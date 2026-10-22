@@ -71,4 +71,5 @@ K["known"] = sorted(known); K["checked"] = t
 json.dump(K, open(f"{D}/odbori_known.json", "w"), separators=(",", ":"))
 json.dump(NOVI, open(f"{D}/odbori_novi.json", "w"), ensure_ascii=False, separators=(",", ":"))
 json.dump(LOG, open(f"{D}/odbori_log.json", "w"), ensure_ascii=False, separators=(",", ":"))
+json.dump({"checked": t}, open(f"{D}/odbori_provera.json", "w"))
 print("novih dokumenata:", len(new), "| provera", t)

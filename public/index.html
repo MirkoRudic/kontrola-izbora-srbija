@@ -228,6 +228,34 @@ header h1{cursor:pointer}
 .zhint.on{opacity:1}
 @media (min-width:961px){svg#map{max-height:calc(100vh - 210px)}}
 .foot1{font-size:12px;color:var(--muted);margin-top:4px}
+
+.sig{margin-left:auto;display:flex;gap:5px;background:none;border:0;padding:0;cursor:pointer}
+.sg{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font:800 13px var(--sans);border:1px solid var(--line);color:var(--ink)}
+.sg i,.tip i.d{width:12px;height:12px;border-radius:50%;background:var(--muted);display:block}
+.sg i.chk,.tip i.d.chk{background:var(--org)}.sg i.ok,.tip i.d.ok{background:var(--good)}
+.sg.p{background:var(--org);border-color:var(--org);color:#1b1b1b}.sg.e,.sg.x{background:var(--bad);border-color:var(--bad);color:#fff}
+.tip{position:absolute;right:0;top:32px;width:min(280px,90%);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-size:12.5px;box-shadow:0 8px 20px rgba(0,0,0,.25);z-index:5}
+.tip div{display:flex;gap:8px;align-items:center;margin:4px 0}.tip>div>i{font-style:normal;width:14px;flex:none;text-align:center;font-weight:800}
+.tip i.tp{color:var(--org)}.tip i.te{color:var(--bad)}.tip i.d{width:11px;height:11px;margin:0 1.5px}
+.ptabs{display:flex;gap:4px;margin:10px 0 -10px}
+.ptabs button{flex:1;font:600 14px var(--sans);background:none;border:0;padding:8px 4px;color:var(--muted);border-radius:8px 8px 0 0;cursor:pointer;white-space:nowrap}
+.ptabs button.on{background:var(--soft);color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent)}
+.badge{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--bad);color:#fff;font:700 11px var(--sans);margin-left:5px;vertical-align:1px}
+.cnt{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin:12px 0 4px}
+.cnt button{font:inherit;display:grid;grid-template-rows:26px 18px 16px;align-items:center;justify-items:center;border:1px solid var(--line);background:none;border-radius:8px;padding:9px 2px 8px;color:var(--ink);cursor:pointer;min-width:0}
+.cnt button.on{border-color:var(--accent);background:var(--soft)}
+.cnt b{font:700 21px/1 var(--sans);white-space:nowrap}.cnt b.sm{font-size:17px}
+.ph1{position:relative}.ph1 .place{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.it.ne{border:1.5px solid var(--bad);border-radius:8px;padding:10px 12px;margin:10px 0;cursor:pointer;background:color-mix(in srgb,var(--bad) 7%,transparent)}.it.ne .d3>b{color:var(--bad)}.it.ne .more2{font-size:12.5px;color:var(--accent);margin-top:6px}
+.flyd{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:60;display:grid;place-items:center;padding:16px}.fly{position:relative;width:min(400px,100%);max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.5);padding:14px 14px 12px}
+.fly h4{margin:0;font:700 15px var(--sans)}.fly .x{position:absolute;right:8px;top:6px;font-size:18px;color:var(--muted);background:none;border:0;cursor:pointer;padding:4px 8px}.fly .sub{color:var(--muted);font-size:12.5px;margin:2px 0 10px}.fly table{width:100%}.fly td.n,.fly th.n{text-align:right}.fly tr.bad td{color:var(--bad);font-weight:700}.fly .ft{margin-top:12px;display:flex;justify-content:space-between;align-items:center;font-size:13px}.ph1 .bmno{white-space:nowrap;flex:none}.ph1 .place{min-width:0}.cnt b small{font-size:11px;font-weight:600;color:var(--muted)}
+.cnt .ic{font:800 13px/1 var(--sans)}.cnt .ic i{display:block;width:11px;height:11px;border-radius:50%}
+.cnt .lb{font-size:10.5px;letter-spacing:-.01em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.it{border-bottom:1px solid var(--line);padding:10px 0}.it .d1{font:600 12px var(--mono);color:var(--muted)}.it .d2{font-weight:700;margin:2px 0}.it .d3{font-size:13.5px;margin-top:3px}.it .d4{font-size:13px;margin-top:5px}
+.nov2{background:var(--accent);color:var(--accent-ink);font:700 10px var(--sans);padding:1px 6px;border-radius:4px;margin-right:6px;letter-spacing:.04em}
+.lnk{font-size:13px;margin:10px 0 0}.prov{margin:12px 0 10px}
+.ok-c{background:var(--good)}.org-c{background:var(--org)}
+:root{--org:#e8912d}
 </style>
 
 <div class="wrap">
@@ -288,7 +316,7 @@ addEventListener('error',e=>greska(e.message||'error',(e.filename||'').split('/'
 addEventListener('unhandledrejection',e=>greska('promise: '+((e.reason&&(e.reason.stack||e.reason.message))||e.reason),''));
 const get=u=>fetch(u,{cache:'no-cache'}).then(r=>{if(!r.ok){if(!/raw\.githubusercontent/.test(u)||r.status!==404)greska('HTTP '+r.status,u.split('?')[0]);return null}return r.json()}).catch(e=>{greska('mreža: '+e.message,u.split('?')[0]);return null});
 let IDX=null, GEO=null, LIVE={meta:null,u:{}}; const UF={}, LU={};
-const ST={lvl:'srb',rid:null,uid:null,nas:null,sid:null,view:'main'};
+const ST={lvl:'srb',rid:null,uid:null,nas:null,sid:null,view:'main',tab:'rez',flt:null};
 
 // ---------- agregati ----------
 const Z=()=>({voters:0,out:0,valid:0,invalid:0,lists:Array(18).fill(0)});
@@ -334,21 +362,21 @@ function otherRow(r){
   const lines=[b?`2026: ${b.n}. ${S26[b.n-1]}`:null,a?`2023: ${a.n}. ${S23[a.n-1]}`:null].filter(Boolean);
   return `<tr class="nob"><th scope="row">Najjača ostala</th>${cell(a?a.v:null,r.y&&r.y.valid)}${cell(b?b.v:null,r.z&&r.z.valid)}<td class="n df"><span class="na">—</span></td></tr><tr class="subn"><td colspan="4">${lines.map(esc).join(' · ')}</td></tr>`}
 function results(r,notes){
-  const H=`<thead><tr><th></th><th class="n">2023</th><th class="n">2026</th><th class="n">Razlika*</th></tr></thead>`;
+  const H=`<thead><tr><th></th><th class="n">2023</th><th class="n">2026</th><th class="n">Razlika</th></tr></thead>`;
   return `<div class="sec"><h3>Rezultati parlamentarnih izbora</h3><div class="tbl"><table class="res cmp">${H}<tbody>
     ${row('Upisani birači','voters',null,r)}
     ${row(lbl('Izašlo',INFO_OUT),'out','voters',r,'',1)}
     ${row(lbl('Važeći listići',INFO_OF_OUT),'valid','out',r)}
     ${row(lbl('Nevažeći listići',INFO_OF_OUT),'invalid','out',r)}
   </tbody></table></div>
-  <div class="foot1">* Razlika = 2026 minus 2023: gore u broju, dole u procentnim poenima (razlika dva procenta: 25,0 % → 24,9 % je −0,1 %).${r.partial?' Dok 2026 nije potpuno obrađeno, prikazuje se samo razlika procenata, u odnosu na ista biračka mesta iz 2023.':''}${notes?' '+notes:''}</div></div></div>
+  ${notes?`<div class="foot1">${notes}</div>`:''}</div></div>
   <div class="sec"><h3><span class="nw">Glasovi${info(INFO_VOTES)}</span></h3><div class="tbl"><table class="res cmp">${H}<tbody>
     ${VOTES.slice(0,2).map(([g,n23,n26,sub,gd])=>row(g,'list','valid',r,sub,gd,n23-1,n26-1)).join('')}
     ${VOTES.slice(2).map(([g,n23,n26,sub,gd])=>row(g,'list','valid',r,sub,gd,n23-1,n26-1)).join('')}
   </tbody></table></div>
-  <button class="more" id="more">Detaljno – ceo izborni listić →</button></div>`}
+  <button class="more" id="more">DETALJNO</button></div>`}
 let btab='2026', bsort=false;
-function ballot(r){
+function ballot(r,extra){
   const tabs=`<div class="tabs" role="tablist"><button role="tab" data-b="2026" aria-selected="${btab==='2026'}">2026</button><button role="tab" data-b="2023" aria-selected="${btab==='2023'}">2023</button></div>`;
   let lists,valid,note='';
   if(btab==='2026'){lists=IDX.lists26.map(([k,l],i)=>[l,r.z?(r.z.lists[i]??0):null]);valid=r.z&&r.z.valid;if(!r.z)note='Rezultati za 2026. još nisu objavljeni na RIK-u.'}
@@ -358,7 +386,7 @@ function ballot(r){
   <div class="sec"><h3>Izborni listić ${btab} – svi glasovi</h3>${note?`<div class="small" style="margin-bottom:6px">${note}</div>`:''}${lists.length?`<div class="tbl"><table><thead><tr><th>#</th><th>Lista</th><th style="text-align:right"><button class="sortbtn" id="bsort">Glasova ${bsort?'▼':'↕'}</button></th><th style="text-align:right">%</th></tr></thead><tbody>
   ${lists.map((l,i)=>[l,i]).sort((a,b)=>bsort?((b[0][1]||0)-(a[0][1]||0)||a[1]-b[1]):a[1]-b[1]).map(([l,i])=>`<tr${l[1]?'':' class="zero"'}><td class="n">${i+1}.</td><td>${esc(l[0])}${l[1]!=null?`<div class="bar" style="width:${((l[1]||0)/max*100).toFixed(1)}%"></div>`:''}</td><td class="n">${l[1]==null?'—':fmt(l[1])}</td><td class="n">${l[1]==null?'':pct(l[1],valid)}</td></tr>`).join('')}
   ${valid!=null?`<tr class="tot"><td></td><td>Važeći listići</td><td class="n">${fmt(valid)}</td><td class="n"></td></tr>`:''}
-  </tbody></table></div>`:''}</div>`}
+  </tbody></table></div>`:''}</div>${extra||''}`}
 
 // ---------- mapa ----------
 const svg=$('#map'), W=800, PAD=14; let PRJ=null, VB0=null, vb=null, MOB=innerWidth<700;
@@ -472,14 +500,61 @@ function updateMarks(){if(ST.lvl!=='unit')return;svg.querySelectorAll('.mk:not(.
 function status26(done,n){const m=LIVE.meta;const sim=m&&m.sim?'<div class="note"><b>PROBA:</b> ovo su rezultati iz 2023. pušteni kao da stižu uživo, radi testa.</div>':'';
   return sim+status26b(done,n,m)}
 function status26b(done,n,m){
-  if(!done) return `<div class="st">2026: rezultati još nisu stigli${m&&m.checked?` · poslednja provera ${esc(m.checked)}`:''}.</div>`;
+  if(!done) return `<div class="note" style="border-left-color:var(--line);background:var(--soft)">Prvo povlačenje rezultata sa RIK-a u nedelju, 25. oktobra u 21 h.</div>`;
   return `<div class="st live">2026: obrađeno ${fmt(done)}/${fmt(n)} BM po RIK-u${m&&m.checked?` · ažurirano ${esc(m.checked)}`:''}</div>`}
 
 // ---------- panel ----------
 const prog=(d,n)=>`<span class="prog" title="${d}/${n}"><i style="width:${n?Math.round(100*d/n):0}%"></i></span>`;
 function kidsTable(rows,head){return `<div class="sec"><h3>${head}</h3><div class="tbl"><table class="kids"><thead><tr><th>Naziv</th><th class="n" style="text-align:right">BM</th><th class="n" style="text-align:right">Izašlo 2023</th><th class="n" style="text-align:right">2026</th></tr></thead><tbody>
   ${rows.map(r=>`<tr data-k="${esc(r.k)}"><td class="nm" title="${esc(r.name)}">${esc(r.name)}</td><td class="n">${fmt(r.n)}</td><td class="n">${r.y?pct(r.y.out,r.y.voters):'—'}</td><td class="n">${r.done?(r.done>=r.n?'✓':`${r.done}/${r.n}`):'<span class="dim">—</span>'}${prog(r.done||0,r.n)}</td></tr>`).join('')}</tbody></table></div></div>`}
-function head(eyebrow,title,no,adr){return `<div class="ph">${no!=null||eyebrow?`<div class="ph1">${no!=null?`<span class="bmno">BM ${no}</span>`:''}<span class="place">${esc(eyebrow)}</span></div>`:''}<div class="ph2" title="${esc(title)}">${esc(title)}</div>${adr!==undefined?`<div class="ph3" title="${esc(adr||'')}">${adr?esc(adr):'&nbsp;'}</div>`:''}</div>`}
+function head(eyebrow,title,no,adr,sig,tabs){return `<div class="ph">${no!=null||eyebrow||sig?`<div class="ph1">${no!=null?`<span class="bmno">BM ${no}</span>`:''}<span class="place">${esc(eyebrow)}</span>${sig||''}</div>`:''}<div class="ph2" title="${esc(title)}">${esc(title)}</div>${adr!==undefined?`<div class="ph3" title="${esc(adr||'')}">${adr?esc(adr):'&nbsp;'}</div>`:''}${tabs||''}</div>`}
+// ---------- signali (zapisnici) ----------
+let OBL=null,OBLT=0,OPROV=null,TIPON=false;
+async function loadObl(force){if(!force&&Date.now()-OBLT<170000)return;OBLT=Date.now();const z=await get(RAW+'data/zap/oblak.json?t='+Math.floor(Date.now()/60000));if(z)OBL=z}
+const zapR=(uid,sid)=>(ZAP&&ZAP.u&&(ZAP.u[uid]||{})[sid])||null, oblR=(uid,sid)=>(OBL&&OBL.u&&(OBL.u[uid]||{})[sid])||null;
+const neTxt=x=>typeof x==='string'?x:x[0];
+function rawSig(uid,sid){const o=oblR(uid,sid),r=zapR(uid,sid);
+  return {chk:!!(o||(r&&!r.err)),p:o&&o.p?o.p.length:(r&&r.primedbe==='DA'?1:0),ne:((o&&o.ne&&o.ne.length?o.ne:null)||(r&&r.ne)||[]).map(neTxt)}}
+function sigOf(uid,sid){const g=rawSig(uid,sid);g.st=g.chk?'ok':zOf(liveBM(uid,sid))?'chk':'wait';g.x=alertsOf(uid,sid).length>0;return g}
+const SGT={wait:'Rezultati se čekaju',chk:'Proverava se zapisnik',ok:'Zapisnik proveren'};
+function sigHtml(g){return `<button type="button" class="sig" id="sigb" aria-label="Značenje znakova"><span class="sg"><i class="${g.st}"></i></span>${g.p?'<span class="sg p">P</span>':''}${g.ne.length?'<span class="sg e">!</span>':''}${g.x?'<span class="sg x">✕</span>':''}</button>`
+  +`<div class="tip" id="sigt"${TIPON?'':' hidden'}><div><i class="d ${g.st}"></i><span>${SGT[g.st]}</span></div>${g.p?'<div><i class="tp">P</i><span>Zapisnik ima primedbe</span></div>':''}${g.ne.length?'<div><i class="te">!</i><span>Rezultati na RIK-u se ne slažu sa zapisnikom</span></div>':''}${g.x?'<div><i class="te">✕</i><span>Poništeno glasanje</span></div>':''}</div>`}
+const sidsOf=uid=>[...new Set([...Object.keys((ZAP&&ZAP.u&&ZAP.u[uid])||{}),...Object.keys((OBL&&OBL.u&&OBL.u[uid])||{})])];
+function cntUnits(uids){const c={n:0,ok:0,chk:0,p:0,e:0,x:0};uids.forEach(uid=>{const u=IDX.units[uid],L=LIVE.u[uid]||{};c.n+=u.nbm;let ok=0;
+  sidsOf(uid).forEach(sid=>{const g=rawSig(uid,sid);if(g.chk)ok++;if(g.p)c.p++;if(g.ne.length)c.e++});c.ok+=ok;c.chk+=Math.max(0,(L.done||0)-ok);c.x+=(L.ob||[]).length});return c}
+function cntStations(uid,list){const c={n:list.length,ok:0,chk:0,p:0,e:0,x:0};list.forEach(s=>{const g=sigOf(uid,s.sid);if(g.st==='ok')c.ok++;else if(g.st==='chk')c.chk++;if(g.p)c.p++;if(g.ne.length)c.e++;if(g.x)c.x++});return c}
+function cntHtml(c){const f=(k,num,ic,lb)=>`<button type="button" data-f="${k}"${ST.flt===k?' class="on"':''}><b${String(num).replace(/<[^>]+>/g,'').length>5?' class="sm"':''}>${num}</b><span class="ic">${ic}</span><span class="lb">${lb}</span></button>`;
+  return `<div class="cnt">${f('ok',c.n<1000?`${fmt(c.ok)}<small>/${fmt(c.n)}</small>`:fmt(c.ok),'<i class="ok-c"></i>','provereno')}${f('chk',fmt(c.chk),'<i class="org-c"></i>','u proveri')}${f('p',fmt(c.p),'<span style="color:var(--org)">P</span>','primedbe')}${f('e',fmt(c.e),'<span style="color:var(--bad)">!</span>','ne slaže se')}${f('x',fmt(c.x),'<span style="color:var(--bad)">✕</span>','poništeno')}</div>`}
+const FLT={ok:g=>g.ok,chk:g=>g.chk,p:g=>g.p,e:g=>g.e,x:g=>g.x};
+function stMatch(uid,s){if(!ST.flt)return true;const g=sigOf(uid,s.sid);return ST.flt==='ok'?g.st==='ok':ST.flt==='chk'?g.st==='chk':ST.flt==='p'?g.p>0:ST.flt==='e'?g.ne.length>0:g.x}
+function ptabs(np,no){const t=(k,l,n)=>`<button type="button" class="${ST.tab===k?'on':''}" data-t="${k}">${l}${n?`<span class="badge">${n>99?'99+':n}</span>`:''}</button>`;
+  return `<div class="ptabs" role="tablist">${t('rez','Rezultati')}${t('prim','Primedbe',np)}${t('odb','Odbori',no)}</div>`}
+function primView(pairs){
+  const neIt=pairs.map(([uid,sid])=>{const g=rawSig(uid,sid);if(!g.ne.length)return null;const o=oblR(uid,sid),r=zapR(uid,sid),at=(o&&o.at)||(r&&r.at)||'';
+    const s=UF[uid]&&UF[uid].stations.find(x=>x.sid===sid),n=s?s.n:(o&&o.n)||(r&&r.n);
+    return {k:akey(at),h:`<div class="it ne" data-ne="${uid}|${sid}"><div class="d1">${[esc(at),n!=null?'BM '+n:'',esc(IDX.units[uid].short)].filter(Boolean).join(' · ')}</div><div class="d3"><b>!</b> Rezultati na RIK-u se ne slažu sa zapisnikom: ${g.ne.map(esc).join(', ')}.</div><div class="more2">Uporedi brojeve</div></div>`}}).filter(Boolean).sort((a,b)=>b.k-a.k).map(x=>x.h).join('');
+  const it=pairs.map(([uid,sid])=>{const o=oblR(uid,sid),r=zapR(uid,sid);const has=o&&o.p&&o.p.length;if(!has&&!(r&&r.primedbe==='DA'))return null;
+    const s=UF[uid]&&UF[uid].stations.find(x=>x.sid===sid),n=s?s.n:(o&&o.n)||(r&&r.n),b=liveBM(uid,sid);
+    const zl=(o&&o.link)||(b&&b.zap&&b.zap.length?b.zap[b.zap.length-1].link:null)||(r&&r.link),at=(o&&o.at)||(r&&r.at)||'';
+    const bm=n!=null?(ST.sid===sid?`BM ${n}`:`<a href="#" data-gu="${uid}" data-gs="${sid}">BM ${n}</a>`):'';
+    return {k:akey(at),h:`<div class="it"><div class="d1">${[esc(at),bm,esc(IDX.units[uid].short)].filter(Boolean).join(' · ')}</div>${has?o.p.map(x=>`<div class="d3">${x.v?`<b>${esc(x.v)}:</b> `:''}${esc(x.t||'')}</div>`).join(''):'<div class="d3">Na zapisniku su upisane primedbe; sadržaj se još čita.</div>'}${zl?`<div class="d4">${link(zl,'Zapisnik (PDF)')}</div>`:''}</div>`}}).filter(Boolean).sort((a,b)=>b.k-a.k);
+  if(neIt&&!it.length)return neIt;
+  return neIt+(it.length?it.slice(0,300).map(x=>x.h).join('')+(it.length>300?`<div class="small" style="margin-top:6px">Prikazano 300 od ${fmt(it.length)}.</div>`:''):neIt?'':'<div class="small" style="padding:12px 0">Nema primedbi.</div>')}
+async function neFly(uid,sid){if(!LU[uid]){const d=await get(SRC?SRC+'data/live/u/'+uid+'.json':'data/live/u/'+uid+'.json?t='+Date.now());if(d)LU[uid]=d}
+  if(!UF[uid])UF[uid]=await get('data/u/'+uid+'.json');
+  const o=oblR(uid,sid),r=zapR(uid,sid),b=liveBM(uid,sid)||{},Z=(o&&o.zap)||(r&&r.zap)||(r?{out:r.izasli,valid:r.vazeci,invalid:r.nevazeci}:{});
+  const s=UF[uid]&&UF[uid].stations.find(x=>x.sid===sid),bl=b.zap&&b.zap.length?b.zap[b.zap.length-1].link:null,zl=(o&&o.link)||bl||(r&&r.link),at=(o&&o.at)||(r&&r.at)||'';
+  const L=Z.lists||{},rows=[['Upisani birači',Z.voters,b.voters],['Izašli',Z.out,b.out],['Važeći listići',Z.valid,b.valid],['Nevažeći listići',Z.invalid,b.invalid]];
+  for(let i=1;i<=18;i++){const zv=L[i]??L[String(i)],rv=b.lists?b.lists[i-1]:null;if(i<=3||(zv!=null&&rv!=null&&+zv!==+rv))rows.push([`${i}. ${S26[i-1]}`,zv,rv])}
+  const td=v=>v==null?'—':fmt(+v),df=(a,c)=>a==null||c==null||+a===+c?'–':sgn(+c-+a);
+  const el=document.createElement('div');el.className='flyd';el.innerHTML=`<div class="fly" role="dialog" aria-label="RIK i zapisnik"><button class="x" aria-label="Zatvori">✕</button><h4>RIK ≠ zapisnik</h4><div class="sub">${[s?'BM '+s.n:'',s&&s.nas!=null&&UF[uid].naselja[s.nas]&&!UF[uid].naselja[s.nas].name.includes(IDX.units[uid].short)?UF[uid].naselja[s.nas].name:'',IDX.units[uid].short].filter(Boolean).map(esc).join(' · ')}</div>
+   <table><thead><tr><th></th><th class="n">Zapisnik</th><th class="n">RIK</th><th class="n">Razlika</th></tr></thead><tbody>${rows.map(([l,a,c])=>`<tr${a!=null&&c!=null&&+a!==+c?' class="bad"':''}><td>${esc(l)}</td><td class="n">${td(a)}</td><td class="n">${td(c)}</td><td class="n">${df(a,c)}</td></tr>`).join('')}</tbody></table>
+   <div class="ft">${zl?link(zl,'Zapisnik (PDF)'):'<span></span>'}<span class="small">${at?'pročitano '+esc(at):''}</span></div></div>`;
+  const close=()=>el.remove();el.onclick=e=>{if(e.target===el||e.target.closest('.x'))close()};document.body.appendChild(el)}
+const olIzm=uids=>{const S=new Set(uids);return (OLOG||[]).filter(e=>S.has(e.u)&&isIzm(e.detail||'')).length};
+const provLine=()=>`<div class="small prov">Provereno: ${esc(OPROV||'—')}</div>`;
+const tsF=ts=>{if(!ts)return '';const d=new Date(ts*1000),p=x=>String(x).padStart(2,'0');return `${d.getDate()}.${d.getMonth()+1}. ${p(d.getHours())}:${p(d.getMinutes())}`};
+const bibBtn='<button class="more" id="bibb">BIBLIOTEKA</button>';
 function crumbs(){const c=[`<button data-c="srb">Srbija</button>`];
   if(ST.rid&&!(ST.uid&&regUnits(ST.rid).length===1)){c.push('<span class="sep">›</span>',`<button data-c="reg">${esc(IDX.regions.find(r=>r.id===ST.rid).name)}</button>`)}
   if(ST.uid){c.push('<span class="sep">›</span>',`<button data-c="unit">${esc(IDX.units[ST.uid].short)}</button>`)}
@@ -492,38 +567,44 @@ function stationAgg(U,list){const y=Z(),z=Z(),zc=Z();let done=0,m=0,yAll=0;
   list.forEach(s=>{if(s.y23){addTo(y,s.y23);yAll++}const b=zOf(liveBM(ST.uid,s.sid));if(b){addTo(z,b);done++;if(s.y23){addTo(zc,s.y23);m++}}});
   return {y:yAll?y:null,z:done?z:null,zc:done?zc:null,partial:done>0&&done<list.length,done,n:list.length,m,yAll}}
 function render(){
-  crumbs(); let h='',body='';
-  if(ST.lvl==='srb'){const a=groupAgg(ALL());const r={...a,partial:a.done>0&&a.done<a.n};
-    h=head('Srbija','Zbir svih '+fmt(a.n)+' biračkih mesta');
-    body=ST.view==='ballot'?ballot(r):status26(a.done,a.n)+results(r)+kidsTable(IDX.regions.map(g=>{const x=groupAgg(g.units);return {k:'r:'+g.id,name:g.name,n:x.n,y:x.y,done:x.done}}),'Regioni')+covView(ALL());
-  } else if(ST.lvl==='reg'){const g=IDX.regions.find(r=>r.id===ST.rid),a=groupAgg(g.units),r={...a,partial:a.done>0&&a.done<a.n};
-    h=head('Region',g.name);
-    body=ST.view==='ballot'?ballot(r):status26(a.done,a.n)+results(r)+kidsTable(g.units.map(id=>{const u=IDX.units[id],x=unitAgg(id);return {k:'u:'+id,name:u.short,n:u.nbm,y:u.y23,done:x.done}}).sort((p,q)=>p.name.localeCompare(q.name,'sr')),'Opštine i gradovi')+covView(g.units);
+  crumbs(); let h='',body=''; if(!ST.tab)ST.tab='rez';
+  const kidsF=(rows)=>ST.flt?rows.filter(r=>r.c&&r.c[ST.flt]>0):rows;
+  if(ST.lvl==='srb'||ST.lvl==='reg'){
+    const isS=ST.lvl==='srb',g=isS?null:IDX.regions.find(r=>r.id===ST.rid),units=isS?ALL():g.units,a=groupAgg(units),r={...a,partial:a.done>0&&a.done<a.n},c=cntUnits(units);
+    h=head(isS?'Srbija':'Region',isS?'Zbir svih '+fmt(a.n)+' biračkih mesta':g.name,null,undefined,'',ptabs(c.p+c.e,olIzm(units)));
+    if(ST.tab==='prim') body=primView(units.flatMap(uid=>sidsOf(uid).map(sid=>[uid,sid])));
+    else if(ST.tab==='odb') body=ST.view==='bib'?bibView(units):provLine()+covView(units)+bibBtn;
+    else if(ST.view==='ballot') body=ballot(r);
+    else{const rows=isS?IDX.regions.map(g=>{const x=groupAgg(g.units);return {k:'r:'+g.id,name:g.name,n:x.n,y:x.y,done:x.done,c:ST.flt?cntUnits(g.units):null}})
+        :g.units.map(id=>{const u=IDX.units[id],x=unitAgg(id);return {k:'u:'+id,name:u.short,n:u.nbm,y:u.y23,done:x.done,c:ST.flt?cntUnits([id]):null}}).sort((p,q)=>p.name.localeCompare(q.name,'sr'));
+      body=cntHtml(c)+status26(a.done,a.n)+results(r)+kidsTable(kidsF(rows),isS?'Regioni':'Opštine i gradovi')}
   } else {const u=IDX.units[ST.uid],U=UF[ST.uid];
     if(!U){h=head(u.name,'Učitavam…');}
-    else if(ST.sid){const s=U.stations.find(x=>x.sid===ST.sid),b=zOf(liveBM(ST.uid,s.sid));
-      const r={y:s.y23,z:b,zc:null,partial:false};
-      h=head(u.short+(s.nas!=null&&U.naselja[s.nas]?' · '+U.naselja[s.nas].name:''),s.name,s.n,s.adr||'');
-      if(ST.view==='ballot') body=ballot(r);
-      else{const al=alertsOf(ST.uid,s.sid);
-        body=(al.length?`<div class="alert"><b>!</b><div>${al.map(x=>`<div>${esc(x.t)}${x.at?` <span class="small">(${esc(x.at)})</span>`:''}</div>`).join('')}</div></div>`:'')
-        +(s.moved?`<div class="note"><b>BM je premešteno:</b> glasa se u opštini ${esc(s.moved)}${s.adr?` (${esc(s.adr)})`:''}. Administrativno pripada opštini ${esc(u.short)}.</div>`:'')+status26(b?1:0,1)+results(r,s.y23?(s.how&&s.how!=='isti broj i naziv'?`2023: BM ${s.n23} – ${s.name23}.`:''):'')
-        +(s.y23?'':'<div class="small tag">Ovo biračko mesto nema odgovarajuće BM iz 2023, pa poređenje nije moguće.</div>')
-        +`<div class="sec"><h3>Dokumenti</h3><div class="links col">${zap26(ST.uid,s)}${link(s.z23,'Zapisnik 2023 (PDF, RIK)')}</div>${zapView(ST.uid,s)}</div>`
-        +boardView(s)}
+    else if(ST.sid){const s=U.stations.find(x=>x.sid===ST.sid),b=zOf(liveBM(ST.uid,s.sid)),g=sigOf(ST.uid,s.sid);
+      const r={y:s.y23,z:b,zc:null,partial:false},docs=odbOf(ST.uid,s);
+      h=head(u.short+(s.nas!=null&&U.naselja[s.nas]?' · '+U.naselja[s.nas].name:''),s.name,s.n,s.adr||'',sigHtml(g),ptabs(g.p+(g.ne.length?1:0),docs.filter(d=>isIzm(d.t)).length));
+      if(ST.tab==='prim') body=primView([[ST.uid,s.sid]]);
+      else if(ST.tab==='odb') body=ST.view==='bib'?bibBM(s,docs):provLine()+boardView(s,docs);
+      else if(ST.view==='ballot') body=ballot(r,`<div class="sec"><h3>Zapisnici</h3><div class="links col">${zap26(ST.uid,s)}${link(s.z23,'Zapisnik 2023 (PDF, RIK)')}</div>${g.ne.length?`<div class="note"><b>!</b> ${g.ne.map(esc).join(' · ')}</div>`:''}</div>`);
+      else body=(s.moved?`<div class="note"><b>BM je premešteno:</b> glasa se u opštini ${esc(s.moved)}${s.adr?` (${esc(s.adr)})`:''}. Administrativno pripada opštini ${esc(u.short)}.</div>`:'')+status26(b?1:0,1)
+        +results(r,s.y23?(s.how&&s.how!=='isti broj i naziv'?`2023: BM ${s.n23} – ${esc(s.name23)}.`:''):'')
+        +(s.y23?'':'<div class="small tag">Ovo biračko mesto nema odgovarajuće BM iz 2023, pa poređenje nije moguće.</div>');
     } else {const list=ST.nas!=null?U.stations.filter(s=>s.nas===ST.nas):U.stations;
       let r;
       if(ST.nas==null){const a=unitAgg(ST.uid);r={...a,partial:a.done>0&&a.done<a.n}}else r=stationAgg(U,list);
-      h=head(ST.nas!=null?u.short:regUnits(u.region).length===1?'':IDX.regions.find(g=>g.id===u.region).name,ST.nas!=null?U.naselja[ST.nas].name:u.name);
+      const c=cntStations(ST.uid,list);
+      h=head(ST.nas!=null?u.short:regUnits(u.region).length===1?'':IDX.regions.find(g=>g.id===u.region).name,ST.nas!=null?U.naselja[ST.nas].name:u.name,null,undefined,'',ptabs(c.p+c.e,list.reduce((a,st)=>a+odbOf(ST.uid,st).filter(d=>isIzm(d.t)).length,0)));
       const done=list.filter(s=>zOf(liveBM(ST.uid,s.sid))).length;
       const note=ST.nas!=null?`Zbir 2023 je za ${r.yAll} od ${list.length} BM koja imaju par iz 2023.`:(u.nbm-u.matched?`${u.nbm-u.matched} od ${u.nbm} BM nema par iz 2023 (zbir opštine se poredi u celini).`:'');
-      body=ST.view==='ballot'?ballot(r):status26(done,list.length)+results(r,note)
-        +`<div class="sec"><h3>Biračka mesta (${list.length})</h3><div class="tbl"><table class="kids"><thead><tr><th>BM</th><th class="n" style="text-align:right">Izašlo 2023</th><th class="n" style="text-align:right">2026</th></tr></thead><tbody>
-        ${list.map(s=>{const b=zOf(liveBM(ST.uid,s.sid));return `<tr data-k="s:${s.sid}"><td class="nm" title="${esc(s.name)}"><b>${s.n}</b> ${esc(s.name)}${alertsOf(ST.uid,s.sid).length?' <b style="color:var(--bad)">!</b>':''}</td><td class="n">${s.y23?pct(s.y23.out,s.y23.voters):'<span class="dim">nema para</span>'}</td><td class="n">${b?pct(b.out,b.voters):'<span class="dim">—</span>'}</td></tr>`}).join('')}</tbody></table></div></div>`
-        +covView(null,list)
-        +(ST.nas==null&&U.odb_general&&U.odb_general.length?`<div class="sec"><h3>Opšta rešenja o odborima</h3><div class="links col">${U.odb_general.map(d=>link(d.l,esc(d.t))).join('')}</div></div>`:'')}
+      const fl=list.filter(s=>stMatch(ST.uid,s));
+      if(ST.tab==='prim') body=primView(list.map(s=>[ST.uid,s.sid]));
+      else if(ST.tab==='odb') body=ST.view==='bib'?bibView([ST.uid],ST.nas!=null?new Set(list.map(s=>s.n)):null):provLine()+covView(null,list)+bibBtn;
+      else if(ST.view==='ballot') body=ballot(r);
+      else body=cntHtml(c)+status26(done,list.length)+results(r,note)
+        +`<div class="sec"><h3>Biračka mesta (${fl.length}${fl.length<list.length?' od '+list.length:''})</h3><div class="tbl"><table class="kids"><thead><tr><th>BM</th><th class="n" style="text-align:right">Izašlo 2023</th><th class="n" style="text-align:right">2026</th></tr></thead><tbody>
+        ${fl.map(s=>{const b=zOf(liveBM(ST.uid,s.sid)),g=sigOf(ST.uid,s.sid),mk=(g.p?' <b style="color:var(--org)">P</b>':'')+(g.ne.length?' <b style="color:var(--bad)">!</b>':'')+(g.x?' <b style="color:var(--bad)">✕</b>':'');return `<tr data-k="s:${s.sid}"><td class="nm" title="${esc(s.name)}"><b>${s.n}</b> ${esc(s.name)}${mk}</td><td class="n">${s.y23?pct(s.y23.out,s.y23.voters):'<span class="dim">nema para</span>'}</td><td class="n">${b?pct(b.out,b.voters):'<span class="dim">—</span>'}</td></tr>`}).join('')}</tbody></table></div></div>`;
+    }
   }
-  if(ST.view==='log'&&!ST.sid) body=logView(); else if(!ST.sid&&ST.view==='main') body+=`<button class="more" id="logb">Dnevnik promena →</button>`;
   const P=$('#panel'),keep=P.scrollTop;P.innerHTML=h+`<div class="pbody">${body}</div>`;P.scrollTop=render._keep?keep:0;render._keep=false;
   P.querySelectorAll('tr[data-cov]').forEach(tr=>tr.onclick=()=>{const x=P.querySelector(`tr.covx[data-for="${tr.dataset.cov}"]`);if(!x)return;
     const U=UF[ST.uid],list=ST.nas!=null?U.stations.filter(s=>s.nas===ST.nas):U.stations,k=tr.dataset.cov;
@@ -534,7 +615,11 @@ function render(){
     if(t==='r')go({lvl:'reg',rid:v});else if(t==='u')go({lvl:'unit',rid:IDX.units[v].region,uid:v});else go({...ST,sid:v,view:'main'},true)});
   const toTop=()=>{if(matchMedia('(max-width:960px)').matches)P.scrollIntoView({block:'start'})};
   const mo=$('#more');if(mo)mo.onclick=()=>{ST.view='ballot';render();toTop()};
-  const lb=$('#logb');if(lb)lb.onclick=async()=>{ST.view='log';render();toTop();await loadLog();render._keep=true;render()};
+  P.querySelectorAll('[data-ne]').forEach(x=>x.onclick=()=>{const [u,sd]=x.dataset.ne.split('|');neFly(u,sd)});
+  const bb=$('#bibb');if(bb)bb.onclick=()=>{ST.view='bib';render();toTop()};
+  P.querySelectorAll('.ptabs button').forEach(b=>b.onclick=()=>{ST.tab=b.dataset.t;ST.view='main';TIPON=false;render._keep=true;render()});
+  P.querySelectorAll('.cnt button').forEach(b=>b.onclick=()=>{const f=b.dataset.f;if(f==='p'){ST.tab='prim';ST.flt=null}else ST.flt=ST.flt===f?null:f;render._keep=true;render()});
+  const sb=$('#sigb');if(sb)sb.onclick=e=>{e.stopPropagation();TIPON=!TIPON;$('#sigt').hidden=!TIPON};
   P.querySelectorAll('[data-gu]').forEach(x=>x.onclick=async e=>{e.preventDefault();const uid=x.dataset.gu;await go({lvl:'unit',rid:IDX.units[uid].region,uid});const sid=x.dataset.gs||(UF[uid].stations.find(s=>s.n===+x.dataset.gn)||{}).sid;if(sid)go({...ST,sid},true)});
   const b2=$('#back2');if(b2)b2.onclick=()=>{ST.view='main';render();toTop()};
   const bs=$('#bsort');if(bs)bs.onclick=()=>{bsort=!bsort;render._keep=true;render()};
@@ -546,24 +631,25 @@ function render(){
   else ex.innerHTML='';
   ex.querySelectorAll('button').forEach(b=>b.onclick=()=>b.dataset.r?go({lvl:'reg',rid:b.dataset.r}):go({lvl:'unit',rid:ST.rid,uid:b.dataset.u}));
 }
+document.addEventListener('click',e=>{if(TIPON&&!e.target.closest('#sigt')){TIPON=false;const t=$('#sigt');if(t)t.hidden=true}});
 const LL=()=>Object.fromEntries(IDX.lists26.map(([k,l],i)=>[k,(i+1)+'. '+l]));
 const GRP={ADMIN:'Načelnik uprave',SNS:'SNS (A. Vučić – Srbija ne sme da stane)',SDPS:'SDPS',SPS:'SPS',STUD:'Poslanici uz studente',NPS:'NPS – Novo lice',SSP:'SSP',PSG:'PSG / SDA / PDD',ZLF:'Zeleno-levi front',SVM:'SVM',NADA:'NADA',SRCE:'SRCE',EU:'Ekološki ustanak',JS:'Jedinstvena Srbija',PUPS:'PUPS',ZS:'Zdrava Srbija',MI:'MI – Glas iz naroda',DS:'DS',ZAVET:'Zavetnici',RP_RS:'Radnička partija – Ruska stranka'};
 const nm=x=>x?esc(x):'<span class="na">nije imenovan</span>';
 const nov=c=>'';
 const roleLbl=r=>esc(r).replace(/^zamenik /,'zamenik<br>').replace(/(\d\.) /,'$1&nbsp;');
-function boardView(s){const b=s.bd,L=LL(),docs=odbOf(ST.uid,s),nIzm=docs.filter(d=>isIzm(d.t)).length;let h='<div class="sec"><h3>Birački odbor 2026</h3>';
-  if(!b||(!b.s&&!b.p)) h+='<div class="small">Sastav još nije pročitan iz rešenja. Rešenja na RIK-u su ispod.</div>';
+function boardView(s,docs){const b=s.bd,L=LL();let h='<div class="sec">';
+  if(!b||(!b.s&&!b.p)) h+='<div class="small">Sastav još nije pročitan iz rešenja.</div>';
   else{
-    if(!b.ver) h+='<div class="small tag" style="margin-bottom:6px">Imena su automatski pročitana sa skeniranih rešenja – moguće su greške u slovima. Za proveru otvori rešenje.</div>';
-    if(b.izmOk) h+=`<div class="note"><b>Izmene:</b> ${b.izmOk===1?'jedna promena iz novijeg rešenja je upisana':b.izmOk+' promena iz novijih rešenja je upisano'} – sastav ispod je ažuriran, a šta je promenjeno piše u dnevniku promena.${b.izmMiss?` Za ${b.izmMiss} rešenja promena nije pročitana – pogledaj ih ispod.`:''}</div>`;
-    else if(nIzm) h+=`<div class="note"><b>Izmene:</b> posle osnovnog rešenja na RIK-u ima još ${nIzm} rešenja (izmena, dopuna, prestanak…). Sastav ispod je ${b.ver?'sa primenjenim izmenama do 20. 10.':'iz osnovnog rešenja'} – za tačan sastav pogledaj najnovije rešenje ispod.</div>`;
-    if(b.s&&b.s.length) h+=`<div class="tbl"><table><thead><tr><th>Stalni sastav</th><th>Ime</th><th>Predlagač</th></tr></thead><tbody>${b.s.map(x=>`<tr><td>${roleLbl(x.role)}</td><td>${nm(x.name)}${nov(x.chg)}</td><td class="small">${esc(GRP[x.key]||x.by||'')}</td></tr>`).join('')}</tbody></table></div>`;
-    if(b.p&&b.p.length){h+=`<div class="tbl" style="margin-top:8px"><table><thead><tr><th>Prošireni sastav (${b.p.length} lista)</th><th>Član</th><th>Zamenik</th></tr></thead><tbody>${b.p.map(x=>`<tr><td class="small">${esc(L[x.key]||x.list||'')}</td><td>${nm(x.member)}${nov(x.chg&&(x.chg.member||x.chg.base&&x.chg))}</td><td>${nm(x.deputy)}${nov(x.chg&&(x.chg.deputy||x.chg.base&&x.chg))}</td></tr>`).join('')}</tbody></table></div>`;
+    if(!b.ver) h+='<div class="small tag" style="margin-bottom:6px">Imena su automatski pročitana sa skeniranih rešenja – moguće su greške u slovima.</div>';
+    if(b.s&&b.s.length) h+=`<div class="tbl"><table><thead><tr><th>Stalni sastav</th><th>Ime</th><th>Predlagač</th></tr></thead><tbody>${b.s.map(x=>`<tr><td>${roleLbl(x.role)}</td><td>${nm(x.name)}</td><td class="small">${esc(GRP[x.key]||x.by||'')}</td></tr>`).join('')}</tbody></table></div>`;
+    if(b.p&&b.p.length){h+=`<div class="tbl" style="margin-top:8px"><table><thead><tr><th>Prošireni sastav (${b.p.length} lista)</th><th>Član</th><th>Zamenik</th></tr></thead><tbody>${b.p.map(x=>`<tr><td class="small">${esc(L[x.key]||x.list||'')}</td><td>${nm(x.member)}</td><td>${nm(x.deputy)}</td></tr>`).join('')}</tbody></table></div>`;
       const have=new Set(b.p.filter(x=>x.member||x.deputy).map(x=>x.key));const miss=IDX.lists26.map(([k,l],i)=>[k,i]).filter(([k])=>!have.has(k));
       h+=`<div style="margin-top:8px"><span class="small">Liste bez predstavnika na ovom BM:</span><br>${miss.map(([k,i])=>`<span class="chip miss">${esc(L[k])}</span>`).join('')||'<span class="small">nema</span>'}</div>`}
   }
-  h+=`<div class="links col" style="margin-top:8px">${docs.map((d,i)=>`<span>${link(d.l,esc(d.t))}${d.ts?` <span class="small">(${new Date(d.ts*1000).toLocaleString('sr-Latn-RS',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})})</span>`:''}${i===0&&docs.length>1?' <span class="chip">najnovije</span>':''}</span>`).join('')||'<span class="small">Na RIK-u nema rešenja vezanog za ovo BM.</span>'}</div></div>`;
-  return h}
+  const d=docs[0];
+  if(d) h+=`<div class="lnk">${d.ts&&Date.now()/1000-d.ts<3*86400?'<span class="nov2">NOVO</span>':''}${link(d.l,esc(d.t))}${d.ts?` <span class="small">(${tsF(d.ts)})</span>`:''}</div>`;
+  else h+='<div class="small" style="margin-top:8px">Na RIK-u nema rešenja vezanog za ovo BM.</div>';
+  return h+bibBtn+'</div>'}
 function covView(units,stations){ // units: lista id-jeva (agregat) ili stations (opština/naselje)
   const L=LL();let cov={},nb=0,n=0;
   if(stations){stations.forEach(s=>{n++;if(!(s.bd&&s.bd.p))return;nb++;s.bd.p.forEach(r=>{if(r.key&&r.member)cov[r.key]=(cov[r.key]||0)+1})})}
@@ -582,16 +668,20 @@ const KIND={odbor:'Odbor',provera:'Provera',rezultat:'Rezultat',zapisnik:'Zapisn
 const akey=t=>{const x=/(\d+)\.(\d+)\.\s*(\d+):(\d+)/.exec(t||'');return x?((+x[2])*1e6+(+x[1])*1e4+(+x[3])*100+(+x[4])):0};
 function prevDoc(e){const U=UF[e.u];if(!U)return null;const s=U.stations.find(x=>x.n===e.n);if(!s)return null;const ds=odbOf(e.u,s).filter(d=>d.l!==e.l);
   const t0=akey(e.at);return ds.find(d=>{const dt=new Date((d.ts||0)*1000);return akey(`${dt.getDate()}.${dt.getMonth()+1}. ${dt.getHours()}:${dt.getMinutes()}`)<=t0})||null}
-function logView(){
-  const all=(LOG||[]).concat(OLOG||[]).slice().sort((a,b)=>akey(b.at)-akey(a.at)), f=ST.uid?all.filter(e=>e.u===ST.uid):all;
-  return `<button class="back2" id="back2">← Nazad</button><div class="sec"><h3>Dnevnik promena${ST.uid?' – '+esc(IDX.units[ST.uid].short):''}</h3>
-   <div class="small" style="margin-bottom:8px">Nova rešenja o biračkim odborima (provera na RIK-u više puta dnevno), izmenjeni rezultati i zamenjeni zapisnici na RIK-u, i automatske provere brojeva (npr. zbir po listama ≠ važeći, neobična izlaznost). Ovo su signali za proveru, ne dokaz nepravilnosti.</div>
-   ${LOG==null?'<div class="small">Učitavam…</div>':f.length?`<div class="tbl"><table class="log"><thead><tr><th>Vreme</th><th>BM</th><th>Šta</th></tr></thead><tbody>${f.slice(0,400).map(e=>`<tr><td class="n">${esc(e.at)}</td><td>${e.n!=null?`<a href="#o${e.u}" data-gu="${e.u}" data-gs="${e.s||''}" data-gn="${e.n}">BM ${e.n}</a>`:'cela opština'}<div class="small">${esc(IDX.units[e.u]?.short||'')}</div></td><td><span class="chip">${e.n==null&&e.type==='odbor'?'Odluka':(KIND[e.type]||e.type)}</span> ${esc(e.detail)}${izmTxt(e)}${e.l?`<div class="links" style="margin-top:3px">${link(e.l,'novo rešenje')}${e.prev?link(e.prev,'prethodno rešenje'):(()=>{const p=prevDoc(e);return p?link(p.l,'prethodno rešenje'):''})()}</div>`:''}</td></tr>`).join('')}</tbody></table></div>${f.length>400?`<div class="small">Prikazano poslednjih 400 od ${f.length}.</div>`:''}`:'<div class="small"><i>Za sada nema nijedne promene.</i></div>'}</div>`}
+const bibItem=(at,l2,l3,l)=>`<div class="it"><div class="d1">${esc(at)}</div><div class="d2">${l2}</div><div class="d3">${l3}</div>${l?`<div class="d4">${link(l,'PDF')}</div>`:''}</div>`;
+function placeOf(uid,n){const U=UF[uid];if(!U)return IDX.units[uid].short;const s=U.stations.find(x=>x.n===n);return s&&s.nas!=null&&U.naselja[s.nas]?U.naselja[s.nas].name:IDX.units[uid].short}
+function bibBM(s,docs){return `<button class="back2" id="back2">← Nazad</button><div class="sec" style="margin-top:8px"><h3>Biblioteka</h3>${docs.length?docs.map(d=>bibItem(tsF(d.ts),`BM ${s.n} · ${esc(placeOf(ST.uid,s.n))}`,esc(d.t)+izmTxt({l:d.l,n:s.n}),d.l)).join(''):'<div class="small">Nema rešenja.</div>'}</div>`}
+function bibView(units,nset){const S=new Set(units),multi=units.length>1;
+  let f=(OLOG||[]).filter(e=>S.has(e.u)&&(!nset||e.n==null||nset.has(e.n)));
+  if(units.length===1&&UF[units[0]]&&UF[units[0]].odb_general){const seen=new Set(f.map(e=>e.l));UF[units[0]].odb_general.forEach(d=>{if(!seen.has(d.l))f.push({at:d.ts?tsF(d.ts):'',u:units[0],n:null,detail:d.t,l:d.l})})}
+  if(units.length===1&&UF[units[0]]){const uid=units[0],seen=new Set(f.map(e=>e.l));UF[uid].stations.forEach(st=>{if(nset&&!nset.has(st.n))return;odbOf(uid,st).forEach(d=>{if(seen.has(d.l))return;seen.add(d.l);f.push({at:tsF(d.ts),u:uid,n:st.n,detail:d.t,l:d.l})})})}
+  f=f.slice().sort((a,b)=>akey(b.at)-akey(a.at));
+  return `<button class="back2" id="back2">← Nazad</button><div class="sec" style="margin-top:8px"><h3>Biblioteka</h3>${f.length?f.slice(0,400).map(e=>bibItem(e.at,(e.n!=null?`BM ${e.n} · ${esc(multi?IDX.units[e.u].short:placeOf(e.u,e.n))}`:'Cela opština'+(multi?' · '+esc(IDX.units[e.u].short):'')),esc(e.detail)+izmTxt(e),e.l)).join('')+(f.length>400?`<div class="small" style="margin-top:6px">Prikazano 400 od ${fmt(f.length)}.</div>`:''):'<div class="small">Nema rešenja.</div>'}</div>`}
 async function loadLog(){LOG=await get(SRC?SRC+'data/live/log.json':'data/live/log.json?t='+Date.now())||[]}
 // ---------- navigacija ----------
 async function go(n,keepMap){
   const prevU=ST.uid,prevLvl=ST.lvl,prevNas=ST.nas;
-  Object.assign(ST,{lvl:'srb',rid:null,uid:null,nas:null,sid:null,view:'main'},n);
+  Object.assign(ST,{lvl:'srb',rid:null,uid:null,nas:null,sid:null,view:'main',flt:null},n);
   if(ST.lvl==='reg'&&regUnits(ST.rid).length===1){ST.lvl='unit';ST.uid=regUnits(ST.rid)[0]}
   if(ST.uid&&!UF[ST.uid]){render();UF[ST.uid]=await get('data/u/'+ST.uid+'.json');applyIzm(ST.uid,UF[ST.uid]);loadLiveUnit(ST.uid)}
   else if(ST.uid) loadLiveUnit(ST.uid);
@@ -683,7 +773,7 @@ function zapView(uid,s){const r=ZAP&&ZAP.u&&(ZAP.u[uid]||{})[s.sid];if(!r)return
   if(r.izasli!=null&&r.u_kutiji!=null&&r.u_kutiji>r.izasli)bad.push(`u kutiji ${r.u_kutiji}, a izašlo ${r.izasli}`);
   if(z){const d=[['izasli','out','izašli'],['vazeci','valid','važeći'],['nevazeci','invalid','nevažeći']].filter(([a,b])=>r[a]!=null&&z[b]!=null&&+r[a]!==+z[b]).map(([a,b,l])=>`${l}: zapisnik ${r[a]}, RIK ${z[b]}`);if(d.length)bad.push('zapisnik ≠ RIK? ('+d.join('; ')+')')}
   return `<div class="${bad.length?'note':'small'}" style="margin-top:6px"><b>Zapisnik (automatski pročitan${r.at?', '+esc(r.at):''}):</b> ${bad.length?bad.map(esc).join(' · '):'bez prekida, kontrolni list u redu, bez primedbi'}${r.van_bm?` · van BM glasalo ${r.van_bm}`:''}${r.posmatraci==='DA'?' · bilo posmatrača':''}<div class="small">Čita lokalni model – može da pogreši; za sigurno otvori PDF.</div></div>`}
-async function loadOdb(){const [n,l,z]=await Promise.all([get('data/odbori_novi.json?t='+Date.now()),get('data/odbori_log.json?t='+Date.now()),get('data/odbori_izm.json?t='+Date.now())]);ONOVI=n||{};OLOG=l||[];ODIZM=z||{}}
+async function loadOdb(){const [n,l,z,pv]=await Promise.all([get('data/odbori_novi.json?t='+Date.now()),get('data/odbori_log.json?t='+Date.now()),get('data/odbori_izm.json?t='+Date.now()),get('data/odbori_provera.json?t='+Date.now())]);ONOVI=n||{};OLOG=l||[];ODIZM=z||{};OPROV=pv&&pv.checked||null}
 function odbOf(uid,s){const extra=((ONOVI[uid]||{})[String(s.n)]||[]);const seen=new Set(s.odb.map(d=>d.l));return s.odb.concat(extra.filter(d=>!seen.has(d.l))).slice().sort((a,b)=>(b.ts||0)-(a.ts||0))}
 const isIzm=t=>/izmen|dopun|prestan|razrešen|odbacivanj|odbijanj/i.test(t);
 async function loadLive(){const [a,b]=await Promise.all([get('data/live/summary.json?t='+Date.now()),get(RAW+'data/live/summary.json')]);
@@ -693,10 +783,10 @@ async function loadLiveUnit(uid){const L=LIVE.u[uid];if(!(L&&(L.done||(L.ob&&L.o
   const d=await get(SRC?SRC+'data/live/u/'+uid+'.json':'data/live/u/'+uid+'.json?t='+Date.now());if(d)LU[uid]=d;addUnitIdx(uid);if(ST.uid===uid){updateMarks();render._keep=true;render()}}
 (async()=>{
   [IDX,GEO]=await Promise.all([get('data/index.json'),get('data/geo.json')]);
-  await Promise.all([loadLive(),loadOdb(),loadZap(true)]);buildIdx();
+  await Promise.all([loadLive(),loadOdb(),loadZap(true),loadObl(true)]);buildIdx();
   const n=Object.values(IDX.units).reduce((a,u)=>a+u.nbm,0);$('#hn').textContent=`${Object.keys(IDX.units).length} jedinica · ${fmt(n)} biračkih mesta`;
   await fromHash();
-  setInterval(async()=>{await loadLive();await loadZap();if(ST.uid)await loadLiveUnit(ST.uid);render._keep=true;render();updateMarks()},60000);
+  setInterval(async()=>{await loadLive();await loadZap();await loadObl();if(ST.uid)await loadLiveUnit(ST.uid);render._keep=true;render();updateMarks()},60000);
 })();
 // ---------- brojač poseta ----------
 try{let vid=null;try{vid=localStorage.getItem('kiz-vid')}catch(e){}
