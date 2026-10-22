@@ -1,4 +1,4 @@
-# Nadzor poslova na laptopu (pokreće ga Windows planer zadataka: „Kontrola - nadzor", pri prijavi i na 10 min).
+﻿# Nadzor poslova na laptopu (pokreće ga Windows planer zadataka: „Kontrola - nadzor", pri prijavi i na 10 min).
 # Jedan primerak radi stalno i na 60 s proverava da li rade poslovi koji treba da rade; ako ne rade, pokreće ih.
 # Režim: D:\VAJB\kontrolaizbora\zadaci\rezim.json  {"rezim": "izbori" | "proba" | "stop", "proba_do": "2026-10-22T18:00"}
 $ErrorActionPreference = 'Continue'
