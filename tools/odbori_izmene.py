@@ -14,6 +14,8 @@ done = {e["l"] for u in IZ.values() for l in u.values() for e in l}
 def kind(t):
     t = t.lower()
     return "S" if "stalnom" in t else "P" if "prošir" in t else None
+FAILS = []
+import time
 TESS = os.environ.get("TESSERACT", "tesseract")
 import threading
 LOCK = threading.Lock()
@@ -23,9 +25,15 @@ def ocr(url):
         f = os.path.join(d, "a.pdf")
         u = urllib.parse.quote(url, safe=":/")
         for a in range(4):
-            r = subprocess.run([os.environ.get("CURL", "curl"), "-sS", "--http1.1", "--max-time", "90", "-o", f, u])
+            r = subprocess.run([os.environ.get("CURL", "curl"), "-sS", "--http1.1", "--max-time", "90", "-A",
+                                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+                                "-w", "%{http_code}", "-o", f, u], capture_output=True, text=True)
             if r.returncode == 0 and os.path.getsize(f) > 1000 and open(f, "rb").read(4) == b"%PDF": break
-        else: return None
+            time.sleep(2 + a * 3)
+        else:
+            FAILS.append(f"{r.returncode} http={r.stdout.strip()} {r.stderr.strip()[:120]} prvo={open(f,'rb').read(60) if os.path.exists(f) else b''}")
+            if len(FAILS) <= 3: print("preuzimanje nije uspelo:", FAILS[-1], flush=True)
+            return None
         txt = ""
         with LOCK:  # pdfium nije bezbedan za više niti
             pdf = P.PdfDocument(f); pngs = []
@@ -109,4 +117,4 @@ with ThreadPoolExecutor(int(os.environ.get("THREADS", "4"))) as ex:
 for u in IZ.values():
     for l in u.values(): l.sort(key=lambda r: r.get("ts") or 0)
 json.dump(IZ, open(OUT, "w"), ensure_ascii=False, separators=(",", ":"))
-print("pročitano novih rešenja:", n_new)
+print("pročitano novih rešenja:", n_new, "| neuspelih preuzimanja:", len(FAILS))
