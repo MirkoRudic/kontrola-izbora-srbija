@@ -13,6 +13,7 @@ ap.add_argument('--dir', required=True)
 ap.add_argument('--until', default='2026-10-26T09:00')
 ap.add_argument('--sim', action='store_true', help='proba na izborima 2023')
 ap.add_argument('--threads', type=int, default=6)
+ap.add_argument('--mirror', default=None, help='druga kopija (npr. Google Drive); ako nije data, čita se iz <dir>/../zadaci/mirror.txt')
 ap.add_argument('--site', default='https://kontrola-izbora-srbija.pages.dev')
 A = ap.parse_args()
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -80,6 +81,35 @@ for uid, u in IDX["units"].items():
     uf = getjson(f"{A.site}/data/u/{uid}.json")
     if uf: UNITS[uid] = dict(region=u["region"], name=u["short"], st={s["sid"]: s for s in uf["stations"]})
 log("BM ukupno", sum(len(u["st"]) for u in UNITS.values()), "jedinica", len(UNITS), "SIM" if A.sim else "")
+# druga kopija zapisnika (Google Drive): <mirror>\<ime foldera dir>\..., greške ne zaustavljaju posao
+MIR = A.mirror
+if not MIR:
+    _mf = os.path.join(os.path.dirname(os.path.abspath(D)), "zadaci", "mirror.txt")
+    if os.path.exists(_mf): MIR = open(_mf, encoding="utf-8-sig").read().strip() or None
+if MIR: MIR = os.path.join(MIR, os.path.basename(os.path.abspath(D)))
+MIR_PEND = []
+def mirror(rel):
+    if not MIR: return True
+    import shutil
+    try:
+        dst = os.path.join(MIR, rel); os.makedirs(os.path.dirname(dst), exist_ok=True)
+        if not os.path.exists(dst) or os.path.getsize(dst) != os.path.getsize(os.path.join(D, rel)):
+            shutil.copy2(os.path.join(D, rel), dst + ".tmp"); os.replace(dst + ".tmp", dst)
+        return True
+    except Exception as e:
+        with LOCK:
+            if rel not in MIR_PEND: MIR_PEND.append(rel)
+        return False
+def mirror_catchup():
+    if not MIR: return
+    n = bad = 0
+    for root, _, fs in os.walk(D):
+        for f in fs:
+            if f.endswith(".pdf"):
+                rel = os.path.relpath(os.path.join(root, f), D); n += 1
+                if not mirror(rel): bad += 1
+    log("kopija na", MIR, "– proverenih", n, "neuspelih", bad)
+if MIR: threading.Thread(target=mirror_catchup, daemon=True).start()
 IXF = os.path.join(D, "index.json")
 INDEX = json.load(open(IXF, encoding="utf-8")) if os.path.exists(IXF) else {}
 def save_index():
@@ -113,6 +143,7 @@ def save_pdf(uid, sid, link):
     fd = os.path.join(D, "2026", uid); os.makedirs(fd, exist_ok=True)
     fn = f"bm{s['n']:03d}_{sha[:10]}.pdf"
     with open(os.path.join(fd, fn), "wb") as f: f.write(b)
+    mirror(os.path.join("2026", uid, fn))
     hist.append(dict(link=link, sha=sha, file=f"2026/{uid}/{fn}", at=now().strftime("%d.%m. %H:%M"), bytes=len(b)))
     if len(hist) > 1: log("!!! ZAMENJEN ZAPISNIK:", UNITS[uid]["name"], "BM", s["n"], fn)
     return True
@@ -138,7 +169,11 @@ while now() < UNTIL:
     with ThreadPoolExecutor(A.threads) as ex:
         for (uid, sid), link in ex.map(job, todo):
             if link and link != "ERR" and save_pdf(uid, sid, link): new += 1
-    save_index()
+    save_index(); mirror("index.json")
+    if MIR_PEND:
+        with LOCK: pend = MIR_PEND[:]; MIR_PEND.clear()
+        bad = sum(not mirror(r) for r in pend)
+        if bad: log("kopija na Drive: još", bad, "fajlova čeka (Drive nedostupan?)")
     total = sum(len(v) for v in INDEX.values())
     interval = 30.0 if total >= sum(len(u["st"]) for u in UNITS.values()) else (max(1.0, interval / 2) if new else min(10.0, interval * 1.5))
     log(f"krug: upita {len(todo)}, novih zapisnika {new}, ukupno sačuvano {total}, sledeći za {interval:.1f} min")
