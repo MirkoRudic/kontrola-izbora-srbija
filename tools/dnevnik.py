@@ -62,3 +62,18 @@ def push_logs(entries, msg=None):
 if __name__ == "__main__":
     job = sys.argv[1]; lines = sys.stdin.read().splitlines()
     print("dnevnik", job, len(lines), "redova:", "ok" if push_logs({job: lines}) else "NIJE UPISANO")
+
+_LOCKS = []
+def jedini(ime):
+    """Samo jedan primerak posla na ovom računaru (zaključan fajl). Vraća False ako već radi drugi."""
+    import tempfile
+    d = os.environ.get("KONTROLA_LOCKDIR") or tempfile.gettempdir()
+    f = open(os.path.join(d, f"kontrola_{ime}.lock"), "a+")
+    try:
+        if os.name == "nt":
+            import msvcrt; f.seek(0); msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl; fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        f.close(); return False
+    _LOCKS.append(f); return True

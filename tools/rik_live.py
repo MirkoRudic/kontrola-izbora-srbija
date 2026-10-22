@@ -152,6 +152,8 @@ def apply(uid, sid, r, t):
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from translit import lat
 import telegram as TG
+import dnevnik as _DN
+if A.standby and not _DN.jedini("rezerva" + ("-proba" if A.sim else "")): print("rezerva već radi – izlazim"); sys.exit(0)
 if A.sim: TG.sim_lists(); TG.SITE = "PROBA (rezultati 2023) · " + TG.SITE
 if A.tg_demo: TG.demo(print); sys.exit(0)
 def _core(x): return re.sub(r'^(gradska opština|grad|opština)\s+', '', lat(x).lower()).strip()

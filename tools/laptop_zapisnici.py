@@ -15,6 +15,9 @@ ap.add_argument('--sim', action='store_true', help='proba na izborima 2023')
 ap.add_argument('--threads', type=int, default=6)
 ap.add_argument('--site', default='https://kontrola-izbora-srbija.pages.dev')
 A = ap.parse_args()
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import dnevnik as _DN
+if not _DN.jedini("zapisnici" + ("-proba" if A.sim else "")): print("arhiva već radi – izlazim"); sys.exit(0)
 R = "https://www.rik.parlament.gov.rs"; ROUND = "341140" if A.sim else "680072"
 D = A.dir; os.makedirs(D, exist_ok=True)
 def _tz():

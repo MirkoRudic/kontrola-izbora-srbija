@@ -18,6 +18,7 @@ ap.add_argument('--model', default='qwen2.5vl:7b')
 ap.add_argument('--sim', action='store_true')
 ap.add_argument('--no-push', action='store_true')
 A = ap.parse_args()
+if not DN.jedini("citanje" + ("-proba" if A.sim else "")): print("čitanje već radi – izlazim"); sys.exit(0)
 D = A.dir; RES_F = os.path.join(D, "citanje.json"); IXF = os.path.join(D, "index.json")
 RAW = "https://raw.githubusercontent.com/MirkoRudic/kontrola-izbora-srbija/uzivo/public/data/live/"
 def now(): return datetime.datetime.now()
