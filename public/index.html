@@ -1,4 +1,4 @@
-<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261023001835"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
+<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261023003526"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
 
 :root{
   --bg:#f4f2ec; --panel:#fffdf8; --ink:#1c2228; --muted:#5f6973; --line:#d9d4c7; --soft:#ebe7dc;
@@ -342,7 +342,7 @@ th .sbtn.on{color:var(--accent)}
       <p><b>Izvor:</b> Republička izborna komisija (rik.parlament.gov.rs) – rezultati po biračkim mestima, zapisnici i rešenja o biračkim odborima.</p>
       <p><b>2023:</b> rezultati parlamentarnih izbora 17. 12. 2023. Biračko mesto iz 2026. upareno je sa onim iz 2023. ako ima isti broj i naziv, ili isti/vrlo sličan naziv. Gde para nema, to piše kod BM, a poređenje se ne prikazuje. Zbirovi po opštini, regionu i Srbiji porede se u celini (Vranjska Banja je 2023. bila posebna jedinica, ovde je sabrana sa Vranjem).</p>
       <p><b>2026:</b> povlači se automatski sa RIK-a u izbornoj noći. Dok opština nije cela obrađena, razlika u procentima se računa prema istim (uparenim) biračkim mestima iz 2023.</p>
-      <p><b>Glasovi:</b> SNS = lista 1, SPS = lista 2, „Naši” = 2023. Srbija protiv nasilja (lista 7), 2026. Studentska lista (lista 3).</p>
+      <p><b>Glasovi:</b> SNS = lista 1, SPS = lista 2, Studenti = Studentska lista (lista 3), nova lista koja 2023. nije postojala.</p>
       <p><b>Mapa:</b> granice opština i naselja su iz OpenStreetMap-a. Za oko 60 % biračkih mesta tačka je na adresi ili objektu iz rešenja o biračkom odboru (pretraga po OpenStreetMap-u); ostala su prikazana u svom naselju, pa im položaj na mapi nije tačan.</p>
       <p><b>Napravio:</b> Mirko &amp; Opus 5.5</p>
     </div></section>
@@ -383,7 +383,7 @@ const INFO_OUT='Procenat je od broja upisanih birača.', INFO_OF_OUT='Procenat j
   INFO_VOTES='Procenti su od broja važećih listića.';
 document.addEventListener('click',e=>{const b=e.target.closest('.ii');document.querySelectorAll('.ii.on').forEach(x=>{if(x!==b)x.classList.remove('on')});if(b){e.preventDefault();e.stopPropagation();b.classList.toggle('on')}},true);
 
-const VOTES=[['SNS',1,1,'lista 1',-1],['SPS',2,2,'lista 2',-1],['„Naši”',7,3,'2023: SPN (lista 7) · 2026: Studentska lista (lista 3)',1]];
+const VOTES=[['SNS',1,1,'lista 1',-1],['SPS',2,2,'lista 2',-1],['Studenti',null,3,'lista 3',0]];
 const sgn=(v,d)=>v==null?'':(v>0?'+':v<0?'−':'±')+Math.abs(v).toLocaleString('sr-Latn-RS',d!=null?{minimumFractionDigits:d,maximumFractionDigits:d}:{});
 function cell(n,base){return n==null?'<td class="n yr"><span class="na">—</span></td>':`<td class="n yr">${fmt(n)}${base?`<small>${pct(n,base)}</small>`:''}</td>`}
 // a=2023, b=2026; ca/cba = 2023 za ista BM (kad 2026 nije potpuno)
@@ -396,8 +396,8 @@ function diff(a,b,ba,bb,good,ppOnly){
 // r: {y (2023 cela), z (2026), zc (2023 istih BM), partial}
 function row(label,key,base,r,sub,good,listY,listZ){
   const g=(o,k,i)=>o?(k==='list'?o.lists[i]:o[k]):null, gb=(o)=>o&&base?o[base]:null;
-  const a=key==='list'?g(r.y,'list',listY):g(r.y,key), b=key==='list'?g(r.z,'list',listZ):g(r.z,key);
-  const cmp=r.partial?r.zc:r.y, ca=key==='list'?g(cmp,'list',listY):g(cmp,key);
+  const a=key==='list'?(listY==null||listY<0?null:g(r.y,'list',listY)):g(r.y,key), b=key==='list'?g(r.z,'list',listZ):g(r.z,key);
+  const cmp=r.partial?r.zc:r.y, ca=key==='list'?(listY==null||listY<0?null:g(cmp,'list',listY)):g(cmp,key);
   return `<tr><th scope="row">${label}${sub?`<small class="rs">${sub}</small>`:''}</th>${cell(a,gb(r.y))}${cell(b,gb(r.z))}${diff(ca,b,gb(cmp),gb(r.z),good,r.partial)}</tr>`}
 const shortL=t=>{t=String(t||'').replace(/\s+/g,' ').trim();return t.length>40?t.slice(0,38).trim()+'…':t};
 function topOther(arr,skip){let bi=-1,bv=-1;(arr||[]).forEach((v,i)=>{if(skip.includes(i+1))return;if((v||0)>bv){bv=v||0;bi=i}});return bi<0||bv<=0?null:{n:bi+1,v:bv}}
@@ -417,8 +417,8 @@ function results(r,notes){
   </tbody></table></div>
   ${notes?`<div class="foot1">${notes}</div>`:''}</div></div>
   <div class="sec"><h3>Glasovi</h3><div class="tbl"><table class="res cmp">${H}<tbody>
-    ${VOTES.slice(0,2).map(([g,n23,n26,sub,gd])=>row(g,'list','valid',r,sub,gd,n23-1,n26-1)).join('')}
-    ${VOTES.slice(2).map(([g,n23,n26,sub,gd])=>row(g,'list','valid',r,sub,gd,n23-1,n26-1)).join('')}
+    ${VOTES.slice(0,2).map(([g,n23,n26,sub,gd])=>row(g,'list','valid',r,sub,gd,n23==null?null:n23-1,n26-1)).join('')}
+    ${VOTES.slice(2).map(([g,n23,n26,sub,gd])=>row(g,'list','valid',r,sub,gd,n23==null?null:n23-1,n26-1)).join('')}
   </tbody></table></div>
   <div style="display:flex;gap:8px"><button class="more" id="more">DETALJNO</button>${dnBtn}</div></div>`}
 let btab='2026', bsort=false;
