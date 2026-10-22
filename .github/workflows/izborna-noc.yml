@@ -49,5 +49,6 @@ jobs:
         run: |
           now=$(date -u +%s); a=$(date -u -d 2026-10-25T17:40:00Z +%s); b=$(date -u -d 2026-10-26T05:00:00Z +%s)
           if [ $now -ge $a ] && [ $now -le $b ]; then
-            gh api -X POST repos/${{ github.repository }}/actions/workflows/izborna-noc.yml/dispatches -f ref=main -f 'inputs[sim]=false' -f 'inputs[minutes]=55' && echo "pokrenut sledeći krug"
-          else echo "van izborne noći – ne pokrećem dalje"; fi
+            if gh api -X POST repos/${{ github.repository }}/actions/workflows/izborna-noc.yml/dispatches -f ref=main -f 'inputs[sim]=false' -f 'inputs[minutes]=55'; then M="pokrenut sledeći krug"; else M="GREŠKA: sledeći krug NIJE pokrenut"; fi
+          else M="van izborne noći – ne pokrećem dalje"; fi
+          echo "$M"; echo "radni tok izborna noć (${{ github.event_name }}): $M" | python3 tools/dnevnik.py izborna-noc || true

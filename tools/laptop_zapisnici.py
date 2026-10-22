@@ -28,6 +28,17 @@ def log(*a):
     line = now().strftime("%d.%m. %H:%M:%S") + " " + " ".join(str(x) for x in a)
     print(line, flush=True)
     with LOCK, open(os.path.join(D, "log.txt"), "a", encoding="utf-8") as f: f.write(line + "\n")
+    with LOCK: LOGBUF.append(" ".join(str(x) for x in a))
+LOGBUF = []; _LASTLOG = [0.0]
+def flush_logs(force=False):
+    """Dnevnik na GitHub (grana uzivo, logovi/laptop-zapisnici.log) na 10 min."""
+    if not LOGBUF or (not force and time.time() - _LASTLOG[0] < 600): return
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import dnevnik as DN
+        lines = LOGBUF[:]
+        if DN.push_logs({"laptop-zapisnici": lines}): del LOGBUF[:len(lines)]
+    except Exception as e: print("dnevnik greška:", e)
+    _LASTLOG[0] = time.time()
 
 cj = http.cookiejar.CookieJar(); OP = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
 OP.addheaders = [("User-Agent", "Mozilla/5.0 (kontrola-izbora)")]
@@ -128,5 +139,6 @@ while now() < UNTIL:
     total = sum(len(v) for v in INDEX.values())
     interval = 30.0 if total >= sum(len(u["st"]) for u in UNITS.values()) else (max(1.0, interval / 2) if new else min(10.0, interval * 1.5))
     log(f"krug: upita {len(todo)}, novih zapisnika {new}, ukupno sačuvano {total}, sledeći za {interval:.1f} min")
+    flush_logs()
     time.sleep(max(5, t0 + interval * 60 - time.time()))
-log("kraj")
+log("kraj"); flush_logs(True)

@@ -36,7 +36,12 @@ ROUND = "341140" if A.sim else "680072"
 OUT = A.out; os.makedirs(OUT + "/u", exist_ok=True)
 now = lambda: datetime.datetime.now(_tz())
 stamp = lambda: now().strftime("%d.%m. %H:%M")
-def log(*a): print(now().strftime("%H:%M:%S"), *a, flush=True)
+LOGBUF = []
+def log(*a):
+    t = " ".join(str(x) for x in a)
+    print(now().strftime("%H:%M:%S"), t, flush=True)
+    LOGBUF.append(t)
+    if len(LOGBUF) > 3000: del LOGBUF[:1000]
 
 def curl(args, t=40):
     return subprocess.run(["curl", "-sS", "--http1.1", "--max-time", str(t)] + args, capture_output=True, text=True).stdout
@@ -218,24 +223,18 @@ def last_main_push():
     try: return int(subprocess.run(["git", "log", "-1", "--format=%ct", "origin/main", "--", OUT], capture_output=True, text=True).stdout.strip() or 0)
     except Exception: return 0
 def push_uzivo(msg):
-    """Na 'uzivo' ide samo folder sa rezultatima, na vrh postojeće grane – bez fajlova iz .github
+    """Na 'uzivo' ide folder sa rezultatima + dnevnik rada (logovi/), na vrh postojeće grane – bez fajlova iz .github
     (GitHub ne dozvoljava GITHUB_TOKEN-u da menja radne tokove, pa bi push cele grane bio odbijen)."""
-    import tempfile
-    env = dict(os.environ, GIT_INDEX_FILE=os.path.join(tempfile.gettempdir(), "uzivo.idx"))
-    g = lambda *a, **k: subprocess.run(["git", *a], capture_output=True, text=True, env=env, **k)
-    base = None
-    if g("fetch", "-q", "origin", "uzivo").returncode == 0:
-        base = g("rev-parse", "FETCH_HEAD").stdout.strip()
-        g("read-tree", base)
-    else:
-        g("read-tree", "--empty")
-    g("rm", "-r", "-q", "--cached", "--ignore-unmatch", OUT)
-    g("add", "-f", OUT)
-    tree = g("write-tree").stdout.strip()
-    c = g("commit-tree", tree, *(["-p", base] if base else []), "-m", msg).stdout.strip()
-    r = g("push", "-q", "-f", "origin", f"{c}:refs/heads/uzivo")
-    if r.returncode != 0: log("push na uzivo:", (r.stderr or "")[-300:])
-    return r.returncode == 0
+    import dnevnik as DN
+    def extra(env):
+        subprocess.run(["git", "rm", "-r", "-q", "--cached", "--ignore-unmatch", OUT], capture_output=True, env=env)
+        subprocess.run(["git", "add", "-f", OUT], capture_output=True, env=env)
+    job = "rik_live-" + DN.host() + ("-proba" if A.sim else "")
+    lines = LOGBUF[:]
+    ok = DN.push(DN.log_changes({job: lines}) if lines else {}, msg, extra)
+    if ok: del LOGBUF[:len(lines)]
+    else: log("push na uzivo nije uspeo")
+    return ok
 
 def push(msg, force_main=False):
     """Svaka promena -> grana 'uzivo' (bez Cloudflare gradnje; aplikacija je čita sa GitHub-a).
@@ -291,11 +290,29 @@ def remote_age_min():
         t = n.replace(month=mo, day=d, hour=h, minute=mi, second=0, microsecond=0)
         return (n - t).total_seconds() / 60
     except Exception: return 999
+LASTLOG = time.time()
+def flush_logs(force=False):
+    """Dnevnik i kad nema novih podataka (na 10 min), da se vidi da posao živi."""
+    global LASTLOG
+    if A.no_push or not LOGBUF or (not force and time.time() - LASTLOG < 600): return
+    import dnevnik as DN
+    lines = LOGBUF[:]
+    if DN.push_logs({"rik_live-" + DN.host() + ("-proba" if A.sim else ""): lines}): del LOGBUF[:len(lines)]
+    LASTLOG = time.time()
+def _pad(t, v, tb):
+    import traceback
+    log("PAD: " + "".join(traceback.format_exception(t, v, tb))[-1500:])
+    try: flush_logs(True)
+    except Exception: pass
+    sys.__excepthook__(t, v, tb)
+sys.excepthook = _pad
+log(f"start: {'PROBA ' if A.sim else ''}{'rezerva ' if A.standby else ''}minuta {A.minutes}")
 while time.time() < deadline:
     if A.standby:
         age = remote_age_min(); alive = gh_alive()
         if alive or age < 3:
-            time.sleep(120); continue
+            log(f"rezerva čeka: GitHub {'radi' if alive else 'ne radi'}, objava stara {age:.0f} min")
+            flush_logs(); time.sleep(120); continue
         log(f"GitHub posao ne radi (objava stara {age:.0f} min) – rezerva preuzima ovaj krug")
     t0 = time.time(); t = stamp()
     with ThreadPoolExecutor(A.threads) as ex:
@@ -340,8 +357,11 @@ while time.time() < deadline:
     else: interval = min(15.0, interval * 1.5)
     if A.fast: interval = min(interval, 1.0)
     log(f"krug: upita {len(todo)} novih {new} greške {err} promenjeno opština {len(changed)} obrađeno {s['meta']['processed']}/{total} trajanje {time.time()-t0:.0f}s sledeći za {interval:.1f} min")
+    flush_logs()
     nxt = t0 + interval * 60
     if nxt > deadline: break
     time.sleep(max(5, nxt - time.time()))
 if PENDING: push(f"Uživo: obrađeno {summary(stamp())['meta']['processed']}/{total} BM ({stamp()})")
+log("kraj kruga (isteklo vreme)")
+flush_logs(True)
 log("kraj")

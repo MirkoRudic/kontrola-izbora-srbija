@@ -280,7 +280,13 @@ const fmt=n=>n==null?'—':n.toLocaleString('sr-Latn-RS');
 const pct=(a,b,d=1)=>(a==null||!b)?'—':(100*a/b).toLocaleString('sr-Latn-RS',{minimumFractionDigits:d,maximumFractionDigits:d})+' %';
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const link=(u,t)=>u?`<a href="${encodeURI(decodeURI(u))}" target="_blank" rel="noopener">${t}</a>`:'';
-const get=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);
+// greške u pregledaču -> /api/greska (najviše 6 po otvaranju strane)
+let NERR=0;const REPORTED=new Set();
+function greska(msg,src){try{if(NERR>=6||!location.protocol.startsWith('http'))return;const k=msg+'|'+src;if(REPORTED.has(k))return;REPORTED.add(k);NERR++;
+  fetch('/api/greska',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({msg:String(msg).slice(0,400),src:String(src||'').slice(0,200),url:location.hash.slice(0,100)}),keepalive:true}).catch(()=>{})}catch(e){}}
+addEventListener('error',e=>greska(e.message||'error',(e.filename||'').split('/').pop()+':'+(e.lineno||'')));
+addEventListener('unhandledrejection',e=>greska('promise: '+((e.reason&&(e.reason.stack||e.reason.message))||e.reason),''));
+const get=u=>fetch(u,{cache:'no-cache'}).then(r=>{if(!r.ok){if(!/raw\.githubusercontent/.test(u)||r.status!==404)greska('HTTP '+r.status,u.split('?')[0]);return null}return r.json()}).catch(e=>{greska('mreža: '+e.message,u.split('?')[0]);return null});
 let IDX=null, GEO=null, LIVE={meta:null,u:{}}; const UF={}, LU={};
 const ST={lvl:'srb',rid:null,uid:null,nas:null,sid:null,view:'main'};
 
