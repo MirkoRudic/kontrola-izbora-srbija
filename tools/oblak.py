@@ -53,8 +53,42 @@ def lista(mx):
                         rik=({kk: live.get(kk) for kk in ("voters", "out", "valid", "invalid", "lists")} if live.get("processed") else None)))
     print(json.dumps(dict(ceka=len(pending()), sledeci=res), ensure_ascii=False, indent=1))
 LBL = {"voters": "upisani", "out": "izašli", "valid": "važeći", "invalid": "nevažeći"}
+R = "https://www.rik.parlament.gov.rs"
+def rik_fresh(uid, sid, sim):
+    """Svež upit RIK-u za jedno BM (pre upisa „!”)."""
+    import http.cookiejar, urllib.parse
+    PD = os.path.join(HERE, "..", "public", "data")
+    try:
+        reg = json.load(open(os.path.join(PD, "index.json"), encoding="utf-8"))["units"][uid]["region"]
+        st = {s["sid"]: s for s in json.load(open(os.path.join(PD, "u", uid + ".json"), encoding="utf-8"))["stations"]}[sid]
+    except Exception: return None
+    q = st.get("m23") if sim else sid
+    if not q: return None
+    op = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar())); op.addheaders = list(UA.items())
+    for a in range(3):
+        try:
+            op.open(R + "/542645/rezultati/", timeout=60).read()
+            rq = urllib.request.Request(R + "/get_results/", data=urllib.parse.urlencode(dict(should_update_pies=1, type=2, election_round="341140" if sim else "680072", region=reg, municipality=uid, election_station=q)).encode(),
+                                        headers={"X-Requested-With": "XMLHttpRequest", "Referer": R + "/542645/rezultati/"})
+            d = json.loads(op.open(rq, timeout=60).read()); s = d.get("stat_sum_numbers") or {}
+            num = lambda x: int(str(x).replace('.', '') or 0)
+            if num(s.get("processed_stations", 0)) == 0: return None
+            v, iv = [int(x) for x in d["sum_config"]["data"]["datasets"][0]["data"][:2]]
+            lists = [0] * 18
+            for l in d.get("table_data") or []:
+                i = int(l["count_number"]) - 1
+                if 0 <= i < 18: lists[i] = num(l["won_number"])
+            return dict(processed=True, voters=num(s.get("total_voters", 0)), out=num(s.get("available", 0)), valid=v, invalid=iv, lists=lists)
+        except Exception: time.sleep(3)
+    return None
+SIM = [None]
 def neslaganja(uid, sid, z):
     live = (raw(f"live/u/{uid}.json") or {}).get("bm", {}).get(sid) or {}
+    if live.get("processed") and z and any(z.get(k) is not None and live.get(k) is not None and int(z[k]) != int(live[k]) for k in LBL) or any(
+            v is not None and live.get("lists") and int(v) != live["lists"][int(i) - 1] for i, v in ((z or {}).get("lists") or {}).items()):
+        if SIM[0] is None: SIM[0] = bool(((raw("zap/kandidati.json") or {}).get("meta") or {}).get("sim"))
+        f = rik_fresh(uid, sid, SIM[0])
+        if f: live = f
     if not live.get("processed") or not z: return None
     ne = [[LBL[k], z[k], live[k]] for k in LBL if z.get(k) is not None and live.get(k) is not None and int(z[k]) != int(live[k])]
     for i, v in (z.get("lists") or {}).items():
