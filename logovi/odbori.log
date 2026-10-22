@@ -10,3 +10,10 @@
 22.10. 14:51:47 [github] novih dokumenata: 558 | provera 22.10. 14:44
 22.10. 14:51:47 [github] za čitanje: 1044
 22.10. 14:51:47 [github] pročitano novih rešenja: 0 | neuspelih preuzimanja: 0
+22.10. 15:08:28 [github] provera rešenja: success
+22.10. 15:08:28 [github] novih dokumenata: 199 | provera 22.10. 15:02
+22.10. 15:08:28 [github] za čitanje: 1229
+22.10. 15:08:28 [github] greška čitanja: izuzetak: ModuleNotFoundError("No module named 'PIL'")
+22.10. 15:08:28 [github] greška čitanja: izuzetak: ModuleNotFoundError("No module named 'PIL'")
+22.10. 15:08:28 [github] greška čitanja: izuzetak: ModuleNotFoundError("No module named 'PIL'")
+22.10. 15:08:28 [github] pročitano novih rešenja: 0 | neuspelih preuzimanja: 1229
