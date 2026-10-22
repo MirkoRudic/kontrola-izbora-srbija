@@ -31,13 +31,25 @@ function Poslovi($r) {
   }
   return $p
 }
+function Pocisti($r) {
+  # posle promene režima: gasi poslove pogrešne vrste (proba = --sim)
+  foreach ($pr in @(Get-CimInstance Win32_Process -Filter "Name='python.exe'" | Where-Object { $_.CommandLine -match 'rik_live\.py|laptop_zapisnici\.py|laptop_citanje\.py' -and $_.CommandLine -notlike '*nadzor*' })) {
+    $sim = $pr.CommandLine -like '*--sim*'
+    $los = ($r.rezim -eq 'stop') -or ($r.rezim -eq 'izbori' -and $sim) -or ($r.rezim -eq 'proba' -and -not $sim)
+    if ($los) { L "gasim posao druge vrste (režim $($r.rezim)): $($pr.ProcessId) $($pr.CommandLine)"; Stop-Process -Id $pr.ProcessId -Force -ErrorAction SilentlyContinue }
+  }
+}
 function Radi($kljuc) {
   return @(Get-CimInstance Win32_Process -Filter "Name='python.exe'" | Where-Object { $_.CommandLine -like "*$kljuc*" -and $_.CommandLine -notlike '*nadzor*' }).Count -gt 0
 }
 L "nadzor start (PID $PID)"
 $poslednjiPull = Get-Date '2000-01-01'; $poslednjeJavljanje = Get-Date
+Register-EngineEvent PowerShell.Exiting -Action { "$(Get-Date -Format 'dd.MM. HH:mm:ss') nadzor se gasi (PID $PID)" | Out-File "D:\VAJB\kontrolaizbora\logovi\nadzor.txt" -Append -Encoding utf8 } | Out-Null
+$poslednjiRezim = $null
 while ($true) {
+ try {
   $r = Rezim; $sad = Get-Date
+  if ($r.rezim -ne $poslednjiRezim) { if ($poslednjiRezim) { L "režim promenjen: $poslednjiRezim -> $($r.rezim)" }; Pocisti $r; $poslednjiRezim = $r.rezim }
   if ($r.rezim -eq 'stop') { Start-Sleep 60; continue }
   $aktivni = @(Poslovi $r | Where-Object { $sad -ge $_.od -and $sad -lt $_.do })
   $treba = @($aktivni | Where-Object { -not (Radi $_.kljuc) })
@@ -60,5 +72,6 @@ while ($true) {
     L "živ, režim $($r.rezim); $(if ($st) {$st} else {'nema aktivnih poslova u ovom trenutku'})"
     $poslednjeJavljanje = $sad
   }
+ } catch { L "nadzor GREŠKA u krugu (nastavljam): $_" }
   Start-Sleep 60
 }
