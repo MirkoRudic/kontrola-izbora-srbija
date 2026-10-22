@@ -23,7 +23,8 @@ jobs:
       - run: |
           git config user.name "rik-odbori"; git config user.email "rik-odbori@users.noreply.github.com"
           python3 tools/odbori_novi.py | tee /tmp/out.txt
-          THREADS=4 python3 tools/odbori_izmene.py | tail -3 || true
+          THREADS=4 timeout 35m python3 tools/odbori_izmene.py > /tmp/izm.log 2>&1 || true
+          ( date -u; tail -n 40 /tmp/izm.log ) > public/data/odbori_izm_log.txt
           git add public/data/odbori_*.json
           if ! git diff --cached --quiet; then
             git commit -qm "Rešenja o odborima: $(cat /tmp/out.txt)"
