@@ -99,6 +99,8 @@ def _api(token, method, data=None):
     body = urllib.parse.urlencode(data).encode() if data else None
     return json.loads(urllib.request.urlopen(urllib.request.Request(url, data=body), timeout=30).read())
 
+# grupa u kojoj je bot (naučeno 21.10.); rezerva ako nema tajne TELEGRAM_CHAT ni stanja u telegram.json
+KNOWN_CHAT = "-5301355164"
 def chat_id(token, state):
     c = os.environ.get("TELEGRAM_CHAT") or state.get("chat")
     if c: return c
@@ -109,8 +111,8 @@ def chat_id(token, state):
         grp = [c for c in chats if c.get("type") in ("group", "supergroup")]
         c = (grp or chats)[-1]["id"] if (grp or chats) else None
         if c: state["chat"] = str(c)
-        return state.get("chat")
-    except Exception: return None
+        return state.get("chat") or KNOWN_CHAT
+    except Exception: return KNOWN_CHAT
 
 def maybe_send(T, now, statef, log, test=False):
     """Šalje po rasporedu + odmah na prve rezultate, 50 %, 90 %, 99 % i novo oboreno BM."""
