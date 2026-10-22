@@ -98,16 +98,17 @@ def neslaganja(uid, sid, z):
         except Exception: pass
     return ne
 def upis(path):
-    items = json.load(open(path, encoding="utf-8")); t = stamp(); lines = []
+    items = json.load(open(path, encoding="utf-8")); t = stamp(); lines = []; RECS = []
+    for it in items:
+        uid, sid = str(it["u"]), str(it["sid"])
+        rec = dict(sha=it.get("sha"), n=it.get("n"), at=t, p=it.get("p") or [], zap=it.get("zap"), link=it.get("link"))
+        ne = neslaganja(uid, sid, it.get("zap"))
+        if ne is not None: rec["ne"] = ne
+        RECS.append((uid, sid, rec))
+        lines.append(f"BM {it.get('n')} ({uid}/{sid}): primedbi {len(rec['p'])}" + (f", ! {ne}" if ne else ""))
     def merge(old):
         d = json.loads(old) if old.strip() else {"meta": {}, "u": {}}
-        for it in items:
-            uid, sid = str(it["u"]), str(it["sid"])
-            rec = dict(sha=it.get("sha"), n=it.get("n"), at=t, p=it.get("p") or [], zap=it.get("zap"), link=it.get("link"))
-            ne = neslaganja(uid, sid, it.get("zap"))
-            if ne is not None: rec["ne"] = ne
-            d["u"].setdefault(uid, {})[sid] = rec
-            lines.append(f"BM {it.get('n')} ({uid}/{sid}): primedbi {len(rec['p'])}" + (f", ! {ne}" if ne else ""))
+        for uid, sid, rec in RECS: d["u"].setdefault(uid, {})[sid] = rec
         d["meta"] = dict(at=t, n=sum(len(v) for v in d["u"].values()))
         return json.dumps(d, ensure_ascii=False, separators=(",", ":"))
     ch = DN.log_changes({"oblak": lines or ["upis bez stavki"]})
