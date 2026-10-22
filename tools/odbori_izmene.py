@@ -11,6 +11,9 @@ NOVI = json.load(open(f"{D}/odbori_novi.json")) if os.path.exists(f"{D}/odbori_n
 OUT = os.environ.get("IZM_OUT", f"{D}/odbori_izm.json")
 IZ = json.load(open(OUT)) if os.path.exists(OUT) else {}
 done = {e["l"] for u in IZ.values() for l in u.values() for e in l}
+for _f in (f"{D}/odbori_izm.json", f"{D}/odbori_izm_laptop.json"):  # ne čitaj ponovo ono što je pročitao drugi računar
+    if os.path.exists(_f) and os.path.abspath(_f) != os.path.abspath(OUT):
+        done |= {e["l"] for u in json.load(open(_f)).values() for l in u.values() for e in l}
 def kind(t):
     t = t.lower()
     return "S" if "stalnom" in t else "P" if "prošir" in t else None
@@ -87,6 +90,7 @@ for uid, n, e in SRC:
     if not k or not re.search(r"imenovan|izmen|ispravk|dopun|razreš|prestan", t): continue
     done.add(e["l"]); todo.append((uid, n, e, k, t))
 todo.sort(key=lambda j: 0 if re.search(r"izmen|ispravk|dopun|razreš|prestan", j[4]) else 1)  # prvo izmene
+if os.environ.get("IZM_REVERSE"): todo.reverse()  # drugi računar kreće od kraja spiska
 print("za čitanje:", len(todo), flush=True)
 def work(j):
     uid, n, e, k, t = j
