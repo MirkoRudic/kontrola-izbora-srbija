@@ -10,10 +10,13 @@ D = "public/data"
 NOVI = json.load(open(f"{D}/odbori_novi.json")) if os.path.exists(f"{D}/odbori_novi.json") else {}
 OUT = os.environ.get("IZM_OUT", f"{D}/odbori_izm.json")
 IZ = json.load(open(OUT)) if os.path.exists(OUT) else {}
+if os.environ.get("IZM_RETRY_EMPTY"):  # ponovo pročitaj rešenja iz kojih ništa nije izvučeno
+    for u in IZ.values():
+        for n in list(u): u[n] = [r for r in u[n] if r.get("ch") or r.get("base")]
 done = {e["l"] for u in IZ.values() for l in u.values() for e in l}
 for _f in (f"{D}/odbori_izm.json", f"{D}/odbori_izm_laptop.json"):  # ne čitaj ponovo ono što je pročitao drugi računar
     if os.path.exists(_f) and os.path.abspath(_f) != os.path.abspath(OUT):
-        done |= {e["l"] for u in json.load(open(_f)).values() for l in u.values() for e in l}
+        done |= {e["l"] for u in json.load(open(_f)).values() for l in u.values() for e in l if not os.environ.get("IZM_RETRY_EMPTY") or e.get("ch") or e.get("base")}
 def kind(t):
     t = t.lower()
     return "S" if "stalnom" in t else "P" if "prošir" in t else None
@@ -46,7 +49,7 @@ def ocr(url):
         for png in pngs:
             txt += subprocess.run([TESS, png, "-", "-l", "srp+srp_latn", "--psm", "6"], capture_output=True).stdout.decode("utf-8", "replace") + "\n"
         return txt
-ROLEW = [(r"заменика\s+председника", "zamenik predsednika"), (r"председника", "predsednik"), (r"заменика\s+(\d)\s*[.,]?\s*члана", "zamenik {}. člana"),
+ROLEW = [(r"заменика\s+председника", "zamenik predsednika"), (r"председника", "predsednik"), (r"заменика\s+члана\s*(\d)", "zamenik {}. člana"), (r"члана\s*(\d)", "{}. član"), (r"заменика\s+(\d)\s*[.,]?\s*члана", "zamenik {}. člana"),
          (r"(\d)\s*[.,]?\s*члана", "{}. član"), (r"заменика\s+члана", "zamenik člana"), (r"члана", "član")]
 def role_of(s):
     for rx, r in ROLEW:
@@ -54,19 +57,27 @@ def role_of(s):
         if m: return r.format(*m.groups()) if "{}" in r else r
     return None
 def changes(t):
-    t = re.split(r"\n\s*2\s*[.,]\s*Ово решење|\nОбразложење", t)[0]
+    t = re.split(r"\n\s*[|]?\s*2\s*[.,)]\s*Ово решење|\nОбразложење", t)[0]
     m0 = re.search(r"тако\s+што\s+се", t); t = t[m0.end():] if m0 else t
+    t = re.sub(r"[|]", " ", t); T = re.sub(r"\s+", " ", t)
     out = []
-    for it in re.split(r"\n\s*\d{1,2}\s*\)\s*", "\n" + t)[1:]:
-        it = re.sub(r"\s+", " ", it)
-        by = re.search(r"на\s+пред?лог\s+(.*)$", it, re.I); by = by.group(1) if by else ""
-        by = re.sub(r"\s+од\s+\d.*$", "", by)
-        m = re.search(r"уместо\s+(.+?)\s*,?\s+за\s+(.+?)\s+именује\s*(?:се)?\s*[:;]?\s*(.+?)\s*,?\s+на\s+пред", it, re.I)
-        if m: out.append(dict(op="zam", old=nice(m.group(1)), role=role_of(m.group(2)), new=nice(m.group(3)), by=lat(by)[:140])); continue
-        m = re.search(r"брише\s+(?:се\s+)?(.+?)\s*,?\s+за\s+(\S+(?:\s+\S+)?)", it, re.I)
-        if m: out.append(dict(op="brisi", old=nice(m.group(1)), role=role_of(m.group(2)), by=lat(by)[:140])); continue
-        m = re.search(r"за\s+(.+?)\s+именује\s*(?:се)?\s*[:;]?\s*(.+?)\s*,?\s+на\s+пред", it, re.I)
-        if m: out.append(dict(op="novo", role=role_of(m.group(1)), new=nice(m.group(2)), by=lat(by)[:140]))
+    # „уместо X за ULOGU именује Y, на предлог Z (од …)“ – u bilo kom obliku (sa ili bez rednih brojeva, dvotačaka, zareza)
+    for m in re.finditer(r"уместо\s*:?\s*(.+?)\s*,?\s+за\s+(.+?)\s+именуј\w*\s*(?:се)?\s*[:;]?\s*(.+?)\s*,?\s+на\s+пред?лог\s+(.+?)(?=\s+од\s+\d|\s+\d{1,2}\s*[.)]\s|\s+уместо|\.\s|$)", T, re.I):
+        out.append(dict(op="zam", old=nice(m.group(1)), role=role_of(m.group(2)), new=nice(m.group(3)), by=lat(m.group(4))[:140]))
+    for m in re.finditer(r"брише\s+(?:се\s+)?(.+?)\s*,?\s+за\s+(\S+(?:\s+\S+)?)", T, re.I):
+        by = re.search(r"на\s+пред?лог\s+(.+?)(?=\s+од\s+\d|$)", T[m.end():m.end()+200], re.I)
+        out.append(dict(op="brisi", old=nice(m.group(1)), role=role_of(m.group(2)), by=lat(by.group(1))[:140] if by else ""))
+    if not out:
+        for m in re.finditer(r"за\s+(\S+(?:\s+\S+){0,3}?)\s+именуј\w*\s*(?:се)?\s*[:;]?\s*(.+?)\s*,?\s+на\s+пред?лог\s+(.+?)(?=\s+од\s+\d|\s+\d{1,2}\s*[.)]\s|\.\s|$)", T, re.I):
+            out.append(dict(op="novo", role=role_of(m.group(1)), new=nice(m.group(2)), by=lat(m.group(3))[:140]))
+    # исправка: „речи: „X“ замењују речима: „Y““ ili „име … X … исправити на Y“
+    for m in re.finditer(r"реч\w*\s*:?\s*[„\"“]\s*(.+?)\s*[“\"”]\s*замењуј\w*\s+реч\w*\s*:?\s*[„\"“]\s*(.+?)\s*[“\"”]", T, re.I):
+        out.append(dict(op="zam", old=nice(m.group(1)), role=None, new=nice(m.group(2)), by=""))
+    if not out:
+        m = re.search(r"(?:име|презиме)\w*\s+(.{0,60}?)\s*,?\s+има\s+исправити\s+на\s+([A-ZА-ЯЂЈЉЊЋЏČĆŠŽĐ][\wА-Яа-яЂђЈјЉљЊњЋћЏџ\-]+)", T)
+        if m:
+            w = re.findall(r"[A-ZА-ЯЂЈЉЊЋЏ][A-ZА-ЯЂЈЉЊЋЏ\-]{2,}", m.group(1))
+            if w: out.append(dict(op="ime", old=nice(w[-1]), new=nice(m.group(2)), role=None, by=""))
     for c in out:
         for f in ("old", "new"):
             if c.get(f): c[f] = re.sub(r"\s+(?:Iz|Из)\s+.*$", "", re.sub(r"^(?:Se|Се)\s+", "", c[f])).strip() or None
