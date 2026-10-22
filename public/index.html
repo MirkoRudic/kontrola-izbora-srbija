@@ -265,6 +265,9 @@ html{scrollbar-gutter:stable}.panel{scrollbar-gutter:stable;overflow-y:auto}
 table.kids.nc tr{cursor:default}table.kids.nc tr:hover td{background:none}
 th .sbtn{font:inherit;background:none;border:0;padding:0;color:inherit;cursor:pointer;text-transform:inherit;letter-spacing:inherit}
 th .sbtn.on{color:var(--accent)}
+.ring{fill:none;stroke:var(--accent);opacity:.35}
+.mkc circle{fill:var(--panel);stroke:var(--accent)}.mkc text{fill:var(--accent);font-family:var(--sans)!important;font-weight:700!important}
+.mkc.sel circle{stroke:var(--sel)}
 </style>
 
 <div class="wrap">
@@ -433,22 +436,16 @@ function drawMap(){
     if(U.naselja.length) U.naselja.forEach((n,i)=>html+=`<path class="naselje click${ST.nas===i?' sel':''}" data-nas="${i}" d="${pathOf(n.g)}"><title>${esc(n.name)}</title></path>`);
     else html+=`<path class="naselje" d="${pathOf(U.detail)}"/>`;
     html+=`<path class="outline" d="${pathOf(U.detail)}"/>`;
-    // markeri BM: po naselju (rp), raspoređeni
+    // markeri BM: sidro je tačna tačka (ili centar naselja); raspored se računa pri svakom zumu (layoutMarks)
     const R=MOB?19:10;
-    const grp={};U.stations.forEach(s=>{const k=s.nas==null?'c':s.nas;(grp[k]=grp[k]||[]).push(s)});
-    Object.entries(grp).forEach(([k,ss])=>{const [cx,cy]=k==='c'?PRJ.P(U.c||IDX.units[ST.uid].c||[0,0]):PRJ.P(U.naselja[+k].rp);
-      const loose=ss.filter(s=>!s.pt);const cols=Math.ceil(Math.sqrt(loose.length||1));
-      loose.forEach((s,i)=>{s._x=cx+((i%cols)-(cols-1)/2)*(2*R+2);s._y=cy+(Math.floor(i/cols)-(Math.ceil(loose.length/cols)-1)/2)*(2*R+2)});
-      ss.filter(s=>s.pt).forEach(s=>{const [x,y]=PRJ.P(s.pt);s._x=x;s._y=y})});
-    {const S=U.stations,d0=2*R+2;for(let it=0;it<40;it++){let mv=false;for(let i=0;i<S.length;i++)for(let j=i+1;j<S.length;j++){const a=S[i],b=S[j],dx=b._x-a._x,dy=b._y-a._y,d=Math.hypot(dx,dy)||0.01;if(d<d0){const m=(d0-d)/2;a._x-=dx/d*m;a._y-=dy/d*m;b._x+=dx/d*m;b._y+=dy/d*m;mv=true}}if(!mv)break}}
-    U.naselja.forEach((n,i)=>{if(!(U.stations.some(s=>s.nas===i)))return;const [x,y]=PRJ.P(n.rp);const ss=grp[i]||[];const rows=Math.ceil(ss.length/Math.ceil(Math.sqrt(ss.length)));
-      html+=`<text class="nlabel" data-p="${ss.length}" x="${x.toFixed(0)}" y="${(y-rows*(R+1)-6).toFixed(0)}" style="font-size:${MOB?17:10}px">${esc(n.name)}</text>`});
-    html+='<g id="mks">'+U.stations.map(s=>`<g class="mk${ST.sid===s.sid?' sel':''}" data-s="${s.sid}" tabindex="0" role="button" aria-label="Biračko mesto ${s.n}"><circle cx="${s._x.toFixed(1)}" cy="${s._y.toFixed(1)}" r="${R}" style="fill:var(--accent)"/><text x="${s._x.toFixed(1)}" y="${s._y.toFixed(1)}" style="fill:var(--accent-ink);font-size:${MOB?(s.n>99?13:16):(s.n>99?7.5:9)}px">${s.n}</text>${s.moved?`<g class="wbang"><circle cx="${(s._x-R*.8).toFixed(1)}" cy="${(s._y-R*.8).toFixed(1)}" r="${(R*.62).toFixed(1)}" style="fill:#f2c200;stroke:var(--panel);stroke-width:1.2"/><text x="${(s._x-R*.8).toFixed(1)}" y="${(s._y-R*.8).toFixed(1)}" style="fill:#1c2228;font:700 ${MOB?15:8}px var(--sans);text-anchor:middle;dominant-baseline:central">!</text><title>Premešteno u: ${esc(s.moved)}</title></g>`:''}<g class="bang" style="display:none"><circle cx="${(s._x+R*.8).toFixed(1)}" cy="${(s._y-R*.8).toFixed(1)}" r="${(R*.62).toFixed(1)}"/><text x="${(s._x+R*.8).toFixed(1)}" y="${(s._y-R*.8).toFixed(1)}" style="font-size:${MOB?15:8}px">!</text></g></g>`).join('')+'</g>';
+    U.stations.forEach(st=>{const p=st.pt?PRJ.P(st.pt):(st.nas!=null&&U.naselja[st.nas]?PRJ.P(U.naselja[st.nas].rp):PRJ.P(U.c||IDX.units[ST.uid].c||[0,0]));st._ax=p[0];st._ay=p[1]});
+    U.naselja.forEach((n,i)=>{if(!(U.stations.some(s=>s.nas===i)))return;const [x,y]=PRJ.P(n.rp);const ss=U.stations.filter(s=>s.nas===i);
+      html+=`<text class="nlabel" data-p="${ss.length}" x="${x.toFixed(0)}" y="${(y-R*1.6-6).toFixed(0)}" style="font-size:${MOB?17:10}px">${esc(n.name)}</text>`});
+    html+='<g id="mks"></g>';
   }
   nm.hidden=true;svg.style.display='';$('.mapwrap').classList.remove('nm');svg.setAttribute('viewBox',`0 0 ${W} ${PRJ.H}`);svg.innerHTML=html;
   LBL=[...svg.querySelectorAll('text.nlabel,text.ulabel,text.rlabel')].map(t=>[t,parseFloat(t.style.fontSize)||10,+(t.dataset.p||0),+t.getAttribute('x'),+t.getAttribute('y'),t.textContent.length]).sort((p,q)=>q[2]-p[2]);
-  MKS=[...svg.querySelectorAll('.mk:not(.bangu)')].map(g=>{const c=g.querySelector(':scope>circle'),t=g.querySelector(':scope>text'),bc=g.querySelector('.bang circle'),bt=g.querySelector('.bang text');
-    return {c,t,bc,bt,x:+c.getAttribute('cx'),y:+c.getAttribute('cy'),r:+c.getAttribute('r'),tf:parseFloat(t.style.fontSize),bf:parseFloat(bt.style.fontSize)}});
+  MKS=ST.lvl==='unit'&&UF[ST.uid]?UF[ST.uid].stations:[];
   applyVB(); bindMap(); updateMarks();
   // fokus na izabrano naselje
   if(ST.lvl==='unit'&&ST.nas!=null&&UF[ST.uid].naselja[ST.nas]){focusGeom(UF[ST.uid].naselja[ST.nas].g)}
@@ -463,9 +460,7 @@ function focusGeom(g){let a=1e9,b=-1e9,c=1e9,d=-1e9;polysOf(g).forEach(p=>p[0].f
   vb={x:(a+b)/2-nw/2,y:(c+d)/2-nh/2,w:nw,h:nh};applyVB()}
 function applyVB(){const k=W/vb.w;svg.setAttribute('viewBox',`${vb.x.toFixed(1)} ${vb.y.toFixed(1)} ${vb.w.toFixed(1)} ${vb.h.toFixed(1)}`);
   const kk=Math.max(1,Math.sqrt(k));
-  MKS.forEach(m=>{const r=m.r*kk/k;m.c.setAttribute('r',r.toFixed(2));m.t.style.fontSize=(m.tf*kk/k)+'px';
-    // pomeri marker oko centra grupe proporcionalno
-    m.c.style.strokeWidth=(1.5/k*kk)+'px';const bx=m.x+r*.8,by=m.y-r*.8;m.bc.setAttribute('cx',bx);m.bc.setAttribute('cy',by);m.bc.setAttribute('r',(r*.62).toFixed(2));m.bt.setAttribute('x',bx);m.bt.setAttribute('y',by);m.bt.style.fontSize=(m.bf*kk/k)+'px'});
+  schedLayout();
   const placed=[];
   LBL.forEach(([t,f,p,x,y,len])=>{const fs=f*kk/k;t.style.fontSize=fs+'px';t.style.strokeWidth=(2.5/k)+'px';
     if(t.classList.contains('rlabel')){t.style.display='';return}
@@ -473,7 +468,7 @@ function applyVB(){const k=W/vb.w;svg.setAttribute('viewBox',`${vb.x.toFixed(1)}
     const hit=!vis||placed.some(P=>Math.abs(P[0]-x)<(P[2]+w)/2+fs*0.3&&Math.abs(P[1]-y)<(P[3]+h)/2);
     t.style.display=hit?'none':'';if(!hit)placed.push([x,y,w,h])});
   svg.querySelectorAll('.reg,.unit,.naselje,.outline').forEach(p=>p.style.strokeWidth=(p.classList.contains('outline')?1.6:1)/k+'px')}
-function zoomAt(f,cx,cy){const nw=Math.min(VB0.w,Math.max(VB0.w/10,vb.w/f)),nh=nw*VB0.h/VB0.w;if(cx==null){cx=vb.x+vb.w/2;cy=vb.y+vb.h/2}
+function zoomAt(f,cx,cy){const nw=Math.min(VB0.w,Math.max(VB0.w/MAXZ,vb.w/f)),nh=nw*VB0.h/VB0.w;if(cx==null){cx=vb.x+vb.w/2;cy=vb.y+vb.h/2}
   vb={x:cx-(cx-vb.x)*nw/vb.w,y:cy-(cy-vb.y)*nh/vb.h,w:nw,h:nh};clampVB();applyVB()}
 function clampVB(){vb.x=Math.min(Math.max(vb.x,0),VB0.w-vb.w);vb.y=Math.min(Math.max(vb.y,0),VB0.h-vb.h)}
 const svgPt=(cx,cy)=>{const r=svg.getBoundingClientRect();return [vb.x+(cx-r.left)/r.width*vb.w,vb.y+(cy-r.top)/r.height*vb.h]};
@@ -490,12 +485,39 @@ svg.addEventListener('pointermove',e=>{if(!ptrs.has(e.pointerId))return;ptrs.set
 const endPtr=e=>{ptrs.delete(e.pointerId);if(ptrs.size<2)pinch=null;if(!ptrs.size)pan=null};
 svg.addEventListener('pointerup',endPtr);svg.addEventListener('pointercancel',endPtr);
 svg.addEventListener('click',e=>{if(moved){e.stopPropagation();e.preventDefault();moved=false}},true);
+
+// ---------- raspored markera BM po zumu: ista zgrada = krug oko tačke, gusto = grupa sa brojem ----------
+const MAXZ=16;let _lay=0;
+function schedLayout(){if(_lay)return;_lay=requestAnimationFrame(()=>{_lay=0;layoutMarks()})}
+function layoutMarks(){const g=svg.querySelector('#mks');if(!g||ST.lvl!=='unit'||!UF[ST.uid])return;const U=UF[ST.uid],k=W/vb.w,kk=Math.min(1.5,Math.max(1,Math.sqrt(k))),r=(MOB?19:10)*kk/k,f=(MOB?16:9)*kk/k,sw=1.5*kk/k;
+  const sites=new Map();U.stations.forEach(st=>{if(st._ax==null)return;const key=Math.round(st._ax*2)+','+Math.round(st._ay*2);if(!sites.has(key))sites.set(key,{x:st._ax,y:st._ay,m:[]});sites.get(key).m.push(st)});
+  const S=[...sites.values()].map(o=>{o.m.sort((a,b)=>a.n-b.n);const n=o.m.length;o.rr=n===1?0:Math.max(r*1.35,n*(2.25*r)/(2*Math.PI));o.fr=o.rr+r;return o}).sort((a,b)=>b.m.length-a.m.length);
+  let C=S.map(o=>({x:o.x,y:o.y,n:o.m.length,sites:[o],fr:o.fr}));
+  const cfr=c=>c.sites.length===1?c.sites[0].fr:r*(1.3+0.22*Math.log2(c.n));
+  for(let pass=0;pass<30;pass++){let ch=false;const out=[];
+    C.forEach(c=>{const t=out.find(o=>Math.hypot(o.x-c.x,o.y-c.y)<(o.fr+c.fr)*0.92);if(t){const w=t.n+c.n;t.x=(t.x*t.n+c.x*c.n)/w;t.y=(t.y*t.n+c.y*c.n)/w;t.n=w;t.sites=t.sites.concat(c.sites);t.fr=cfr(t);ch=true}else out.push(c)});
+    C=out;if(!ch)break}
+  const maxed=vb.w<=VB0.w/MAXZ*1.05;
+  if(maxed)C=C.map(c=>{if(c.sites.length===1)return c;const m=c.sites.flatMap(o=>o.m).sort((a,b)=>a.n-b.n),n=m.length,rr=Math.max(r*1.35,n*(2.25*r)/(2*Math.PI));return {x:c.x,y:c.y,n,sites:[{x:c.x,y:c.y,m,rr,fr:rr+r}]}});
+  const al=st=>alertsOf(ST.uid,st.sid).length>0,bang=(x,y,rr)=>`<g class="bang"><circle cx="${(x+rr*.8).toFixed(2)}" cy="${(y-rr*.8).toFixed(2)}" r="${(rr*.62).toFixed(2)}"/><text x="${(x+rr*.8).toFixed(2)}" y="${(y-rr*.8).toFixed(2)}" style="font-size:${(f*.95).toFixed(2)}px">!</text></g>`;
+  const one=(st,x,y)=>`<g class="mk${ST.sid===st.sid?' sel':''}" data-s="${st.sid}" tabindex="0" role="button" aria-label="Biračko mesto ${st.n}"><circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${r.toFixed(2)}" style="fill:var(--accent);stroke-width:${sw.toFixed(2)}px"/><text x="${x.toFixed(2)}" y="${y.toFixed(2)}" style="fill:var(--accent-ink);font-size:${(st.n>99?f*.82:f).toFixed(2)}px">${st.n}</text>${st.moved?`<g class="wbang"><circle cx="${(x-r*.8).toFixed(2)}" cy="${(y-r*.8).toFixed(2)}" r="${(r*.62).toFixed(2)}" style="fill:#f2c200;stroke:var(--panel);stroke-width:${(sw*.8).toFixed(2)}px"/><text x="${(x-r*.8).toFixed(2)}" y="${(y-r*.8).toFixed(2)}" style="fill:#1c2228;font:700 ${(f*.95).toFixed(2)}px var(--sans);text-anchor:middle;dominant-baseline:central">!</text><title>Premešteno u: ${esc(st.moved)}</title></g>`:''}${al(st)?bang(x,y,r):''}</g>`;
+  let h='';
+  C.forEach(c=>{if(c.sites.length===1){const o=c.sites[0];if(o.m.length===1){h+=one(o.m[0],o.x,o.y);return}
+      h+=`<circle cx="${o.x.toFixed(2)}" cy="${o.y.toFixed(2)}" r="${o.rr.toFixed(2)}" class="ring" style="stroke-width:${sw.toFixed(2)}px"/>`;
+      o.m.forEach((st,i)=>{const a=-Math.PI/2+2*Math.PI*i/o.m.length;h+=one(st,o.x+o.rr*Math.cos(a),o.y+o.rr*Math.sin(a))});return}
+    const all=c.sites.flatMap(o=>o.m),R2=cfr(c),sel=all.some(st=>st.sid===ST.sid);
+    h+=`<g class="mk mkc${sel?' sel':''}" data-c="${all.map(st=>st.sid).join(',')}" tabindex="0" role="button" aria-label="${all.length} biračkih mesta"><circle cx="${c.x.toFixed(2)}" cy="${c.y.toFixed(2)}" r="${R2.toFixed(2)}" style="stroke-width:${sw.toFixed(2)}px"/><text x="${c.x.toFixed(2)}" y="${c.y.toFixed(2)}" style="font-size:${(f*1.05).toFixed(2)}px">${all.length}</text>${all.some(al)?bang(c.x,c.y,R2):''}<title>${all.length} biračkih mesta: ${all.map(st=>st.n).sort((a,b)=>a-b).join(', ')}</title></g>`});
+  g.innerHTML=h}
+function zoomToSids(ids){const U=UF[ST.uid],ss=U.stations.filter(st=>ids.includes(st.sid));let a=1e9,b=-1e9,c=1e9,d=-1e9;ss.forEach(st=>{a=Math.min(a,st._ax);b=Math.max(b,st._ax);c=Math.min(c,st._ay);d=Math.max(d,st._ay)});
+  const nw=Math.min(VB0.w,Math.max(VB0.w/MAXZ,(b-a)*2.2,(d-c)*2.2*VB0.w/VB0.h)),nh=nw*VB0.h/VB0.w;vb={x:(a+b)/2-nw/2,y:(c+d)/2-nh/2,w:nw,h:nh};clampVB();applyVB()}
+function mkAct(t){const m=t.closest('.mk');if(!m||m.classList.contains('bangu'))return false;if(m.dataset.c){zoomToSids(m.dataset.c.split(','));zoomHint&&0}else go({...ST,sid:m.dataset.s,view:'main'},true);return true}
+svg.addEventListener('click',e=>{if(mkAct(e.target))e.stopPropagation()});
+svg.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&mkAct(e.target))e.preventDefault()});
 function bindMap(){
   svg.querySelectorAll('.reg').forEach(p=>p.onclick=()=>go({lvl:'reg',rid:p.dataset.r}));
   svg.querySelectorAll('.bangu').forEach(g=>g.onclick=e=>{e.stopPropagation();const id=g.dataset.bu;go({lvl:'unit',rid:IDX.units[id].region,uid:id})});
   svg.querySelectorAll('.unit').forEach(p=>p.onclick=()=>go({lvl:'unit',rid:IDX.units[p.dataset.u].region,uid:p.dataset.u}));
   svg.querySelectorAll('.naselje.click').forEach(p=>p.onclick=()=>{const i=+p.dataset.nas;go({...ST,nas:ST.nas===i?null:i,sid:null,view:'main'},true)});
-  svg.querySelectorAll('.mk:not(.bangu)').forEach(g=>{const f=()=>go({...ST,sid:g.dataset.s,view:'main'},true);g.addEventListener('click',e=>{e.stopPropagation();f()});g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}})});
 }
 
 // ---------- 2026 uživo ----------
@@ -505,7 +527,7 @@ function alertsOf(uid,sid){const b=liveBM(uid,sid)||{},a=[];
   if(b.status&&b.status.oboreno) a.push({t:'BM oboreno'+(b.status.napomena?': '+b.status.napomena:''),at:b.status.at});
   else (b.alerts||[]).filter(x=>x.type==='oboreno').slice(-1).forEach(x=>a.push({t:'BM oboreno: '+(x.detail||''),at:x.at}));
   return a}
-function updateMarks(){if(ST.lvl!=='unit')return;svg.querySelectorAll('.mk:not(.bangu)').forEach(g=>{g.querySelector('.bang').style.display=alertsOf(ST.uid,g.dataset.s).length?'':'none'})}
+function updateMarks(){if(ST.lvl!=='unit')return;schedLayout();return;svg.querySelectorAll('.mk:not(.bangu)').forEach(g=>{g.querySelector('.bang').style.display=alertsOf(ST.uid,g.dataset.s).length?'':'none'})}
 function status26(done,n){const m=LIVE.meta;const sim=m&&m.sim?'<div class="note"><b>PROBA:</b> ovo su rezultati iz 2023. pušteni kao da stižu uživo, radi testa.</div>':'';
   return sim+status26b(done,n,m)}
 function status26b(done,n,m){
@@ -523,7 +545,7 @@ async function loadObl(force){if(!force&&Date.now()-OBLT<170000)return;OBLT=Date
 const zapR=(uid,sid)=>(ZAP&&ZAP.u&&(ZAP.u[uid]||{})[sid])||null, oblR=(uid,sid)=>(OBL&&OBL.u&&(OBL.u[uid]||{})[sid])||null;
 const neTxt=x=>typeof x==='string'?x:x[0];
 function rawSig(uid,sid){const o=oblR(uid,sid),r=zapR(uid,sid);
-  return {chk:!!(o||(r&&!r.err)),p:o&&o.p?o.p.length:(r&&r.primedbe==='DA'?1:0),ne:((o&&o.ne&&o.ne.length?o.ne:null)||(r&&r.ne)||[]).map(neTxt)}}
+  return {chk:!!(o||(r&&!r.err)),p:o&&o.p?o.p.length:(r&&r.p15==='DA'?1:0),ne:((o&&o.ne&&o.ne.length?o.ne:null)||(r&&r.ne)||[]).map(neTxt)}}
 function sigOf(uid,sid){const g=rawSig(uid,sid);g.st=g.chk?'ok':zOf(liveBM(uid,sid))?'chk':'wait';g.x=alertsOf(uid,sid).length>0;return g}
 const SGT={wait:'Rezultati se čekaju',chk:'Proverava se zapisnik',ok:'Zapisnik proveren'};
 function sigHtml(g){return `<button type="button" class="sig" id="sigb" aria-label="Značenje znakova"><span class="sg"><i class="${g.st}"></i></span>${g.p?'<span class="sg p">P</span>':''}${g.ne.length?'<span class="sg e">!</span>':''}${g.x?'<span class="sg x">✕</span>':''}</button>`
@@ -542,7 +564,7 @@ function primView(pairs){
   const neIt=pairs.map(([uid,sid])=>{const g=rawSig(uid,sid);if(!g.ne.length)return null;const o=oblR(uid,sid),r=zapR(uid,sid),at=(o&&o.at)||(r&&r.at)||'';
     const s=UF[uid]&&UF[uid].stations.find(x=>x.sid===sid),n=s?s.n:(o&&o.n)||(r&&r.n);
     return {k:akey(at),h:`<div class="it ne" data-ne="${uid}|${sid}"><div class="d1">${[esc(at),n!=null?'BM '+n:'',esc(IDX.units[uid].short)].filter(Boolean).join(' · ')}</div><div class="d3"><b>!</b> Rezultati na RIK-u se ne slažu sa zapisnikom: ${g.ne.map(esc).join(', ')}.</div><div class="more2">Uporedi brojeve</div></div>`}}).filter(Boolean).sort((a,b)=>b.k-a.k).map(x=>x.h).join('');
-  const it=pairs.map(([uid,sid])=>{const o=oblR(uid,sid),r=zapR(uid,sid);const has=o&&o.p&&o.p.length;if(!has&&!(r&&r.primedbe==='DA'))return null;
+  const it=pairs.map(([uid,sid])=>{const o=oblR(uid,sid),r=zapR(uid,sid);const has=o&&o.p&&o.p.length;if(!has&&!(r&&r.p15==='DA'))return null;
     const s=UF[uid]&&UF[uid].stations.find(x=>x.sid===sid),n=s?s.n:(o&&o.n)||(r&&r.n),b=liveBM(uid,sid);
     const zl=(o&&o.link)||(b&&b.zap&&b.zap.length?b.zap[b.zap.length-1].link:null)||(r&&r.link),at=(o&&o.at)||(r&&r.at)||'';
     const bm=n!=null?(ST.sid===sid?`BM ${n}`:`<a href="#" data-gu="${uid}" data-gs="${sid}">BM ${n}</a>`):'';
@@ -724,7 +746,7 @@ async function go(n,keepMap){
   if(ST.uid&&!UF[ST.uid]){render();UF[ST.uid]=await get('data/u/'+ST.uid+'.json');applyIzm(ST.uid,UF[ST.uid]);loadLiveUnit(ST.uid)}
   else if(ST.uid) loadLiveUnit(ST.uid);
   const redraw=!keepMap||prevU!==ST.uid||prevLvl!==ST.lvl||prevNas!==ST.nas;
-  if(redraw){drawMap()} else {svg.querySelectorAll('.mk').forEach(g=>g.classList.toggle('sel',g.dataset.s===ST.sid))}
+  if(redraw){drawMap()} else {schedLayout()}
   render();setHash();
   if(ST.sid&&matchMedia('(max-width:960px)').matches)$('#panel').scrollIntoView({behavior:'smooth',block:'start'});
 }
