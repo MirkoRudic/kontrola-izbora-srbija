@@ -920,3 +920,10 @@
 23.10. 01:47:33 [laptop] pročitano 271, kandidata 27, u redu 618
 23.10. 01:47:33 [laptop] nesmisleno čitanje -> oblak 5 211713 [7761, 7761, 36, 7725]
 23.10. 01:47:33 [laptop] pročitano 286, kandidata 29, u redu 646
+23.10. 01:49:49 [laptop] sumnja na ! -> oblak: 5 BM 55 [['izašli', 870, 868], ['važeći', 852, 853]]
+23.10. 01:49:49 [laptop] pročitano 301, kandidata 30, u redu 676
+23.10. 01:49:49 [laptop] pročitano 316, kandidata 32, u redu 701
+23.10. 01:49:49 [laptop] nesmisleno čitanje -> oblak 5 211869 [45290, 900, 33, 867]
+23.10. 01:49:49 [laptop] pročitano 331, kandidata 33, u redu 730
+23.10. 01:49:49 [laptop] nesigurno čitanje 5 211887 [('izašli', 382, 382, 982), ('važeći', 349, 348, 948)]
+23.10. 01:49:49 [laptop] pročitano 346, kandidata 39, u redu 787
