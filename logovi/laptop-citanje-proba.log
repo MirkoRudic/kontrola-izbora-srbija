@@ -166,3 +166,17 @@
 22.10. 16:54:32 [laptop] ZNAK: 12 213603 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
 22.10. 16:54:32 [laptop] ZNAK: 12 213648 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
 22.10. 16:54:32 [laptop] pročitano ukupno 840, u redu 6766
+22.10. 16:58:11 [laptop] ZNAK: 12 213666 {'pages': 3, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 16:58:11 [laptop] ZNAK: 12 213678 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 16:58:11 [laptop] ZNAK: 12 213684 {'pages': 3, 'prekid': 'ДА', 'kontrolni_list': 'ДА', 'primedbe': 'NE'}
+22.10. 16:58:11 [laptop] ZNAK: 12 213693 {'pages': 4, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 16:58:11 [laptop] ZNAK: 12 213699 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 16:58:11 [laptop] ZNAK: 12 213702 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 16:58:11 [laptop] ZNAK: 12 213708 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 16:58:11 [laptop] pročitano ukupno 860, u redu 6746
+22.10. 16:58:11 [laptop] ZNAK: 12 213723 {'pages': 4, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 16:58:11 [laptop] ZNAK: 12 213732 {'pages': 3, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 16:58:11 [laptop] ZNAK: 12 213753 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 16:58:11 [laptop] ZNAK: 12 213762 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 16:58:11 [laptop] greška 12 213771 HTTP Error 500: Internal Server Error
+22.10. 16:58:11 [laptop] pročitano ukupno 880, u redu 6726
