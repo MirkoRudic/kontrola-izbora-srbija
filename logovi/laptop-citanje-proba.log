@@ -180,3 +180,16 @@
 22.10. 16:58:11 [laptop] ZNAK: 12 213762 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
 22.10. 16:58:11 [laptop] greška 12 213771 HTTP Error 500: Internal Server Error
 22.10. 16:58:11 [laptop] pročitano ukupno 880, u redu 6726
+22.10. 17:02:10 [laptop] ZNAK: 12 213816 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 17:02:10 [laptop] ZNAK: 13 213843 {'pages': 3, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 17:02:10 [laptop] ZNAK: 13 213849 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 17:02:10 [laptop] pročitano ukupno 900, u redu 6706
+22.10. 17:02:10 [laptop] ZNAK: 13 213858 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 17:02:10 [laptop] ZNAK: 13 213861 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 17:02:10 [laptop] ZNAK: 13 213873 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 17:02:10 [laptop] ZNAK: 13 213885 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 17:02:10 [laptop] ZNAK: 13 213894 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 17:02:10 [laptop] ZNAK: 13 213903 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 17:02:10 [laptop] ZNAK: 13 213906 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 17:02:10 [laptop] greška 13 213912 <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+22.10. 17:02:10 [laptop] pročitano ukupno 920, u redu 6686
