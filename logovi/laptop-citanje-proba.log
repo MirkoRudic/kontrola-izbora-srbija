@@ -77,3 +77,9 @@
 22.10. 16:09:47 [laptop] ZNAK: 5 211773 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
 22.10. 16:09:47 [laptop] ZNAK: 5 211806 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
 22.10. 16:09:47 [laptop] pročitano ukupno 360, u redu 7246
+22.10. 16:13:41 [laptop] ZNAK: 6 211962 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 16:13:41 [laptop] ZNAK: 6 211968 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 16:13:41 [laptop] pročitano ukupno 380, u redu 7226
+22.10. 16:13:41 [laptop] greška 5 211851 HTTP Error 500: Internal Server Error
+22.10. 16:13:41 [laptop] greška 5 211854 <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+22.10. 16:13:41 [laptop] pročitano ukupno 400, u redu 7206
