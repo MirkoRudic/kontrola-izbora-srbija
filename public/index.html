@@ -509,7 +509,7 @@ function render(){
         body=(al.length?`<div class="alert"><b>!</b><div>${al.map(x=>`<div>${esc(x.t)}${x.at?` <span class="small">(${esc(x.at)})</span>`:''}</div>`).join('')}</div></div>`:'')
         +(s.moved?`<div class="note"><b>BM je premešteno:</b> glasa se u opštini ${esc(s.moved)}${s.adr?` (${esc(s.adr)})`:''}. Administrativno pripada opštini ${esc(u.short)}.</div>`:'')+status26(b?1:0,1)+results(r,s.y23?(s.how&&s.how!=='isti broj i naziv'?`2023: BM ${s.n23} – ${s.name23}.`:''):'')
         +(s.y23?'':'<div class="small tag">Ovo biračko mesto nema odgovarajuće BM iz 2023, pa poređenje nije moguće.</div>')
-        +`<div class="sec"><h3>Dokumenti</h3><div class="links col">${zap26(ST.uid,s)}${link(s.z23,'Zapisnik 2023 (PDF, RIK)')}</div></div>`
+        +`<div class="sec"><h3>Dokumenti</h3><div class="links col">${zap26(ST.uid,s)}${link(s.z23,'Zapisnik 2023 (PDF, RIK)')}</div>${zapView(ST.uid,s)}</div>`
         +boardView(s)}
     } else {const list=ST.nas!=null?U.stations.filter(s=>s.nas===ST.nas):U.stations;
       let r;
@@ -670,7 +670,19 @@ function applyIzm(uid,U){if(!U||U._izm)return;U._izm=1;const X=ODIZM[uid]||{};
           if(!x){miss++;return}
           x.chg={...tag,old:x.name||c.old};x.name=nv;if(c.key){x.key=c.key;x.by=c.by}ok++}})});
     b.izmOk=ok;b.izmMiss=miss})}
-let ONOVI={},OLOG=[];
+let ONOVI={},OLOG=[],ZAP=null,ZAPT=0;
+async function loadZap(force){if(!force&&Date.now()-ZAPT<170000)return;ZAPT=Date.now();const z=await get(RAW+'data/zap/citanje.json?t='+Math.floor(Date.now()/60000));if(z)ZAP=z}
+function zapView(uid,s){const r=ZAP&&ZAP.u&&(ZAP.u[uid]||{})[s.sid];if(!r)return '';
+  if(r.err)return `<div class="small" style="margin-top:6px">Zapisnik: automatsko čitanje nije uspelo – otvori PDF.</div>`;
+  const z=zOf(liveBM(uid,s.sid)),bad=[],ok=[],yn=(v,good)=>v==null?'?':v;
+  if(r.prekid==='DA')bad.push('bilo je prekida glasanja');
+  if(r.kontrolni_list==='NE')bad.push('kontrolni list NIJE pronađen');else if(r.kontrolni_potpisan==='NE')bad.push('kontrolni list nije potpisan');
+  if(r.primedbe==='DA')bad.push('članovi odbora imali primedbe');
+  if(r.pages>2)bad.push(`uz zapisnik ${r.pages-2} ${r.pages-2===1?'strana':'strane'} priloga`);
+  if(r.izasli==null)bad.push('broj izašlih (11.1) nije upisan');
+  if(r.izasli!=null&&r.u_kutiji!=null&&r.u_kutiji>r.izasli)bad.push(`u kutiji ${r.u_kutiji}, a izašlo ${r.izasli}`);
+  if(z){const d=[['izasli','out','izašli'],['vazeci','valid','važeći'],['nevazeci','invalid','nevažeći']].filter(([a,b])=>r[a]!=null&&z[b]!=null&&+r[a]!==+z[b]).map(([a,b,l])=>`${l}: zapisnik ${r[a]}, RIK ${z[b]}`);if(d.length)bad.push('zapisnik ≠ RIK? ('+d.join('; ')+')')}
+  return `<div class="${bad.length?'note':'small'}" style="margin-top:6px"><b>Zapisnik (automatski pročitan${r.at?', '+esc(r.at):''}):</b> ${bad.length?bad.map(esc).join(' · '):'bez prekida, kontrolni list u redu, bez primedbi'}${r.van_bm?` · van BM glasalo ${r.van_bm}`:''}${r.posmatraci==='DA'?' · bilo posmatrača':''}<div class="small">Čita lokalni model – može da pogreši; za sigurno otvori PDF.</div></div>`}
 async function loadOdb(){const [n,l,z]=await Promise.all([get('data/odbori_novi.json?t='+Date.now()),get('data/odbori_log.json?t='+Date.now()),get('data/odbori_izm.json?t='+Date.now())]);ONOVI=n||{};OLOG=l||[];ODIZM=z||{}}
 function odbOf(uid,s){const extra=((ONOVI[uid]||{})[String(s.n)]||[]);const seen=new Set(s.odb.map(d=>d.l));return s.odb.concat(extra.filter(d=>!seen.has(d.l))).slice().sort((a,b)=>(b.ts||0)-(a.ts||0))}
 const isIzm=t=>/izmen|dopun|prestan|razrešen|odbacivanj|odbijanj/i.test(t);
@@ -681,10 +693,10 @@ async function loadLiveUnit(uid){const L=LIVE.u[uid];if(!(L&&(L.done||(L.ob&&L.o
   const d=await get(SRC?SRC+'data/live/u/'+uid+'.json':'data/live/u/'+uid+'.json?t='+Date.now());if(d)LU[uid]=d;addUnitIdx(uid);if(ST.uid===uid){updateMarks();render._keep=true;render()}}
 (async()=>{
   [IDX,GEO]=await Promise.all([get('data/index.json'),get('data/geo.json')]);
-  await Promise.all([loadLive(),loadOdb()]);buildIdx();
+  await Promise.all([loadLive(),loadOdb(),loadZap(true)]);buildIdx();
   const n=Object.values(IDX.units).reduce((a,u)=>a+u.nbm,0);$('#hn').textContent=`${Object.keys(IDX.units).length} jedinica · ${fmt(n)} biračkih mesta`;
   await fromHash();
-  setInterval(async()=>{await loadLive();if(ST.uid)await loadLiveUnit(ST.uid);render._keep=true;render();updateMarks()},60000);
+  setInterval(async()=>{await loadLive();await loadZap();if(ST.uid)await loadLiveUnit(ST.uid);render._keep=true;render();updateMarks()},60000);
 })();
 // ---------- brojač poseta ----------
 try{let vid=null;try{vid=localStorage.getItem('kiz-vid')}catch(e){}
