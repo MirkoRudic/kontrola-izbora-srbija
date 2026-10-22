@@ -83,3 +83,6 @@
 22.10. 16:13:41 [laptop] greška 5 211851 HTTP Error 500: Internal Server Error
 22.10. 16:13:41 [laptop] greška 5 211854 <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
 22.10. 16:13:41 [laptop] pročitano ukupno 400, u redu 7206
+22.10. 16:17:23 [laptop] pročitano ukupno 420, u redu 7186
+22.10. 16:17:23 [laptop] ZNAK: 7 212283 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'НЕ'}
+22.10. 16:17:23 [laptop] pročitano ukupno 440, u redu 7166
