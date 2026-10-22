@@ -193,3 +193,10 @@
 22.10. 17:02:10 [laptop] ZNAK: 13 213906 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
 22.10. 17:02:10 [laptop] greška 13 213912 <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
 22.10. 17:02:10 [laptop] pročitano ukupno 920, u redu 6686
+22.10. 17:05:51 [laptop] ZNAK: 13 213921 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 17:05:51 [laptop] ZNAK: 13 213924 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 17:05:51 [laptop] ZNAK: 13 213927 {'pages': 2, 'prekid': 'NE', 'kontrolni_list': 'DA', 'primedbe': 'DA'}
+22.10. 17:05:51 [laptop] ZNAK: 14 213948 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'НЕ'}
+22.10. 17:05:51 [laptop] pročitano ukupno 940, u redu 6666
+22.10. 17:05:51 [laptop] ZNAK: 14 214044 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 17:05:51 [laptop] pročitano ukupno 960, u redu 6646
