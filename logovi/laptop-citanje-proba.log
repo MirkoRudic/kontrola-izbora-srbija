@@ -202,3 +202,8 @@
 22.10. 17:05:51 [laptop] pročitano ukupno 960, u redu 6646
 22.10. 17:56:10 [laptop] start čitanja zapisnika, model qwen2.5vl:7b već pročitano 980
 22.10. 17:56:10 [laptop] pročitano ukupno 1000, u redu 6606
+22.10. 17:59:41 [laptop] ZNAK: 16 214218 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 17:59:41 [laptop] pročitano ukupno 1020, u redu 6586
+22.10. 17:59:41 [laptop] ZNAK: 16 214245 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 17:59:41 [laptop] ZNAK: 16 214275 {'pages': 2, 'prekid': 'DA', 'kontrolni_list': 'DA', 'primedbe': 'NE'}
+22.10. 17:59:41 [laptop] pročitano ukupno 1040, u redu 6566
