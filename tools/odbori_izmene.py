@@ -63,8 +63,12 @@ def changes(t):
     T = re.sub(r"\s+", " ", t); T = re.sub(r"на\s+пред?лог\s*:", "на предлог ", T, flags=re.I)
     out = []
     # „уместо X за ULOGU именује Y, на предлог Z (од …)“ – u bilo kom obliku (sa ili bez rednih brojeva, dvotačaka, zareza)
-    for m in re.finditer(r"уместо\s*:?\s*(.+?)\s*,?\s+за\s+(.+?)\s+именуј\w*\s*(?:се)?\s*[:;]?\s*(.+?)\s*,?\s+на\s+пред?лог\s+(.+?)(?=\s+од\s+\d|\s+\d{1,2}\s*[.)]\s|\s+уместо|\.\s|$)", T, re.I):
-        out.append(dict(op="zam", old=nice(m.group(1)), role=role_of(m.group(2)), new=nice(m.group(3)), by=lat(m.group(4))[:140]))
+    RW = r"(?:за|као)\s+|(?:\d\s*[.,]?\s*)?(?:заменик\w*\s+)?(?:председник|члан)\w*|заменик\w*\s"
+    for m in re.finditer(r"уместо\s*:?\s*(.+?)\s+именуј\w*\s*(?:се)?\s*[:;]?\s*(.+?)\s*,?\s+на\s+пред?лог\s+(.+?)(?=\s+од\s+\d|\s+\d{1,2}\s*[.)]\s|\s+уместо|\.\s|;|$)", T, re.I):
+        M = m.group(1); k = re.search(r"\s*,?\s+(?=" + RW + ")", M, re.I)
+        o, rl = (M[:k.start()], re.sub(r"^(?:за|као)\s+", "", M[k.end():], flags=re.I)) if k else (M, "")
+        nw = re.sub(r"\s*,?\s+(?:заменик\w*\s+)?(?:председник|члан)\w*(?:\s*\d)?\s*$", "", m.group(2), flags=re.I)
+        out.append(dict(op="zam", old=nice(o), role=role_of(rl), new=nice(nw), by=lat(m.group(3))[:140]))
     for m in re.finditer(r"брише\s+(?:се\s+)?(.+?)\s*,?\s+за\s+(\S+(?:\s+\S+)?)", T, re.I):
         by = re.search(r"на\s+пред?лог\s+(.+?)(?=\s+од\s+\d|$)", T[m.end():m.end()+200], re.I)
         out.append(dict(op="brisi", old=nice(m.group(1)), role=role_of(m.group(2)), by=lat(by.group(1))[:140] if by else ""))
