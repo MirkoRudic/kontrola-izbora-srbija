@@ -160,6 +160,13 @@ def check_ne(uid, sid, h, path, r):
     r["zap"] = dict(out=r.get("izasli"), valid=r.get("vazeci"), invalid=r.get("nevazeci"))
     diff = [f for f in FIELDS if r.get(f[0]) is not None and rik.get(f[1]) is not None and r[f[0]] != rik[f[1]]]
     if not diff: return []
+    # pročitani brojevi moraju da budu smisleni među sobom; inače je verovatnije pogrešno čitanje -> oblak
+    iz, uk, nv, vz = r.get("izasli"), r.get("u_kutiji"), r.get("nevazeci"), r.get("vazeci")
+    bad = (iz is not None and rik.get("voters") and iz > rik["voters"]) or (uk is not None and nv is not None and vz is not None and uk != nv + vz) \
+          or (iz is not None and uk is not None and abs(iz - uk) > max(5, 0.02 * iz)) or any(v is not None and v < 0 for v in (iz, uk, nv, vz))
+    if bad:
+        kand(uid, sid, h, "nesigurno", dict(procitano=[iz, uk, nv, vz]))
+        log("nesmisleno čitanje -> oblak", uid, sid, [iz, uk, nv, vz]); return None
     fresh = rik_fresh(uid, sid)
     if not fresh: log("RIK ne odgovara za", uid, sid); return None
     diff = [f for f in diff if fresh.get(f[1]) is not None and r[f[0]] != fresh[f[1]]]
@@ -176,7 +183,8 @@ try: api("/api/tags")
 except Exception as e: log("OLLAMA NE RADI:", e); publish(True); sys.exit(1)
 cookie()
 log("start provere zapisnika, model", A.model, "već pročitano", sum(len(v) for v in RES.values()))
-PAGES = {}  # sha -> broj strana
+PF = os.path.join(D, "strane.json")
+PAGES = json.load(open(PF)) if os.path.exists(PF) else {}  # sha -> broj strana
 while now() < UNTIL:
     try: IX = json.load(open(IXF, encoding="utf-8"))
     except Exception: IX = {}
@@ -193,6 +201,7 @@ while now() < UNTIL:
             n = PAGES[h["sha"]]
             if n: per[uid].append(n)
             cur.append((uid, sid, h, p, n, len(hist)))
+    json.dump(PAGES, open(PF, "w"))
     norm = {}
     for uid, l in per.items():
         c = collections.Counter(l).most_common(1)[0]
