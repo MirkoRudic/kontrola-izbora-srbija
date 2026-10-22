@@ -4,10 +4,9 @@
 # Tok (dogovoreno 22.10.):
 #  1. Trijaža po broju strana: zapisnik duži od norme opštine (najčešći broj strana) = kandidat za primedbe.
 #     Spisak kandidata ide na granu 'uzivo' (public/data/zap/kandidati.json); oblak ih čita detaljno (oblak.json).
-#  2. „!” za sve što oblak nije pročitao: isečak 11.1–11.4 (izašli, u kutiji, nevažeći, važeći) poredi se sa RIK-om.
-#     „!” se upisuje tek kad: (a) svež upit RIK-u za to BM i dalje daje drugi broj, (b) ponovno, uvećano čitanje
-#     isečka daje isti broj kao prvo. Ako se dva čitanja ne slažu – BM ide oblaku (kandidat „nesigurno”), bez „!”.
-#     Kad se RIK ispravi, „!” se gasi u sledećem krugu.
+#  2. Sumnja na „!” za sve što oblak nije pročitao: isečak 11.1–11.4 poredi se sa RIK-om; sumnja (svež RIK i dalje drugačiji,
+#     dvostruko čitanje isto, brojevi smisleni) ide oblaku kao kandidat „neslaganje”. Sam „!” upisuje samo oblak, jer lokalni
+#     model ne vidi pouzdano precrtane i ispravljene brojeve (proba 22.10.: 538 precrtano -> 537).
 #  3. Drugi krug P: isečak polja 15 (primedbe DA/NE) za zapisnike normalne dužine; „DA” -> p15 (P u aplikaciji) i kandidat za oblak.
 # Rezultat: <dir>\citanje.json i 'uzivo' -> public/data/zap/citanje.json, logovi/laptop-citanje.log
 import sys, os
@@ -108,6 +107,8 @@ def read_p15(path):
 
 # ---------- stanje ----------
 RES = json.load(open(RES_F, encoding="utf-8")) if os.path.exists(RES_F) else {}
+for _d in RES.values():
+    for _r in _d.values(): _r.pop("ne", None)  # „!” upisuje samo oblak
 KAND = json.load(open(KF, encoding="utf-8")) if os.path.exists(KF) else {}
 def save():
     for f, o in ((RES_F, RES), (KF, KAND)):
@@ -177,7 +178,10 @@ def check_ne(uid, sid, h, path, r):
         kand(uid, sid, h, "nesigurno", dict(procitano=[r.get(f[0]) for f in diff], drugo=[r2.get(f[0]) for f in diff]))
         log("nesigurno čitanje", uid, sid, [(f[2], r[f[0]], r2.get(f[0]), fresh[f[1]]) for f in diff])
         return None
-    return [[f[2], r[f[0]], fresh[f[1]]] for f in diff]
+    # laptop ne pali „!” sam: model ne vidi pouzdano precrtane i ispravljene brojeve -> oblak potvrđuje
+    kand(uid, sid, h, "neslaganje", dict(sumnja=[[f[2], r[f[0]], fresh[f[1]]] for f in diff]))
+    log("sumnja na ! -> oblak:", uid, "BM", (UNITS[uid]["st"].get(sid) or {}).get("n"), [[f[2], r[f[0]], fresh[f[1]]] for f in diff])
+    return []
 
 try: api("/api/tags")
 except Exception as e: log("OLLAMA NE RADI:", e); publish(True); sys.exit(1)
@@ -232,7 +236,6 @@ while now() < UNTIL:
                     r.update(read_rez(p))
                     ne = check_ne(uid, sid, h, p, r)
                     if ne is not None: r["ne"] = ne
-                    if ne: log("! RIK ≠ zapisnik:", uid, "BM", s.get("n"), ne)
             elif pri == 3:
                 fresh = rik_fresh(uid, sid)
                 if fresh:

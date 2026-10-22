@@ -29,7 +29,7 @@ def pending():
         for sid, k in d.items():
             o = (O.get(uid) or {}).get(sid)
             if o and o.get("sha") == k.get("sha"): continue
-            pr = 0 if "nesigurno" in k.get("why", []) else 1 if "p15" in k.get("why", []) else 2
+            w = k.get("why", []); pr = 0 if "neslaganje" in w else 1 if "nesigurno" in w else 2 if "p15" in w else 3
             out.append((pr, k.get("at", ""), uid, sid, k))
     out.sort(key=lambda x: (x[0], x[1]))
     return out
@@ -48,7 +48,7 @@ def lista(mx):
         subprocess.run(["pdftoppm", "-r", "110", "-png", f, pre], capture_output=True)
         pngs = sorted(x for x in os.listdir(WD) if x.startswith(f"{uid}_{sid}-") and x.endswith(".png"))
         live = (raw(f"live/u/{uid}.json") or {}).get("bm", {}).get(sid) or {}
-        res.append(dict(u=uid, sid=sid, sha=k.get("sha"), n=k.get("n"), zasto=k.get("why"), link=k.get("link"),
+        res.append(dict(u=uid, sid=sid, sha=k.get("sha"), n=k.get("n"), zasto=k.get("why"), sumnja=k.get("sumnja"), link=k.get("link"),
                         strane=[os.path.join(WD, x) for x in pngs],
                         rik=({kk: live.get(kk) for kk in ("voters", "out", "valid", "invalid", "lists")} if live.get("processed") else None)))
     print(json.dumps(dict(ceka=len(pending()), sledeci=res), ensure_ascii=False, indent=1))
@@ -114,8 +114,29 @@ def upis(path):
     ch["public/data/zap/oblak.json"] = merge
     ok = DN.push(ch, f"Oblak: pročitano {len(items)} kandidata")
     print("upisano" if ok else "GREŠKA pri upisu", len(items))
+def provera_ne():
+    """Za BM sa „!”: svež RIK; ako je RIK ispravio, „!” se gasi (bez ponovnog čitanja)."""
+    O = (raw("zap/oblak.json") or {}).get("u") or {}; SIM[0] = bool(((raw("zap/kandidati.json") or {}).get("meta") or {}).get("sim"))
+    todo = [(u, s_, r) for u, d in O.items() for s_, r in d.items() if r.get("ne")]
+    upd = {}
+    for u, s_, r in todo:
+        f = rik_fresh(u, s_, SIM[0]); z = r.get("zap") or {}
+        if not f: continue
+        ne = [[LBL[k], z[k], f[k]] for k in LBL if z.get(k) is not None and f.get(k) is not None and int(z[k]) != int(f[k])]
+        for i, v in (z.get("lists") or {}).items():
+            if v is not None and int(v) != f["lists"][int(i) - 1]: ne.append([f"lista {int(i)}", int(v), f["lists"][int(i) - 1]])
+        if ne != r["ne"]: upd[(u, s_)] = ne
+    if not upd: print("„!” bez promene:", len(todo)); return
+    def merge(old):
+        d = json.loads(old)
+        for (u, s_), ne in upd.items(): d["u"][u][s_]["ne"] = ne
+        return json.dumps(d, ensure_ascii=False, separators=(",", ":"))
+    ch = DN.log_changes({"oblak": [f"RIK ispravio – „!” ažuriran: {u}/{s_} -> {ne}" for (u, s_), ne in upd.items()]})
+    ch["public/data/zap/oblak.json"] = merge
+    print("ažurirano" if DN.push(ch, "Oblak: provera „!” uz svež RIK") else "GREŠKA", len(upd))
 if __name__ == "__main__":
     c = sys.argv[1] if len(sys.argv) > 1 else "stanje"
     if c == "lista": lista(int(sys.argv[sys.argv.index("--max") + 1]) if "--max" in sys.argv else 6)
     elif c == "upis": upis(sys.argv[2])
+    elif c == "provera": provera_ne()
     else: print(len(pending()), "kandidata čeka")
