@@ -12,14 +12,14 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#14181c; --panel:#1b2026; --ink:#e7e3da; --muted:#9aa3ab; --line:#2f363e; --soft:#242a31;
-  --accent:#7fb6dc; --accent-ink:#0f1a22; --land:#20262c; --land-line:#3b444d; --land-hi:#2a3138;
+  --accent:#7fb6dc; --accent-ink:#0f1a22; --land:#262d35; --land-line:#4f5a66; --land-hi:#313a44;
   --warn:#f0b35a; --good:#6cc28f; --warn-bg:#2e2617; --bad:#f08a80;
   --q1:#24384a; --q2:#2f5574; --q3:#3f78a3; --q4:#68a3cf; --q5:#a9d0ec;
   --t1:#e7e3da; --t2:#e7e3da; --t3:#ffffff; --t4:#0f1a22; --t5:#0f1a22;
   --mark-stroke:#14181c; --sel:#ff7a4d; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#14181c; --panel:#1b2026; --ink:#e7e3da; --muted:#9aa3ab; --line:#2f363e; --soft:#242a31;
-  --accent:#7fb6dc; --accent-ink:#0f1a22; --land:#20262c; --land-line:#3b444d; --land-hi:#2a3138;
+  --accent:#7fb6dc; --accent-ink:#0f1a22; --land:#262d35; --land-line:#4f5a66; --land-hi:#313a44;
   --warn:#f0b35a; --good:#6cc28f; --warn-bg:#2e2617; --bad:#f08a80;
   --q1:#24384a; --q2:#2f5574; --q3:#3f78a3; --q4:#68a3cf; --q5:#a9d0ec;
   --t1:#e7e3da; --t2:#e7e3da; --t3:#ffffff; --t4:#0f1a22; --t5:#0f1a22;
@@ -257,7 +257,18 @@ header h1{cursor:pointer}
 .ok-c{background:var(--good)}.org-c{background:var(--org)}
 :root{--org:#e8912d}
 
-html{scrollbar-gutter:stable}.panel{scrollbar-gutter:stable;overflow-y:auto}
+.panel{scrollbar-gutter:stable;overflow-y:auto}
+#panel{scroll-margin-top:calc(var(--hh,60px) + 6px)}
+table.kids thead tr{cursor:default}
+@media (min-width:961px){
+ body>.wrap{height:100vh;display:flex;flex-direction:column;padding-bottom:12px;box-sizing:border-box}
+ body>.wrap>.grid{flex:1;min-height:0;align-items:stretch}
+ .mapcard{display:flex;flex-direction:column;min-height:0}
+ .mapwrap{flex:1;min-height:0}
+ svg#map{height:100%!important;max-height:none!important}
+ .panel{position:static!important;max-height:none!important;height:100%;min-height:0;box-sizing:border-box}
+}
+@media (max-width:960px){svg#map{height:min(58vh,520px)}.mapwrap.nm .nomap{min-height:110px}}
 .ph1{height:26px}.phm{height:78px;display:flex;flex-direction:column;justify-content:center;margin-top:4px}
 .phm .ph2{height:auto;margin-top:0}
 .phm .ph3{margin-top:3px}
@@ -279,7 +290,7 @@ th .sbtn.on{color:var(--accent)}
 <div class="grid">
   <div class="card mapcard">
     <div class="toolbar">
-      <div class="search"><input type="search" id="q" placeholder="Kucaj opštinu, naselje, broj BM ili ime (u otvorenoj opštini)…" aria-label="Pretraga" autocomplete="off" role="combobox" aria-controls="sugg">
+      <div class="search"><input type="search" id="q" placeholder="Opština, naselje, broj BM ili ime…" aria-label="Pretraga" autocomplete="off" role="combobox" aria-controls="sugg">
         <ul id="sugg" role="listbox" hidden></ul></div>
     </div>
     <nav class="crumbs" id="crumbs" aria-label="Putanja"></nav>
@@ -422,7 +433,7 @@ function drawMap(){
     html+=bangs(Object.keys(GEO.units).filter(id=>obOf(id)));
   } else if(ST.lvl==='reg'){
     const ids=regUnits(ST.rid).filter(id=>GEO.units[id]);
-    if(!ids.length) return noMap('Za ovu celinu nema mape. Izaberi sa spiska desno.');
+    if(!ids.length) return noMap('Za ovu celinu nema mape. Izaberi sa spiska.');
     setProj(ids.map(id=>GEO.units[id].shape));
     ids.forEach(id=>html+=`<path class="unit" data-u="${id}" d="${pathOf(GEO.units[id].shape)}"><title>${esc(IDX.units[id].short)}</title></path>`);
     const fs=MOB?15:9.5;
@@ -431,7 +442,7 @@ function drawMap(){
     html+=bangs(ids.filter(id=>obOf(id)));
   } else {
     const U=UF[ST.uid]; if(!U) return noMap('Učitavam…');
-    if(!U.detail) return noMap('Za ovu celinu nema mape. Biračka mesta su na spisku desno.');
+    if(!U.detail) return noMap('Za ovu celinu nema mape. Biračka mesta su na spisku.');
     setProj([U.detail]);
     if(U.naselja.length) U.naselja.forEach((n,i)=>html+=`<path class="naselje click${ST.nas===i?' sel':''}" data-nas="${i}" d="${pathOf(n.g)}"><title>${esc(n.name)}</title></path>`);
     else html+=`<path class="naselje" d="${pathOf(U.detail)}"/>`;
@@ -471,7 +482,8 @@ function applyVB(){const k=W/vb.w;svg.setAttribute('viewBox',`${vb.x.toFixed(1)}
 function zoomAt(f,cx,cy){const nw=Math.min(VB0.w,Math.max(VB0.w/MAXZ,vb.w/f)),nh=nw*VB0.h/VB0.w;if(cx==null){cx=vb.x+vb.w/2;cy=vb.y+vb.h/2}
   vb={x:cx-(cx-vb.x)*nw/vb.w,y:cy-(cy-vb.y)*nh/vb.h,w:nw,h:nh};clampVB();applyVB()}
 function clampVB(){vb.x=Math.min(Math.max(vb.x,0),VB0.w-vb.w);vb.y=Math.min(Math.max(vb.y,0),VB0.h-vb.h)}
-const svgPt=(cx,cy)=>{const r=svg.getBoundingClientRect();return [vb.x+(cx-r.left)/r.width*vb.w,vb.y+(cy-r.top)/r.height*vb.h]};
+const svgPt=(cx,cy)=>{const m=svg.getScreenCTM();if(!m){const r=svg.getBoundingClientRect();return [vb.x+(cx-r.left)/r.width*vb.w,vb.y+(cy-r.top)/r.height*vb.h]}const p=new DOMPoint(cx,cy).matrixTransform(m.inverse());return [p.x,p.y]};
+const svgScale=()=>{const r=svg.getBoundingClientRect();return Math.min(r.width/vb.w,r.height/vb.h)||1};
 $('#zin').onclick=()=>zoomAt(1.6);$('#zout').onclick=()=>zoomAt(1/1.6);$('#zreset').onclick=()=>{vb={...VB0};applyVB()};
 svg.addEventListener('wheel',e=>{if(!(e.ctrlKey||e.metaKey)){zoomHint();return}e.preventDefault();const [x,y]=svgPt(e.clientX,e.clientY);zoomAt(e.deltaY<0?1.15:1/1.15,x,y)},{passive:false});
 let _zh=null;function zoomHint(){const m=document.querySelector('.mapwrap');if(!m)return;let h=m.querySelector('.zhint');if(!h){h=document.createElement('div');h.className='zhint';h.textContent=(navigator.platform||'').includes('Mac')?'Za zumiranje drži ⌘ i okreni točkić, ili koristi + i −':'Za zumiranje drži Ctrl i okreni točkić, ili koristi + i −';m.appendChild(h)}h.classList.add('on');clearTimeout(_zh);_zh=setTimeout(()=>h.classList.remove('on'),1400)}
@@ -479,7 +491,7 @@ const ptrs=new Map();let pan=null,pinch=null,moved=false;
 svg.addEventListener('pointerdown',e=>{ptrs.set(e.pointerId,[e.clientX,e.clientY]);moved=false;if(ptrs.size===1)pan={x:e.clientX,y:e.clientY,vb:{...vb}};
   if(ptrs.size===2){const [a,b]=[...ptrs.values()];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),vb:{...vb},c:svgPt((a[0]+b[0])/2,(a[1]+b[1])/2)};pan=null}});
 svg.addEventListener('pointermove',e=>{if(!ptrs.has(e.pointerId))return;ptrs.set(e.pointerId,[e.clientX,e.clientY]);const r=svg.getBoundingClientRect();
-  if(pan){const dx=(e.clientX-pan.x)/r.width*vb.w,dy=(e.clientY-pan.y)/r.height*vb.h;if(Math.abs(e.clientX-pan.x)+Math.abs(e.clientY-pan.y)>6)moved=true;
+  if(pan){const sc=Math.min(r.width/pan.vb.w,r.height/pan.vb.h)||1,dx=(e.clientX-pan.x)/sc,dy=(e.clientY-pan.y)/sc;if(Math.abs(e.clientX-pan.x)+Math.abs(e.clientY-pan.y)>6)moved=true;
     if(moved&&vb.w<VB0.w){vb.x=pan.vb.x-dx;vb.y=pan.vb.y-dy;clampVB();applyVB()}}
   else if(pinch&&ptrs.size===2){moved=true;const [a,b]=[...ptrs.values()];const f=Math.hypot(a[0]-b[0],a[1]-b[1])/pinch.d;vb={...pinch.vb};zoomAt(f,pinch.c[0],pinch.c[1])}});
 const endPtr=e=>{ptrs.delete(e.pointerId);if(ptrs.size<2)pinch=null;if(!ptrs.size)pan=null};
@@ -495,7 +507,7 @@ function layoutMarks(){const g=svg.querySelector('#mks');if(!g||ST.lvl!=='unit'|
   let C=S.map(o=>({x:o.x,y:o.y,n:o.m.length,sites:[o],fr:o.fr}));
   const cfr=c=>c.sites.length===1?c.sites[0].fr:r*(1.3+0.22*Math.log2(c.n));
   for(let pass=0;pass<30;pass++){let ch=false;const out=[];
-    C.forEach(c=>{const t=out.find(o=>Math.hypot(o.x-c.x,o.y-c.y)<(o.fr+c.fr)*0.92);if(t){const w=t.n+c.n;t.x=(t.x*t.n+c.x*c.n)/w;t.y=(t.y*t.n+c.y*c.n)/w;t.n=w;t.sites=t.sites.concat(c.sites);t.fr=cfr(t);ch=true}else out.push(c)});
+    C.forEach(c=>{const t=out.find(o=>Math.hypot(o.x-c.x,o.y-c.y)<(o.fr+c.fr)*0.72);if(t){const w=t.n+c.n;t.x=(t.x*t.n+c.x*c.n)/w;t.y=(t.y*t.n+c.y*c.n)/w;t.n=w;t.sites=t.sites.concat(c.sites);t.fr=cfr(t);ch=true}else out.push(c)});
     C=out;if(!ch)break}
   const maxed=vb.w<=VB0.w/MAXZ*1.05;
   if(maxed)C=C.map(c=>{if(c.sites.length===1)return c;const m=c.sites.flatMap(o=>o.m).sort((a,b)=>a.n-b.n),n=m.length,rr=Math.max(r*1.35,n*(2.25*r)/(2*Math.PI));return {x:c.x,y:c.y,n,sites:[{x:c.x,y:c.y,m,rr,fr:rr+r}]}});
@@ -622,6 +634,7 @@ function stationAgg(U,list){const y=Z(),z=Z(),zc=Z();let done=0,m=0,yAll=0;
 function render(){
   crumbs(); let h='',body=''; if(!ST.tab)ST.tab='rez';
   const kidsF=(rows)=>ST.flt?rows.filter(r=>r.c&&r.c[ST.flt]>0):rows;
+  const FLL={ok:'provereno',chk:'u proveri',e:'ne slaže se',x:'poništeno'};
   if(ST.lvl==='srb'||ST.lvl==='reg'){
     const isS=ST.lvl==='srb',g=isS?null:IDX.regions.find(r=>r.id===ST.rid),units=isS?ALL():g.units,a=groupAgg(units),r={...a,partial:a.done>0&&a.done<a.n},c=cntUnits(units);
     h=head(isS?'Srbija':'Region',isS?'Zbir svih '+fmt(a.n)+' biračkih mesta':g.name,null,undefined,'',ptabs(c.p+c.e,olIzm(units)));
@@ -631,12 +644,12 @@ function render(){
     else if(ST.view==='ballot') body=ballot(r);
     else{const rows=isS?IDX.regions.map(g=>{const x=groupAgg(g.units);return {k:'r:'+g.id,name:g.name,n:x.n,y:x.y,done:x.done,c:ST.flt?cntUnits(g.units):null}})
         :g.units.map(id=>{const u=IDX.units[id],x=unitAgg(id);return {k:'u:'+id,name:u.short,n:u.nbm,y:u.y23,done:x.done,c:ST.flt?cntUnits([id]):null}}).sort((p,q)=>p.name.localeCompare(q.name,'sr'));
-      body=cntHtml(c)+status26(a.done,a.n)+results(r)+kidsTable(kidsF(rows),isS?'Regioni':'Opštine i gradovi')}
+      {const fr=kidsF(rows);body=cntHtml(c)+status26(a.done,a.n)+results(r)+(ST.flt&&!fr.length?`<div class="sec"><h3>${isS?'Regioni':'Opštine i gradovi'} – ${FLL[ST.flt]}</h3><div class="small">nema</div></div>`:kidsTable(fr,(isS?'Regioni':'Opštine i gradovi')+(ST.flt?' – '+FLL[ST.flt]:'')))}}
   } else {const u=IDX.units[ST.uid],U=UF[ST.uid];
     if(!U){h=head(u.name,'Učitavam…');}
     else if(ST.sid){const s=U.stations.find(x=>x.sid===ST.sid),b=zOf(liveBM(ST.uid,s.sid)),g=sigOf(ST.uid,s.sid);
       const r={y:s.y23,z:b,zc:null,partial:false},docs=odbOf(ST.uid,s);
-      h=head(u.short+(s.nas!=null&&U.naselja[s.nas]?' · '+U.naselja[s.nas].name:''),s.name,s.n,s.adr||'',sigHtml(g),ptabs(g.p+(g.ne.length?1:0),docs.filter(isNewD).length));
+      h=head(u.short+(s.nas!=null&&U.naselja[s.nas]&&!fold(U.naselja[s.nas].name).includes(fold(u.short))?' · '+U.naselja[s.nas].name:''),s.name,s.n,s.adr||'',sigHtml(g),ptabs(g.p+(g.ne.length?1:0),docs.filter(isNewD).length));
       if(ST.tab==='prim') body=primView([[ST.uid,s.sid]]);
       else if(ST.tab==='odb') body=ST.view==='bib'?bibBM(s,docs):provLine()+boardView(s,docs);
       else if(ST.view==='dn') body=dnView(dnBM(liveBM(ST.uid,s.sid),zapR(ST.uid,s.sid)).map(e=>({...e,l2:`BM ${s.n} · ${esc(placeOf(ST.uid,s.n))}`})));
@@ -657,7 +670,7 @@ function render(){
       else if(ST.view==='dn') body=dnView(list.flatMap(st=>{const b=liveBM(ST.uid,st.sid);return dnBM(b,null).filter(e=>!/^(Rezultati preuzeti|Zapisnik objavljen)/.test(e.t)).map(e=>({...e,l2:`<a href="#" data-gu="${ST.uid}" data-gs="${st.sid}">BM ${st.n}</a> · ${esc(placeOf(ST.uid,st.n))}`}))}));
       else if(ST.view==='ballot') body=ballot(r);
       else body=cntHtml(c)+status26(done,list.length)+results(r,note)
-        +`<div class="sec"><h3>Biračka mesta (${fl.length}${fl.length<list.length?' od '+list.length:''})</h3><div class="tbl"><table class="kids"><thead><tr><th>BM</th><th class="n" style="text-align:right">Izašlo 2023</th><th class="n" style="text-align:right">2026</th></tr></thead><tbody>
+        +`<div class="sec"><h3>Biračka mesta (${fl.length}${fl.length<list.length?' od '+list.length:''})</h3>${fl.length?'':'<div class="small">nema</div>'}<div class="tbl"${fl.length?'':' hidden'}><table class="kids"><thead><tr><th>BM</th><th class="n" style="text-align:right">Izašlo 2023</th><th class="n" style="text-align:right">2026</th></tr></thead><tbody>
         ${fl.map(s=>{const b=zOf(liveBM(ST.uid,s.sid)),g=sigOf(ST.uid,s.sid),mk=(g.p?' <b style="color:var(--org)">P</b>':'')+(g.ne.length?' <b style="color:var(--bad)">!</b>':'')+(g.x?' <b style="color:var(--bad)">✕</b>':'');return `<tr data-k="s:${s.sid}"><td class="nm" title="${esc(s.name)}"><b>${s.n}</b> ${esc(s.name)}${mk}</td><td class="n">${s.y23?pct(s.y23.out,s.y23.voters):'<span class="dim">nema para</span>'}</td><td class="n">${b?pct(b.out,b.voters):'<span class="dim">—</span>'}</td></tr>`}).join('')}</tbody></table></div></div>`;
     }
   }
@@ -672,7 +685,7 @@ function render(){
   const toTop=()=>{if(matchMedia('(max-width:960px)').matches)P.scrollIntoView({block:'start'})};
   const mo=$('#more');if(mo)mo.onclick=()=>{ST.view='ballot';render();toTop()};
   P.querySelectorAll('[data-ne]').forEach(x=>x.onclick=()=>{const [u,sd]=x.dataset.ne.split('|');neFly(u,sd)});
-  P.querySelectorAll('[data-cs]').forEach(b=>b.onclick=()=>{const k=b.dataset.cs;COVS=COVS.k===k&&k!=='i'?{k,d:-COVS.d}:{k,d:1};render._keep=true;render()});
+  P.querySelectorAll('[data-cs]').forEach(b=>b.onclick=()=>{const k=b.dataset.cs;COVS=COVS.k===k?{k,d:-COVS.d}:{k,d:1};render._keep=true;render()});
   const db=$('#dnb');if(db)db.onclick=async()=>{ST.view='dn';render();toTop();if(LOG==null&&!ST.uid){await loadLog();render._keep=true;render()}};
   const bb=$('#bibb');if(bb)bb.onclick=()=>{ST.view='bib';render();toTop()};
   P.querySelectorAll('.ptabs button').forEach(b=>b.onclick=()=>{ST.tab=b.dataset.t;ST.view='main';TIPON=false;render._keep=true;render()});
@@ -714,9 +727,9 @@ function covView(units,stations){ // units: lista id-jeva (agregat) ili stations
   if(stations){stations.forEach(s=>{n++;if(!(s.bd&&s.bd.p))return;nb++;s.bd.p.forEach(r=>{if(r.key&&r.member)cov[r.key]=(cov[r.key]||0)+1})})}
   else units.forEach(id=>{const u=IDX.units[id];n+=u.nbm;nb+=u.nb||0;Object.entries(u.cov||{}).forEach(([k,v])=>cov[k]=(cov[k]||0)+v)});
   if(!nb) return '';
-  const rows=IDX.lists26.map(([k,l],i)=>({k,i,l:L[k],c:cov[k]||0})).sort((a,b)=>COVS.k==='i'?a.i-b.i:(COVS.d*(b.c-a.c)||a.i-b.i));
-  const sb=(k,l)=>`<button type="button" class="sbtn${COVS.k===k?' on':''}" data-cs="${k}">${l}${COVS.k===k&&k!=='i'?(COVS.d>0?' ▼':' ▲'):''}</button>`;
-  return `<div class="sec"><h3>Prošireni sastav – BM sa članom liste</h3><div class="small" style="margin-bottom:6px">Od ${fmt(nb)} BM čiji je prošireni sastav pročitan${nb<n?` (ukupno ${fmt(n)} BM)`:''}.${stations?' Klikni na listu da vidiš BM bez njenog člana.':''}</div><div class="tbl"><table class="kids cov${stations?'':' nc'}"><thead><tr><th>${sb('i','Lista')}</th><th class="n" style="text-align:right">${sb('c','BM')}</th><th class="n" style="text-align:right">${sb('c','%')}</th></tr></thead><tbody>
+  const rows=IDX.lists26.map(([k,l],i)=>({k,i,l:L[k],c:cov[k]||0})).sort((a,b)=>COVS.k==='i'?COVS.d*(a.i-b.i):(COVS.d*(b.c-a.c)||a.i-b.i));
+  const sb=(k,l)=>`<button type="button" class="sbtn${COVS.k===k?' on':''}" data-cs="${k}">${l}${COVS.k===k?(k==='i'?(COVS.d>0?'':' ▲'):(COVS.d>0?' ▼':' ▲')):''}</button>`;
+  return `<div class="sec"><h3>Prošireni sastav – BM sa članom liste</h3><div class="small" style="margin-bottom:6px">Od ${fmt(nb)} BM čiji je prošireni sastav pročitan${nb<n?` (ukupno ${fmt(n)} BM)`:''}.${stations?' Klikni na listu da vidiš BM bez njenog člana.':''}</div><div class="tbl"><table class="kids cov${stations?'':' nc'}"><thead><tr><th>${sb('i','Lista')}</th><th class="n" style="text-align:right">${sb('c','BM')}</th><th class="n" style="text-align:right">${sb('p','%')}</th></tr></thead><tbody>
    ${rows.map(r=>`<tr data-cov="${r.k}"><td class="nm" title="${esc(r.l)}">${esc(r.l)}</td><td class="n">${fmt(r.c)}</td><td class="n">${pct(r.c,nb,0)}</td></tr>${stations?`<tr class="covx" data-for="${r.k}" hidden><td colspan="3"></td></tr>`:''}`).join('')}</tbody></table></div></div>`}
 function zap26(uid,s){const b=liveBM(uid,s.sid),h=(b&&b.zap)||[];
   if(!h.length) return '<span class="small">Zapisnik 2026: još nije objavljen na RIK-u.</span>';
@@ -751,7 +764,8 @@ async function go(n,keepMap){
   if(ST.sid&&matchMedia('(max-width:960px)').matches)$('#panel').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function setHash(){let h='';if(ST.lvl==='reg')h='r'+ST.rid;else if(ST.lvl==='unit'){h='o'+ST.uid;if(ST.nas!=null)h+='-n'+ST.nas;if(ST.sid){const s=UF[ST.uid]&&UF[ST.uid].stations.find(x=>x.sid===ST.sid);if(s)h+='-bm'+s.n}}
-  try{history.replaceState(null,'',h?'#'+h:location.pathname+location.search)}catch(e){}}
+  try{const nh=h?'#'+h:location.pathname+location.search,cur=location.hash||location.pathname+location.search;if(nh!==cur&&!setHash._pop)history.pushState(null,'',nh);else history.replaceState(null,'',nh)}catch(e){}}
+addEventListener('popstate',async()=>{setHash._pop=true;try{await fromHash()}finally{setHash._pop=false}});
 async function fromHash(){const m=/^#(?:r(\d+)|o(\d+)(?:-n(\d+))?(?:-bm(\d+))?)$/.exec(location.hash);
   if(!m) return go({lvl:'srb'});
   if(m[1]&&IDX.regions.some(r=>r.id===m[1])) return go({lvl:'reg',rid:m[1]});
@@ -760,7 +774,8 @@ async function fromHash(){const m=/^#(?:r(\d+)|o(\d+)(?:-n(\d+))?(?:-bm(\d+))?)$
   go({lvl:'srb'})}
 
 // ---------- pretraga ----------
-const fold=t=>String(t??'').toLowerCase().replace(/đ/g,'dj').normalize('NFD').replace(/[̀-ͯ]/g,'');
+const CYR={'а':'a','б':'b','в':'v','г':'g','д':'d','ђ':'dj','е':'e','ж':'ž','з':'z','и':'i','ј':'j','к':'k','л':'l','љ':'lj','м':'m','н':'n','њ':'nj','о':'o','п':'p','р':'r','с':'s','т':'t','ћ':'ć','у':'u','ф':'f','х':'h','ц':'c','ч':'č','џ':'dž','ш':'š'};
+const fold=t=>String(t??'').toLowerCase().replace(/[а-џ]/g,c=>CYR[c]??c).replace(/đ/g,'dj').normalize('NFD').replace(/[̀-ͯ]/g,'');
 let SIDX=[];
 function buildIdx(){SIDX=[];IDX.regions.forEach(r=>SIDX.push({t:'r',id:r.id,label:r.name,sub:r.units.length+' jedinica',key:fold(r.name)}));
   Object.entries(IDX.units).forEach(([id,u])=>SIDX.push({t:'u',id,label:u.short,sub:u.name+' · '+u.nbm+' BM',key:fold(u.name+' '+u.short)}))}
