@@ -479,3 +479,4 @@
 23.10. 20:35:11 [vm] BM 52 (161/234552): na RIK-u je okačen zapisnik BM 44 – upisano kao greška RIK-a, bez „!”
 23.10. 20:35:11 [vm] BM 52 (161/234552): primedbi 0
 23.10. 20:35:11 [vm] BM 2 (154/233112): primedbi 1
+23.10. 20:35:16 [vm] BM 7 (88/223311): primedbi 2, ! [['izašli', 296, 141], ['važeći', 281, 138], ['nevažeći', 15, 3], ['lista 1', 163, 75], ['lista 2', 46, 49], ['lista 3', 4, 0], ['lista 4', 10, 0], ['lista 5', 11, 1], ['lista 7', 32, 10], ['lista 8', 1, 0], ['lista 10', 1, 0], ['lista 13', 3, 0], ['lista 14', 0, 3], ['lista 15', 9, 0], ['lista 16', 1, 0]]
