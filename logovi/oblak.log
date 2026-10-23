@@ -457,3 +457,5 @@
 23.10. 20:33:31 [vm] BM 37 (17/214416): primedbi 2
 23.10. 20:33:31 [vm] BM 98 (17/214599): na RIK-u je okačen zapisnik BM 92 – upisano kao greška RIK-a, bez „!”
 23.10. 20:33:31 [vm] BM 98 (17/214599): primedbi 1
+23.10. 20:33:41 [vm] BM 9 (154/233133): primedbi 0, ! [['izašli', 567, 566], ['važeći', 556, 555], ['lista 1', 281, 278], ['lista 3', 8, 9]]
+23.10. 20:33:41 [vm] BM 4 (80/222531): primedbi 0
