@@ -18,10 +18,10 @@ B = lambda t: f"<b>{t}</b>"
 SITE = "kontrola-izbora-srbija.pages.dev"
 
 def fnum(n):
-    """Kratko: 987 · 123.6k · 1.34M (da poruka ne puca u redu)"""
+    """Kratko: 987 · 123,6k · 1,34M (da poruka ne puca u redu)"""
     n = int(n)
-    if n >= 999_950: return f"{n/1e6:.2f}M"
-    if n >= 1000: return f"{n/1e3:.1f}k"
+    if n >= 999_950: return f"{n/1e6:.2f}M".replace(".", ",")
+    if n >= 1000: return f"{n/1e3:.1f}k".replace(".", ",")
     return str(n)
 def fpct(x, d=1): return f"{x:.{d}f}".replace(".", ",")
 def sgn(x): return ("+" if x > 0 else "−" if x < 0 else "±") + fpct(abs(x))
@@ -61,7 +61,7 @@ def message(T, hhmm):
     if not T["done"] or not z["valid"]: return None
     p = lambda i: 100 * z["lists"][i - 1] / z["valid"]
     sl, sns = p(SL), p(SNS)
-    head = f"⏰ {hhmm}"
+    head = f"{hhmm}"
     # 💋 SL vodi do 2 %, 💋💋 vodi 2 % i više, 💋💋💋 SL preko 50 %; ⚔️ razlika SL–SNS manja od 2
     if sl > 50: head += " 💋💋💋"
     elif sl - sns >= 2: head += " 💋💋"
@@ -129,7 +129,7 @@ def maybe_send(T, now, statef, log, test=False):
     msg = message(T, now.strftime("%H:%M"))
     if not msg: return False
     import hashlib, time as _t
-    body = hashlib.sha1("\n".join(l for l in msg.split("\n") if "⏰" not in l).encode()).hexdigest()[:16]
+    body = hashlib.sha1("\n".join(msg.split("\n")[1:]).encode()).hexdigest()[:16]
     if reasons == ["raspored"] and not test and body == state.get("last") and _t.time() - state.get("last_t", 0) < 3600:
         if s: state["slot"] = s
         json.dump(state, open(statef, "w")); return False  # isti brojevi kao prošla poruka – ne ponavljaj (najviše jednom na sat)
