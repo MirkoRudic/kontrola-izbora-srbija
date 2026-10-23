@@ -38,6 +38,9 @@ for dt in (4, 1):
                 if h in known: continue
                 known.add(h); fresh += 1; new.append((dt, d, l))
         if not recs or fresh == 0: break
+KIMD = {"kosovska mitrovica", "priština", "peć", "gnjilane", "prizren", "косовска митровица", "приштина", "пећ", "гњилане", "призрен"}
+KIMN = {u: re.sub(r"^grad\s+", "", lat(x["name"]).lower()) for u, x in IDX["units"].items() if x.get("region") == next((r["id"] for r in IDX["regions"] if "Kosov" in r["name"]), None)}
+KIMMAP = json.load(open(f"{D}/kim_map.json")) if os.path.exists(f"{D}/kim_map.json") else {}
 UFC = {}
 CITY = {"niš": ["136", "137", "138", "139", "140"], "požarevac": ["80", "81"], "užice": ["110", "111"]}
 _ST = {}
@@ -66,6 +69,18 @@ for dt, d, l in sorted(new, key=lambda x: int(x[1].get('datetime') or 0)):
         tt = _nm(lat(d.get("election_station_title") or ""))
         hit = [u for u in cm if any(_nm(f"{x['n']} - {x['name']}") == tt for x in _stations(u))] or [u for u in cm if any(x['n'] == int(m.group(1)) for x in _stations(u))]
         uids = hit[:1] if len(hit) == 1 or hit else []
+    # Kosovo i Metohija: dokumenti su okačeni pod okrugom (Kosovska Mitrovica, Priština, Peć, Gnjilane, Prizren), a važe za opštine okruga.
+    # Opština se uzima iz naziva fajla ili iz ručno/oblakom pročitane mape (kim_map.json); inače dokument ide na nivo okruga (bez BM).
+    if _core(mn) in KIMD:
+        import urllib.parse
+        fn = lat(urllib.parse.unquote(l.split("/")[-1])).lower()
+        km = KIMMAP.get(l)
+        if km: uids = [km[0]]; m = re.match(r"(\d+)", str(km[1]))
+        else:
+            hit = [u for u, nm in KIMN.items() if nm in fn]
+            hit = [u for u in hit if not any(u != v and KIMN[u] in KIMN[v] and KIMN[v] in fn for v in hit)]
+            if len(hit) == 1: uids = hit
+            else: m = None
     # RIK: rešenja za zavode i inostranstvo (RESENJA ZAVODI|INOSTRANSTVO - ..._PartN.pdf)
     rm = re.search(r"RESENJA (ZAVODI|INOSTRANSTVO) - (STALNI|PROSIRENI) SASTAV_Part(\d+)", l)
     if rm:
