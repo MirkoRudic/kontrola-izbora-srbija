@@ -1552,3 +1552,16 @@
 23.10. 03:53:14 [laptop] nesmisleno čitanje -> oblak 161 234432 [12, 12, 36, 123]
 23.10. 03:53:14 [laptop] sumnja na ! -> oblak: 161 BM 19 [['izašli', 873, 871], ['važeći', 837, 839], ['nevažeći', 36, 32]]
 23.10. 03:53:14 [laptop] pročitano 3481, kandidata 582, u redu 6331
+23.10. 03:55:36 [laptop] sumnja na ! -> oblak: 161 BM 27 [['izašli', 591, 590], ['važeći', 571, 574]]
+23.10. 03:55:36 [laptop] pročitano 3496, kandidata 583, u redu 6381
+23.10. 03:55:36 [laptop] nesmisleno čitanje -> oblak 161 234543 [None, 60, 0, 59]
+23.10. 03:55:36 [laptop] sumnja na ! -> oblak: 161 BM 51 [['važeći', 1, 39], ['nevažeći', 39, 1]]
+23.10. 03:55:36 [laptop] sumnja na ! -> oblak: 161 BM 52 [['izašli', 269, 341], ['važeći', 265, 333], ['nevažeći', 4, 8]]
+23.10. 03:55:36 [laptop] nesmisleno čitanje -> oblak 161 234582 [575443, 443, 13, 430]
+23.10. 03:55:36 [laptop] nesigurno čitanje 161 234585 [('izašli', 29, 29, 77), ('važeći', 29, 29, 76), ('nevažeći', 0, None, 1)]
+23.10. 03:55:36 [laptop] nesmisleno čitanje -> oblak 161 234594 [33, 33, 10, 32]
+23.10. 03:55:36 [laptop] pročitano 3511, kandidata 589, u redu 6406
+23.10. 03:55:36 [laptop] nesmisleno čitanje -> oblak 161 234615 [258, 258, 9, 149]
+23.10. 03:55:36 [laptop] pročitano 3526, kandidata 592, u redu 6432
+23.10. 03:55:36 [laptop] nesmisleno čitanje -> oblak 107 226011 [764, 764, 24, 732]
+23.10. 03:55:36 [laptop] pročitano 3541, kandidata 593, u redu 6461
