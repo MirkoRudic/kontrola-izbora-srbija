@@ -1707,3 +1707,11 @@
 23.10. 04:29:45 [laptop] greška 157 233724 HTTP Error 400: Bad Request
 23.10. 04:29:45 [laptop] sumnja na ! -> oblak: 157 BM 41 [['izašli', 77, 83], ['važeći', 77, 82]]
 23.10. 04:29:45 [laptop] pročitano 4441, kandidata 683, u redu 7441
+23.10. 04:31:58 [laptop] nesmisleno čitanje -> oblak 104 225585 [347, 347, 1, 330]
+23.10. 04:31:58 [laptop] nesmisleno čitanje -> oblak 104 225612 [338, 183, 6, 177]
+23.10. 04:31:58 [laptop] pročitano 4456, kandidata 685, u redu 7441
+23.10. 04:31:58 [laptop] pročitano 4471, kandidata 685, u redu 7441
+23.10. 04:31:58 [laptop] nesigurno čitanje 87 223209 [('izašli', 225, 228, 228)]
+23.10. 04:31:58 [laptop] pročitano 4486, kandidata 686, u redu 7441
+23.10. 04:31:58 [laptop] nesmisleno čitanje -> oblak 87 223260 [145, 145, 4, 168]
+23.10. 04:31:58 [laptop] pročitano 4501, kandidata 687, u redu 7441
