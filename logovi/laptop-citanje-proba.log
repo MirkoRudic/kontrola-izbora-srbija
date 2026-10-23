@@ -1916,3 +1916,12 @@
 23.10. 20:34:20 [laptop] pročitano 5941, kandidata 785, u redu 7428
 23.10. 20:34:20 [laptop] pročitano 5956, kandidata 785, u redu 7428
 23.10. 20:34:20 [laptop] pročitano 5971, kandidata 785, u redu 7428
+23.10. 20:36:37 [laptop] nesmisleno čitanje -> oblak 67 220470 [378242, 242, 8, 234]
+23.10. 20:36:37 [laptop] pročitano 5986, kandidata 786, u redu 7428
+23.10. 20:36:37 [laptop] nesmisleno čitanje -> oblak 67 220518 [522, 522, 19, 508]
+23.10. 20:36:37 [laptop] pročitano 6001, kandidata 787, u redu 7428
+23.10. 20:36:37 [laptop] nesmisleno čitanje -> oblak 67 220542 [1116, 1115, 28, 1089]
+23.10. 20:36:37 [laptop] nesmisleno čitanje -> oblak 67 220581 [458, 458, 19, 459]
+23.10. 20:36:37 [laptop] pročitano 6016, kandidata 789, u redu 7428
+23.10. 20:36:37 [laptop] nesigurno čitanje 67 220614 [('izašli', 121, 121, 421), ('važeći', 111, 411, 411)]
+23.10. 20:36:37 [laptop] pročitano 6031, kandidata 790, u redu 7428
