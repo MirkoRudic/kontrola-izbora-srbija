@@ -844,3 +844,8 @@
 23.10. 23:11:43 [vm] BM 30 (58/219411): primedbi 0
 23.10. 23:11:43 [vm] BM 8 (39/217068): primedbi 0, ! [['izašli', 195, 200], ['važeći', 190, 197], ['nevažeći', 8, 3], ['lista 1', 34, 56], ['lista 2', 4, 2], ['lista 3', 1, 0], ['lista 4', 1, 0], ['lista 5', 5, 2], ['lista 6', 93, 113], ['lista 7', 43, 19], ['lista 8', 0, 1], ['lista 11', 2, 0], ['lista 12', 2, 1], ['lista 13', 1, 0], ['lista 14', 3, 2], ['lista 17', 0, 1], ['lista 18', 1, 0]]
 23.10. 23:11:43 [vm] BM 1 (25/215655): primedbi 0
+23.10. 23:11:47 [vm] BM 94 (126/229191): na RIK-u je okačen zapisnik BM 114 – upisano kao greška RIK-a, bez „!”
+23.10. 23:11:47 [vm] BM 94 (126/229191): primedbi 0
+23.10. 23:11:47 [vm] BM 52 (67/220542): primedbi 1
+23.10. 23:11:47 [vm] BM 65 (67/220581): primedbi 0
+23.10. 23:11:47 [vm] BM 12 (127/229254): primedbi 0
