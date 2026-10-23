@@ -130,9 +130,9 @@ def maybe_send(T, now, statef, log, test=False):
     if not msg: return False
     import hashlib, time as _t
     body = hashlib.sha1("\n".join(msg.split("\n")[1:]).encode()).hexdigest()[:16]
-    if reasons == ["raspored"] and not test and body == state.get("last") and _t.time() - state.get("last_t", 0) < 3600:
+    if not test and body == state.get("last") and "oboreno" not in reasons:
         if s: state["slot"] = s
-        json.dump(state, open(statef, "w")); return False  # isti brojevi kao prošla poruka – ne ponavljaj (najviše jednom na sat)
+        json.dump(state, open(statef, "w")); return False  # isti brojevi kao prošla poruka – ne šalje se
     if "99" in reasons: msg = "✅ <b>Obrađeno preko 99 % BM – poslednja poruka.</b>\n\n" + msg; state["final"] = True
     if not token: log("telegram: nema TELEGRAM_TOKEN – poruka nije poslata:\n" + msg); return False
     c = chat_id(token, state)
