@@ -101,3 +101,4 @@
 23.10. 04:48:10 [laptop] živ, režim proba; rezerva-proba=radi, zapisnici-proba=radi, citanje-proba=radi
 23.10. 04:58:21 [laptop] živ, režim proba; rezerva-proba=radi, zapisnici-proba=radi, citanje-proba=radi
 23.10. 05:06:26 [laptop] režim promenjen: proba -> izbori
+23.10. 05:06:30 [laptop] gasim posao druge vrste (režim izbori): 21184 python  tools\rik_live.py --standby --sim --minutes 600
