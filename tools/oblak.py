@@ -5,6 +5,7 @@
 # Format jednog upisa (rezultat.json je lista ovakvih):
 #   {"u":"84","sid":"222927","sha":"...","n":22,
 #    "p":[{"v":"Ubacivanje listića","t":"Član odbora (lista 3) navodi da ..."}],   # prazna lista = nema primedbi
+#    "u":[{"v":"Ispravke u zapisniku","t":"..."}],   # ono što se uočava u zapisniku, a nije primedba člana odbora (nije obavezno)
 #    "zap":{"voters":287,"out":151,"valid":142,"invalid":9,"lists":{"1":58,"2":12,"3":41,...}},
 #    "bmz":22,                                                                     # broj BM upisan u samom zapisniku (polje 1)
 #    "ne":[["izašli",151,157]]}                                                   # računa se ovde iz "zap" i RIK-a; ne popunjavaj ručno
@@ -107,6 +108,7 @@ def upis(path):
     for it in items:
         uid, sid = str(it["u"]), str(it["sid"])
         rec = dict(sha=it.get("sha"), n=it.get("n"), at=t, p=it.get("p") or [], zap=it.get("zap"), link=it.get("link"))
+        if it.get("u"): rec["u"] = it["u"]
         bmz = it.get("bmz")
         if bmz is not None and it.get("n") is not None and str(bmz).strip() != str(it.get("n")).strip():
             # 2) na RIK-u je okačen zapisnik drugog BM: beleži se, bez „!”
