@@ -103,6 +103,21 @@ def neslaganja(uid, sid, z):
             if v is not None and int(v) != int(r): ne.append([f"lista {int(i)}", int(v), r])
         except Exception: pass
     return ne
+def cisti(ne, z):
+    """Izbacuje očigledne greške čitanja (ne neslaganja RIK–zapisnik): broj pisan između kosih crta (/61/ pročitano kao 161),
+    važeći ≠ zbir lista iz istog zapisnika a RIK = zbir, izašlih više od upisanih. Vraća (ne, sumnjivo)."""
+    z = z or {}; L = z.get("lists") or {}
+    S = sum(int(v) for v in L.values()) if len(L) == 18 and all(v is not None for v in L.values()) else None
+    ok, mr = [], []
+    for x in ne:
+        lab, zv, rv = x[0], x[1], x[2]
+        a, b = str(zv), str(rv)
+        why = "kose" if a in ("1" + b, b + "1", "1" + b + "1") else None
+        if not why and lab == "važeći" and S is not None and int(zv) != S and int(rv) == S: why = "zbir"
+        if not why and lab == "izašli" and z.get("voters") and int(zv) > int(z["voters"]) >= int(rv): why = "upisani"
+        if why: mr.append([lab, zv, rv, why])
+        else: ok.append(x)
+    return ok, mr
 def upis(path):
     items = json.load(open(path, encoding="utf-8")); t = stamp(); lines = []; RECS = []
     for it in items:
@@ -116,6 +131,8 @@ def upis(path):
             lines.append(f"BM {it.get('n')} ({uid}/{sid}): na RIK-u je okačen zapisnik BM {bmz} – upisano kao greška RIK-a, bez „!”")
         else: ne = neslaganja(uid, sid, it.get("zap"))
         if ne is not None:
+            ne, mr = cisti(ne, it.get("zap"))
+            if mr: rec["mr"] = mr
             rec["ne"] = [x for x in ne if x[0] != "upisani"]; nu = [x for x in ne if x[0] == "upisani"]
             if nu: rec["nu"] = nu
         RECS.append((uid, sid, rec))
@@ -140,7 +157,7 @@ def provera_ne():
         ne = [[LBL[k], z[k], f[k]] for k in LBL if z.get(k) is not None and f.get(k) is not None and int(z[k]) != int(f[k])]
         for i, v in (z.get("lists") or {}).items():
             if v is not None and int(v) != f["lists"][int(i) - 1]: ne.append([f"lista {int(i)}", int(v), f["lists"][int(i) - 1]])
-        ne = [x for x in ne if x[0] != "upisani"]
+        ne = [x for x in cisti(ne, z)[0] if x[0] != "upisani"]
         if ne != r["ne"]: upd[(u, s_)] = ne
     if not upd: print("„!” bez promene:", len(todo)); return
     def merge(old):
