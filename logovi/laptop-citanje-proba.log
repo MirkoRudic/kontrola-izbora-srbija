@@ -1858,3 +1858,11 @@
 23.10. 20:15:57 [laptop] nesmisleno čitanje -> oblak 71 221286 [41, 41, 1, 41]
 23.10. 20:15:57 [laptop] pročitano 5476, kandidata 760, u redu 7429
 23.10. 20:15:57 [laptop] pročitano 5491, kandidata 760, u redu 7429
+23.10. 20:18:10 [laptop] pročitano 5506, kandidata 760, u redu 7429
+23.10. 20:18:10 [laptop] greška 97 224637 HTTP Error 500: Internal Server Error
+23.10. 20:18:10 [laptop] nesmisleno čitanje -> oblak 97 224640 [911, 911, 2, 109]
+23.10. 20:18:10 [laptop] pročitano 5521, kandidata 761, u redu 7429
+23.10. 20:18:10 [laptop] pročitano 5536, kandidata 761, u redu 7429
+23.10. 20:18:10 [laptop] sumnja na ! -> oblak: 97 BM 39 [['važeći', 300, 299]]
+23.10. 20:18:10 [laptop] nesmisleno čitanje -> oblak 97 224709 [84, 84, 0, 77]
+23.10. 20:18:10 [laptop] pročitano 5551, kandidata 763, u redu 7429
