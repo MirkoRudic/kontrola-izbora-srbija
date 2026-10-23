@@ -592,3 +592,7 @@
 23.10. 21:35:27 [vm] BM 30 (70/220953): primedbi 1
 23.10. 21:35:27 [vm] BM 88 (70/221127): na RIK-u je okačen zapisnik BM 86 – upisano kao greška RIK-a, bez „!”
 23.10. 21:35:27 [vm] BM 88 (70/221127): primedbi 0
+23.10. 21:35:56 [vm] BM 20 (74/221724): primedbi 4, ! [['izašli', 150, 167], ['važeći', 145, 163], ['nevažeći', 5, 4], ['lista 1', 98, 132], ['lista 2', 16, 13], ['lista 3', 2, 4], ['lista 4', 3, 0], ['lista 5', 1, 2], ['lista 7', 16, 8], ['lista 10', 0, 1], ['lista 11', 2, 0], ['lista 12', 1, 0], ['lista 14', 6, 3]]
+23.10. 21:35:56 [vm] BM 16 (96/224499): primedbi 1
+23.10. 21:35:56 [vm] BM 30 (115/227181): primedbi 1
+23.10. 21:35:56 [vm] BM 21 (75/221841): primedbi 1
