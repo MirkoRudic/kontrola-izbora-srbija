@@ -208,7 +208,7 @@ def summary(t):
         P += done
         ob = [sid for sid, r in bm.items() if (r.get("status") or {}).get("oboreno")]
         if done or ob: U[uid] = dict(done=done, m=m, s26=s26, s23=s23, dt=(AGG.get(uid) or {}).get("dt"), ob=ob)
-    return dict(meta=dict(checked=t, processed=P, stations=sum(len(u["st"]) for u in UNITS.values()), sim=A.sim), u=U)
+    return dict(meta=dict(checked=t, changed=LASTCH[0], processed=P, stations=sum(len(u["st"]) for u in UNITS.values()), sim=A.sim), u=U)
 
 def write(changed_units, t):
     for uid in changed_units:
@@ -273,9 +273,12 @@ deadline = time.time() + A.minutes * 60
 interval = 1.0 if A.fast else 5.0
 total = sum(len(u["st"]) for u in UNITS.values())
 PENDING = False; LASTPUSH = 0
+LASTCH = [None]  # vreme poslednje nove/promenjene objave RIK-a (za „RIK objavio novo pre X min” u aplikaciji)
 subprocess.run(["git", "fetch", "-q", "origin", "main"], check=False)
 LASTMAIN = last_main_push()
 if not A.reset: sync_from_uzivo()
+try: LASTCH[0] = json.load(open(f"{OUT}/summary.json"))["meta"].get("changed")
+except Exception: pass
 _GHC = [None, 0]
 def gh_alive():
     import urllib.request
@@ -347,6 +350,7 @@ while time.time() < deadline:
             changed.add(uid)
             if not was and r: new += 1
     changed |= annulments(t)
+    if changed: LASTCH[0] = t
     s = write(changed, t)
     try:
         T = TG.totals(UNITS, LU)
