@@ -29,6 +29,7 @@ function Poslovi($r) {
     $p += @{ ime='rezerva-proba';   kljuc='rik_live.py';         od=(Get-Date).AddMinutes(-1); do=$do; arg='tools\rik_live.py --standby --sim --minutes 600' }
     $p += @{ ime='zapisnici-proba'; kljuc='laptop_zapisnici.py'; od=(Get-Date).AddMinutes(-1); do=$do; arg="tools\laptop_zapisnici.py --sim --dir $Base\proba_zap --until $u --site $Repo\public" }
     $p += @{ ime='citanje-proba';   kljuc='laptop_citanje.py';   od=(Get-Date).AddMinutes(-1); do=$do; arg="tools\laptop_citanje.py --sim --dir $Base\proba_zap --until $u"; ollama=$true }
+    $p += @{ ime='izmene';    kljuc='laptop_izmene.py';    od=(Get-Date '2026-10-23T11:00:00'); do=(Get-Date '2026-10-25T19:00:00'); arg='tools\laptop_izmene.py --until 2026-10-25T19:00' }  # rešenja se čitaju i tokom probe
   }
   return $p
 }
