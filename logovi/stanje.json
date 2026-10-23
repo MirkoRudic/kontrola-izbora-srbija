@@ -35,9 +35,9 @@
   "poslednje": "krug: upita 947 novih 0 greške 0 promenjeno opština 0 obrađeno 7595/8392 trajanje 10s sledeći za 15.0 min"
  },
  "oblak": {
-  "vreme": "23.10. 04:42:00",
+  "vreme": "23.10. 04:42:20",
   "gde": "vm",
-  "poslednje": "BM 43 (59/219540): primedbi 1"
+  "poslednje": "BM 36 (152/233037): primedbi 2, ! [['izašli', 87, 80], ['važeći', 83, 77], ['nevažeći', 4, 3], ['lista 1', 67, 68], ['lista 2', 5, 4], ['lista 4', 9, 4], ['lista 5', 1, 0]]"
  },
  "rik_live-github-proba": {
   "vreme": "23.10. 04:39:31",
