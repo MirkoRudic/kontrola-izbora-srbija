@@ -495,3 +495,8 @@
 23.10. 20:36:59 [vm] BM 34 (2/211032): primedbi 0, ! [['upisani', 1699, 1697]]
 23.10. 20:36:59 [vm] BM 2 (3/211257): primedbi 0
 23.10. 20:36:59 [vm] BM 30 (3/211341): primedbi 0
+23.10. 20:37:31 [vm] BM 34 (4/211542): primedbi 1
+23.10. 20:37:31 [vm] BM 1 (6/211944): na RIK-u je okačen zapisnik BM 2 – upisano kao greška RIK-a, bez „!”
+23.10. 20:37:31 [vm] BM 1 (6/211944): primedbi 2
+23.10. 20:37:31 [vm] BM 46 (6/212079): na RIK-u je okačen zapisnik BM 40 – upisano kao greška RIK-a, bez „!”
+23.10. 20:37:31 [vm] BM 46 (6/212079): primedbi 1
