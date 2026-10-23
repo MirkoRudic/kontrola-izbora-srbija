@@ -6,6 +6,7 @@
 #   {"u":"84","sid":"222927","sha":"...","n":22,
 #    "p":[{"v":"Ubacivanje listića","t":"Član odbora (lista 3) navodi da ..."}],   # prazna lista = nema primedbi
 #    "zap":{"voters":287,"out":151,"valid":142,"invalid":9,"lists":{"1":58,"2":12,"3":41,...}},
+#    "bmz":22,                                                                     # broj BM upisan u samom zapisniku (polje 1)
 #    "ne":[["izašli",151,157]]}                                                   # računa se ovde iz "zap" i RIK-a; ne popunjavaj ručno
 import sys, os, json, time, subprocess, urllib.request, datetime, tempfile
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
@@ -33,9 +34,13 @@ def pending():
             out.append((pr, k.get("at", ""), uid, sid, k))
     out.sort(key=lambda x: (x[0], x[1]))
     return out
-def lista(mx):
+def _shard(sid, sh):
+    if not sh: return True
+    k, n = map(int, sh.split("/")); import zlib
+    return zlib.crc32(str(sid).encode()) % n == k
+def lista(mx, sh=None):
     res = []
-    for pr, at, uid, sid, k in pending()[:mx]:
+    for pr, at, uid, sid, k in [x for x in pending() if _shard(x[3], sh)][:mx]:
         if not k.get("link"): continue
         f = os.path.join(WD, f"{uid}_{sid}.pdf")
         try:
@@ -51,7 +56,7 @@ def lista(mx):
         res.append(dict(u=uid, sid=sid, sha=k.get("sha"), n=k.get("n"), zasto=k.get("why"), sumnja=k.get("sumnja"), link=k.get("link"),
                         strane=[os.path.join(WD, x) for x in pngs],
                         rik=({kk: live.get(kk) for kk in ("voters", "out", "valid", "invalid", "lists")} if live.get("processed") else None)))
-    print(json.dumps(dict(ceka=len(pending()), sledeci=res), ensure_ascii=False, indent=1))
+    print(json.dumps(dict(ceka=len([x for x in pending() if _shard(x[3], sh)]), sledeci=res), ensure_ascii=False, indent=1))
 LBL = {"voters": "upisani", "out": "izašli", "valid": "važeći", "invalid": "nevažeći"}
 R = "https://www.rik.parlament.gov.rs"
 def rik_fresh(uid, sid, sim):
@@ -102,8 +107,15 @@ def upis(path):
     for it in items:
         uid, sid = str(it["u"]), str(it["sid"])
         rec = dict(sha=it.get("sha"), n=it.get("n"), at=t, p=it.get("p") or [], zap=it.get("zap"), link=it.get("link"))
-        ne = neslaganja(uid, sid, it.get("zap"))
-        if ne is not None: rec["ne"] = ne
+        bmz = it.get("bmz")
+        if bmz is not None and it.get("n") is not None and str(bmz).strip() != str(it.get("n")).strip():
+            # 2) na RIK-u je okačen zapisnik drugog BM: beleži se, bez „!”
+            rec["wz"] = str(bmz); ne = None
+            lines.append(f"BM {it.get('n')} ({uid}/{sid}): na RIK-u je okačen zapisnik BM {bmz} – upisano kao greška RIK-a, bez „!”")
+        else: ne = neslaganja(uid, sid, it.get("zap"))
+        if ne is not None:
+            rec["ne"] = [x for x in ne if x[0] != "upisani"]; nu = [x for x in ne if x[0] == "upisani"]
+            if nu: rec["nu"] = nu
         RECS.append((uid, sid, rec))
         lines.append(f"BM {it.get('n')} ({uid}/{sid}): primedbi {len(rec['p'])}" + (f", ! {ne}" if ne else ""))
     def merge(old):
@@ -126,6 +138,7 @@ def provera_ne():
         ne = [[LBL[k], z[k], f[k]] for k in LBL if z.get(k) is not None and f.get(k) is not None and int(z[k]) != int(f[k])]
         for i, v in (z.get("lists") or {}).items():
             if v is not None and int(v) != f["lists"][int(i) - 1]: ne.append([f"lista {int(i)}", int(v), f["lists"][int(i) - 1]])
+        ne = [x for x in ne if x[0] != "upisani"]
         if ne != r["ne"]: upd[(u, s_)] = ne
     if not upd: print("„!” bez promene:", len(todo)); return
     def merge(old):
@@ -137,7 +150,7 @@ def provera_ne():
     print("ažurirano" if DN.push(ch, "Oblak: provera „!” uz svež RIK") else "GREŠKA", len(upd))
 if __name__ == "__main__":
     c = sys.argv[1] if len(sys.argv) > 1 else "stanje"
-    if c == "lista": lista(int(sys.argv[sys.argv.index("--max") + 1]) if "--max" in sys.argv else 6)
+    if c == "lista": lista(int(sys.argv[sys.argv.index("--max") + 1]) if "--max" in sys.argv else 6, sys.argv[sys.argv.index("--shard") + 1] if "--shard" in sys.argv else None)
     elif c == "upis": upis(sys.argv[2])
     elif c == "provera": provera_ne()
     else: print(len(pending()), "kandidata čeka")
