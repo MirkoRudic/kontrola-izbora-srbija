@@ -80,11 +80,11 @@ def message(T, hhmm):
     if zm["valid"] and ym["valid"]:
         d = 100 * zm["lists"][SNS-1] / zm["valid"] - 100 * ym["lists"][SNS23-1] / ym["valid"]
         s_line += f" • {arrow(d)} {sgn(d)}" + (" " + emo(-d, "❄️") if d < 0 and emo(-d, "❄️") else "")
-    L.append(s_line)
+    L += [s_line, ""]
     for name, idx in (("SPS", [SPS]), ("AD", [AD]), ("ES", [ES]), ("Manjine", MANJINE), ("Ostali", OSTALI)):
         v = sum(z["lists"][i - 1] for i in idx)
         L.append(f"{B(name + ':')} {fnum(v)} – {fpct(100*v/z['valid'])} %")
-    L += ["", f"{B('Broj oborenih BM:')} {T['ob']}", SITE]
+    L += ["", SITE]
     return "\n".join(L)
 
 def slot(now):
