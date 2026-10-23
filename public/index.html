@@ -1,4 +1,4 @@
-<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261023232653"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
+<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261023234600"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
 
 :root{
   --bg:#f4f2ec; --panel:#fffdf8; --ink:#1c2228; --muted:#5f6973; --line:#d9d4c7; --soft:#ebe7dc;
@@ -373,6 +373,10 @@ svg#map,#map{touch-action:pan-y!important}
 
 @media (max-width:520px){.ptabs{gap:0}.ptabs button{flex:1 1 auto;font-size:13px;padding:8px 2px;letter-spacing:-.01em}.ptabs .badge{min-width:15px;height:15px;padding:0 3px;font-size:9.5px;margin-left:3px}}
 @media (max-width:400px){.ptabs button{position:relative;padding:12px 2px 8px}.ptabs .badge{position:absolute;top:0;right:0;margin:0}}
+
+table thead th{vertical-align:middle!important}
+
+.pfs{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 10px}.pfc{font:500 12.5px var(--sans);color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:14px;padding:4px 10px;cursor:pointer}.pfc span{color:var(--muted);margin-left:2px;font-variant-numeric:tabular-nums}.pfc:hover{border-color:var(--accent)}.pfc.on{border-color:var(--accent);background:var(--soft);color:var(--accent);font-weight:600}
 </style>
 
 <div class="wrap">
@@ -778,13 +782,21 @@ function neView(pairs){
     const s=UF[uid]&&UF[uid].stations.find(x=>x.sid===sid),n=s?s.n:(o&&o.n)||(r&&r.n);
     return {k:akey(at),h:`<div class="it ne" data-ne="${uid}|${sid}"><div class="d1">${[esc(at),n!=null?'BM '+n:'',esc(IDX.units[uid].short)].filter(Boolean).join(' · ')}</div><div class="d3"><b>!</b> Rezultati na RIK-u se ne slažu sa zapisnikom: ${g.ne.map(esc).join(', ')}.</div><div class="more2">Uporedi brojeve</div></div>`}}).filter(Boolean).sort((a,b)=>b.k-a.k).map(x=>x.h).join('');
   return neIt||'<div class="small" style="padding:12px 0">Nema neslaganja.</div>'}
-function primView(pairs){
-  const it=pairs.map(([uid,sid])=>{const o=oblR(uid,sid),r=zapR(uid,sid);const has=o&&o.p&&o.p.length;if(!has)return null;
+let PF=null,PLIM=200;
+function pfChips(cnt,nuo,tot){const ch=(k,l,n)=>`<button type="button" class="pfc${PF===k?' on':''}" data-pf="${k===null?'':esc(k)}">${esc(l)} <span>${fmt(n)}</span></button>`;
+  return `<div class="pfs">${ch(null,'Sve primedbe',tot)}${Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([v,n])=>ch('v:'+v,v,n)).join('')}${nuo?ch('uo','Uočeno u zapisniku',nuo):''}</div>`}
+function primView(pairs){const cnt={};let nuo=0,tot=0;
+  const rows=pairs.map(([uid,sid])=>{const o=oblR(uid,sid);if(!o)return null;const P=o.p||[],U=o.uo||[];if(!P.length&&!U.length)return null;P.forEach(x=>{const v=x.v||'Ostalo';cnt[v]=(cnt[v]||0)+1});tot+=P.length;nuo+=U.length;return [uid,sid,o,P,U]}).filter(Boolean);
+  if(PF&&PF.startsWith('v:')&&!cnt[PF.slice(2)])PF=null;if(PF==='uo'&&!nuo)PF=null;
+  const it=rows.map(([uid,sid,o,P,U])=>{const E=PF==='uo'?U:PF?P.filter(x=>(x.v||'Ostalo')===PF.slice(2)):P;if(!E.length)return null;const r=zapR(uid,sid);
     const s=UF[uid]&&UF[uid].stations.find(x=>x.sid===sid),n=s?s.n:(o&&o.n)||(r&&r.n),b=liveBM(uid,sid);
     const zl=(o&&o.link)||(b&&b.zap&&b.zap.length?b.zap[b.zap.length-1].link:null)||(r&&r.link),at=(o&&o.at)||(r&&r.at)||'';
     const bm=n!=null?(ST.sid===sid?`BM ${n}`:`<a href="#" data-gu="${uid}" data-gs="${sid}">BM ${n}</a>`):'';
-    return {k:akey(at),h:`<div class="it"><div class="d1">${[esc(at),bm,esc(IDX.units[uid].short)].filter(Boolean).join(' · ')}</div>${has?o.p.map(x=>`<div class="d3">${x.v?`<b>${esc(x.v)}:</b> `:''}${esc(x.t||'')}</div>`).join(''):'<div class="d3">Na zapisniku su upisane primedbe; sadržaj se još čita.</div>'}${zl?`<div class="d4">${link(zl,'Zapisnik (PDF)')}</div>`:''}</div>`}}).filter(Boolean).sort((a,b)=>b.k-a.k);
-  return it.length?it.slice(0,300).map(x=>x.h).join('')+(it.length>300?`<div class="small" style="margin-top:6px">Prikazano 300 od ${fmt(it.length)}.</div>`:''):'<div class="small" style="padding:12px 0">Nema primedbi.</div>'}
+    return {k:akey(at),h:`<div class="it"><div class="d1">${[esc(at),bm,esc(IDX.units[uid].short)].filter(Boolean).join(' · ')}</div>${E.map(x=>`<div class="d3">${x.v?`<b>${esc(x.v)}:</b> `:''}${esc(x.t||'')}</div>`).join('')}${zl?`<div class="d4">${link(zl,'Zapisnik (PDF)')}</div>`:''}</div>`}}).filter(Boolean).sort((a,b)=>b.k-a.k);
+  if(!tot&&!nuo)return '<div class="small" style="padding:12px 0">Nema primedbi.</div>';
+  const head=(tot+nuo>0&&(Object.keys(cnt).length>1||nuo))?pfChips(cnt,nuo,tot):'';
+  const note=PF==='uo'?'<div class="small" style="margin:0 0 6px">Ovo nisu primedbe članova odbora, već ono što se vidi u samom zapisniku (ispravke brojeva, nepopunjena polja, zbir koji se ne slaže i sl.).</div>':'';
+  return head+note+(it.length?it.slice(0,PLIM).map(x=>x.h).join('')+(it.length>PLIM?`<button type="button" class="more" data-pmore="1" style="margin-top:8px">Prikaži još (${fmt(it.length-PLIM)})</button>`:''):'<div class="small" style="padding:12px 0">Nema primedbi.</div>')}
 async function neFly(uid,sid){if(!LU[uid]){const d=await get(SRC?SRC+'data/live/u/'+uid+'.json':'data/live/u/'+uid+'.json?t='+Date.now());if(d)LU[uid]=d}
   if(!UF[uid])UF[uid]=await get('data/u/'+uid+'.json');
   const o=oblR(uid,sid),r=zapR(uid,sid),b=liveBM(uid,sid)||{},Z=(o&&o.zap)||(r&&r.zap)||(r?{out:r.izasli,valid:r.vazeci,invalid:r.nevazeci}:{});
@@ -818,7 +830,8 @@ function dnView(items){items=items.filter(e=>e.at).sort((a,b)=>akey(b.at)-akey(a
   return `<button class="back2" id="back2">← Nazad</button><div class="sec" style="margin-top:8px"><h3>Dnevnik rezultata</h3>${items.length?items.slice(0,400).map(e=>dnItem(e,e.l2)).join(''):'<div class="small">Još nema upisa.</div>'}</div>`}
 const CUT=Date.parse('2026-10-23T00:00:00+02:00')/1000,CUTK=10230000; // akey('23.10. 00:00')
 const isNewD=d=>(d.ts||0)>=CUT;
-const olIzm=uids=>{const S=new Set(uids);return (OLOG||[]).filter(e=>S.has(e.u)&&akey(e.at)>=CUTK).length};
+const olTs=()=>{if(olTs.m&&olTs.k===ONOVI)return olTs.m;const m=new Map();Object.values(ONOVI||{}).forEach(v=>Object.values(v).forEach(ds=>ds.forEach(d=>{if(d.ts)m.set(d.l,d.ts)})));olTs.k=ONOVI;return olTs.m=m};
+const olIzm=uids=>{const S=new Set(uids),M=olTs();return (OLOG||[]).filter(e=>{if(!S.has(e.u))return false;const t=M.get(e.l);return t?t>=CUT:akey(e.at)>=CUTK}).length};
 const provLine=()=>`<div class="small prov">Provereno: ${esc(OPROV||'—')}</div>`;
 const tsF=ts=>{if(!ts)return '';const d=new Date(ts*1000),p=x=>String(x).padStart(2,'0');return `${d.getDate()}.${d.getMonth()+1}. ${p(d.getHours())}:${p(d.getMinutes())}`};
 const bibBtn='<button class="more" id="bibb">BIBLIOTEKA</button>';
@@ -908,6 +921,8 @@ function render(){
   const bs=$('#bsort');if(bs)bs.onclick=()=>{bsort=!bsort;render._keep=true;render()};
   P.querySelectorAll('.tabs button[data-b]').forEach(b=>b.onclick=()=>{btab=b.dataset.b;render._keep=true;render()});
   P.querySelectorAll('.tabs button[data-pt]').forEach(b=>b.onclick=()=>{PT=b.dataset.pt;render._keep=true;render()});
+  P.querySelectorAll('[data-pf]').forEach(b=>b.onclick=()=>{PF=b.dataset.pf||null;PLIM=200;render._keep=true;render()});
+  P.querySelectorAll('[data-pmore]').forEach(b=>b.onclick=()=>{PLIM+=200;render._keep=true;render()});
   P.querySelectorAll('.tabs button[data-ot]').forEach(b=>b.onclick=()=>{OT=b.dataset.ot;render._keep=true;render()});
   // dodatne celine bez mape
   const ex=$('#extra');
