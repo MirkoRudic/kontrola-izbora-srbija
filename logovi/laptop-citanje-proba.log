@@ -2141,3 +2141,15 @@
 23.10. 21:26:40 [laptop] pročitano 7276, kandidata 920, u redu 7410
 23.10. 21:26:40 [laptop] nesmisleno čitanje -> oblak 119 227871 [195, 195, 15, 182]
 23.10. 21:26:40 [laptop] pročitano 7291, kandidata 921, u redu 7410
+23.10. 21:29:15 [laptop] sumnja na ! -> oblak: 95 BM 6 [['važeći', 303, 304]]
+23.10. 21:29:15 [laptop] sumnja na ! -> oblak: 95 BM 8 [['važeći', 0, 303], ['nevažeći', 0, 7]]
+23.10. 21:29:15 [laptop] pročitano 7306, kandidata 923, u redu 7410
+23.10. 21:29:15 [laptop] sumnja na ! -> oblak: 95 BM 11 [['važeći', 0, 128], ['nevažeći', 0, 2]]
+23.10. 21:29:15 [laptop] nesmisleno čitanje -> oblak 95 224400 [123, 123, 0, 119]
+23.10. 21:29:15 [laptop] sumnja na ! -> oblak: 95 BM 20 [['važeći', 0, 308], ['nevažeći', 0, 13]]
+23.10. 21:29:15 [laptop] pročitano 7321, kandidata 926, u redu 7410
+23.10. 21:29:15 [laptop] sumnja na ! -> oblak: 95 BM 25 [['izašli', 894, 883], ['važeći', 876, 849], ['nevažeći', 18, 34]]
+23.10. 21:29:15 [laptop] sumnja na ! -> oblak: 134 BM 7 [['izašli', 572, 573]]
+23.10. 21:29:15 [laptop] pročitano 7336, kandidata 928, u redu 7410
+23.10. 21:29:15 [laptop] nesmisleno čitanje -> oblak 134 230673 [268269, 269, 5, 264]
+23.10. 21:29:15 [laptop] pročitano 7351, kandidata 929, u redu 7410
