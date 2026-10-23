@@ -1790,3 +1790,12 @@
 23.10. 04:48:27 [laptop] pročitano 4906, kandidata 732, u redu 7435
 23.10. 04:48:27 [laptop] nesmisleno čitanje -> oblak 109 226458 [201, 201, 9, 194]
 23.10. 04:48:27 [laptop] pročitano 4921, kandidata 733, u redu 7435
+23.10. 04:50:35 [laptop] nesmisleno čitanje -> oblak 167 235272 [1132, 432, 18, 414]
+23.10. 04:50:35 [laptop] pročitano 4936, kandidata 734, u redu 7435
+23.10. 04:50:35 [laptop] greška 167 235329 HTTP Error 500: Internal Server Error
+23.10. 04:50:35 [laptop] pročitano 4951, kandidata 734, u redu 7435
+23.10. 04:50:35 [laptop] nesmisleno čitanje -> oblak 167 235368 [247, 247, 0, 246]
+23.10. 04:50:35 [laptop] nesigurno čitanje 167 235380 [('važeći', 78, 71, 77), ('nevažeći', 0, 7, 1)]
+23.10. 04:50:35 [laptop] pročitano 4966, kandidata 736, u redu 7435
+23.10. 04:50:35 [laptop] nesmisleno čitanje -> oblak 167 235389 [57, 66, 2, 64]
+23.10. 04:50:35 [laptop] pročitano 4981, kandidata 737, u redu 7435
