@@ -54,7 +54,8 @@ while ($true) {
   $aktivni = @(Poslovi $r | Where-Object { $sad -ge $_.od -and $sad -lt $_.do })
   $treba = @($aktivni | Where-Object { -not (Radi $_.kljuc) })
   if ($treba.Count -gt 0 -and ($sad - $poslednjiPull).TotalMinutes -gt 10) {
-    $g = cmd /c "git checkout -q main 2>&1 && git pull -q --rebase --autostash 2>&1"
+    # public/data/live na laptopu piše rezerva (rik_live) – to je radna kopija, pravi podaci su na grani uzivo; inače pull puca
+    $g = cmd /c "git checkout -q main 2>&1 && git checkout -q -- public/data/live 2>&1 && git clean -fdq public/data/live 2>&1 && git pull -q --rebase --autostash 2>&1"
     if ($LASTEXITCODE -ne 0) { L "git pull nije uspeo: $g" }
     $poslednjiPull = $sad
   }
