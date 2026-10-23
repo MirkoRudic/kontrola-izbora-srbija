@@ -25,9 +25,9 @@
   "poslednje": "za čitanje: 3111"
  },
  "laptop-nadzor": {
-  "vreme": "23.10. 05:06:34",
+  "vreme": "23.10. 05:08:38",
   "gde": "laptop",
-  "poslednje": "gasim posao druge vrste (režim izbori): 37984 python  tools\\laptop_zapisnici.py --sim --dir D:\\VAJB\\kontrolaizbora\\proba_zap --until 2026-10-23T05:00 --site D:\\VAJB\\kontrolaizbora\\repo\\public  "
+  "poslednje": "živ, režim izbori; nema aktivnih poslova u ovom trenutku"
  },
  "rik_live-laptop-proba": {
   "vreme": "23.10. 05:02:52",
