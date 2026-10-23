@@ -1724,3 +1724,22 @@
 23.10. 04:34:22 [laptop] sumnja na ! -> oblak: 105 BM 1 [['izašli', 0, 373], ['važeći', 0, 368], ['nevažeći', 0, 5]]
 23.10. 04:34:22 [laptop] sumnja na ! -> oblak: 105 BM 2 [['izašli', 0, 536], ['važeći', 0, 518], ['nevažeći', 0, 17]]
 23.10. 04:34:22 [laptop] pročitano 4561, kandidata 692, u redu 7439
+23.10. 04:36:58 [laptop] nesmisleno čitanje -> oblak 105 225699 [384, 384, 4, 377]
+23.10. 04:36:58 [laptop] sumnja na ! -> oblak: 105 BM 11 [['izašli', 0, 1016], ['važeći', 0, 976], ['nevažeći', 0, 40]]
+23.10. 04:36:58 [laptop] nesigurno čitanje 105 225711 [('izašli', 0, None, 320), ('važeći', 0, 0, 311), ('nevažeći', 0, 0, 9)]
+23.10. 04:36:58 [laptop] pročitano 4576, kandidata 695, u redu 7437
+23.10. 04:36:58 [laptop] sumnja na ! -> oblak: 105 BM 25 [['izašli', 0, 103], ['važeći', 0, 103]]
+23.10. 04:36:58 [laptop] nesmisleno čitanje -> oblak 105 225750 [272, 227, 5, 272]
+23.10. 04:36:58 [laptop] sumnja na ! -> oblak: 105 BM 27 [['izašli', 0, 134], ['važeći', 0, 133], ['nevažeći', 0, 1]]
+23.10. 04:36:58 [laptop] sumnja na ! -> oblak: 105 BM 28 [['važeći', 0, 99], ['nevažeći', 0, 1]]
+23.10. 04:36:58 [laptop] sumnja na ! -> oblak: 105 BM 31 [['izašli', 0, 247], ['važeći', 0, 242], ['nevažeći', 0, 4]]
+23.10. 04:36:58 [laptop] nesmisleno čitanje -> oblak 105 225768 [186, 186, 0, 180]
+23.10. 04:36:58 [laptop] sumnja na ! -> oblak: 105 BM 33 [['izašli', 0, 437], ['važeći', 0, 432], ['nevažeći', 0, 5]]
+23.10. 04:36:58 [laptop] pročitano 4591, kandidata 702, u redu 7437
+23.10. 04:36:58 [laptop] sumnja na ! -> oblak: 105 BM 42 [['izašli', 0, 149], ['važeći', 0, 147], ['nevažeći', 0, 2]]
+23.10. 04:36:58 [laptop] pročitano 4606, kandidata 703, u redu 7437
+23.10. 04:36:58 [laptop] sumnja na ! -> oblak: 105 BM 60 [['izašli', 0, 268], ['važeći', 0, 267], ['nevažeći', 0, 1]]
+23.10. 04:36:58 [laptop] sumnja na ! -> oblak: 105 BM 61 [['izašli', 0, 143], ['važeći', 0, 132], ['nevažeći', 0, 11]]
+23.10. 04:36:58 [laptop] nesmisleno čitanje -> oblak 105 225867 [1916, 167, 10, 157]
+23.10. 04:36:58 [laptop] nesmisleno čitanje -> oblak 105 225873 [152, 152, 4, 758]
+23.10. 04:36:58 [laptop] pročitano 4621, kandidata 707, u redu 7437
