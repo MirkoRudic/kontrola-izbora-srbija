@@ -1,4 +1,4 @@
-<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261023223525"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
+<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261023224955"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
 
 :root{
   --bg:#f4f2ec; --panel:#fffdf8; --ink:#1c2228; --muted:#5f6973; --line:#d9d4c7; --soft:#ebe7dc;
@@ -363,6 +363,9 @@ footer.ft p{font-style:italic!important;font-weight:400!important}
 footer.ft a.setl{position:absolute;right:0;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--muted)!important;display:grid;place-items:center;padding:0}
 footer.ft a.setl:hover{color:var(--accent)!important;border-color:var(--accent)}
 #settings footer.ft a.setl{display:none}
+
+/* podeli2 */
+.shsel{display:flex;align-items:center;gap:10px;margin:6px 0 2px;font-size:13px;color:var(--muted)}.dd{position:relative}.ddb{font:inherit;font-size:13.5px;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:8px;padding:5px 10px 5px 12px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;min-height:32px}.ddb:hover{border-color:var(--accent)}.ddm{position:absolute;left:0;top:calc(100% + 4px);min-width:100%;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 28px rgba(0,0,0,.28);padding:4px;z-index:20}.ddm button{display:block;width:100%;text-align:left;font:inherit;font-size:13.5px;color:var(--ink);background:none;border:0;border-radius:6px;padding:7px 14px;cursor:pointer;white-space:nowrap}.ddm button:hover{background:color-mix(in srgb,var(--line) 60%,transparent)}.ddm button[aria-selected=true]{color:var(--accent);font-weight:600}
 </style>
 
 <div class="wrap">
@@ -925,7 +928,7 @@ function covSView(units,stations){let a={},ns=0,n=0;
   if(!ns)return '';const nmK=k=>k==='?'?'predlagač nije pročitan':GRP[k]||k,ci={b:0,m:1,p:2}[COVSS.k];
   const rows=Object.entries(a).sort((p,q)=>COVSS.k==='n'?COVSS.d*nmK(p[0]).localeCompare(nmK(q[0]),'sr'):(COVSS.d*(q[1][ci]-p[1][ci])||q[1][0]-p[1][0]||q[1][1]-p[1][1]));
   const sb=(k,l)=>`<button type="button" class="sbtn${COVSS.k===k?' on':''}" data-css="${k}">${l}${COVSS.k===k?(COVSS.d>0?(k==='n'?' ▲':' ▼'):(k==='n'?' ▼':' ▲')):''}</button>`;
-  return `<div class="sec"><h3>Stalni sastav</h3><div class="small" style="margin-bottom:6px">${ns<n?`Stalni sastav je poznat za ${fmt(ns)} od ${fmt(n)} BM; za ostala BM rešenje još nije objavljeno ili nije čitljivo.`:`Stalni sastav je poznat za sva ${fmt(n)} BM.`}</div><div class="tbl"><table class="kids cov nc"><thead><tr><th>${sb('n','Predlagač')}</th><th class="n" style="text-align:right">${sb('b','BM')}</th><th class="n" style="text-align:right">${sb('m','Mesta')}</th><th class="n" style="text-align:right">${sb('p','Predsed.')}</th></tr></thead><tbody>
+  return `<div class="sec"><h3>Stalni sastav</h3><div class="small" style="margin-bottom:6px">${ns<n?`Čeka se obrada još ${fmt(n-ns)} BM.`:''}</div><div class="tbl"><table class="kids cov nc"><thead><tr><th>${sb('n','Predlagač')}</th><th class="n" style="text-align:right">${sb('b','BM')}</th><th class="n" style="text-align:right">${sb('m','Mesta')}</th><th class="n" style="text-align:right">${sb('p','Predsed.')}</th></tr></thead><tbody>
    ${rows.map(([k,v])=>`<tr data-covs="${esc(k)}"><td class="nm" title="${esc(nmK(k))}">${esc(nmK(k))}</td><td class="n">${fmt(v[0])}</td><td class="n">${fmt(v[1])}</td><td class="n">${fmt(v[2])}</td></tr>`).join('')}</tbody></table></div></div>`}
 let COVSS={k:'b',d:1};
 let COVS={k:'i',d:1};
@@ -936,7 +939,7 @@ function covView(units,stations){ // units: lista id-jeva (agregat) ili stations
   if(!nb) return '';
   const rows=IDX.lists26.map(([k,l],i)=>({k,i,l:L[k],c:cov[k]||0})).sort((a,b)=>COVS.k==='i'?COVS.d*(a.i-b.i):(COVS.d*(b.c-a.c)||a.i-b.i));
   const sb=(k,l)=>`<button type="button" class="sbtn${COVS.k===k?' on':''}" data-cs="${k}">${l}${COVS.k===k?(k==='i'?(COVS.d>0?'':' ▲'):(COVS.d>0?' ▼':' ▲')):''}</button>`;
-  return `<div class="sec"><h3>Prošireni sastav</h3><div class="small" style="margin-bottom:6px">${nb<n?`Prošireni sastav je poznat za ${fmt(nb)} od ${fmt(n)} BM.`:`Prošireni sastav je poznat za sva ${fmt(n)} BM.`}${stations?' Klikni na listu da vidiš BM bez njenog člana.':''}</div><div class="tbl"><table class="kids cov${stations?'':' nc'}"><thead><tr><th>${sb('i','Lista')}</th><th class="n" style="text-align:right">${sb('c','BM')}</th><th class="n" style="text-align:right">${sb('p','%')}</th></tr></thead><tbody>
+  return `<div class="sec"><h3>Prošireni sastav</h3><div class="small" style="margin-bottom:6px">${nb<n?`Čeka se obrada još ${fmt(n-nb)} BM.`:''}${stations?' Klikni na listu da vidiš BM bez njenog člana.':''}</div><div class="tbl"><table class="kids cov${stations?'':' nc'}"><thead><tr><th>${sb('i','Lista')}</th><th class="n" style="text-align:right">${sb('c','BM')}</th><th class="n" style="text-align:right">${sb('p','%')}</th></tr></thead><tbody>
    ${rows.map(r=>`<tr data-cov="${r.k}"><td class="nm" title="${esc(r.l)}">${esc(r.l)}</td><td class="n">${fmt(r.c)}</td><td class="n">${pct(r.c,nb,0)}</td></tr>${stations?`<tr class="covx" data-for="${r.k}" hidden><td colspan="3"></td></tr>`:''}`).join('')}</tbody></table></div></div>`}
 function zap26(uid,s){const b=liveBM(uid,s.sid),h=(b&&b.zap)||[];
   if(!h.length) return '<span class="small">Zapisnik 2026: još nije objavljen na RIK-u.</span>';
@@ -1103,19 +1106,19 @@ async function shareImg(d){const W=1080,H=1350,c=document.createElement('canvas'
   const fmtn=n=>n==null?'—':Number(n).toLocaleString('sr-Latn-RS'),pc=(a,b)=>b?(100*a/b).toLocaleString('sr-Latn-RS',{minimumFractionDigits:1,maximumFractionDigits:1})+' %':'';
   const fit=(t,w)=>{if(x.measureText(t).width<=w)return t;while(t.length>1&&x.measureText(t+'…').width>w)t=t.slice(0,-1);return t.trimEnd()+'…'};
   x.fillStyle=C.bg;x.fillRect(0,0,W,H);const X=64,IW=W-2*X;
+  if(d.shape&&d.shape.d){try{const sc=Math.min(860/(d.shape.w+2),1000/104),sw=(d.shape.w+2)*sc;x.save();x.translate(W/2-sw/2,H/2-52*sc+30);x.scale(sc,sc);const p=new Path2D(d.shape.d);x.globalAlpha=.07;x.fillStyle=C.acc;x.fill(p);x.globalAlpha=.16;x.lineWidth=2/sc;x.strokeStyle=C.acc;x.stroke(p);x.restore()}catch(e){}}
   x.textBaseline='alphabetic';x.font=`700 30px ${F}`;x.fillStyle=C.acc;const hl='KONTROLA IZBORA · '+d.app.toUpperCase();x.fillText(hl,X,92);const wl=x.measureText(hl).width;
   x.font=`500 20px ${M}`;x.fillStyle=C.muted;x.textAlign='right';x.fillText('PARLAMENTARNI IZBORI',X+IW,78);x.fillText(d.year==='2026'?'25.10.2026.':'17.12.2023.',X+IW,104);const wr=x.measureText('PARLAMENTARNI IZBORI').width;x.textAlign='left';
-  if(d.shape&&d.shape.d){try{const gap=(X+IW-wr)-(X+wl),hh=Math.min(104,gap-60);if(hh>40){const sc=hh/102,sw=(d.shape.w+2)*sc,cx=X+wl+gap/2;x.save();x.translate(cx-sw/2+sc,40+sc);x.scale(sc,sc);const p=new Path2D(d.shape.d);x.fillStyle=C.bar;x.fill(p);x.lineWidth=1.2/sc;x.strokeStyle=C.acc;x.stroke(p);x.restore()}}catch(e){}}
   x.font=`700 46px ${F}`;x.fillStyle=C.text;let y=176;const words=String(d.title).split(' ');let line='';const lines=[];
   for(const w of words){const t=line?line+' '+w:w;if(x.measureText(t).width>IW&&line){lines.push(line);line=w}else line=t}lines.push(line);
   lines.slice(0,2).forEach((l,i)=>{x.fillText(i===1&&lines.length>2?fit(l+'…',IW):l,X,y);y+=56});
   if(d.sub){x.font=`500 24px ${F}`;x.fillStyle=C.muted;x.fillText(fit(d.sub,IW),X,y-12);y+=26}
   y+=10;x.fillStyle=C.line;x.fillRect(X,y,IW,2);y+=26;
-  const rows=d.rows.filter(r=>r[1]).sort((a,b)=>b[1]-a[1]),top=rows.slice(0,11),rest=rows.slice(11).reduce((a,r)=>a+r[1],0);if(rest)top.push(['Ostale liste',rest]);
-  const mx=Math.max(1,...top.map(r=>r[1])),RH=Math.min(62,(H-y-300)/Math.max(top.length,1));
-  top.forEach(([n,v])=>{x.font=`500 25px ${F}`;x.fillStyle=C.text;x.fillText(fit(n,IW-340),X,y+26);
-    x.font=`500 25px ${M}`;x.textAlign='right';x.fillStyle=C.text;x.fillText(pc(v,d.valid),X+IW,y+26);x.fillStyle=C.muted;x.fillText(fmtn(v),X+IW-150,y+26);x.textAlign='left';
-    x.fillStyle=C.bar;x.fillRect(X,y+36,Math.max(3,(IW)*v/mx),7);y+=RH});
+  const top=d.rows.slice().sort((a,b)=>b[1]-a[1]);
+  const mx=Math.max(1,...top.map(r=>r[1])),RH=Math.min(62,(H-y-300)/Math.max(top.length,1)),fs=Math.min(25,Math.floor(RH*.55)),bh=Math.max(4,Math.round(RH*.11));
+  top.forEach(([n,v])=>{const z=!v;x.globalAlpha=z?.55:1;x.font=`500 ${fs}px ${F}`;x.fillStyle=z?C.muted:C.text;x.fillText(fit(n,IW-340),X,y+fs+1);
+    x.font=`500 ${fs}px ${M}`;x.textAlign='right';x.fillText(pc(v,d.valid)||'0,0 %',X+IW,y+fs+1);x.fillStyle=C.muted;x.fillText(fmtn(v),X+IW-150,y+fs+1);x.textAlign='left';x.globalAlpha=1;
+    if(v){x.fillStyle=C.bar;x.fillRect(X,y+fs+8,Math.max(3,IW*v/mx),bh)}y+=RH});
   y=Math.max(y+10,H-270);x.fillStyle=C.line;x.fillRect(X,y,IW,2);y+=20;
   const box=[['IZAŠLO',pc(d.out,d.voters),fmtn(d.out)+' od '+fmtn(d.voters)],['VAŽEĆI',fmtn(d.valid),pc(d.valid,d.out)+' izašlih'],['NEVAŽEĆI',fmtn(d.invalid),pc(d.invalid,d.out)+' izašlih']];
   const bw=(IW-2*18)/3;box.forEach((b,i)=>{const bx=X+i*(bw+18);x.fillStyle=C.card;x.beginPath();x.roundRect(bx,y,bw,128,16);x.fill();
@@ -1125,16 +1128,15 @@ async function shareImg(d){const W=1080,H=1350,c=document.createElement('canvas'
   {const n=new Date(),p2=v=>String(v).padStart(2,'0');x.font=`500 18px ${M}`;x.fillStyle=C.muted;x.fillText(`Izvezeno ${n.getDate()}.${n.getMonth()+1}.${n.getFullYear()}. u ${p2(n.getHours())}:${p2(n.getMinutes())}`,X,H-40)}
   return await new Promise(r=>c.toBlob(r,'image/png'))}
 function shareText(d,mode){const f=n=>Number(n||0).toLocaleString('sr-RS'),pc=(a,b)=>b?(a/b*100).toFixed(1).replace('.',',')+' %':'–';
-  const head=`Kontrola izbora · ${d.title}`+(d.sub?`\n${d.sub}`:'')+`\n${d.note}`;
-  if(mode==='link')return `${head}\nRezultati uživo: ${d.url}`;
-  if(mode==='kratko'){const t=d.rows.filter(r=>r[1]>0).sort((a,b)=>b[1]-a[1])[0];return `${d.title}: rezultati sa RIK-a`+(t?` (prvo mesto: ${t[0]}, ${pc(t[1],d.valid)})`:'')+`\nPogledaj uživo: ${d.url}`}
+  if(mode==='link')return `${d.cap}\n${d.url}`;
   const rs=d.rows.filter(r=>r[1]>0).sort((a,b)=>b[1]-a[1]);
-  return head+'\n\n'+rs.map((r,i)=>`${i+1}. ${r[0]} – ${f(r[1])} (${pc(r[1],d.valid)})`).join('\n')+
-    `\n\nIzašlo: ${f(d.out)}`+(d.voters?` od ${f(d.voters)} (${pc(d.out,d.voters)})`:'')+`\nNevažeći listići: ${f(d.invalid)}\n\nRezultati uživo: ${d.url}`}
-async function shareOpen(d){const el=document.createElement('div');el.className='flyd';el.innerHTML=`<div class="fly shp" role="dialog" aria-label="Podeli"><button class="x" aria-label="Zatvori">✕</button><h4>Podeli rezultate</h4><label class="shsel">Šta deliš <select class="shm"><option value="slika">Slika</option><option value="tekst">Tekst</option><option value="link">Link</option></select></label><div class="shimg"><span class="small">Pravim sliku…</span></div><div class="shcap"></div><div class="shb"></div></div>`;
+  if(mode==='kratko')return `${d.cap}\nIzlaznost: ${pc(d.out,d.voters)}\n`+rs.slice(0,2).map((r,i)=>`${i+1}. ${r[0]} – ${pc(r[1],d.valid)}`).join('\n')+`\n${d.url}`;
+  return `Kontrola izbora · ${d.cap}\n${d.note}\n\n`+rs.map((r,i)=>`${i+1}. ${r[0]} – ${f(r[1])} (${pc(r[1],d.valid)})`).join('\n')+
+    `\n\nIzašlo: ${f(d.out)}`+(d.voters?` od ${f(d.voters)} (${pc(d.out,d.voters)})`:'')+`\nNevažeći listići: ${f(d.invalid)}\n\n${d.url}`}
+async function shareOpen(d){const el=document.createElement('div');el.className='flyd';el.innerHTML=`<div class="fly shp" role="dialog" aria-label="Podeli"><button class="x" aria-label="Zatvori">✕</button><h4>Podeli rezultate</h4><div class="shsel"><span>Šta deliš</span><div class="dd"><button type="button" class="ddb" aria-haspopup="listbox" aria-expanded="false"><span class="ddl">Slika</span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="ddm" role="listbox" hidden><button type="button" role="option" data-v="slika" aria-selected="true">Slika</button><button type="button" role="option" data-v="tekst">Tekst</button><button type="button" role="option" data-v="link">Link</button></div></div></div><div class="shimg"><span class="small">Pravim sliku…</span></div><div class="shcap"></div><div class="shb"></div></div>`;
   const close=()=>{el.remove();document.removeEventListener('keydown',esc_)},esc_=e=>{if(e.key==='Escape')close()};el.onclick=e=>{if(e.target===el||e.target.closest('.x'))close()};document.addEventListener('keydown',esc_);document.body.appendChild(el);
   if(!d){el.querySelector('.shsel').remove();el.querySelector('.shimg').innerHTML=`<span class="small">Za ${btab}. još nema rezultata za ovo mesto, pa nema šta da se podeli.${btab==='2026'?' Izaberi 2023. iznad liste.':''}</span>`;return}
-  const box=el.querySelector('.shimg'),cap=el.querySelector('.shcap'),bb=el.querySelector('.shb'),sel=el.querySelector('.shm'),mob=matchMedia('(pointer:coarse)').matches&&typeof navigator.share==='function';
+  const box=el.querySelector('.shimg'),cap=el.querySelector('.shcap'),bb=el.querySelector('.shb'),sel={value:'slika'},mob=matchMedia('(pointer:coarse)').matches&&typeof navigator.share==='function';
   const ime='kontrola-izbora-'+String(d.title).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').slice(0,40)+'.png';
   const cpy=async(t,b,ok)=>{try{await navigator.clipboard.writeText(t);b.textContent=ok}catch(_){b.textContent='Nije uspelo'}};
   const capHtml=t=>`<div class="small shct">${esc(t).replace(/\n/g,'<br>').replace(esc(d.url),`<a href="${esc(d.url)}">${esc(d.url)}</a>`)}</div>`;
@@ -1142,23 +1144,25 @@ async function shareOpen(d){const el=document.createElement('div');el.className=
   const show=async m=>{bb.innerHTML='';cap.innerHTML='';
     if(m==='slika'){box.innerHTML='<span class="small">Pravim sliku…</span>';let I;try{I=await getImg()}catch(e){box.innerHTML='<span class="small">Slika nije napravljena. Pokušaj ponovo ili izaberi Tekst.</span>';return}
       if(sel.value!=='slika')return;const t=shareText(d,'kratko'),can=mob&&typeof navigator.canShare==='function'&&navigator.canShare({files:[I.f]});
-      box.innerHTML=`<img src="${I.u}" alt="Slika rezultata">`;cap.innerHTML=capHtml(t);
-      bb.innerHTML=(can?'<button class="more shgo">PODELI</button>':'')+`<a class="more" href="${I.u}" download="${ime}">${can?'Sačuvaj sliku':'SAČUVAJ SLIKU'}</a>${!can&&window.ClipboardItem?'<button class="more shci">Kopiraj sliku</button>':''}<button class="more shcp">Kopiraj tekst i link</button>`+(can?'<div class="small" style="margin-top:6px;width:100%">Viber, WhatsApp i ostale aplikacije su u meniju „Podeli”.</div>':'');
-      const g=bb.querySelector('.shgo');if(g)g.onclick=async()=>{try{await navigator.share({files:[I.f],text:t})}catch(e){if(e&&e.name!=='AbortError')bb.querySelector('a[download]').click()}};
-      const ci=bb.querySelector('.shci');if(ci)ci.onclick=async e=>{try{await navigator.clipboard.write([new ClipboardItem({'image/png':I.b})]);e.target.textContent='Slika kopirana'}catch(_){e.target.textContent='Nije uspelo'}};
-      bb.querySelector('.shcp').onclick=e=>cpy(t,e.target,'Kopirano');return}
+      box.innerHTML=`<img src="${I.u}" alt="Slika rezultata">`;
+      bb.innerHTML=can?'<button class="more shgo">PODELI</button><div class="small" style="margin-top:6px;width:100%">Viber, WhatsApp i ostale aplikacije su u meniju „Podeli”. Uz sliku ide i kratak tekst sa linkom.</div>':(window.ClipboardItem?'<button class="more shci">Kopiraj sliku</button>':`<a class="more" href="${I.u}" download="${ime}">Preuzmi sliku</a>`);
+      const g=bb.querySelector('.shgo');if(g)g.onclick=async()=>{try{await navigator.share({files:[I.f],text:t})}catch(e){}};
+      const ci=bb.querySelector('.shci');if(ci)ci.onclick=async e=>{try{await navigator.clipboard.write([new ClipboardItem({'image/png':I.b})]);e.target.textContent='Slika kopirana'}catch(_){e.target.textContent='Nije uspelo'}};return}
     const t=shareText(d,m);box.innerHTML=`<textarea class="shtx" readonly rows="${m==='link'?4:Math.min(16,t.split('\n').length+1)}">${esc(t)}</textarea>`;
     bb.innerHTML=(mob?'<button class="more shgo">PODELI</button>':'')+`<button class="more shcp">${m==='link'?'Kopiraj link':'Kopiraj tekst'}</button>`;
-    const g=bb.querySelector('.shgo');if(g)g.onclick=async()=>{try{await navigator.share(m==='link'?{title:'Kontrola izbora · '+d.title,text:shareText(d,'kratko').split('\n')[0],url:d.url}:{text:t})}catch(_){}};
-    bb.querySelector('.shcp').onclick=e=>cpy(m==='link'?d.url:t,e.target,'Kopirano')};
-  sel.onchange=()=>show(sel.value);show('slika')}
-function shareData(){const r=_SHR;if(!r)return null;const o=btab==="2026"?r.z:r.y;if(!o)return null;let title,sub='';
+    const g=bb.querySelector('.shgo');if(g)g.onclick=async()=>{try{await navigator.share(m==='link'?{text:d.cap,url:d.url}:{text:t})}catch(_){}};
+    bb.querySelector('.shcp').onclick=e=>cpy(t,e.target,'Kopirano')};
+  const ddb=el.querySelector('.ddb'),ddm=el.querySelector('.ddm'),ddt=o=>{ddm.hidden=!o;ddb.setAttribute('aria-expanded',o)};
+  ddb.onclick=e=>{e.stopPropagation();ddt(ddm.hidden)};el.addEventListener('click',e=>{if(!e.target.closest('.dd'))ddt(false)});
+  ddm.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{sel.value=b.dataset.v;ddm.querySelectorAll('[data-v]').forEach(q=>q.setAttribute('aria-selected',q===b));el.querySelector('.ddl').textContent=b.textContent;ddt(false);show(sel.value)});
+  show('slika')}
+function shareData(){const r=_SHR;if(!r)return null;const o=btab==="2026"?r.z:r.y;if(!o)return null;let title,sub='',cap;
   if(ST.lvl==='srb')title='Srbija';else if(ST.lvl==='reg')title=IDX.regions.find(g=>g.id===ST.rid).name;
-  else{const u=IDX.units[ST.uid],U=UF[ST.uid];if(ST.sid){const st=U.stations.find(x=>x.sid===ST.sid);title=`BM ${st.n} · ${st.name}`;sub=u.short+(st.nas!=null&&U.naselja[st.nas]&&!fold(U.naselja[st.nas].name).includes(fold(u.short))?' · '+U.naselja[st.nas].name:'')+(st.adr?' · '+st.adr:'')}
-    else if(ST.nas!=null){title=U.naselja[ST.nas].name;sub=u.short}else title=u.name}
+  else{const u=IDX.units[ST.uid],U=UF[ST.uid];if(ST.sid){const st=U.stations.find(x=>x.sid===ST.sid);title=`BM ${st.n} · ${st.name}`;cap=`BM ${st.n}, ${u.short}`;sub=u.short+(st.nas!=null&&U.naselja[st.nas]&&!fold(U.naselja[st.nas].name).includes(fold(u.short))?' · '+U.naselja[st.nas].name:'')+(st.adr?' · '+st.adr:'')}
+    else if(ST.nas!=null){title=U.naselja[ST.nas].name;sub=u.short;cap=`${title}, ${u.short}`}else title=u.name}
   const names=btab==='2026'?IDX.lists26.map(([k,l])=>l):IDX.lists23;const m=LIVE.meta;
   const note=btab==='2026'?((m&&m.sim?'PROBA (rezultati 2023) · ':'')+(r.partial?'Delimični rezultati':'Rezultati')+' sa RIK-a'+(m&&m.checked?' · stanje '+m.checked:'')):'Rezultati RIK-a, parlamentarni izbori 17. 12. 2023.';
-  return {app:'Srbija',shape:shpPath(),title,sub,year:btab,rows:names.map((n,i)=>[n,o.lists[i]||0]),valid:o.valid,invalid:o.invalid,out:o.out,voters:o.voters,note,url:location.href,host:location.host}}
+  return {app:'Srbija',shape:shpPath(),title,cap:cap||title,sub,year:btab,rows:names.map((n,i)=>[n,o.lists[i]||0]),valid:o.valid,invalid:o.invalid,out:o.out,voters:o.voters,note,url:location.href,host:location.host}}
 
 (function(){const m=document.querySelector('meta[name=appv]');if(!m||!location.protocol.startsWith('http'))return;const v0=m.content;
   const chk=async()=>{try{const r=await fetch('version.txt?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const v=(await r.text()).trim();if(!v||v===v0)return;
