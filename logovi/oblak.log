@@ -453,3 +453,7 @@
 23.10. 20:33:21 [vm] BM 41 (156/233553): primedbi 1
 23.10. 20:33:21 [vm] BM 33 (102/225411): primedbi 0
 23.10. 20:33:21 [vm] BM 51 (161/234549): primedbi 1, ! [['važeći', 1, 39], ['nevažeći', 39, 1]]
+23.10. 20:33:31 [vm] BM 37 (17/214416): na RIK-u je okačen zapisnik BM 36 – upisano kao greška RIK-a, bez „!”
+23.10. 20:33:31 [vm] BM 37 (17/214416): primedbi 2
+23.10. 20:33:31 [vm] BM 98 (17/214599): na RIK-u je okačen zapisnik BM 92 – upisano kao greška RIK-a, bez „!”
+23.10. 20:33:31 [vm] BM 98 (17/214599): primedbi 1
