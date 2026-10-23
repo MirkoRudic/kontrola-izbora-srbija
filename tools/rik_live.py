@@ -276,13 +276,15 @@ PENDING = False; LASTPUSH = 0
 subprocess.run(["git", "fetch", "-q", "origin", "main"], check=False)
 LASTMAIN = last_main_push()
 if not A.reset: sync_from_uzivo()
+_GHC = [None, 0]
 def gh_alive():
     import urllib.request
     try:
-        for st in ("in_progress", "queued"):
+        for st in ("in_progress", "queued"):  # najviše 2 upita; bez tokena GitHub dozvoljava 60/h
+            if _GHC[0] and time.time() - _GHC[1] < 240: return _GHC[0]
             d = json.loads(urllib.request.urlopen(f"https://api.github.com/repos/MirkoRudic/kontrola-izbora-srbija/actions/workflows/izborna-noc.yml/runs?status={st}&per_page=1", timeout=20).read())
-            if d.get("total_count"): return True
-        return False
+            if d.get("total_count"): _GHC[:] = [True, time.time()]; return True
+        _GHC[:] = [False, time.time()]; return False
     except Exception: return True  # ako ne možemo da proverimo, ne mešamo se (osim ako je objava stara)
 def remote_age_min():
     sync_from_uzivo()
@@ -312,7 +314,7 @@ log(f"start: {'PROBA ' if A.sim else ''}{'rezerva ' if A.standby else ''}minuta 
 while time.time() < deadline:
     if A.standby:
         age = remote_age_min(); alive = gh_alive()
-        if alive or age < 3:
+        if (alive and age < 25) or age < 3:  # GitHub upisuje bar na 10 min; starije od 25 min = zaglavio se
             log(f"rezerva čeka: GitHub {'radi' if alive else 'ne radi'}, objava stara {age:.0f} min")
             flush_logs(); time.sleep(120); continue
         log(f"GitHub posao ne radi (objava stara {age:.0f} min) – rezerva preuzima ovaj krug")
@@ -350,7 +352,7 @@ while time.time() < deadline:
         T = TG.totals(UNITS, LU)
         TG.maybe_send(T, now(), f"{OUT}/telegram.json", log)
     except Exception as e: log("telegram greška:", e)
-    if changed: PENDING = True
+    if changed or time.time() - LASTPUSH >= 600: PENDING = True  # i bez promena na 10 min: „ažurirano” u aplikaciji i znak života za rezervu
     if PENDING and time.time() - LASTPUSH >= 120:  # Cloudflare gradi sajt posle svakog push-a (limit gradnji): ne češće od 2 min
         if push(f"Uživo: obrađeno {s['meta']['processed']}/{total} BM ({t})"): PENDING = False; LASTPUSH = time.time()
     # interval
