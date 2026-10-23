@@ -426,3 +426,17 @@
 23.10. 20:32:10 [vm] BM 43 (12/213729): primedbi 1
 23.10. 20:32:28 [vm] BM 57 (12/213771): primedbi 1
 23.10. 20:32:28 [vm] BM 1 (15/214047): primedbi 1
+23.10. 20:32:16 [vm] BM 18 (29/216123): primedbi 1
+23.10. 20:32:16 [vm] BM 23 (155/233427): primedbi 1
+23.10. 20:32:16 [vm] BM 14 (83/222876): primedbi 1
+23.10. 20:32:16 [vm] BM 32 (89/223521): primedbi 2, ! [['izašli', 617, 377], ['važeći', 591, 370], ['nevažeći', 27, 7], ['lista 1', 354, 271], ['lista 2', 51, 23], ['lista 3', 10, 3], ['lista 4', 21, 8], ['lista 5', 10, 14], ['lista 7', 71, 22], ['lista 9', 1, 0], ['lista 11', 7, 0], ['lista 12', 6, 2], ['lista 13', 2, 0], ['lista 16', 2, 0], ['lista 18', 0, 1]]
+23.10. 20:32:16 [vm] BM 17 (59/219462): primedbi 1
+23.10. 20:32:16 [vm] BM 27 (30/216216): na RIK-u je okačen zapisnik BM 28 – upisano kao greška RIK-a, bez „!”
+23.10. 20:32:16 [vm] BM 27 (30/216216): primedbi 0
+23.10. 20:32:16 [vm] BM 53 (61/219879): primedbi 1
+23.10. 20:32:16 [vm] BM 17 (141/231531): primedbi 0, ! [['izašli', 473, 472], ['važeći', 448, 447]]
+23.10. 20:32:16 [vm] BM 34 (141/231582): primedbi 0, ! [['izašli', 59, 60], ['važeći', 58, 59]]
+23.10. 20:32:16 [vm] BM 25 (164/234903): primedbi 0
+23.10. 20:32:16 [vm] BM 23 (82/222807): na RIK-u je okačen zapisnik BM 1 – upisano kao greška RIK-a, bez „!”
+23.10. 20:32:16 [vm] BM 23 (82/222807): primedbi 1
+23.10. 20:32:16 [vm] BM 7 (142/231765): primedbi 0
