@@ -1565,3 +1565,10 @@
 23.10. 03:55:36 [laptop] pročitano 3526, kandidata 592, u redu 6432
 23.10. 03:55:36 [laptop] nesmisleno čitanje -> oblak 107 226011 [764, 764, 24, 732]
 23.10. 03:55:36 [laptop] pročitano 3541, kandidata 593, u redu 6461
+23.10. 03:58:06 [laptop] nesmisleno čitanje -> oblak 107 226068 [482, 482, 25, 57]
+23.10. 03:58:06 [laptop] greška 107 226074 <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+23.10. 03:58:06 [laptop] pročitano 3556, kandidata 595, u redu 6497
+23.10. 03:58:06 [laptop] nesmisleno čitanje -> oblak 107 226116 [165, 165, 7, 148]
+23.10. 03:58:06 [laptop] pročitano 3571, kandidata 598, u redu 6551
+23.10. 03:58:06 [laptop] pročitano 3586, kandidata 598, u redu 6577
+23.10. 03:58:06 [laptop] pročitano 3601, kandidata 598, u redu 6605
