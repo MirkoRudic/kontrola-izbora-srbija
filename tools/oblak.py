@@ -117,7 +117,24 @@ def cisti(ne, z):
         if not why and lab == "izašli" and z.get("voters") and int(zv) > int(z["voters"]) >= int(rv): why = "upisani"
         if why: mr.append([lab, zv, rv, why])
         else: ok.append(x)
-    return ok, mr
+    # dodatno: zapisnik se ne slaže sam sa sobom, a RIK-ov broj ga „popravlja” → greška čitanja, ne neslaganje
+    R = {x[0]: int(x[2]) for x in ne}; g = lambda k: None if z.get(k) is None else int(z[k])
+    va, iv, out = g("valid"), g("invalid"), g("out"); Ls = {int(k): int(v) for k, v in L.items() if v is not None}
+    S2 = sum(Ls.values()) if len(Ls) >= 12 else None; va_fix = S2 if (S2 is not None and "važeći" in R and S2 == R["važeći"]) else va
+    def bad(x):
+        lab = x[0]
+        if lab.startswith("lista ") and S2 is not None and va is not None and S2 != va:
+            i = int(lab.split()[1]); return S2 - Ls.get(i, 0) + int(x[2]) in (va, R.get("važeći"))
+        if lab == "izašli" and out is not None and iv is not None:
+            return any(vv is not None and vv + iv == int(x[2]) and out != vv + iv for vv in (va, va_fix))
+        if lab == "nevažeći" and out is not None and va_fix is not None and (S2 is None or S2 == va_fix):
+            return out - va_fix == int(x[2]) and iv != out - va_fix
+        return False
+    ok2 = []
+    for x in ok:
+        if bad(x): mr.append([x[0], x[1], x[2], "zapisnik sam sa sobom"])
+        else: ok2.append(x)
+    return ok2, mr
 def upis(path):
     items = json.load(open(path, encoding="utf-8")); t = stamp(); lines = []; RECS = []
     for it in items:
