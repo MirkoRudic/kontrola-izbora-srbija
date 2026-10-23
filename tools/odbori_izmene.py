@@ -6,17 +6,18 @@ import json, os, re, sys, subprocess, tempfile, hashlib, urllib.parse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from translit import lat
 from parse_odb import parse_stalni, parse_prosireni, gkey, lkey, nice
+from imena import ocisti
 D = "public/data"
 NOVI = json.load(open(f"{D}/odbori_novi.json")) if os.path.exists(f"{D}/odbori_novi.json") else {}
 OUT = os.environ.get("IZM_OUT", f"{D}/odbori_izm.json")
 IZ = json.load(open(OUT)) if os.path.exists(OUT) else {}
 if os.environ.get("IZM_RETRY_EMPTY"):  # ponovo pročitaj rešenja iz kojih ništa nije izvučeno
     for u in IZ.values():
-        for n in list(u): u[n] = [r for r in u[n] if r.get("ch") or r.get("base")]
+        for n in list(u): u[n] = [r for r in u[n] if (r.get("ch") or r.get("base")) and not (os.environ.get("IZM_RETRY_BAD") and any(c.get("op") in ("zam", "novo") and not c.get("new") for c in r.get("ch") or []))]
 done = {e["l"] for u in IZ.values() for l in u.values() for e in l}
 for _f in (f"{D}/odbori_izm.json", f"{D}/odbori_izm_laptop.json"):  # ne čitaj ponovo ono što je pročitao drugi računar
     if os.path.exists(_f) and os.path.abspath(_f) != os.path.abspath(OUT):
-        done |= {e["l"] for u in json.load(open(_f)).values() for l in u.values() for e in l if not os.environ.get("IZM_RETRY_EMPTY") or e.get("ch") or e.get("base")}
+        done |= {e["l"] for u in json.load(open(_f)).values() for l in u.values() for e in l if not os.environ.get("IZM_RETRY_EMPTY") or ((e.get("ch") or e.get("base")) and not (os.environ.get("IZM_RETRY_BAD") and any(c.get("op") in ("zam", "novo") and not c.get("new") for c in e.get("ch") or [])))}
 def kind(t):
     t = t.lower()
     return "S" if "stalnom" in t else "P" if "prošir" in t else None
@@ -145,6 +146,10 @@ def changes(t):
     for c in out:
         for f in ("old", "new"):
             if c.get(f): c[f] = re.sub(r"\s+(?:Iz|Из|Sa|Са)\s+.*$", "", re.sub(r"^(?:Se|Се)\s+", "", c[f])).strip() or None
+        if c.get("new"):
+            v = ocisti(c["new"]); c["new"] = None if v in (None, "?") else v
+        if c.get("old"):
+            v = ocisti(c["old"]); c["old"] = v if v not in (None, "?") else c["old"]
         c["key"] = (lkey(c["by"]) if c["role"] in ("član", "zamenik člana") else gkey(c["by"])) if c["by"] else None
     return out
 # izvori: nova rešenja (odbori_novi.json) + starija rešenja o izmenama iz podataka opština (--stara)
