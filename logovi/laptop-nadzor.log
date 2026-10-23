@@ -89,3 +89,4 @@
 23.10. 03:06:10 [laptop] živ, režim proba; rezerva-proba=radi, zapisnici-proba=radi, citanje-proba=radi
 23.10. 03:16:21 [laptop] živ, režim proba; rezerva-proba=radi, zapisnici-proba=radi, citanje-proba=radi
 23.10. 03:26:32 [laptop] živ, režim proba; rezerva-proba=radi, zapisnici-proba=radi, citanje-proba=radi
+23.10. 03:32:42 [laptop] git pull nije uspeo: error: The following untracked working tree files would be overwritten by merge: 	public/data/live/u/111.json 	public/data/live/u/230.json 	public/data/live/u/232.json 	public/data/live/u/235.json 	public/data/live/u/242.json 	public/data/live/u/36.json Please move or remove them before you merge. Aborting Created autostash: 0e8860a Applied autostash.
