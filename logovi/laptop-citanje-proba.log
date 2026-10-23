@@ -2095,3 +2095,11 @@
 23.10. 21:14:55 [laptop] sumnja na ! -> oblak: 116 BM 30 [['izašli', 257, 260]]
 23.10. 21:14:55 [laptop] nesmisleno čitanje -> oblak 116 227319 [139, 139, 86, 133]
 23.10. 21:14:55 [laptop] pročitano 6991, kandidata 895, u redu 7410
+23.10. 21:17:18 [laptop] nesmisleno čitanje -> oblak 116 227334 [198, 198, 0, 191]
+23.10. 21:17:18 [laptop] nesigurno čitanje 116 227340 [('važeći', 93, 94, 94), ('nevažeći', 4, 43, 3)]
+23.10. 21:17:18 [laptop] nesigurno čitanje 116 227349 [('izašli', 45, 46, 46)]
+23.10. 21:17:18 [laptop] pročitano 7006, kandidata 898, u redu 7410
+23.10. 21:17:18 [laptop] pročitano 7021, kandidata 898, u redu 7410
+23.10. 21:17:18 [laptop] nesmisleno čitanje -> oblak 117 227457 [321, 321, 0, 318]
+23.10. 21:17:18 [laptop] pročitano 7036, kandidata 899, u redu 7410
+23.10. 21:17:18 [laptop] pročitano 7051, kandidata 899, u redu 7410
