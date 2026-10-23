@@ -1683,3 +1683,12 @@
 23.10. 04:25:10 [laptop] nesmisleno čitanje -> oblak 108 226395 [65, 65, 1, 65]
 23.10. 04:25:10 [laptop] pročitano 4306, kandidata 668, u redu 7442
 23.10. 04:25:10 [laptop] pročitano 4321, kandidata 668, u redu 7442
+23.10. 04:27:19 [laptop] pročitano 4336, kandidata 668, u redu 7441
+23.10. 04:27:19 [laptop] nesmisleno čitanje -> oblak 149 232485 [146, 65, 2, 63]
+23.10. 04:27:19 [laptop] pročitano 4351, kandidata 669, u redu 7441
+23.10. 04:27:19 [laptop] nesigurno čitanje 86 223095 [('važeći', 221, 220, 220), ('nevažeći', 9, 10, 10)]
+23.10. 04:27:19 [laptop] nesmisleno čitanje -> oblak 86 223107 [98, 89, 2, 87]
+23.10. 04:27:19 [laptop] nesmisleno čitanje -> oblak 86 223119 [65, 65, 32, 63]
+23.10. 04:27:19 [laptop] pročitano 4366, kandidata 672, u redu 7441
+23.10. 04:27:19 [laptop] nesmisleno čitanje -> oblak 86 223149 [0, 100, 11, 89]
+23.10. 04:27:19 [laptop] pročitano 4381, kandidata 673, u redu 7441
