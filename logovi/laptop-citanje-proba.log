@@ -2186,3 +2186,10 @@
 23.10. 21:36:44 [laptop] pročitano 7516, kandidata 948, u redu 7406
 23.10. 21:36:44 [laptop] sumnja na ! -> oblak: 76 BM 20 [['izašli', 144, 164], ['važeći', 142, 162]]
 23.10. 21:36:44 [laptop] pročitano 7531, kandidata 949, u redu 7406
+23.10. 21:39:00 [laptop] pročitano 7546, kandidata 949, u redu 7406
+23.10. 21:39:00 [laptop] nesmisleno čitanje -> oblak 76 221973 [804, 804, 24, 783]
+23.10. 21:39:00 [laptop] pročitano 7561, kandidata 950, u redu 7406
+23.10. 21:39:00 [laptop] nesigurno čitanje 120 227919 [('važeći', 375, 372, 372), ('nevažeći', 4, 4, 7)]
+23.10. 21:39:00 [laptop] pročitano 7576, kandidata 951, u redu 7406
+23.10. 21:39:00 [laptop] nesmisleno čitanje -> oblak 120 227964 [431, 431, 412, 419]
+23.10. 21:39:00 [laptop] pročitano 7591, kandidata 952, u redu 7406
