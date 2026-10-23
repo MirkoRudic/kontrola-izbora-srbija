@@ -1692,3 +1692,18 @@
 23.10. 04:27:19 [laptop] pročitano 4366, kandidata 672, u redu 7441
 23.10. 04:27:19 [laptop] nesmisleno čitanje -> oblak 86 223149 [0, 100, 11, 89]
 23.10. 04:27:19 [laptop] pročitano 4381, kandidata 673, u redu 7441
+23.10. 04:29:45 [laptop] pročitano 4396, kandidata 673, u redu 7441
+23.10. 04:29:45 [laptop] nesmisleno čitanje -> oblak 157 233625 [661, 661, 90, 641]
+23.10. 04:29:45 [laptop] nesmisleno čitanje -> oblak 157 233634 [427, 438, 11, 427]
+23.10. 04:29:45 [laptop] nesmisleno čitanje -> oblak 157 233646 [111, 112, 113, 114]
+23.10. 04:29:45 [laptop] nesmisleno čitanje -> oblak 157 233649 [110, 170, 8, 162]
+23.10. 04:29:45 [laptop] pročitano 4411, kandidata 677, u redu 7441
+23.10. 04:29:45 [laptop] nesmisleno čitanje -> oblak 157 233667 [56, 56, 1, 56]
+23.10. 04:29:45 [laptop] nesmisleno čitanje -> oblak 157 233688 [139, 139, 0, 137]
+23.10. 04:29:45 [laptop] nesmisleno čitanje -> oblak 157 233691 [599600, 599600, 11, 588589]
+23.10. 04:29:45 [laptop] sumnja na ! -> oblak: 157 BM 31 [['važeći', 426, 424]]
+23.10. 04:29:45 [laptop] pročitano 4426, kandidata 681, u redu 7441
+23.10. 04:29:45 [laptop] nesmisleno čitanje -> oblak 157 233718 [48, 40, 0, 47]
+23.10. 04:29:45 [laptop] greška 157 233724 HTTP Error 400: Bad Request
+23.10. 04:29:45 [laptop] sumnja na ! -> oblak: 157 BM 41 [['izašli', 77, 83], ['važeći', 77, 82]]
+23.10. 04:29:45 [laptop] pročitano 4441, kandidata 683, u redu 7441
