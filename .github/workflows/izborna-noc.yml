@@ -19,6 +19,9 @@ on:
       minutes:
         description: "Koliko minuta da radi"
         default: "50"
+      proba_do:
+        description: "Samo proba: lanac sim krugova do ovog UTC vremena (npr. 2026-10-24T05:00:00Z); prazno = bez lanca"
+        default: ""
 permissions:
   contents: write
   actions: write
@@ -52,3 +55,13 @@ jobs:
             if gh api -X POST repos/${{ github.repository }}/actions/workflows/izborna-noc.yml/dispatches -f ref=main -f 'inputs[sim]=false' -f 'inputs[minutes]=55'; then M="pokrenut sledeći krug"; else M="GREŠKA: sledeći krug NIJE pokrenut"; fi
           else M="van izborne noći – ne pokrećem dalje"; fi
           echo "$M"; echo "radni tok izborna noć (${{ github.event_name }}): $M" | python3 tools/dnevnik.py izborna-noc || true
+      - name: Sledeći krug probe (lanac kao u izbornoj noći)
+        if: always() && github.event.inputs.sim == 'true' && github.event.inputs.proba_do != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          now=$(date -u +%s); b=$(date -u -d "${{ github.event.inputs.proba_do }}" +%s)
+          if [ $now -le $b ]; then
+            if gh api -X POST repos/${{ github.repository }}/actions/workflows/izborna-noc.yml/dispatches -f ref=main -f 'inputs[sim]=true' -f 'inputs[minutes]=55' -f "inputs[proba_do]=${{ github.event.inputs.proba_do }}"; then M="proba: pokrenut sledeći krug"; else M="GREŠKA: proba – sledeći krug NIJE pokrenut"; fi
+          else M="proba: kraj lanca (${{ github.event.inputs.proba_do }})"; fi
+          echo "$M"; echo "radni tok izborna noć (proba): $M" | python3 tools/dnevnik.py izborna-noc || true
