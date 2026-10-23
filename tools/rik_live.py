@@ -362,7 +362,7 @@ while time.time() < deadline:
     # interval
     if s["meta"]["processed"] >= total: interval = 30.0
     elif new: interval = max(1.0, interval / 2)
-    else: interval = min(15.0, interval * 1.5)
+    else: interval = min(5.0, interval * 1.5)
     if A.fast: interval = min(interval, 1.0)
     log(f"krug: upita {len(todo)} novih {new} greške {err} promenjeno opština {len(changed)} obrađeno {s['meta']['processed']}/{total} trajanje {time.time()-t0:.0f}s sledeći za {interval:.1f} min")
     flush_logs()
