@@ -1784,3 +1784,9 @@
 23.10. 04:46:14 [laptop] nesmisleno čitanje -> oblak 146 232212 [331, 331, 116, 315]
 23.10. 04:46:14 [laptop] pročitano 4846, kandidata 731, u redu 7435
 23.10. 04:46:14 [laptop] pročitano 4861, kandidata 731, u redu 7435
+23.10. 04:48:27 [laptop] pročitano 4876, kandidata 731, u redu 7435
+23.10. 04:48:27 [laptop] pročitano 4891, kandidata 731, u redu 7435
+23.10. 04:48:27 [laptop] nesigurno čitanje 109 226416 [('izašli', 721, 721, 727), ('važeći', 701, 707, 707)]
+23.10. 04:48:27 [laptop] pročitano 4906, kandidata 732, u redu 7435
+23.10. 04:48:27 [laptop] nesmisleno čitanje -> oblak 109 226458 [201, 201, 9, 194]
+23.10. 04:48:27 [laptop] pročitano 4921, kandidata 733, u redu 7435
