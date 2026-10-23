@@ -1840,3 +1840,5 @@
 23.10. 05:00:31 [laptop] nesmisleno čitanje -> oblak 131 230040 [118, 118, 13, 115]
 23.10. 05:00:31 [laptop] nesmisleno čitanje -> oblak 131 230046 [366, 239, 4, 235]
 23.10. 05:00:31 [laptop] pročitano 5251, kandidata 759, u redu 7433
+23.10. 20:03:05 [laptop] start provere zapisnika, model qwen2.5vl:7b već pročitano 5251
+23.10. 20:03:05 [laptop] pročitano 5266, kandidata 759, u redu 7431
