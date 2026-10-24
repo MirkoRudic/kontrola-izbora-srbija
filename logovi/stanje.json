@@ -25,9 +25,9 @@
   "poslednje": "za čitanje: 28"
  },
  "laptop-nadzor": {
-  "vreme": "24.10. 09:12:43",
+  "vreme": "24.10. 09:14:48",
   "gde": "laptop",
-  "poslednje": "gasim posao druge vrste (režim stop): 36104 python  tools\\rik_live.py --standby --sim --minutes 600  "
+  "poslednje": "režim promenjen: stop -> proba"
  },
  "rik_live-laptop-proba": {
   "vreme": "24.10. 09:07:28",
