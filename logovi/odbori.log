@@ -78,3 +78,6 @@
 24.10. 14:05:59 [github] greška čitanja: izuzetak: PdfiumError('Failed to load document (PDFium: Data format error).')
 24.10. 14:05:59 [github] preuzimanje nije uspelo: 0 http=404  prvo=b'<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">\n<html><he'
 24.10. 14:05:59 [github] pročitano novih rešenja: 2 | neuspelih preuzimanja: 2
+24.10. 17:40:10 [github] provera rešenja: success
+24.10. 17:40:10 [github] novih dokumenata: 72 | provera 24.10. 17:04
+24.10. 17:40:10 [github] za čitanje: 63
