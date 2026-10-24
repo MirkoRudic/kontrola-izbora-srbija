@@ -277,3 +277,4 @@
 24.10. 09:00:28 [laptop] živ, režim proba; nema aktivnih poslova u ovom trenutku
 24.10. 09:10:33 [laptop] živ, režim proba; nema aktivnih poslova u ovom trenutku
 24.10. 09:12:37 [laptop] režim promenjen: proba -> stop
+24.10. 09:12:43 [laptop] gasim posao druge vrste (režim stop): 36104 python  tools\rik_live.py --standby --sim --minutes 600
