@@ -20,7 +20,7 @@ function Poslovi($r) {
   $p = @()
   if ($r.rezim -eq 'izbori') {
     $od = Get-Date '2026-10-25T19:40:00'
-    $p += @{ ime='rezerva';   kljuc='rik_live.py';         od=$od; do=(Get-Date '2026-10-26T12:00:00'); arg='tools\rik_live.py --standby --minutes 960' }
+    $p += @{ ime='rezerva';   kljuc='rik_live.py';         od=$od; do=(Get-Date '2026-10-28T12:00:00'); arg='tools\rik_live.py --standby --minutes 960' }
     $p += @{ ime='zapisnici'; kljuc='laptop_zapisnici.py'; od=$od; do=(Get-Date '2026-10-27T12:00:00'); arg="tools\laptop_zapisnici.py --dir $Base\zapisnici --until 2026-10-27T12:00 --site $Repo\public" }
     $p += @{ ime='izmene';    kljuc='laptop_izmene.py';    od=(Get-Date '2026-10-23T11:00:00'); do=(Get-Date '2026-10-25T19:00:00'); arg='tools\laptop_izmene.py --until 2026-10-25T19:00' }
     $p += @{ ime='citanje';   kljuc='laptop_citanje.py';   od=$od; do=(Get-Date '2026-10-28T12:00:00'); arg="tools\laptop_citanje.py --dir $Base\zapisnici --until 2026-10-28T12:00"; ollama=$true }
