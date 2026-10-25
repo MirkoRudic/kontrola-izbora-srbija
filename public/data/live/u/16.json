@@ -1,1 +1,1 @@
-{"bm":{"214218":{"processed":true,"voters":1091,"out":823,"valid":810,"invalid":13,"lists":[342,12,437,2,1,0,1,6,2,0,2,1,0,2,0,2,0,0],"at":"25.10. 21:55","zap":[],"alerts":[],"chk":[]}}}
+{"bm":{"214218":{"processed":true,"voters":1091,"out":823,"valid":810,"invalid":13,"lists":[342,12,437,2,1,0,1,6,2,0,2,1,0,2,0,2,0,0],"at":"25.10. 21:55","zap":[{"link":"https://www.rik.parlament.gov.rs/extfile/sr/election_results/795/677/6ade6c1750d99/@ПА2_b483eec0d101753a65a0f79caa8efac4.pdf","at":"25.10. 22:20"}],"alerts":[],"chk":[]}}}
