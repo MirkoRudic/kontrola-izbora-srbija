@@ -45,7 +45,7 @@ jobs:
           SIM=""; [ "${{ github.event.inputs.sim }}" = "true" ] && SIM="--sim"
           [ "${{ github.event.inputs.reset }}" = "true" ] && SIM="$SIM --reset"
           [ "${{ github.event.inputs.tg_demo }}" = "true" ] && SIM="--tg-demo"
-          python3 tools/rik_live.py --threads 12 --minutes "${{ github.event.inputs.minutes || '50' }}" $SIM
+          python3 tools/rik_live.py --threads 20 --minutes "${{ github.event.inputs.minutes || '50' }}" $SIM
       - name: Sledeći krug (ne čeka GitHub raspored)
         if: always() && github.event.inputs.sim != 'true' && github.event.inputs.tg_demo != 'true'
         env:
