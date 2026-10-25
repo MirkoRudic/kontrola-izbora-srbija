@@ -1,1 +1,1 @@
-{"bm":{"232248":{"processed":true,"voters":94,"out":74,"valid":72,"invalid":2,"lists":[49,4,18,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],"at":"25.10. 21:33","zap":[],"alerts":[],"chk":[]}}}
+{"bm":{"232248":{"processed":true,"voters":94,"out":74,"valid":72,"invalid":2,"lists":[49,4,18,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],"at":"25.10. 21:12","zap":[],"alerts":[],"chk":[]},"232233":{"processed":true,"voters":108,"out":80,"valid":80,"invalid":0,"lists":[49,2,26,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0],"at":"25.10. 21:43","zap":[],"alerts":[],"chk":[]}}}
