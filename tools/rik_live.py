@@ -9,7 +9,7 @@ import sys, os
 if os.name == 'nt' and not sys.flags.utf8_mode:  # Windows: naša slova u fajlovima
     os.execv(sys.executable, [sys.executable, '-X', 'utf8'] + sys.argv)
 import json, os, sys, time, re, subprocess, random, datetime, argparse, hashlib, tempfile
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 try:
     from zoneinfo import ZoneInfo; _TZ = ZoneInfo("Europe/Belgrade")
 except Exception:  # Windows bez tzdata
@@ -340,15 +340,27 @@ while time.time() < deadline:
     done_list.sort(key=lambda k: CHECKED.get(k, 0))
     todo += done_list[:150]
     changed = set(); new = 0; err = 0
+    # rezultati se upisuju čim stignu; tokom dugog kruga međuobjava na ~3 min (da aplikacija ne čeka kraj kruga)
+    part = set(); tpart = time.time()
     with ThreadPoolExecutor(A.threads) as ex:
-        res = list(ex.map(lambda k: (k, fetch_station(*k)), todo))
-    for (uid, sid), r in res:
-        CHECKED[(uid, sid)] = time.time()
-        if r == "ERR": err += 1; continue
-        was = (LU[uid]["bm"].get(sid) or {}).get("processed")
-        if apply(uid, sid, r, t):
-            changed.add(uid)
-            if not was and r: new += 1
+        futs = {ex.submit(fetch_station, *k): k for k in todo}
+        for fu in as_completed(futs):
+            uid, sid = futs[fu]
+            try: r = fu.result()
+            except Exception: r = "ERR"
+            CHECKED[(uid, sid)] = time.time()
+            if r == "ERR": err += 1; continue
+            was = (LU[uid]["bm"].get(sid) or {}).get("processed")
+            if apply(uid, sid, r, t):
+                changed.add(uid); part.add(uid)
+                if not was and r: new += 1
+            if part and time.time() - tpart >= 180:
+                try:
+                    tp = stamp(); sp = write(part, tp)
+                    if push(f"Uživo: obrađeno {sp['meta']['processed']}/{total} BM ({tp}, u toku kruga)"): LASTPUSH = time.time()
+                    log(f"međuobjava: obrađeno {sp['meta']['processed']}/{total}")
+                except Exception as e: log("međuobjava greška:", e)
+                part = set(); tpart = time.time()
     changed |= annulments(t)
     if changed: LASTCH[0] = t
     s = write(changed, t)
