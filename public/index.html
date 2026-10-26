@@ -1,4 +1,4 @@
-<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261026015922"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
+<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261026150113"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
 
 :root{
   --bg:#f4f2ec; --panel:#fffdf8; --ink:#1c2228; --muted:#5f6973; --line:#d9d4c7; --soft:#ebe7dc;
@@ -562,7 +562,7 @@ function results(r,notes){
     ${row('Važeći listići','valid','out',r)}
     ${row('Nevažeći listići','invalid','out',r)}
   </tbody></table></div>
-  ${notes?`<div class="foot1">${notes}</div>`:''}<div class="mrow btnrow">${dnBtn}${bibBtn}</div></div>`}
+  ${notes?`<div class="foot1">${notes}</div>`:''}<div class="mrow btnrow">${dnBtn}${bibBtn}${shBtn}</div></div>`}
 let btab='2026', bsort=false;
 let _SHR=null;
 function ballot(r,extra){_SHR=r;
@@ -945,6 +945,11 @@ const olIzm=uids=>{const S=new Set(uids),M=olTs();return (OLOG||[]).filter(e=>{i
 const provLine=()=>`<div class="small prov">Provereno: ${esc(OPROV||'—')}</div>`;
 const tsF=ts=>{if(!ts)return '';const d=new Date(ts*1000),p=x=>String(x).padStart(2,'0');return `${d.getDate()}.${d.getMonth()+1}. ${p(d.getHours())}:${p(d.getMinutes())}`};
 const bibBtn='<button class="more" id="bibb">BIBLIOTEKA</button>';
+const shBtn='<button class="more" data-share="1">PODELI</button>';
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-share]');if(!b)return;e.preventDefault();
+  const h=document.querySelector('#panel .ph2,#panel h2'),t=(h&&h.textContent.trim()),title=(document.title||'Kontrola izbora')+(t?' – '+t:''),url=location.href;
+  try{if(navigator.share){await navigator.share({title,text:title,url});return}}catch(x){if(x&&x.name==='AbortError')return}
+  try{await navigator.clipboard.writeText(url);toast('Link je kopiran')}catch(x){prompt('Kopiraj link:',url)}});
 function goUp(){if(ST.sid)return go({...ST,sid:null,view:'main'},true);if(ST.uid&&ST.nas!=null)return go({lvl:'unit',rid:ST.rid,uid:ST.uid});if(ST.uid)return ST.rid&&regUnits(ST.rid).length>1?go({lvl:'reg',rid:ST.rid}):go({lvl:'srb'});return go({lvl:'srb'})}
 function crumbs(){const c=[`<button data-c="srb">Srbija</button>`];
   if(ST.rid&&!(ST.uid&&regUnits(ST.rid).length===1)){c.push('<span class="sep">›</span>',`<button data-c="reg">${esc(IDX.regions.find(r=>r.id===ST.rid).name)}</button>`)}
@@ -1004,7 +1009,7 @@ function render(){
     }
   }
   if(ST.view==='bib'){if(ST.lvl==='srb'||ST.lvl==='reg'){const g=ST.lvl==='reg'?IDX.regions.find(r=>r.id===ST.rid):null;body=libView(g?g.units:ALL())}else if(UF[ST.uid]){const U=UF[ST.uid];body=ST.sid?libView([ST.uid],new Set([U.stations.find(x=>x.sid===ST.sid).n])):libView([ST.uid],ST.nas!=null?new Set(U.stations.filter(s=>s.nas===ST.nas).map(s=>s.n)):null)}}
-  else if(ST.view==='main'&&ST.tab!=='rez')body+=`<div class="mrow bibw">${bibBtn}</div>`;
+  else if(ST.view==='main'&&ST.tab!=='rez')body+=`<div class="mrow bibw">${bibBtn}${shBtn}</div>`;
   const P=$('#panel'),keep=P.scrollTop;P.innerHTML=h+`<div class="pbody">${body}</div>`;renderCol();P.scrollTop=render._keep?keep:0;render._keep=false;
   P.querySelectorAll('tr[data-cov]').forEach(tr=>tr.onclick=()=>{const x=P.querySelector(`tr.covx[data-for="${tr.dataset.cov}"]`);if(!x)return;
     const U=UF[ST.uid],list=ST.nas!=null?U.stations.filter(s=>s.nas===ST.nas):U.stations,k=tr.dataset.cov;
