@@ -1,4 +1,4 @@
-<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261027001029"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
+<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261027002510"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
 
 :root{
   --bg:#f4f2ec; --panel:#fffdf8; --ink:#1c2228; --muted:#5f6973; --line:#d9d4c7; --soft:#ebe7dc;
@@ -725,13 +725,15 @@ function kidsTable(rows,head){return `<div class="sec"><h3>${head}</h3><div clas
 function head(eyebrow,title,no,adr,sig,tabs){return `<div class="ph"><div class="ph1">${no!=null?`<span class="bmno">BM ${no}</span>`:''}<span class="place">${esc(eyebrow||'')}</span>${sig||''}</div><div class="phm"><div class="ph2" title="${esc(title)}">${esc(title)}</div>${adr?`<div class="ph3" title="${esc(adr)}">${esc(adr)}</div>`:''}</div>${tabs||''}</div>`}
 // ---------- signali (zapisnici) ----------
 let OBL=null,OBLT=0,OPROV=null,TIPON=false;
-async function loadObl(force){if(!force&&Date.now()-OBLT<170000)return;OBLT=Date.now();const z=await get(RAW+'data/zap/oblak.json?t='+Math.floor(Date.now()/60000));if(z)OBL=z}
+let ZAMN=null;const zamR=(uid,sid)=>(ZAMN&&ZAMN.u&&ZAMN.u[uid]&&ZAMN.u[uid][sid])||null;
+async function loadObl(force){if(!force&&Date.now()-OBLT<170000)return;OBLT=Date.now();const t=Math.floor(Date.now()/60000),[z,zm]=await Promise.all([get(RAW+'data/zap/oblak.json?t='+t),get(RAW+'data/zap/zamene.json?t='+t)]);if(z)OBL=z;if(zm)ZAMN=zm}
 const zapR=(uid,sid)=>(ZAP&&ZAP.u&&(ZAP.u[uid]||{})[sid])||null, oblR=(uid,sid)=>(OBL&&OBL.u&&(OBL.u[uid]||{})[sid])||null;
 const neTxt=x=>typeof x==='string'?x:x[0];
 const NEL={'izašli':'Izašli birači','važeći':'Važeći listići','nevažeći':'Nevažeći listići','upisani':'Upisani birači'};
 function neNote(nr){const rows=nr.map(x=>{const a=Array.isArray(x)?x:[x],l=NEL[a[0]]||(a[0].charAt(0).toUpperCase()+a[0].slice(1));return a.length>2?`<tr><td>${esc(l)}</td><td class="n">${fmt(a[1])}</td><td class="n">${fmt(a[2])}</td></tr>`:`<tr><td colspan="3">${esc(l)}</td></tr>`}).join('');
   return `<div class="note nen"><div><b>!</b> Rezultati na RIK-u se ne slažu sa zapisnikom:</div><table><thead><tr><th></th><th class="n">Zapisnik</th><th class="n">RIK</th></tr></thead><tbody>${rows}</tbody></table></div>`}
-function rawSig(uid,sid){const o=oblR(uid,sid),r=zapR(uid,sid);
+function rawSig(uid,sid){const g=rawSig0(uid,sid),z=zamR(uid,sid);g.nb=g.ne.slice();if(z&&z.tip==='brojevi'){g.zb=z;g.ne=[...g.ne,'zamenjen zapisnik']}return g}
+function rawSig0(uid,sid){const o=oblR(uid,sid),r=zapR(uid,sid);
   return {chk:!!(o||(r&&!r.err)),p:o&&o.p?o.p.length:0,nr:((o&&o.ne&&o.ne.length?o.ne:null)||(r&&r.ne)||[]),ne:((o&&o.ne&&o.ne.length?o.ne:null)||(r&&r.ne)||[]).map(neTxt),nu:(o&&o.nu||[]).map(x=>Array.isArray(x)?x[1]+' u zapisniku, '+x[2]+' na RIK-u':String(x)),wz:o&&o.wz||null}}
 function sigOf(uid,sid){const g=rawSig(uid,sid);g.st=g.chk?'ok':zOf(liveBM(uid,sid))?'chk':'wait';g.x=alertsOf(uid,sid).length>0;return g}
 const SGT={wait:'Rezultati se čekaju',chk:'Proverava se zapisnik',ok:'Zapisnik proveren'};
@@ -872,10 +874,10 @@ function primTab(pairsF,NE){const VW=NE?neView:primView;const seg=`<div class="t
 function emptyMsg(pairs,what){if(PT==='2023')return `<div class="small" style="padding:12px 0">Nema ${what}.</div>`;const n=pairs.length,c=pairs.filter(([u,x])=>rawSig(u,x).chk).length;
   const t=!c?'Čeka se analiza zapisnika.':c<n?`Nema ${what} u proverenim zapisnicima (${fmt(c)} od ${fmt(n)} BM). Ostali zapisnici čekaju analizu.`:`Nema ${what}.`;return `<div class="small" style="padding:12px 0">${t}</div>`}
 function neView(pairs){
-  let nNe=0;const neIt=pairs.map(([uid,sid])=>{const g=rawSig(uid,sid);if(!g.ne.length)return null;nNe++;const o=oblR(uid,sid),r=zapR(uid,sid),at=(o&&o.at)||(r&&r.at)||'';
+  let nNe=0;const neIt=pairs.map(([uid,sid])=>{const g=rawSig(uid,sid);if(!g.ne.length)return null;nNe++;const o=oblR(uid,sid),r=zapR(uid,sid),at=(o&&o.at)||(r&&r.at)||(g.zb&&g.zb.new_at)||'';
     const s=UF[uid]&&UF[uid].stations.find(x=>x.sid===sid),n=s?s.n:(o&&o.n)||(r&&r.n);
-    return {k:akey(at),h:`<div class="it ne" data-ne="${uid}|${sid}"><div class="d1">${[esc(at),n!=null?(ST.sid===sid?'BM '+n:`<a href="#" data-gu="${uid}" data-gs="${sid}">BM ${n}</a>`):'',esc(IDX.units[uid].short)].filter(Boolean).join(' · ')}</div><div class="d3"><b>!</b> Rezultati na RIK-u se ne slažu sa zapisnikom: ${g.ne.map(esc).join(', ')}.</div><div class="more2">Uporedi brojeve</div></div>`}}).filter(Boolean).sort((a,b)=>b.k-a.k).map(x=>x.h).join('');
-  return neIt?(pairs.length>1?`<div class="small pcnt" style="margin:0 0 6px"><b>${fmt(nNe)} BM</b> u kojima se rezultati na RIK-u ne slažu sa zapisnikom</div>`:'')+neIt:emptyMsg(pairs,'neslaganja')}
+    return {k:akey(at),h:`<div class="it ne" data-ne="${uid}|${sid}"><div class="d1">${[esc(at),n!=null?(ST.sid===sid?'BM '+n:`<a href="#" data-gu="${uid}" data-gs="${sid}">BM ${n}</a>`):'',esc(IDX.units[uid].short)].filter(Boolean).join(' · ')}</div>${g.nb.length?`<div class="d3"><b>!</b> Rezultati na RIK-u se ne slažu sa zapisnikom: ${g.nb.map(esc).join(', ')}.</div>`:''}${g.zb?`<div class="d3"><b>!</b> RIK je zamenio zapisnik (${esc(g.zb.old_at||'')} → ${esc(g.zb.new_at||'')}) i u novom su drugi brojevi: ${(g.zb.razlike||[]).map(esc).join('; ')}.${g.zb.opis?' '+esc(g.zb.opis):''}</div><div class="d4">${g.zb.old_link?link(g.zb.old_link,'Stari zapisnik'):''}${g.zb.new_link?' · '+link(g.zb.new_link,'Novi zapisnik'):''}</div>`:''}${g.nb.length?'<div class="more2">Uporedi brojeve</div>':''}</div>`}}).filter(Boolean).sort((a,b)=>b.k-a.k).map(x=>x.h).join('');
+  return neIt?(pairs.length>1?`<div class="small pcnt" style="margin:0 0 6px"><b>${fmt(nNe)} BM</b> sa neslaganjem (rezultati na RIK-u ili zamenjeni zapisnik)</div>`:'')+neIt:emptyMsg(pairs,'neslaganja')}
 const PW1=['Ubacivanje listića','Birački spisak','Paralelni spiskovi','Nepravilnost u prebrojavanju','Kontrolni list','Pritisak na birače','Nasilje / zastrašivanje','Kupovina glasova','Fotografisanje listića','Glasanje bez lične karte','Poništeno glasanje','Red i mir na BM'],PW2=['Porodično glasanje','Narušena tajnost glasanja','Neovlašćena lica na BM','Glasanje uz pomoć / pomagač','Glasanje van BM','Prekid glasanja'];
 const pNorm=x=>x.v==='Agitacija / pritisak na birače'?{...x,v:'Pritisak na birače'}:x;
 const pTez=v=>PW1.includes(v)?'1':PW2.includes(v)?'2':'3',PTL={'1':'Teške','2':'Srednje','3':'Lakše','':'Sve težine'};
@@ -922,7 +924,7 @@ async function neFly(uid,sid){if(!LU[uid]){const d=await get(SRC?SRC+'data/live/
 
 // ---------- dnevnik rezultata ----------
 const DKL={voters:'upisani',out:'izašli',valid:'važeći',invalid:'nevažeći'};
-function dnBM(b,zr,ob){const it=[];if(!b)b={};
+function dnBM(b,zr,ob,zm){const it=[];if(!b)b={};
   if(b.processed&&b.at)it.push({at:b.at,t:'Rezultati preuzeti sa RIK-a'});
   const zh=b.zap||b.zap_history||[];if(zh.length)it.push({at:zh[0].at,t:'Zapisnik objavljen na RIK-u',l:zh[0].link});
   const al=b.alerts||[];
@@ -930,7 +932,7 @@ function dnBM(b,zr,ob){const it=[];if(!b)b={};
       Object.keys(bf).forEach(k=>{const nx=al.slice(i+1).find(x=>x.type==='rezultat'&&x.before&&k in x.before),nv=nx?nx.before[k]:b[k];
         if(k==='lists'){(bf.lists||[]).forEach((v,j)=>{const w=(nv||[])[j];if(v!==w)parts.push(`lista ${j+1}: ${fmt(v)} → ${fmt(w)}`)})}else parts.push(`${DKL[k]||k}: ${fmt(bf[k])} → ${fmt(nv)}`)});
       it.push({at:a.at,t:'RIK promenio rezultat – '+(parts.join('; ')||String(a.detail||'').replace('RIK promenio: ',''))})}
-    else if(a.type==='zapisnik'){const z=zh.find(x=>x.at===a.at);it.push({at:a.at,t:'Zapisnik na RIK-u zamenjen novim fajlom',l:z&&(z.link)})}
+    else if(a.type==='zapisnik'){const z=zh.find(x=>x.at===a.at);it.push({at:a.at,t:'Zapisnik na RIK-u zamenjen novim fajlom'+(zm&&zm.opis?' – '+zm.opis:''),l:z&&(z.link)})}
     else if(a.type==='oboreno')it.push({at:a.at,t:'Poništeno glasanje'+(a.detail?': '+a.detail:'')})});
   if(ob&&ob.at){const np=(ob.p||[]).length,ne=(ob.ne||[]).length;it.push({at:ob.at,t:'Zapisnik analiziran'+(np||ne?' – '+[np?'primedbe: '+np:'',ne?'ne slaže se sa RIK-om':''].filter(Boolean).join(', '):' – bez primedbi i neslaganja')})}
   if(zr&&zr.at)it.push({at:zr.at,t:'Zapisnik proveren'+(rawSigOK(zr)?'':' – rezultati na RIK-u se ne slažu sa zapisnikom')});
@@ -974,7 +976,7 @@ function render(){
     if(ST.tab==='prim') body=primTab(()=>units.flatMap(uid=>sidsOf(uid).map(sid=>[uid,sid])));
     else if(ST.tab==='ne') body=primTab(()=>units.flatMap(uid=>sidsOf(uid).map(sid=>[uid,sid])),1);
     else if(ST.tab==='odb') body=odbTab(()=>provLine()+covSView(units)+covView(units),{units});
-    else if(ST.view==='dn'){const U2=new Set(units);body=LOG==null?'<div class="small">Učitavam…</div>':dnView(LOG.filter(e=>U2.has(e.u)&&/^(rezultat|zapisnik|oboreno)$/.test(e.type)).map(e=>({at:e.at,t:e.type==='rezultat'?'RIK promenio rezultat – '+String(e.detail||'').replace('RIK promenio: ',''):e.type==='zapisnik'?'Zapisnik na RIK-u zamenjen novim fajlom':'Poništeno glasanje'+(e.detail?': '+e.detail:''),l2:`<a href="#" data-gu="${e.u}" data-gs="${e.s||''}" data-gn="${e.n}">BM ${e.n}</a> · ${esc(IDX.units[e.u]?.short||'')}`})))}
+    else if(ST.view==='dn'){const U2=new Set(units);body=LOG==null?'<div class="small">Učitavam…</div>':dnView(LOG.filter(e=>U2.has(e.u)&&/^(rezultat|zapisnik|oboreno)$/.test(e.type)).map(e=>({at:e.at,t:e.type==='rezultat'?'RIK promenio rezultat – '+String(e.detail||'').replace('RIK promenio: ',''):e.type==='zapisnik'?'Zapisnik na RIK-u zamenjen novim fajlom'+((zamR(e.u,e.s)||{}).opis?' – '+zamR(e.u,e.s).opis:''):'Poništeno glasanje'+(e.detail?': '+e.detail:''),l2:`<a href="#" data-gu="${e.u}" data-gs="${e.s||''}" data-gn="${e.n}">BM ${e.n}</a> · ${esc(IDX.units[e.u]?.short||'')}`})))}
     else if(ST.view==='ballot') body=ballot(r);
     else{const rows=isS?IDX.regions.map(g=>{const x=groupAgg(g.units);return {k:'r:'+g.id,name:RLAB[g.name]||g.name,n:x.n,y:x.y,z:x.z,done:x.done,c:ST.flt?cntUnits(g.units):null}})
         :g.units.map(id=>{const u=IDX.units[id],x=unitAgg(id);return {k:'u:'+id,name:u.short,n:u.nbm,y:u.y23,z:x.z,done:x.done,c:ST.flt?cntUnits([id]):null}}).sort((p,q)=>p.name.localeCompare(q.name,'sr'));
@@ -987,7 +989,7 @@ function render(){
       if(ST.tab==='prim') body=primTab(()=>[[ST.uid,s.sid]]);
       else if(ST.tab==='ne') body=primTab(()=>[[ST.uid,s.sid]],1);
       else if(ST.tab==='odb'){o23Load(ST.uid);body=odbTab(()=>provLine()+boardView(s,docs),{uid:ST.uid,s})}
-      else if(ST.view==='dn') body=dnView(dnBM(liveBM(ST.uid,s.sid),zapR(ST.uid,s.sid),oblR(ST.uid,s.sid)).map(e=>({...e,l2:`BM ${s.n} · ${esc(placeOf(ST.uid,s.n))}`})));
+      else if(ST.view==='dn') body=dnView(dnBM(liveBM(ST.uid,s.sid),zapR(ST.uid,s.sid),oblR(ST.uid,s.sid),zamR(ST.uid,s.sid)).map(e=>({...e,l2:`BM ${s.n} · ${esc(placeOf(ST.uid,s.n))}`})));
       else if(ST.view==='ballot') body=ballot(r,`<div class="sec"><h3>Zapisnici</h3><div class="links col">${zap26(ST.uid,s)}${link(s.z23,'Zapisnik 2023 (PDF, RIK)')}</div>${g.ne.length?neNote(g.nr):''}</div>`);
       else body=(s.moved?`<div class="note"><b>BM je premešteno:</b> glasa se u opštini ${esc(s.moved)}${s.adr?` (${esc(s.adr)})`:''}. Administrativno pripada opštini ${esc(u.short)}.</div>`:'')+(DESK()?'':status26(b?1:0,1))
         +results(r,[s.y23&&s.how&&s.how!=='isti broj i naziv'?`2023: BM ${s.n23} – ${esc(s.name23)}.`:'',((PON23||{})[ST.uid]||{})[s.n]?`Glasanje 2023. na ovom BM je poništeno i ponovljeno ${PON23[ST.uid][s.n]}`:''].filter(Boolean).join(' '))
@@ -1003,7 +1005,7 @@ function render(){
       if(ST.tab==='prim') body=primTab(()=>list.map(s=>[ST.uid,s.sid]));
       else if(ST.tab==='ne') body=primTab(()=>list.map(s=>[ST.uid,s.sid]),1);
       else if(ST.tab==='odb') body=odbTab(()=>provLine()+covSView(null,list)+covView(null,list),{uid:ST.uid,list:ST.nas!=null?list:null});
-      else if(ST.view==='dn') body=dnView(list.flatMap(st=>{const b=liveBM(ST.uid,st.sid);return dnBM(b,null).filter(e=>!/^(Rezultati preuzeti|Zapisnik objavljen)/.test(e.t)).map(e=>({...e,l2:`<a href="#" data-gu="${ST.uid}" data-gs="${st.sid}">BM ${st.n}</a> · ${esc(placeOf(ST.uid,st.n))}`}))}));
+      else if(ST.view==='dn') body=dnView(list.flatMap(st=>{const b=liveBM(ST.uid,st.sid);return dnBM(b,null,null,zamR(ST.uid,st.sid)).filter(e=>!/^(Rezultati preuzeti|Zapisnik objavljen)/.test(e.t)).map(e=>({...e,l2:`<a href="#" data-gu="${ST.uid}" data-gs="${st.sid}">BM ${st.n}</a> · ${esc(placeOf(ST.uid,st.n))}`}))}));
       else if(ST.view==='ballot') body=ballot(r);
       else body=''+results(r,note)
         +`<div class="sec"><h3>Biračka mesta (${fl.length}${fl.length<list.length?' od '+list.length:''})</h3>${fl.length?'':'<div class="small">nema</div>'}<div class="tbl"${fl.length?'':' hidden'}><table class="kids"><thead><tr><th>BM</th><th class="n" style="text-align:right">Izašlo 2026</th><th class="n" style="text-align:right">2023</th></tr></thead><tbody>
