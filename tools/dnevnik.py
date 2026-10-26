@@ -2,7 +2,7 @@
 #   iz koda:   from dnevnik import push_logs; push_logs({"posao": ["red", ...]})
 #   iz ljuske: python3 tools/dnevnik.py posao < fajl     (dodaje redove iz fajla)
 # logovi/<posao>.log čuva poslednjih 4000 redova; logovi/stanje.json ima vreme poslednjeg javljanja svakog posla.
-import os, sys, json, subprocess, tempfile, datetime, socket
+import os, sys, json, subprocess, tempfile, datetime, socket, time
 try:
     from zoneinfo import ZoneInfo; TZ = ZoneInfo("Europe/Belgrade")
 except Exception: TZ = None
@@ -18,11 +18,14 @@ def build_commit(changes, msg, extra_tree=None):
     Vraća (env, commit, base) ili None."""
     env = dict(os.environ, GIT_INDEX_FILE=os.path.join(tempfile.gettempdir(), f"uzivo-{os.getpid()}.idx"))
     base = None
-    if _git(env, "fetch", "-q", "origin", "uzivo").returncode == 0:
-        base = _git(env, "rev-parse", "FETCH_HEAD").stdout.strip()
-        _git(env, "read-tree", base)
-    else:
-        _git(env, "read-tree", "--empty")
+    for _ in range(3):  # bez osnove NIKAD ne pravimo commit od nule (to bi obrisalo granu uzivo, kao 26.10. u 23:08)
+        if _git(env, "fetch", "-q", "--refmap=", "origin", "+refs/heads/uzivo").returncode == 0:
+            base = _git(env, "rev-parse", "FETCH_HEAD").stdout.strip() or None
+            if base: break
+        time.sleep(3)
+    if not base:
+        sys.stderr.write("dnevnik: grana uzivo nije dohvaćena – preskačem upis\n"); return None
+    _git(env, "read-tree", base)
     if extra_tree: extra_tree(env)
     for path, fn in changes.items():
         old = _git(env, "show", f"{base}:{path}").stdout if base else ""
