@@ -482,3 +482,14 @@
 26.10. 23:21:59 [laptop] pročitano 8282, kandidata 1197, u redu 8104
 26.10. 23:21:59 [laptop] nesmisleno čitanje -> oblak 3 211413 [773, 773, 7, 786]
 26.10. 23:21:59 [laptop] pročitano 8282, kandidata 1198, u redu 8098
+26.10. 23:24:38 [laptop] pročitano 8282, kandidata 1198, u redu 8092
+26.10. 23:24:38 [laptop] pročitano 8282, kandidata 1198, u redu 8092
+26.10. 23:24:38 [laptop] nesmisleno čitanje -> oblak 5 211878 [1148, 1148, 11, 1167]
+26.10. 23:24:38 [laptop] greška 44 217695 HTTP Error 500: Internal Server Error
+26.10. 23:24:38 [laptop] greška 44 217650 HTTP Error 500: Internal Server Error
+26.10. 23:24:38 [laptop] pročitano 8282, kandidata 1199, u redu 8092
+26.10. 23:24:38 [laptop] nesmisleno čitanje -> oblak 45 217773 [8, 8, 13, 75]
+26.10. 23:24:38 [laptop] sumnja na ! -> oblak: 45 BM 40 [['izašli', 768, 769]]
+26.10. 23:24:38 [laptop] sumnja na ! -> oblak: 45 BM 10 [['važeći', 0, 934], ['nevažeći', 0, 16]]
+26.10. 23:24:38 [laptop] sumnja na ! -> oblak: 45 BM 39 [['važeći', 0, 772], ['nevažeći', 0, 7]]
+26.10. 23:24:38 [laptop] pročitano 8282, kandidata 1203, u redu 8092
