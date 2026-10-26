@@ -1,1 +1,1 @@
-{"bm":{"236004":{"processed":true,"voters":603,"out":105,"valid":103,"invalid":2,"lists":[83,10,7,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0],"at":"25.10. 23:02","zap":[],"alerts":[],"chk":[]}}}
+{"bm":{"236004":{"processed":true,"voters":603,"out":105,"valid":103,"invalid":2,"lists":[83,10,7,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0],"at":"25.10. 23:02","zap":[{"link":"https://www.rik.parlament.gov.rs/extfile/sr/election_results/802/454/6ade7dc224d0d/@Записник о раду бирачког одбора БМ1_0a7a1c64e0fdb30de0298a6661297875.pdf","at":"26.10. 04:28"}],"alerts":[],"chk":[]}}}
