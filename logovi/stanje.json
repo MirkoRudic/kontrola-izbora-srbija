@@ -20,9 +20,9 @@
   "poslednje": "krug: upita 244 novih 0 greške 0 promenjeno opština 0 obrađeno 8192/8392 trajanje 14s sledeći za 5.0 min"
  },
  "oblak": {
-  "vreme": "26.10. 23:21:59",
+  "vreme": "26.10. 23:22:45",
   "gde": "vm",
-  "poslednje": "BM 31 (56/219261): primedbi 0"
+  "poslednje": "BM 6 (6/211959): primedbi 0, ! [['važeći', 1012, 1015], ['nevažeći', 15, 12], ['lista 3', 708, 711]]"
  },
  "laptop-zapisnici": {
   "vreme": "26.10. 23:20:29",
