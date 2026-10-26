@@ -28,5 +28,10 @@
   "vreme": "26.10. 23:50:35",
   "gde": "laptop",
   "poslednje": "krug: upita 222, novih zapisnika 0, ukupno sačuvano 8282, sledeći za 10.0 min"
+ },
+ "izborna-noc": {
+  "vreme": "26.10. 23:51:32",
+  "gde": "github",
+  "poslednje": "radni tok izborna noć (workflow_dispatch): pokrenut sledeći krug"
  }
 }
