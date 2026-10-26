@@ -20,8 +20,8 @@
   "poslednje": "krug: upita 244 novih 0 greške 0 promenjeno opština 0 obrađeno 8192/8392 trajanje 14s sledeći za 5.0 min"
  },
  "oblak": {
-  "vreme": "26.10. 23:20:02",
+  "vreme": "26.10. 23:20:24",
   "gde": "vm",
-  "poslednje": "BM 11 (161/234429): primedbi 0"
+  "poslednje": "BM 40 (6/212061): primedbi 0, ! [['važeći', 666, 667], ['nevažeći', 7, 6], ['lista 1', 171, 172]]"
  }
 }
