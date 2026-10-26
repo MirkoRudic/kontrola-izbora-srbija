@@ -567,3 +567,18 @@
 26.10. 23:44:12 [laptop] nesigurno čitanje 99 225039 [('izašli', 3, 11, 111), ('važeći', 2, 10, 110)]
 26.10. 23:44:12 [laptop] sumnja na ! -> oblak: 99 BM 10 [['izašli', 0, 196], ['važeći', 0, 194], ['nevažeći', 0, 2]]
 26.10. 23:44:12 [laptop] pročitano 8282, kandidata 1249, u redu 8091
+26.10. 23:46:48 [laptop] sumnja na ! -> oblak: 99 BM 33 [['izašli', 0, 300], ['važeći', 0, 293], ['nevažeći', 0, 7]]
+26.10. 23:46:48 [laptop] sumnja na ! -> oblak: 99 BM 21 [['izašli', 0, 195], ['važeći', 0, 191], ['nevažeći', 0, 4]]
+26.10. 23:46:48 [laptop] sumnja na ! -> oblak: 99 BM 30 [['važeći', 0, 144], ['nevažeći', 0, 3]]
+26.10. 23:46:48 [laptop] nesmisleno čitanje -> oblak 100 225171 [527, 527, 9, 0]
+26.10. 23:46:48 [laptop] nesmisleno čitanje -> oblak 119 227847 [75, 75, 1, 75]
+26.10. 23:46:48 [laptop] pročitano 8282, kandidata 1254, u redu 8091
+26.10. 23:46:48 [laptop] nesmisleno čitanje -> oblak 119 227781 [97, 97, 0, 139]
+26.10. 23:46:48 [laptop] nesmisleno čitanje -> oblak 119 227724 [81, 81, 0, 80]
+26.10. 23:46:48 [laptop] nesmisleno čitanje -> oblak 119 227796 [173, 173, 0, 0]
+26.10. 23:46:48 [laptop] nesmisleno čitanje -> oblak 119 227805 [212, 212, 3, 0]
+26.10. 23:46:48 [laptop] nesmisleno čitanje -> oblak 119 227703 [38, 38, 1, 38]
+26.10. 23:46:48 [laptop] nesmisleno čitanje -> oblak 119 227772 [107, 107, 0, 102]
+26.10. 23:46:48 [laptop] pročitano 8282, kandidata 1260, u redu 8091
+26.10. 23:46:48 [laptop] pročitano 8282, kandidata 1260, u redu 8091
+26.10. 23:46:48 [laptop] pročitano 8282, kandidata 1260, u redu 8091
