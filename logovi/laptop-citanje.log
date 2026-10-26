@@ -582,3 +582,25 @@
 26.10. 23:46:48 [laptop] pročitano 8282, kandidata 1260, u redu 8091
 26.10. 23:46:48 [laptop] pročitano 8282, kandidata 1260, u redu 8091
 26.10. 23:46:48 [laptop] pročitano 8282, kandidata 1260, u redu 8091
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 129 229842 [155, 155, 8, 58]
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 129 229698 [236, 236, 3, 0]
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 129 229701 [46, 46, 5, 0]
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 129 229713 [102, 102, 9, 0]
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 129 229791 [108, 108, 0, 0]
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 129 229797 [271, 271, 13, 0]
+26.10. 23:49:25 [laptop] pročitano 8282, kandidata 1266, u redu 8091
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 129 229758 [104, 105, 0, 0]
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 129 229785 [114, 114, 6, 114]
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 129 229719 [156, 156, 8, 156]
+26.10. 23:49:25 [laptop] sumnja na ! -> oblak: 129 BM 55 [['nevažeći', 0, 1]]
+26.10. 23:49:25 [laptop] sumnja na ! -> oblak: 129 BM 61 [['izašli', 0, 202], ['važeći', 0, 196], ['nevažeći', 0, 6]]
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 129 229764 [161, 161, 9, 32]
+26.10. 23:49:25 [laptop] pročitano 8282, kandidata 1272, u redu 8091
+26.10. 23:49:25 [laptop] nesigurno čitanje 129 229812 [('važeći', 186, 188, 188), ('nevažeći', 5, 5, 3)]
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 129 229830 [83, 83, 0, 76]
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 129 229806 [290294, 290294, 2, 0]
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 76 221907 [161, 161, 9, 154]
+26.10. 23:49:25 [laptop] nesmisleno čitanje -> oblak 76 221961 [241, 241, 6, 0]
+26.10. 23:49:25 [laptop] pročitano 8282, kandidata 1277, u redu 8091
+26.10. 23:49:25 [laptop] nesigurno čitanje 7 212391 [('nevažeći', 1, 17, 17)]
+26.10. 23:49:25 [laptop] pročitano 8282, kandidata 1278, u redu 8091
