@@ -85,6 +85,14 @@ for uid in UNITS:
     LU[uid] = json.load(open(f)) if os.path.exists(f) else {"bm": {}}
 LOGF = f"{OUT}/log.json"
 LOG = json.load(open(LOGF)) if os.path.exists(LOGF) else []
+# 27.10.: „Rešenje o odbacivanju/odbijanju zahteva za poništavanje“ greškom je bilo upisano kao poništeno – čistimo pri pokretanju
+_NEPON = re.compile(r"ОДБАЦ|одбац|ОДБИ[ЈJ]|одби[јj]|НЕОСНОВАН|неоснован")
+for _uid, _u in LU.items():
+    for _sid, _b in _u.get("bm", {}).items():
+        _st = _b.get("status") or {}
+        if _st.get("oboreno") and _NEPON.search(_st.get("napomena") or ""):
+            _b.pop("status", None); _b["alerts"] = [x for x in _b.get("alerts", []) if not (x.get("type") == "oboreno" and _NEPON.search(x.get("detail") or ""))]
+LOG = [e for e in LOG if not (e.get("type") == "oboreno" and _NEPON.search(e.get("detail") or ""))]
 def addlog(uid, sid, typ, detail, t):
     LOG.append(dict(at=t, u=uid, s=sid, n=UNITS[uid]['st'][sid]['n'], type=typ, detail=detail))
 AGG = {}  # uid -> (processed, datetime) iz poslednjeg kruga
@@ -178,6 +186,8 @@ def annulments(t):
             if key in SEEN_DOCS: continue
             SEEN_DOCS.add(key)
             if not re.search(r"ПОНИШТ|поништ", name): continue
+            if _NEPON.search(name): log("rešenje o odbacivanju/odbijanju zahteva – nije poništeno:", name[:120]); continue
+            if re.search(r"ОДБАЦ|одбац|ОДБИ[ЈJ]|одби[јj]|НЕОСНОВАН|неоснован|ODBAC|odbac|ODBI[JJ]|odbij", name): log("rešenje o odbacivanju/odbijanju zahteva – nije poništeno:", name[:120]); continue  # 27.10.: „Rešenje o ODBACIVANJU zahteva za poništavanje“ nije poništeno glasanje
             uids = UCORE.get(_core(d.get("municipality_display_name") or ""), [])
             m = re.match(r"\s*(\d+)", d.get("election_station_title") or "") or re.search(r"(?:БМ|бирачк\w* мест\w*)\s*(?:бр\.?|број)?\s*(\d+)", name)
             if not uids or not m: log("rešenje o poništavanju bez BM:", name[:120]); continue
