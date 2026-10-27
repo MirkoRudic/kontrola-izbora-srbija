@@ -113,6 +113,13 @@ def ocisti():
                 if x.get("type") == "oboreno": x["detail"] = _L(x.get("detail"))
     for e in LOG:
         if e.get("type") == "oboreno": e["detail"] = _L(e.get("detail"))
+    # 27.10. 22:20: „ispravka“ upisana pri prvom viđenju starih RG-7 fajlova (pogrešno vreme) – briše se; fajlovi ostaju u b["dz"]
+    _n0 = len(LOG); LOG[:] = [e for e in LOG if not (e.get("type") == "ispravka" and not e.get("v"))]
+    for _uid, _u in LU.items():
+        for _b in _u.get("bm", {}).values():
+            _a = _b.get("alerts") or []
+            if any(x.get("type") == "ispravka" and not x.get("v") for x in _a):
+                _b["alerts"] = [x for x in _a if not (x.get("type") == "ispravka" and not x.get("v"))]; OCISCENO.add(_uid)
     _seen = set(); LOG[:] = [e for e in LOG if not (e.get("type") == "oboreno" and ((e.get("u"), e.get("s")) in _seen or _seen.add((e.get("u"), e.get("s")))))]
 ocisti()
 def addlog(uid, sid, typ, detail, t):
@@ -189,13 +196,16 @@ def apply(uid, sid, r, t):
             old["alerts"].append(dict(type="zapisnik", at=t, detail="Zapisnik na RIK-u zamenjen novim fajlom"))
             addlog(uid, sid, "zapisnik", "Zapisnik na RIK-u zamenjen novim fajlom", t)
         old["zap"].append(dict(link=r["zlink"], at=t)); changed = True
-    if r.get("dz") is not None and r["dz"] != old.get("dz", []):
-        had = {x["link"] for x in old.get("dz", [])}
-        for x in r["dz"]:
-            if x["link"] not in had and re.search(r"(?:РГ|RG|PG|ПГ)\s*-?\s*(?:8-)?7(?!\d)|исправ|ispravk", x["naziv"], re.I):
-                old["alerts"].append(dict(type="ispravka", at=t, detail="Uz zapisnik okačeno rešenje o ispravci zapisnika (RG-7)", link=x["link"]))
-                addlog(uid, sid, "ispravka", "Uz zapisnik okačeno rešenje o ispravci zapisnika (RG-7)", t)
-        if r["dz"] or old.get("dz"): old["dz"] = r["dz"]; changed = True
+    if r.get("dz") is not None and ("dz" not in old or r["dz"] != old["dz"]):
+        # 27.10. 22:20: pri prvom viđenju (stari fajlovi) bez upisa u dnevnik; vreme = vreme kačenja na RIK-u
+        if "dz" in old:
+            had = {x["link"] for x in old["dz"]}
+            for x in r["dz"]:
+                if x["link"] not in had and re.search(r"(?:РГ|RG|PG|ПГ)\s*-?\s*(?:8-)?7(?!\d)|исправ|ispravk", x["naziv"], re.I):
+                    m_ = re.match(r"(\d+)-(\d+)-\d{4}\s*(\d+:\d+)", x.get("t") or ""); ta = f"{m_[1]}.{m_[2]}. {m_[3]}" if m_ else t
+                    old["alerts"].append(dict(type="ispravka", at=ta, v=2, detail="Uz zapisnik okačeno rešenje o ispravci zapisnika (RG-7)", link=x["link"]))
+                    LOG.append(dict(at=ta, u=uid, s=sid, n=UNITS[uid]['st'][sid]['n'], type="ispravka", v=2, detail="Uz zapisnik okačeno rešenje o ispravci zapisnika (RG-7)"))
+        old["dz"] = r["dz"]; changed = True
     return changed
 
 # ---------- rešenja o poništavanju glasanja (RIK dokumenti, tip 1) ----------
