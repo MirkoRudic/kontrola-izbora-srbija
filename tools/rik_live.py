@@ -154,11 +154,23 @@ def checks(r, y23):
 def apply(uid, sid, r, t):
     L = LU[uid]["bm"]; old = L.get(sid); changed = False
     y23 = UNITS[uid]["st"][sid].get("y23")
-    if r is None: return False
+    if r is None:
+        # 27.10.: RIK ume da skine već objavljen rezultat (Kuršumlija BM 30) – proveri još jednom, pa zabeleži
+        if old and old.get("processed") and not A.sim:
+            time.sleep(3); r2 = fetch_station(uid, sid)
+            if r2 is None:
+                bf = {k: old.get(k) for k in ("voters", "out", "valid", "invalid", "lists")}
+                old.setdefault("alerts", []).append(dict(type="skinuto", at=t, detail="RIK skinuo objavljeni rezultat sa sajta", before=bf))
+                addlog(uid, sid, "skinuto", "RIK skinuo objavljeni rezultat (bilo: izašlo %s, važećih %s)" % (bf["out"], bf["valid"]), t)
+                old["processed"] = False; old["skinuto"] = t; return True
+        return False
     new = {k: r[k] for k in ("processed", "voters", "out", "valid", "invalid", "lists")}
     if old is None or not old.get("processed"):
         rec_ = dict(new, at=t, zap=[], alerts=[], chk=checks(r, y23))
-        if r["zlink"]: rec_["zap"].append(dict(link=r["zlink"], at=t))
+        if old and old.get("skinuto"):  # rezultat ponovo objavljen – zadrži istoriju
+            rec_["zap"] = old.get("zap", []); rec_["alerts"] = old.get("alerts", []) + [dict(type="vraceno", at=t, detail="RIK ponovo objavio rezultat")]
+            addlog(uid, sid, "vraceno", "RIK ponovo objavio rezultat (izašlo %s, važećih %s)" % (new["out"], new["valid"]), t)
+        if r["zlink"] and (not rec_["zap"] or rec_["zap"][-1]["link"] != r["zlink"]): rec_["zap"].append(dict(link=r["zlink"], at=t))
         if rec_["chk"]: addlog(uid, sid, "provera", "; ".join(rec_["chk"]), t)
         L[sid] = rec_; return True
     diffk = [k for k in ("voters", "out", "valid", "invalid", "lists") if old.get(k) != new[k]]
@@ -366,11 +378,13 @@ while time.time() < deadline:
                 if not (LU[uid]["bm"].get(sid) or {}).get("processed"):
                     if A.sim and sid not in a["reveal"]: continue
                     todo.append((uid, sid))
+        elif a["processed"] < known and not A.sim:  # RIK ima manje obrađenih nego mi – proveri sva obrađena BM te jedinice
+            todo += [(uid, sid) for sid, r in LU[uid]["bm"].items() if r.get("processed")]
         AGG[uid] = a
     # spora rotacija obrađenih (izmene rezultata/zapisnika): najstarije proverena, do 150 po krugu
     done_list = [(uid, sid) for uid in UNITS for sid, r in LU[uid]["bm"].items() if r.get("processed")]
     done_list.sort(key=lambda k: CHECKED.get(k, 0))
-    todo += done_list[:150]
+    vec = set(todo); todo += [k for k in done_list[:150] if k not in vec]
     changed = set(); new = 0; err = 0
     # rezultati se upisuju čim stignu; tokom dugog kruga međuobjava na ~3 min (da aplikacija ne čeka kraj kruga)
     part = set(); tpart = time.time()
