@@ -171,14 +171,16 @@ SEEN_DOCS = set(); LAST_DOCS = 0
 def annulments(t):
     global LAST_DOCS
     if A.sim or time.time() - LAST_DOCS < 600: return set()
+    prvi = LAST_DOCS == 0
     LAST_DOCS = time.time(); changed = set()
-    for p in (1, 2, 3):
+    for p in range(1, 26 if prvi else 4):  # prvi put u krugu: sve od dana izbora (~18 strana), posle samo najnovije
         o = curl(["-G", R + "/get-additional-documents", "--data-urlencode", f"page={p}", "--data-urlencode", "filters[document-type]=1",
                   "--data-urlencode", f"filters[election-round]={ROUND}", "--data-urlencode", "filters[municipality-id]=0",
                   "--data-urlencode", "filters[election_station]=0", "--data-urlencode", "filters[additional-document]=0",
                   "--data-urlencode", "order=0", "--data-urlencode", "sort=0", "--data-urlencode", "election_type=-1"], 60)
         try: recs = json.loads(o)["records"]
         except Exception: break
+        if not recs: break
         for d in recs:
             name = (d.get("document_name") or "") + " " + (d.get("election_board_decision") or "")
             links = re.findall(r'href="([^"]+)"', str(d.get("extfiles_link")))
@@ -187,9 +189,8 @@ def annulments(t):
             SEEN_DOCS.add(key)
             if not re.search(r"ПОНИШТ|поништ", name): continue
             if _NEPON.search(name): log("rešenje o odbacivanju/odbijanju zahteva – nije poništeno:", name[:120]); continue
-            if re.search(r"ОДБАЦ|одбац|ОДБИ[ЈJ]|одби[јj]|НЕОСНОВАН|неоснован|ODBAC|odbac|ODBI[JJ]|odbij", name): log("rešenje o odbacivanju/odbijanju zahteva – nije poništeno:", name[:120]); continue  # 27.10.: „Rešenje o ODBACIVANJU zahteva za poništavanje“ nije poništeno glasanje
             uids = UCORE.get(_core(d.get("municipality_display_name") or ""), [])
-            m = re.match(r"\s*(\d+)", d.get("election_station_title") or "") or re.search(r"(?:БМ|бирачк\w* мест\w*)\s*(?:бр\.?|број)?\s*(\d+)", name)
+            m = re.match(r"\s*(\d+)", d.get("election_station_title") or "") or re.search(r"(?:БМ|Б\.\s?М\.|BM|бирачк\w*\s+мест\w*|biračk\w*\s+mest\w*)\s*(?:бр\.?|број|br\.?|broj)?\s*(\d+)", name, re.I)  # 27.10.: i VELIKIM slovima (Ljig BM 20, Kanjiža BM 4 su bili promašeni)
             if not uids or not m: log("rešenje o poništavanju bez BM:", name[:120]); continue
             uid = uids[0]; n = int(m.group(1))
             sid = next((s for s, x in UNITS[uid]["st"].items() if x["n"] == n), None)
