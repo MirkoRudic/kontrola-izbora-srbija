@@ -66,9 +66,14 @@ def rec(r):
     for l in r.get("table_data") or []:
         i = int(l["count_number"]) - 1
         if 0 <= i < 18: lists[i] = num(l["won_number"])
-    m = re.search(r"href='([^']+)'", r.get("minute_from_election_station") or "")
+    mf = r.get("minute_from_election_station") or ""
+    m = re.search(r"href='([^']+)'", mf)
+    # 27.10.: uz zapisnik RIK kači i dodatne fajlove (RG-7 rešenje o ispravci, RG-11 posmatrači) – beležimo sve
+    import html as _h
+    dz = [dict(link=R + _h.unescape(l), naziv=_h.unescape(nm).strip(), t=dt.strip())
+          for l, nm, dt in re.findall(r"href='([^']+)'[^>]*>([^<]*)<span[^>]*></span></a><span>([^<]*)", mf)]
     return dict(processed=True, voters=num(s.get("total_voters", 0)), out=num(s.get("available", 0)), valid=v, invalid=iv, lists=lists,
-                zlink=(R + m.group(1)) if m else None)
+                zlink=(R + m.group(1)) if m else None, dz=[x for x in dz if m and x["link"] != R + m.group(1)])
 
 # ---------- statični podaci ----------
 IDX = json.load(open("public/data/index.json"))
@@ -171,6 +176,7 @@ def apply(uid, sid, r, t):
             rec_["zap"] = old.get("zap", []); rec_["alerts"] = old.get("alerts", []) + [dict(type="vraceno", at=t, detail="RIK ponovo objavio rezultat")]
             addlog(uid, sid, "vraceno", "RIK ponovo objavio rezultat (izašlo %s, važećih %s)" % (new["out"], new["valid"]), t)
         if r["zlink"] and (not rec_["zap"] or rec_["zap"][-1]["link"] != r["zlink"]): rec_["zap"].append(dict(link=r["zlink"], at=t))
+        if r.get("dz"): rec_["dz"] = r["dz"]
         if rec_["chk"]: addlog(uid, sid, "provera", "; ".join(rec_["chk"]), t)
         L[sid] = rec_; return True
     diffk = [k for k in ("voters", "out", "valid", "invalid", "lists") if old.get(k) != new[k]]
@@ -183,6 +189,13 @@ def apply(uid, sid, r, t):
             old["alerts"].append(dict(type="zapisnik", at=t, detail="Zapisnik na RIK-u zamenjen novim fajlom"))
             addlog(uid, sid, "zapisnik", "Zapisnik na RIK-u zamenjen novim fajlom", t)
         old["zap"].append(dict(link=r["zlink"], at=t)); changed = True
+    if r.get("dz") is not None and r["dz"] != old.get("dz", []):
+        had = {x["link"] for x in old.get("dz", [])}
+        for x in r["dz"]:
+            if x["link"] not in had and re.search(r"РГ-?7|RG-?7", x["naziv"], re.I):
+                old["alerts"].append(dict(type="ispravka", at=t, detail="Uz zapisnik okačeno rešenje o ispravci zapisnika (RG-7)", link=x["link"]))
+                addlog(uid, sid, "ispravka", "Uz zapisnik okačeno rešenje o ispravci zapisnika (RG-7)", t)
+        if r["dz"] or old.get("dz"): old["dz"] = r["dz"]; changed = True
     return changed
 
 # ---------- rešenja o poništavanju glasanja (RIK dokumenti, tip 1) ----------
