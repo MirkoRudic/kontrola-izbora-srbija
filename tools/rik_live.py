@@ -192,7 +192,7 @@ def apply(uid, sid, r, t):
     if r.get("dz") is not None and r["dz"] != old.get("dz", []):
         had = {x["link"] for x in old.get("dz", [])}
         for x in r["dz"]:
-            if x["link"] not in had and re.search(r"РГ-?7|RG-?7", x["naziv"], re.I):
+            if x["link"] not in had and re.search(r"(?:РГ|RG|PG|ПГ)\s*-?\s*(?:8-)?7(?!\d)|исправ|ispravk", x["naziv"], re.I):
                 old["alerts"].append(dict(type="ispravka", at=t, detail="Uz zapisnik okačeno rešenje o ispravci zapisnika (RG-7)", link=x["link"]))
                 addlog(uid, sid, "ispravka", "Uz zapisnik okačeno rešenje o ispravci zapisnika (RG-7)", t)
         if r["dz"] or old.get("dz"): old["dz"] = r["dz"]; changed = True
