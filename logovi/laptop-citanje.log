@@ -1,11 +1,5 @@
 27.10. 07:03:47 [laptop] greška 4 211515 HTTP Error 400: Bad Request
 27.10. 07:03:47 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 07:03:47 [laptop] pročitano 8282, kandidata 1674, u redu 2641
-27.10. 07:03:47 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 07:03:47 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 07:03:47 [laptop] pročitano 8282, kandidata 1674, u redu 2640
-27.10. 07:03:47 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 07:03:47 [laptop] greška 4 211563 HTTP Error 400: Bad Request
 27.10. 07:03:47 [laptop] pročitano 8282, kandidata 1674, u redu 2639
 27.10. 07:03:47 [laptop] greška 4 211515 HTTP Error 400: Bad Request
 27.10. 07:03:47 [laptop] greška 4 211563 HTTP Error 400: Bad Request
@@ -3998,3 +3992,9 @@
 27.10. 08:39:39 [laptop] greška 4 211563 HTTP Error 400: Bad Request
 27.10. 08:39:39 [laptop] pročitano 8282, kandidata 1759, u redu 1359
 27.10. 09:21:29 [laptop] OLLAMA NE RADI: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>
+27.10. 09:29:06 [laptop] start provere zapisnika, model qwen2.5vl:7b već pročitano 8282
+27.10. 09:29:06 [laptop] nesmisleno čitanje -> oblak 107 226074 [441, 440, 10, 431]
+27.10. 09:29:06 [laptop] sumnja na ! -> oblak: 107 BM 2 [['važeći', 9, 1078], ['nevažeći', 1078, 9]]
+27.10. 09:29:06 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 09:29:06 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 09:29:06 [laptop] pročitano 8282, kandidata 1762, u redu 1339
