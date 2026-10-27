@@ -1,1 +1,1 @@
-{"bm":{"235971":{"processed":true,"voters":2005,"out":775,"valid":764,"invalid":11,"lists":[617,8,104,0,0,0,1,31,0,0,3,0,0,0,0,0,0,0],"at":"26.10. 00:14","zap":[],"alerts":[],"chk":[]}}}
+{"bm":{"235971":{"processed":true,"voters":2005,"out":775,"valid":764,"invalid":11,"lists":[617,8,104,0,0,0,1,31,0,0,3,0,0,0,0,0,0,0],"at":"26.10. 00:14","zap":[{"link":"https://www.rik.parlament.gov.rs/extfile/sr/election_results/819/986/6adeabe370da2/@ПА 1 ВИТИНА СРП_a0be535900e70de68b09a5b29fa02b40.pdf","at":"27.10. 19:04"}],"alerts":[],"chk":[]}}}
