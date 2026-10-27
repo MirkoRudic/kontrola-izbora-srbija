@@ -1,91 +1,3 @@
-27.10. 00:11:58 [laptop] nesigurno čitanje 51 218253 [('važeći', 1148, 1145, 1145), ('nevažeći', 14, 14, 17)]
-27.10. 00:11:58 [laptop] pročitano 8282, kandidata 1353, u redu 8073
-27.10. 00:11:58 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:11:58 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:11:58 [laptop] pročitano 8282, kandidata 1353, u redu 8073
-27.10. 00:11:58 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:11:58 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:11:58 [laptop] pročitano 8282, kandidata 1353, u redu 8073
-27.10. 00:11:58 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:11:58 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:11:58 [laptop] pročitano 8282, kandidata 1353, u redu 8073
-27.10. 00:11:58 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:11:58 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:11:58 [laptop] pročitano 8282, kandidata 1353, u redu 8073
-27.10. 00:11:58 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:11:58 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:11:58 [laptop] sumnja na ! -> oblak: 38 BM 37 [['izašli', 1248, 1278], ['važeći', 1242, 1272]]
-27.10. 00:11:58 [laptop] pročitano 8282, kandidata 1354, u redu 8073
-27.10. 00:11:58 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:11:58 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:11:58 [laptop] nesmisleno čitanje -> oblak 38 216969 [1124, 1124, 13, 1117]
-27.10. 00:11:58 [laptop] pročitano 8282, kandidata 1355, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1355, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1355, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] sumnja na ! -> oblak: 231 BM 1 [['izašli', 913, 911]]
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:14:09 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:14:09 [laptop] pročitano 8282, kandidata 1356, u redu 8073
-27.10. 00:16:18 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:16:18 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 00:16:18 [laptop] pročitano 8282, kandidata 1356, u redu 8072
-27.10. 00:16:18 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 00:16:18 [laptop] greška 4 211563 HTTP Error 400: Bad Request
 27.10. 00:16:18 [laptop] pročitano 8282, kandidata 1356, u redu 8071
 27.10. 00:16:18 [laptop] greška 4 211515 HTTP Error 400: Bad Request
 27.10. 00:16:18 [laptop] greška 4 211563 HTTP Error 400: Bad Request
@@ -3998,3 +3910,91 @@
 27.10. 01:50:30 [laptop] greška 4 211515 HTTP Error 400: Bad Request
 27.10. 01:50:30 [laptop] greška 4 211563 HTTP Error 400: Bad Request
 27.10. 01:50:30 [laptop] pročitano 8282, kandidata 1446, u redu 6816
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6815
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6814
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6813
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6812
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6811
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] P (polje 15): 158 BM 41
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6810
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6809
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6808
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6807
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6806
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6805
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6804
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6803
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6802
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6801
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6800
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6799
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6798
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6797
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6796
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6795
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6794
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6793
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6792
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6791
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6790
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6789
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6788
+27.10. 01:52:35 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:52:35 [laptop] pročitano 8282, kandidata 1446, u redu 6787
