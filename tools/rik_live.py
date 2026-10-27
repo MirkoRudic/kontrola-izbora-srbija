@@ -216,7 +216,7 @@ def annulments(t):
             key = links[0] if links else name
             if key in SEEN_DOCS: continue
             SEEN_DOCS.add(key)
-            if not re.search(r"ПОНИШТ|поништ", name): continue
+            if not re.search(r"ПОНИШТ|НЕ\s+МОГУ\s+(СЕ\s+)?УТВРДИТИ", name, re.I): continue  # i „rezultati se ne mogu utvrditi“ (Koceljeva, 27.10.)
             if _NEPON.search(name): log("rešenje o odbacivanju/odbijanju zahteva – nije poništeno:", name[:120]); continue
             uids = UCORE.get(_core(d.get("municipality_display_name") or ""), [])
             m = re.match(r"\s*(\d+)", d.get("election_station_title") or "") or re.search(r"(?:БМ|Б\.\s?М\.|BM|бирачк\w*\s+мест\w*|biračk\w*\s+mest\w*)\s*(?:бр\.?|број|br\.?|broj)?\s*(\d+)", name, re.I)  # 27.10.: i VELIKIM slovima (Ljig BM 20, Kanjiža BM 4 su bili promašeni)
