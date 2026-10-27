@@ -35,8 +35,8 @@
   "poslednje": "radni tok izborna noć (workflow_dispatch): pokrenut sledeći krug"
  },
  "laptop-omotac": {
-  "vreme": "27.10. 12:26:45",
+  "vreme": "27.10. 12:37:40",
   "gde": "laptop",
-  "poslednje": "omotač zapisnici: kraj"
+  "poslednje": "omotač zapisnici: start laptop_zapisnici.py"
  }
 }
