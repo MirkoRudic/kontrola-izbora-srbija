@@ -1,4 +1,3 @@
-27.10. 07:03:47 [laptop] pročitano 8282, kandidata 1674, u redu 2642
 27.10. 07:03:47 [laptop] greška 4 211515 HTTP Error 400: Bad Request
 27.10. 07:03:47 [laptop] greška 4 211563 HTTP Error 400: Bad Request
 27.10. 07:03:47 [laptop] pročitano 8282, kandidata 1674, u redu 2641
@@ -3998,3 +3997,4 @@
 27.10. 08:39:39 [laptop] greška 4 211515 HTTP Error 400: Bad Request
 27.10. 08:39:39 [laptop] greška 4 211563 HTTP Error 400: Bad Request
 27.10. 08:39:39 [laptop] pročitano 8282, kandidata 1759, u redu 1359
+27.10. 09:21:29 [laptop] OLLAMA NE RADI: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>

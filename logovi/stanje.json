@@ -10,9 +10,9 @@
   "poslednje": "pokrenut posao citanje"
  },
  "laptop-citanje": {
-  "vreme": "27.10. 08:39:39",
+  "vreme": "27.10. 09:21:29",
   "gde": "laptop",
-  "poslednje": "pročitano 8282, kandidata 1759, u redu 1359"
+  "poslednje": "OLLAMA NE RADI: <urlopen error [WinError 10061] No connection could be made because the target machine actively refused it>"
  },
  "rik_live-github": {
   "vreme": "27.10. 09:14:49",
