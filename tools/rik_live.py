@@ -87,12 +87,29 @@ LOGF = f"{OUT}/log.json"
 LOG = json.load(open(LOGF)) if os.path.exists(LOGF) else []
 # 27.10.: „Rešenje o odbacivanju/odbijanju zahteva za poništavanje“ greškom je bilo upisano kao poništeno – čistimo pri pokretanju
 _NEPON = re.compile(r"ОДБАЦ|одбац|ОДБИ[ЈJ]|одби[јj]|НЕОСНОВАН|неоснован")
-for _uid, _u in LU.items():
-    for _sid, _b in _u.get("bm", {}).items():
-        _st = _b.get("status") or {}
-        if _st.get("oboreno") and _NEPON.search(_st.get("napomena") or ""):
-            _b.pop("status", None); _b["alerts"] = [x for x in _b.get("alerts", []) if not (x.get("type") == "oboreno" and _NEPON.search(x.get("detail") or ""))]
-LOG = [e for e in LOG if not (e.get("type") == "oboreno" and _NEPON.search(e.get("detail") or ""))]
+OCISCENO = set()
+def ocisti():
+    """Briše pogrešno upisano „poništeno“ za rešenja o odbacivanju/odbijanju zahteva (poziva se i posle sync_from_uzivo)."""
+    for _uid, _u in LU.items():
+        for _sid, _b in _u.get("bm", {}).items():
+            _st = _b.get("status") or {}
+            if _st.get("oboreno") and _NEPON.search(_st.get("napomena") or ""):
+                _b.pop("status", None); _b["alerts"] = [x for x in _b.get("alerts", []) if not (x.get("type") == "oboreno" and _NEPON.search(x.get("detail") or ""))]
+                OCISCENO.add(_uid)
+    LOG[:] = [e for e in LOG if not (e.get("type") == "oboreno" and _NEPON.search(e.get("detail") or ""))]
+    import html as _h
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from translit import lat as _lat
+    _L = lambda x: _lat(_h.unescape(x)) if x and re.search("[\u0400-\u04FF]|&#", x) else x
+    for _uid, _u in LU.items():
+        for _b in _u.get("bm", {}).values():
+            _st = _b.get("status") or {}
+            if _st.get("oboreno") and _L(_st.get("napomena")) != _st.get("napomena"): _st["napomena"] = _L(_st["napomena"]); OCISCENO.add(_uid)
+            for x in _b.get("alerts", []):
+                if x.get("type") == "oboreno": x["detail"] = _L(x.get("detail"))
+    for e in LOG:
+        if e.get("type") == "oboreno": e["detail"] = _L(e.get("detail"))
+    _seen = set(); LOG[:] = [e for e in LOG if not (e.get("type") == "oboreno" and ((e.get("u"), e.get("s")) in _seen or _seen.add((e.get("u"), e.get("s")))))]
+ocisti()
 def addlog(uid, sid, typ, detail, t):
     LOG.append(dict(at=t, u=uid, s=sid, n=UNITS[uid]['st'][sid]['n'], type=typ, detail=detail))
 AGG = {}  # uid -> (processed, datetime) iz poslednjeg kruga
@@ -196,7 +213,10 @@ def annulments(t):
             sid = next((s for s, x in UNITS[uid]["st"].items() if x["n"] == n), None)
             if not sid: continue
             b = LU[uid]["bm"].setdefault(sid, {"processed": False, "zap": [], "alerts": []})
-            b["status"] = dict(oboreno=True, napomena="RIK: " + re.sub(r"\s+", " ", name).strip()[:160], at=t, doc=(R + links[0]) if links else None)
+            doc = (R + links[0]) if links else None
+            if (b.get("status") or {}).get("oboreno") and (b["status"].get("doc") == doc or not doc): continue  # već upisano (SEEN_DOCS važi samo u jednom krugu)
+            import html as _html
+            b["status"] = dict(oboreno=True, napomena="RIK: " + lat(_html.unescape(re.sub(r"\s+", " ", name).strip()))[:160], at=t, doc=doc)
             b.setdefault("alerts", []).append(dict(type="oboreno", at=t, detail=b["status"]["napomena"]))
             addlog(uid, sid, "oboreno", b["status"]["napomena"], t); changed.add(uid)
     return changed
@@ -277,6 +297,7 @@ def sync_from_uzivo():
         f = f"{OUT}/u/{uid}.json"
         if os.path.exists(f): LU[uid] = json.load(open(f))
     if os.path.exists(LOGF): LOG[:] = json.load(open(LOGF))
+    ocisti()
 
 # ---------- glavna petlja ----------
 cookie()
@@ -373,6 +394,7 @@ while time.time() < deadline:
                 except Exception as e: log("međuobjava greška:", e)
                 part = set(); tpart = time.time()
     changed |= annulments(t)
+    if OCISCENO: changed |= OCISCENO; OCISCENO.clear()
     if changed: LASTCH[0] = t
     s = write(changed, t)
     try:
