@@ -60,3 +60,4 @@
 27.10. 08:27:17 [laptop] živ, režim izbori; rezerva=radi, zapisnici=radi, citanje=radi
 27.10. 08:37:26 [laptop] živ, režim izbori; rezerva=radi, zapisnici=radi, citanje=radi
 27.10. 09:20:39 [laptop] nadzor start (PID 15640)
+27.10. 09:20:46 [laptop] git pull nije uspeo: fatal: It seems that there is already a rebase-merge directory, and I wonder if you are in the middle of another rebase.  If that is the case, please try 	git rebase (--continue | --abort | --skip) If that is not the case, please 	rm -fr ".git/rebase-merge" and run me again.  I am stopping in case you still have something valuable there.
