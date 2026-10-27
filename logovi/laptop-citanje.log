@@ -1,93 +1,3 @@
-26.10. 23:21:59 [laptop] nesmisleno čitanje -> oblak 133 230262 [1232, 1232, 0, 1221]
-26.10. 23:21:59 [laptop] pročitano 8282, kandidata 1197, u redu 8104
-26.10. 23:21:59 [laptop] nesmisleno čitanje -> oblak 3 211413 [773, 773, 7, 786]
-26.10. 23:21:59 [laptop] pročitano 8282, kandidata 1198, u redu 8098
-26.10. 23:24:38 [laptop] pročitano 8282, kandidata 1198, u redu 8092
-26.10. 23:24:38 [laptop] pročitano 8282, kandidata 1198, u redu 8092
-26.10. 23:24:38 [laptop] nesmisleno čitanje -> oblak 5 211878 [1148, 1148, 11, 1167]
-26.10. 23:24:38 [laptop] greška 44 217695 HTTP Error 500: Internal Server Error
-26.10. 23:24:38 [laptop] greška 44 217650 HTTP Error 500: Internal Server Error
-26.10. 23:24:38 [laptop] pročitano 8282, kandidata 1199, u redu 8092
-26.10. 23:24:38 [laptop] nesmisleno čitanje -> oblak 45 217773 [8, 8, 13, 75]
-26.10. 23:24:38 [laptop] sumnja na ! -> oblak: 45 BM 40 [['izašli', 768, 769]]
-26.10. 23:24:38 [laptop] sumnja na ! -> oblak: 45 BM 10 [['važeći', 0, 934], ['nevažeći', 0, 16]]
-26.10. 23:24:38 [laptop] sumnja na ! -> oblak: 45 BM 39 [['važeći', 0, 772], ['nevažeći', 0, 7]]
-26.10. 23:24:38 [laptop] pročitano 8282, kandidata 1203, u redu 8092
-26.10. 23:27:00 [laptop] sumnja na ! -> oblak: 45 BM 29 [['izašli', 710, 608], ['važeći', 694, 602], ['nevažeći', 16, 6]]
-26.10. 23:27:00 [laptop] nesmisleno čitanje -> oblak 49 218121 [598, 597, 5, 594]
-26.10. 23:27:00 [laptop] pročitano 8282, kandidata 1205, u redu 8092
-26.10. 23:27:00 [laptop] nesmisleno čitanje -> oblak 28 215994 [349520, 7520, 8, 512]
-26.10. 23:27:00 [laptop] pročitano 8282, kandidata 1206, u redu 8092
-26.10. 23:27:00 [laptop] nesmisleno čitanje -> oblak 28 215940 [634, 633, 88, 625]
-26.10. 23:27:00 [laptop] nesmisleno čitanje -> oblak 28 216036 [556, 555, 0, 0]
-26.10. 23:27:00 [laptop] nesmisleno čitanje -> oblak 36 216705 [737, 737, 20, 716]
-26.10. 23:27:00 [laptop] pročitano 8282, kandidata 1209, u redu 8092
-26.10. 23:29:14 [laptop] nesmisleno čitanje -> oblak 41 217236 [836, 836, 0, 0]
-26.10. 23:29:14 [laptop] nesmisleno čitanje -> oblak 41 217263 [791, 791, 7, 794]
-26.10. 23:29:14 [laptop] nesmisleno čitanje -> oblak 53 218985 [487, 787, 14, 773]
-26.10. 23:29:14 [laptop] pročitano 8282, kandidata 1212, u redu 8092
-26.10. 23:29:14 [laptop] pročitano 8282, kandidata 1212, u redu 8092
-26.10. 23:29:14 [laptop] nesmisleno čitanje -> oblak 61 219774 [813, 813, 9, 803]
-26.10. 23:29:14 [laptop] pročitano 8282, kandidata 1213, u redu 8092
-26.10. 23:29:14 [laptop] pročitano 8282, kandidata 1213, u redu 8091
-26.10. 23:31:53 [laptop] nesmisleno čitanje -> oblak 165 235062 [436, 435, 8, 428]
-26.10. 23:31:53 [laptop] nesigurno čitanje 165 235158 [('važeći', 7, 27, 27), ('nevažeći', 20, 10, 0)]
-26.10. 23:31:53 [laptop] sumnja na ! -> oblak: 165 BM 3 [['izašli', 530, 539]]
-26.10. 23:31:53 [laptop] pročitano 8282, kandidata 1216, u redu 8091
-26.10. 23:31:53 [laptop] nesmisleno čitanje -> oblak 80 222570 [2, 2, 2, 275]
-26.10. 23:31:53 [laptop] pročitano 8282, kandidata 1217, u redu 8091
-26.10. 23:31:53 [laptop] pročitano 8282, kandidata 1217, u redu 8091
-26.10. 23:34:36 [laptop] pročitano 8282, kandidata 1217, u redu 8091
-26.10. 23:34:36 [laptop] nesmisleno čitanje -> oblak 87 223251 [206, 206, 3, 0]
-26.10. 23:34:36 [laptop] pročitano 8282, kandidata 1218, u redu 8091
-26.10. 23:34:36 [laptop] sumnja na ! -> oblak: 87 BM 12 [['važeći', 5, 197], ['nevažeći', 197, 5]]
-26.10. 23:34:36 [laptop] nesmisleno čitanje -> oblak 146 232158 [90, 90, 0, 89]
-26.10. 23:34:36 [laptop] pročitano 8282, kandidata 1220, u redu 8091
-26.10. 23:34:36 [laptop] pročitano 8282, kandidata 1220, u redu 8091
-26.10. 23:37:13 [laptop] nesmisleno čitanje -> oblak 109 226425 [494, 494, 13, 461]
-26.10. 23:37:13 [laptop] pročitano 8282, kandidata 1221, u redu 8091
-26.10. 23:37:13 [laptop] nesigurno čitanje 63 220032 [('izašli', 14, 20, 694)]
-26.10. 23:37:13 [laptop] nesmisleno čitanje -> oblak 126 229014 [342, 342, 36, 338]
-26.10. 23:37:13 [laptop] pročitano 8282, kandidata 1223, u redu 8091
-26.10. 23:37:13 [laptop] pročitano 8282, kandidata 1223, u redu 8091
-26.10. 23:37:13 [laptop] nesigurno čitanje 126 228990 [('važeći', 1120, 1123, 1113), ('nevažeći', 0, 0, 7)]
-26.10. 23:37:13 [laptop] nesmisleno čitanje -> oblak 126 228978 [1403, 1405, 15, 1388]
-26.10. 23:37:13 [laptop] nesmisleno čitanje -> oblak 127 229287 [19, 19, 0, 0]
-26.10. 23:37:13 [laptop] nesmisleno čitanje -> oblak 127 229332 [1000, 950, 50, 0]
-26.10. 23:37:13 [laptop] pročitano 8282, kandidata 1227, u redu 8091
-26.10. 23:39:34 [laptop] nesmisleno čitanje -> oblak 127 229500 [966, 996, 20, 976]
-26.10. 23:39:34 [laptop] nesigurno čitanje 127 229329 [('izašli', 465, 465, 765), ('važeći', 434, 34, 734)]
-26.10. 23:39:34 [laptop] nesmisleno čitanje -> oblak 127 229380 [97, 97, 10, 0]
-26.10. 23:39:34 [laptop] nesmisleno čitanje -> oblak 127 229356 [350, 340, 31, 770]
-26.10. 23:39:34 [laptop] nesmisleno čitanje -> oblak 127 229383 [46, 46, 0, 45]
-26.10. 23:39:34 [laptop] pročitano 8282, kandidata 1232, u redu 8091
-26.10. 23:39:34 [laptop] sumnja na ! -> oblak: 127 BM 7 [['važeći', 183, 179], ['nevažeći', 1, 5]]
-26.10. 23:39:34 [laptop] nesigurno čitanje 127 229338 [('izašli', 60, 760, 760), ('važeći', 23, 23, 723)]
-26.10. 23:39:34 [laptop] nesmisleno čitanje -> oblak 127 229443 [861, 861, 19, 0]
-26.10. 23:39:34 [laptop] pročitano 8282, kandidata 1235, u redu 8091
-26.10. 23:39:34 [laptop] pročitano 8282, kandidata 1235, u redu 8091
-26.10. 23:41:52 [laptop] nesmisleno čitanje -> oblak 74 221700 [233, 233, 4, 233]
-26.10. 23:41:52 [laptop] pročitano 8282, kandidata 1236, u redu 8091
-26.10. 23:41:52 [laptop] sumnja na ! -> oblak: 74 BM 10 [['važeći', 48, 49], ['nevažeći', 4, 3]]
-26.10. 23:41:52 [laptop] nesmisleno čitanje -> oblak 115 227172 [35, 35, 0, 34]
-26.10. 23:41:52 [laptop] pročitano 8282, kandidata 1238, u redu 8091
-26.10. 23:41:52 [laptop] nesmisleno čitanje -> oblak 115 227115 [102, 102, 0, 99]
-26.10. 23:41:52 [laptop] nesmisleno čitanje -> oblak 115 227208 [616, 616, 89, 607]
-26.10. 23:41:52 [laptop] pročitano 8282, kandidata 1240, u redu 8091
-26.10. 23:41:52 [laptop] sumnja na ! -> oblak: 98 BM 16 [['važeći', 1319, 1317]]
-26.10. 23:41:52 [laptop] nesmisleno čitanje -> oblak 98 224949 [922, 922, 14, 898]
-26.10. 23:41:52 [laptop] pročitano 8282, kandidata 1242, u redu 8091
-26.10. 23:44:12 [laptop] nesmisleno čitanje -> oblak 118 227538 [48, 48, 1, 48]
-26.10. 23:44:12 [laptop] pročitano 8282, kandidata 1243, u redu 8091
-26.10. 23:44:12 [laptop] nesmisleno čitanje -> oblak 118 227652 [640, 630, 15, 625]
-26.10. 23:44:12 [laptop] sumnja na ! -> oblak: 118 BM 57 [['izašli', 465, 466], ['važeći', 455, 456], ['nevažeći', 11, 10]]
-26.10. 23:44:12 [laptop] pročitano 8282, kandidata 1245, u redu 8091
-26.10. 23:44:12 [laptop] sumnja na ! -> oblak: 99 BM 3 [['izašli', 0, 177], ['važeći', 0, 177]]
-26.10. 23:44:12 [laptop] nesmisleno čitanje -> oblak 99 225069 [100, 74, 0, 74]
-26.10. 23:44:12 [laptop] nesigurno čitanje 99 225039 [('izašli', 3, 11, 111), ('važeći', 2, 10, 110)]
-26.10. 23:44:12 [laptop] sumnja na ! -> oblak: 99 BM 10 [['izašli', 0, 196], ['važeći', 0, 194], ['nevažeći', 0, 2]]
-26.10. 23:44:12 [laptop] pročitano 8282, kandidata 1249, u redu 8091
-26.10. 23:46:48 [laptop] sumnja na ! -> oblak: 99 BM 33 [['izašli', 0, 300], ['važeći', 0, 293], ['nevažeći', 0, 7]]
 26.10. 23:46:48 [laptop] sumnja na ! -> oblak: 99 BM 21 [['izašli', 0, 195], ['važeći', 0, 191], ['nevažeći', 0, 4]]
 26.10. 23:46:48 [laptop] sumnja na ! -> oblak: 99 BM 30 [['važeći', 0, 144], ['nevažeći', 0, 3]]
 26.10. 23:46:48 [laptop] nesmisleno čitanje -> oblak 100 225171 [527, 527, 9, 0]
@@ -3998,3 +3908,93 @@
 27.10. 01:44:04 [laptop] greška 4 211515 HTTP Error 400: Bad Request
 27.10. 01:44:04 [laptop] greška 4 211563 HTTP Error 400: Bad Request
 27.10. 01:44:04 [laptop] pročitano 8282, kandidata 1436, u redu 6902
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6901
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6900
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6899
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6898
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6897
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6896
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6895
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6894
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6893
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6892
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6891
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6890
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6889
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6888
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6887
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6886
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6885
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6884
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1436, u redu 6883
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] P (polje 15): 158 BM 82
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1437, u redu 6882
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1437, u redu 6881
+27.10. 01:46:16 [laptop] nesmisleno čitanje -> oblak 119 227781 [97, 97, 0, 439]
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1437, u redu 6880
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1437, u redu 6880
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1437, u redu 6879
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1437, u redu 6878
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1437, u redu 6877
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1437, u redu 6876
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] P (polje 15): 158 BM 139
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1438, u redu 6875
+27.10. 01:46:16 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 01:46:16 [laptop] pročitano 8282, kandidata 1438, u redu 6874
