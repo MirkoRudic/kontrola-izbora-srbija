@@ -1,1 +1,1 @@
-{"bm":{"235896":{"processed":true,"voters":3077,"out":726,"valid":701,"invalid":25,"lists":[553,15,120,0,0,0,1,8,0,0,3,0,0,0,0,0,0,1],"at":"26.10. 07:28","zap":[],"alerts":[],"chk":[]}}}
+{"bm":{"235896":{"processed":true,"voters":3077,"out":726,"valid":701,"invalid":25,"lists":[553,15,120,0,0,0,1,8,0,0,3,0,0,0,0,0,0,1],"at":"26.10. 07:28","zap":[{"link":"https://www.rik.parlament.gov.rs/extfile/sr/election_results/830/108/6adf4b0fa8a2b/@ПА 1 - ВУЧИТРН_7840b1add4eea87a45cd14e77c91391a.pdf","at":"27.10. 19:09"}],"alerts":[],"chk":[]}}}
