@@ -66,7 +66,7 @@ for p in range(1, 40):
             hit = seen[url] = [uid, s, n] if s else None
         if not hit: continue
         uid, sid, n = hit
-        vr = "dokument" if pa else ("odbaceno" if NEPON.search(name) else "ponisteno") if re.search(r"ПОНИШТ", name, re.I) else "ispravka" if re.search(r"ИСПРАВ|ИЗМЕН", name, re.I) else "resenje"
+        vr = "dokument" if pa else "neutvrdjeno" if re.search(r"НЕ\s+МОГУ\s+(СЕ\s+)?УТВРДИТИ", name, re.I) else ("odbaceno" if NEPON.search(name) else "ponisteno") if re.search(r"ПОНИШТ", name, re.I) else "ispravka" if re.search(r"ИСПРАВ|ИЗМЕН", name, re.I) else "resenje"
         at = datetime.datetime.fromtimestamp(int(d["datetime"]), TZ).strftime("%d.%m. %H:%M")
         naz = ("Zapisnik BM %d (okačen kao dodatni dokument)" % n) if pa and "RG-11" not in lat(name) else ("Zapisnik o posmatračima BM %d (okačen kao dodatni dokument)" % n) if pa else lat(name)[:220]
         out.setdefault(uid, {}).setdefault(sid, []).append(dict(at=at, naziv=naz, link=url, vrsta=vr, ko=lat(d.get("document_bearer") or "")[:120]))
