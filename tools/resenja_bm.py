@@ -71,6 +71,12 @@ for p in range(1, 40):
         naz = ("Zapisnik BM %d (okačen kao dodatni dokument)" % n) if pa and "RG-11" not in lat(name) else ("Zapisnik o posmatračima BM %d (okačen kao dodatni dokument)" % n) if pa else lat(name)[:220]
         out.setdefault(uid, {}).setdefault(sid, []).append(dict(at=at, naziv=naz, link=url, vrsta=vr, ko=lat(d.get("document_bearer") or "")[:120]))
     if stari == len(recs): break
+# RIK ume da prekine listanje (ograničenje upita) – nikad ne gubimo ranije nađena rešenja
+for u, v in old.get("u", {}).items():
+    for sid, L in v.items():
+        have = {x["link"] for x in out.get(u, {}).get(sid, [])}
+        for x in L:
+            if x["link"] not in have: out.setdefault(u, {}).setdefault(sid, []).append(x)
 for u in out.values():
     for L in u.values(): L.sort(key=lambda x: x["at"][3:5] + x["at"][:2] + x["at"][6:])
 n = sum(len(L) for u in out.values() for L in u.values())
