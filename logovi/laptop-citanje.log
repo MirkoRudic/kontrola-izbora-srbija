@@ -1,13 +1,4 @@
 27.10. 09:44:33 [laptop] pročitano 8283, kandidata 1762, u redu 1340
-27.10. 09:44:33 [laptop] greška 4 211515 <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
-27.10. 09:44:33 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 09:44:33 [laptop] pročitano 8283, kandidata 1762, u redu 1340
-27.10. 09:44:33 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 09:44:33 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 09:44:33 [laptop] pročitano 8283, kandidata 1762, u redu 1340
-27.10. 09:44:33 [laptop] greška 4 211515 HTTP Error 400: Bad Request
-27.10. 09:44:33 [laptop] greška 4 211563 HTTP Error 400: Bad Request
-27.10. 09:44:33 [laptop] pročitano 8283, kandidata 1762, u redu 1340
 27.10. 09:44:33 [laptop] greška 4 211515 HTTP Error 400: Bad Request
 27.10. 09:44:33 [laptop] greška 4 211563 HTTP Error 400: Bad Request
 27.10. 09:44:33 [laptop] pročitano 8283, kandidata 1762, u redu 1340
@@ -3998,3 +3989,12 @@
 27.10. 11:45:19 [laptop] greška 4 211515 HTTP Error 400: Bad Request
 27.10. 11:45:19 [laptop] greška 4 211563 HTTP Error 400: Bad Request
 27.10. 11:45:19 [laptop] pročitano 8288, kandidata 1762, u redu 1345
+27.10. 11:50:45 [laptop] sumnja na ! -> oblak: 198 BM 67 [['izašli', 0, 434], ['važeći', 0, 429], ['nevažeći', 0, 5]]
+27.10. 11:50:45 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 11:50:45 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 11:50:45 [laptop] pročitano 8289, kandidata 1763, u redu 1346
+27.10. 11:50:45 [laptop] sumnja na ! -> oblak: 198 BM 87 [['izašli', 0, 1100], ['važeći', 0, 1099], ['nevažeći', 0, 1]]
+27.10. 11:50:45 [laptop] sumnja na ! -> oblak: 198 BM 88 [['izašli', 0, 1491], ['važeći', 0, 1490], ['nevažeći', 0, 1]]
+27.10. 11:50:45 [laptop] greška 4 211515 HTTP Error 400: Bad Request
+27.10. 11:50:45 [laptop] greška 4 211563 HTTP Error 400: Bad Request
+27.10. 11:50:45 [laptop] pročitano 8291, kandidata 1765, u redu 1348
