@@ -5,9 +5,9 @@
   "poslednje": "rezerva čeka: GitHub radi, objava stara 2 min"
  },
  "laptop-nadzor": {
-  "vreme": "27.10. 07:27:21",
+  "vreme": "27.10. 07:27:25",
   "gde": "laptop",
-  "poslednje": "e, please try \tgit rebase (--continue | --abort | --skip) If that is not the case, please \trm -fr \".git/rebase-merge\" and run me again.  I am stopping in case you still have something valuable there. "
+  "poslednje": "pokrenut posao zapisnici"
  },
  "laptop-citanje": {
   "vreme": "27.10. 07:27:14",
