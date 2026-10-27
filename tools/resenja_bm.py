@@ -76,8 +76,10 @@ for u, v in old.get("u", {}).items():
     for sid, L in v.items():
         have = {x["link"] for x in out.get(u, {}).get(sid, [])}
         for x in L:
-            if x["link"] not in have: out.setdefault(u, {}).setdefault(sid, []).append(x)
+            if x["link"] not in have: out.setdefault(u, {}).setdefault(sid, []).append(x); have.add(x["link"])
 for u in out.values():
+    for k in list(u):
+        seen_l = set(); u[k] = [x for x in u[k] if not (x["link"] in seen_l or seen_l.add(x["link"]))]
     for L in u.values(): L.sort(key=lambda x: x["at"][3:5] + x["at"][:2] + x["at"][6:])
 n = sum(len(L) for u in out.values() for L in u.values())
 doc = dict(meta=dict(at=datetime.datetime.now(TZ).strftime("%d.%m. %H:%M"), n=n, bm=sum(len(u) for u in out.values())), u=out, seen=seen)
