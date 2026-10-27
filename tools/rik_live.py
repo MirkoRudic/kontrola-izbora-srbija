@@ -383,8 +383,10 @@ while time.time() < deadline:
         AGG[uid] = a
     # spora rotacija obrađenih (izmene rezultata/zapisnika): najstarije proverena, do 150 po krugu
     done_list = [(uid, sid) for uid in UNITS for sid, r in LU[uid]["bm"].items() if r.get("processed")]
-    done_list.sort(key=lambda k: CHECKED.get(k, 0))
-    vec = set(todo); todo += [k for k in done_list[:150] if k not in vec]
+    # 27.10.: prvo obrađena BM bez linka na zapisnik (bilo ih je 1.282), pa najdavnije proverena; slučajan redosled među jednakima (CHECKED se ne pamti između krugova posla)
+    done_list.sort(key=lambda k: (bool(LU[k[0]]["bm"][k[1]].get("zap")), CHECKED.get(k, 0), random.random()))
+    vec = set(todo); nz = [k for k in done_list if not LU[k[0]]["bm"][k[1]].get("zap")][:400]; vec |= set(nz)
+    todo += nz + [k for k in done_list[:150] if k not in vec]
     changed = set(); new = 0; err = 0
     # rezultati se upisuju čim stignu; tokom dugog kruga međuobjava na ~3 min (da aplikacija ne čeka kraj kruga)
     part = set(); tpart = time.time()
