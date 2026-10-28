@@ -2,7 +2,7 @@
 #   iz koda:   from dnevnik import push_logs; push_logs({"posao": ["red", ...]})
 #   iz ljuske: python3 tools/dnevnik.py posao < fajl     (dodaje redove iz fajla)
 # logovi/<posao>.log čuva poslednjih 4000 redova; logovi/stanje.json ima vreme poslednjeg javljanja svakog posla.
-import os, sys, json, subprocess, tempfile, datetime, socket, time
+import os, re, sys, json, subprocess, tempfile, datetime, socket, time
 try:
     from zoneinfo import ZoneInfo; TZ = ZoneInfo("Europe/Belgrade")
 except Exception: TZ = None
@@ -53,6 +53,9 @@ def push(changes, msg, extra_tree=None, tries=4):
         r = build_commit(changes, msg, extra_tree)
         if not r: return False
         env, c, base = r
+        # 28.10.: prazan c (neuspeo commit-tree) dao bi refspec ":refs/heads/uzivo" = BRISANJE grane – nikad
+        if not re.fullmatch(r"[0-9a-f]{40}", c or "") or not base:
+            sys.stderr.write("dnevnik push: commit nije napravljen – preskačem\n"); return False
         p = _git(env, "push", "-q", "origin", f"{c}:refs/heads/uzivo")
         if p.returncode == 0: return True
         if "non-fast-forward" not in p.stderr and "fetch first" not in p.stderr and "rejected" not in p.stderr:
