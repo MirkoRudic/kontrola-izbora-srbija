@@ -5,9 +5,9 @@
   "poslednje": "GitHub posao ne radi (objava stara 5 min) – rezerva preuzima ovaj krug"
  },
  "laptop-nadzor": {
-  "vreme": "28.10. 13:09:17",
+  "vreme": "28.10. 13:09:23",
   "gde": "laptop",
-  "poslednje": "režim promenjen: izbori -> stop"
+  "poslednje": "gasim posao druge vrste (režim stop): 18352 python  tools\\rik_live.py --standby --minutes 960  "
  },
  "laptop-citanje": {
   "vreme": "28.10. 12:00:01",
