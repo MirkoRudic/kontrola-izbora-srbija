@@ -23,6 +23,10 @@ def build_commit(changes, msg, extra_tree=None):
             base = _git(env, "rev-parse", "FETCH_HEAD").stdout.strip() or None
             if base: break
         time.sleep(3)
+    if not base:  # 28.10.: ako je grana uzivo obrisana, nastavi od rezervne kopije (push je ponovo pravi)
+        if _git(env, "fetch", "-q", "--refmap=", "origin", "+refs/heads/uzivo-kopija").returncode == 0:
+            base = _git(env, "rev-parse", "FETCH_HEAD").stdout.strip() or None
+            if base: sys.stderr.write("dnevnik: grana uzivo ne postoji – vraćam je iz uzivo-kopija\n")
     if not base:
         sys.stderr.write("dnevnik: grana uzivo nije dohvaćena – preskačem upis\n"); return None
     _git(env, "read-tree", base)
@@ -57,7 +61,9 @@ def push(changes, msg, extra_tree=None, tries=4):
         if not re.fullmatch(r"[0-9a-f]{40}", c or "") or not base:
             sys.stderr.write("dnevnik push: commit nije napravljen – preskačem\n"); return False
         p = _git(env, "push", "-q", "origin", f"{c}:refs/heads/uzivo")
-        if p.returncode == 0: return True
+        if p.returncode == 0:
+            _git(env, "push", "-q", "-f", "origin", f"{c}:refs/heads/uzivo-kopija")  # rezervna kopija (najbolje što može)
+            return True
         if "non-fast-forward" not in p.stderr and "fetch first" not in p.stderr and "rejected" not in p.stderr:
             sys.stderr.write("dnevnik push: " + p.stderr[-300:] + "\n")
     return False
