@@ -6,8 +6,9 @@ on:
     - cron: "*/10 18-23 25 10 *"
     - cron: "*/10 * 26-27 10 *"
     - cron: "*/10 0-10 28 10 *"
-    # 28.10. (Mirko): posle toga jednom dnevno ujutro (07:50 po Beogradu) – osveži rezultate i pošalji Telegram poruku ako se stanje promenilo
-    - cron: "50 6 * * *"
+    # 28.10. 13:10 (Mirko): posle toga na 2 sata danju (07:50–21:50 po Beogradu), noću ne; dok RIK ne obradi 100 % BM.
+    # Telegram i dalje samo jutarnja poruka (prvi krug), i samo ako se stanje promenilo.
+    - cron: "50 6-20/2 * * *"
   workflow_dispatch:
     inputs:
       sim:
@@ -47,7 +48,13 @@ jobs:
           SIM=""; [ "${{ github.event.inputs.sim }}" = "true" ] && SIM="--sim"
           [ "${{ github.event.inputs.reset }}" = "true" ] && SIM="$SIM --reset"
           [ "${{ github.event.inputs.tg_demo }}" = "true" ] && SIM="--tg-demo"
-          MIN="${{ github.event.inputs.minutes || '50' }}"; [ "${{ github.event.schedule }}" = "50 6 * * *" ] && MIN=25
+          MIN="${{ github.event.inputs.minutes || '50' }}"
+          if [ "${{ github.event.schedule }}" = "50 6-20/2 * * *" ]; then
+            MIN=20
+            P=$(curl -sf https://raw.githubusercontent.com/${{ github.repository }}/uzivo/public/data/live/summary.json | python3 -c "import json,sys;m=json.load(sys.stdin)['meta'];print(m.get('processed',0),m.get('stations',0))" || echo "0 0")
+            set -- $P; echo "obrađeno $1 od $2"
+            if [ "$2" != "0" ] && [ "$1" -ge "$2" ]; then echo "RIK je obradio 100 % BM – nema više čitanja"; exit 0; fi
+          fi
           python3 tools/rik_live.py --threads 40 --minutes "$MIN" $SIM
       - name: Sledeći krug (ne čeka GitHub raspored)
         if: always() && github.event.inputs.sim != 'true' && github.event.inputs.tg_demo != 'true'
