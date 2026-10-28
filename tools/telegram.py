@@ -1,6 +1,6 @@
 # Telegram poruke za izbornu noć (poziva ih rik_live.py).
 # Tajne (GitHub Secrets): TELEGRAM_TOKEN (obavezno), TELEGRAM_CHAT (opciono – ako fali, uzima se poslednja grupa u kojoj je bot).
-import json, os, urllib.request, urllib.parse
+import json, os, time, urllib.request, urllib.parse
 
 # liste 2026 (redni broj)
 SL, SNS, SPS, AD, ES = 3, 1, 2, 8, 9
@@ -88,10 +88,8 @@ def message(T, hhmm):
     return "\n".join(L)
 
 def slot(now):
-    """21:00–00:59 na pola sata, posle toga na sat. Pre 21 h nema redovnih poruka."""
-    h, m = now.hour, now.minute
-    if h >= 21 or h < 1: return f"{now:%d.%m.} {h:02d}:{0 if m < 30 else 30:02d}"
-    if 1 <= h < 12: return f"{now:%d.%m.} {h:02d}:00"
+    """28.10. (Mirko): posle izborne noći samo jedna poruka dnevno, ujutro (7–12 h)."""
+    if 7 <= now.hour < 12: return f"{now:%d.%m.} jutro"
     return None
 
 def _api(token, method, data=None):
@@ -121,10 +119,12 @@ def maybe_send(T, now, statef, log, test=False):
     frac = T["done"] / max(T["n"], 1)
     reasons = []
     s = slot(now)
-    if s and s != state.get("slot") and T["done"] and not state.get("final"): reasons.append("raspored")
+    if s and s != state.get("slot") and T["done"]: reasons.append("raspored")
     for key, cond in (("prvi", T["done"] > 0), ("50", frac >= .5), ("90", frac >= .9), ("99", frac >= .99)):
         if cond and key not in state.get("mile", []): reasons.append(key); state.setdefault("mile", []).append(key)
-    if T["ob"] > state.get("ob", 0): reasons.append("oboreno")
+    # 28.10.: bez posebnih poruka (oboreno, procenti) – samo jutarnja, i to samo ako se stanje promenilo od prethodne
+    reasons = [r for r in reasons if r == "raspored"]
+    if not test and time.time() - state.get("last_t", 0) < 20 * 3600: reasons = []
     if not reasons and not test: return False
     msg = message(T, now.strftime("%H:%M"))
     if not msg: return False
