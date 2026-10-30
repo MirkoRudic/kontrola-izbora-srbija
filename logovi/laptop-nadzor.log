@@ -240,3 +240,4 @@
 28.10. 13:01:10 [laptop] živ, režim izbori; nema aktivnih poslova u ovom trenutku
 28.10. 13:09:17 [laptop] režim promenjen: izbori -> stop
 28.10. 13:09:23 [laptop] gasim posao druge vrste (režim stop): 18352 python  tools\rik_live.py --standby --minutes 960
+30.10. 12:02:20 [laptop] nadzor start (PID 27072)
