@@ -15,6 +15,10 @@ ap.add_argument('--sim', action='store_true', help='proba na izborima 2023')
 ap.add_argument('--threads', type=int, default=6)
 ap.add_argument('--mirror', default=None, help='druga kopija (npr. Google Drive); ako nije data, čita se iz <dir>/../zadaci/mirror.txt')
 ap.add_argument('--site', default='https://kontrola-izbora-srbija.pages.dev')
+# RIK baza zapisnika (www.rik.parlament.gov.rs/zapisnici/<parent>): zapisnici se tu pojavljuju PRE rezultata (25.10. prvi u 20:38, rezultati tek posle 21:07)
+ap.add_argument('--zap-parent', default='779676', help='ID strane „Записници” za ove izbore (prazno = ne koristi bazu)')
+ap.add_argument('--zap-round', default='680072')
+ap.add_argument('--proba-baza', type=int, default=0, help='samo proba: pročitaj bazu za prvih N opština, ništa ne preuzimaj, izađi')
 A = ap.parse_args()
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dnevnik as _DN
@@ -134,10 +138,10 @@ def station(uid, sid):
     m = re.search(r"href='([^']+)'", d.get("minute_from_election_station") or "")
     return (R + urllib.parse.quote(m.group(1))) if m else None
 
-def save_pdf(uid, sid, link):
+def save_pdf(uid, sid, link, b=None):
     s = UNITS[uid]["st"][sid]; hist = INDEX.setdefault(uid, {}).setdefault(sid, [])
     if hist and hist[-1]["link"] == link: return False
-    b = getbin(link)
+    b = b or getbin(link)
     if not b: log("PDF nije preuzet", UNITS[uid]["name"], "BM", s["n"]); return False
     sha = hashlib.sha256(b).hexdigest()
     if hist and hist[-1]["sha"] == sha: hist[-1]["link"] = link; return False
@@ -149,10 +153,58 @@ def save_pdf(uid, sid, link):
     if len(hist) > 1: log("!!! ZAMENJEN ZAPISNIK:", UNITS[uid]["name"], "BM", s["n"], fn)
     return True
 
+# ---------- RIK baza zapisnika: RG-2 po opštini, nezavisno od rezultata (dodato 1.11.2026) ----------
+# 25.10. smo zapisnike tražili samo preko rezultata, pa je prvi preuzet tek u 21:31, a RIK ih je kačio od 20:38.
+ZAP = None if (A.sim or not A.zap_parent) else {f"data[{k}]": v for k, v in dict(type=1, parent=A.zap_parent, election_round=A.zap_round, property_election_type=2).items()}
+_FREF = re.compile(r"<span>([^<]*)</span></div>\s*<div class='table-file[^']*'><a href='([^']+)'", re.S)
+def baza_opstina(uid):
+    """[(sid, link)] za sva BM opštine čiji RG-2 postoji u bazi zapisnika; None ako RIK ne odgovori."""
+    byn = {int(s["n"]): sid for sid, s in UNITS[uid]["st"].items() if str(s.get("n", "")).isdigit()}
+    out, page = [], 1
+    while True:
+        d = post("/get-election", {"page": page, "election_type": 2, "filters[municipality]": uid, "filters[election_document_type]": 6, **ZAP}, tries=3)
+        if d is None: return None
+        rec = d.get("records") or []
+        for r in rec:
+            ex = r.get("extfiles") or []
+            h = "".join(x.get("extfile", "") for x in ex) if isinstance(ex, list) else str(ex)
+            files = _FREF.findall(h)
+            pick = next((l for t, l in files if "РГ-2" in t or "RG-2" in t or "раду бирачког" in t), files[0][1] if files else None)
+            try: sid = byn.get(int(str(r.get("election_station_number", "")).strip()))
+            except ValueError: sid = None
+            if sid and pick: out.append((sid, R + urllib.parse.quote(pick)))
+        pages = [int(x) for x in re.findall(r'data-page="(\d+)"', d.get("pagination") or "")]
+        if not rec or page >= max(pages + [1]): return out
+        page += 1
+def baza_krug():
+    """Preuzmi RG-2 koje još nemamo, za opštine koje nisu kompletne. Vraća (upita_opština, novih)."""
+    units = [u for u in UNITS if len(INDEX.get(u, {})) < len(UNITS[u]["st"])]
+    nov = 0
+    with ThreadPoolExecutor(A.threads) as ex:
+        lists = list(ex.map(baza_opstina, units))
+    todo = [(u, sid, l) for u, L in zip(units, lists) if L for sid, l in L if sid not in INDEX.get(u, {})]
+    with ThreadPoolExecutor(A.threads) as ex:  # preuzimanje paralelno, upis u INDEX samo ovde (glavna nit)
+        for (u, sid, l), b in ex.map(lambda t: (t, getbin(t[2])), todo):
+            if b and save_pdf(u, sid, l, b):
+                nov += 1
+                if time.time() - _LASTIX[0] > 30: save_index(); mirror("index.json"); _LASTIX[0] = time.time()
+    if None in lists: log("baza zapisnika: bez odgovora za", lists.count(None), "opština")
+    return len(units), nov
+if A.proba_baza:
+    if not ZAP: sys.exit("baza zapisnika isključena (--sim ili prazan --zap-parent)")
+    for uid in list(UNITS)[:A.proba_baza]:
+        L = baza_opstina(uid)
+        print(UNITS[uid]["name"], "BM", len(UNITS[uid]["st"]), "u bazi", None if L is None else len(L), (L or [("", "")])[0][1][-60:])
+    sys.exit(0)
+
 KNOWN = {uid: 0 for uid in UNITS}
 interval = 5.0; recheck = []
 while now() < UNTIL:
     t0 = time.time()
+    bnov = 0
+    if ZAP:
+        bu, bnov = baza_krug()
+        if bnov: log(f"baza zapisnika: {bnov} novih (proverenih opština {bu})")
     with ThreadPoolExecutor(A.threads) as ex: ag = dict(zip(UNITS, ex.map(unit_processed, UNITS)))
     todo = []
     for uid, p in ag.items():
@@ -163,7 +215,7 @@ while now() < UNTIL:
         KNOWN[uid] = p
     if not recheck: recheck = [(u, s) for u in INDEX for s in INDEX[u]]; random.shuffle(recheck)
     todo += recheck[:120]; recheck = recheck[120:]   # spora provera već sačuvanih (zamenjen zapisnik?)
-    new = 0
+    new = bnov
     def job(k):
         link = station(*k)
         return k, link
@@ -180,7 +232,7 @@ while now() < UNTIL:
         bad = sum(not mirror(r) for r in pend)
         if bad: log("kopija na Drive: još", bad, "fajlova čeka (Drive nedostupan?)")
     total = sum(len(v) for v in INDEX.values())
-    interval = 30.0 if total >= sum(len(u["st"]) for u in UNITS.values()) else (max(1.0, interval / 2) if new else min(10.0, interval * 1.5))
+    interval = 30.0 if total >= sum(len(u["st"]) for u in UNITS.values()) else (max(1.0, interval / 2) if new else min(5.0, interval * 1.5))
     log(f"krug: upita {len(todo)}, novih zapisnika {new}, ukupno sačuvano {total}, sledeći za {interval:.1f} min")
     flush_logs()
     time.sleep(max(5, t0 + interval * 60 - time.time()))
