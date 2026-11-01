@@ -28,6 +28,7 @@ ap.add_argument('--standby', action='store_true', help='rezerva (laptop): radi s
 ap.add_argument('--reset', action='store_true', help='kreni od nule (obriši prethodno stanje, ne nastavljaj sa grane uzivo)')
 ap.add_argument('--tg-demo', action='store_true', help='pošalji probne Telegram poruke i izađi')
 ap.add_argument('--fast', action='store_true', help='kratki intervali (za test)')
+ap.add_argument('--provera-bm', default=None, help='JSON fajl [[uid,sid],...]: ova BM proveri u prvom krugu (npr. posle ponovljenog glasanja)')
 A = ap.parse_args()
 if A.reset:
     import shutil; shutil.rmtree(A.out, ignore_errors=True)
@@ -67,13 +68,20 @@ def rec(r):
         i = int(l["count_number"]) - 1
         if 0 <= i < 18: lists[i] = num(l["won_number"])
     mf = r.get("minute_from_election_station") or ""
-    m = re.search(r"href='([^']+)'", mf)
     # 27.10.: uz zapisnik RIK kači i dodatne fajlove (RG-7 rešenje o ispravci, RG-11 posmatrači) – beležimo sve
+    # 2.11.: beležimo i naslov dokumenta (tip); posle ponovljenog glasanja glavni zapisnik je onaj „са поновљеног гласања“
     import html as _h
-    dz = [dict(link=R + _h.unescape(l), naziv=_h.unescape(nm).strip(), t=dt.strip())
-          for l, nm, dt in re.findall(r"href='([^']+)'[^>]*>([^<]*)<span[^>]*></span></a><span>([^<]*)", mf)]
+    dz = [dict(link=R + _h.unescape(l), naziv=_h.unescape(nm).strip(), t=dt.strip(), tip=_h.unescape(tt).strip())
+          for tt, l, nm, dt in re.findall(r"<span>([^<]*)</span></div>\s*<div class='table-file[^']*'><a href='([^']+)'[^>]*>([^<]*)<span[^>]*></span></a><span>([^<]*)", mf)]
+    if not dz:
+        dz = [dict(link=R + _h.unescape(l), naziv=_h.unescape(nm).strip(), t=dt.strip())
+              for l, nm, dt in re.findall(r"href='([^']+)'[^>]*>([^<]*)<span[^>]*></span></a><span>([^<]*)", mf)]
+    m = re.search(r"href='([^']+)'", mf)
+    orig = (R + _h.unescape(m.group(1))) if m else None
+    pz = next((x["link"] for x in dz if "поновљен" in x.get("tip", "") and "Записник о раду" in x.get("tip", "")), None)
+    main = pz or ((R + m.group(1)) if m else None)  # bez ponovljenog: isti zapis linka kao ranije (bez lažne „zamene“)
     return dict(processed=True, voters=num(s.get("total_voters", 0)), out=num(s.get("available", 0)), valid=v, invalid=iv, lists=lists,
-                zlink=(R + m.group(1)) if m else None, dz=[x for x in dz if m and x["link"] != R + m.group(1)])
+                zlink=main, pon=bool(pz), dz=[x for x in dz if x["link"] != main and (pz or x["link"] != orig)])
 
 # ---------- statični podaci ----------
 IDX = json.load(open("public/data/index.json"))
@@ -184,6 +192,7 @@ def apply(uid, sid, r, t):
             addlog(uid, sid, "vraceno", "RIK ponovo objavio rezultat (izašlo %s, važećih %s)" % (new["out"], new["valid"]), t)
         if r["zlink"] and (not rec_["zap"] or rec_["zap"][-1]["link"] != r["zlink"]): rec_["zap"].append(dict(link=r["zlink"], at=t))
         if r.get("dz"): rec_["dz"] = r["dz"]
+        if r.get("pon"): rec_["pon"] = True
         if rec_["chk"]: addlog(uid, sid, "provera", "; ".join(rec_["chk"]), t)
         L[sid] = rec_; return True
     diffk = [k for k in ("voters", "out", "valid", "invalid", "lists") if old.get(k) != new[k]]
@@ -192,10 +201,14 @@ def apply(uid, sid, r, t):
         addlog(uid, sid, "rezultat", "RIK promenio rezultat (" + ", ".join(diffk) + ")", t)
         old.update(new); old["chk"] = checks(r, y23); changed = True
     if r["zlink"] and (not old["zap"] or old["zap"][-1]["link"] != r["zlink"]):
-        if old["zap"]:
+        if old["zap"] and r.get("pon"):
+            old["alerts"].append(dict(type="zapisnik", at=t, detail="Objavljen zapisnik sa ponovljenog glasanja 1. 11."))
+            addlog(uid, sid, "zapisnik", "Objavljen zapisnik sa ponovljenog glasanja 1. 11.", t)
+        elif old["zap"]:
             old["alerts"].append(dict(type="zapisnik", at=t, detail="Zapisnik na RIK-u zamenjen novim fajlom"))
             addlog(uid, sid, "zapisnik", "Zapisnik na RIK-u zamenjen novim fajlom", t)
         old["zap"].append(dict(link=r["zlink"], at=t)); changed = True
+    if r.get("pon") and not old.get("pon"): old["pon"] = True; changed = True
     if r.get("dz") is not None and ("dz" not in old or r["dz"] != old["dz"]):
         # 27.10. 22:20: pri prvom viđenju (stari fajlovi) bez upisa u dnevnik; vreme = vreme kačenja na RIK-u
         if "dz" in old:
@@ -414,6 +427,8 @@ while time.time() < deadline:
     done_list.sort(key=lambda k: (bool(LU[k[0]]["bm"][k[1]].get("zap")), CHECKED.get(k, 0), random.random()))
     vec = set(todo); nz = [k for k in done_list if not LU[k[0]]["bm"][k[1]].get("zap")][:400]; vec |= set(nz)
     todo += nz + [k for k in done_list[:150] if k not in vec]
+    if A.provera_bm and not getattr(A, "_pb", 0):
+        A._pb = 1; pb = [tuple(x) for x in json.load(open(A.provera_bm))]; todo += [k for k in pb if k not in set(todo)]
     changed = set(); new = 0; err = 0
     # rezultati se upisuju čim stignu; tokom dugog kruga međuobjava na ~3 min (da aplikacija ne čeka kraj kruga)
     part = set(); tpart = time.time()
