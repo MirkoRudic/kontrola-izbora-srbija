@@ -25,6 +25,9 @@ import dnevnik as _DN
 if not _DN.jedini("zapisnici" + ("-proba" if A.sim else "")): print("arhiva već radi – izlazim"); sys.exit(0)
 R = "https://www.rik.parlament.gov.rs"; ROUND = "341140" if A.sim else "680072"
 D = A.dir; os.makedirs(D, exist_ok=True)
+import revizija as REV  # revizioni dnevnik: kad je šta pročitano/preuzeto (lokalno odmah + zaštićena grana 'revizija')
+REV.LOCAL = os.path.join(os.path.dirname(os.path.abspath(D)), "revizija")
+POSAO = "zapisnici" + ("-proba" if A.sim else "")
 def _tz():
     n = datetime.datetime.utcnow()
     return datetime.timezone(datetime.timedelta(hours=1 if n >= datetime.datetime(2026, 10, 25, 1, 0) else 2))  # CEST->CET 25.10. u 03:00
@@ -52,7 +55,7 @@ cj = http.cookiejar.CookieJar(); OP = urllib.request.build_opener(urllib.request
 OP.addheaders = [("User-Agent", "Mozilla/5.0 (kontrola-izbora)")]
 def cookie():
     try: OP.open(R + "/542645/rezultati/", timeout=60).read()
-    except Exception as e: log("cookie greška", e)
+    except Exception as e: log("cookie greška", e); REV.zapisi(POSAO, "greska", gde_u_kodu="cookie", poruka=str(e)[:200])
 def post(path, data, tries=5):
     for a in range(tries):
         try:
@@ -138,7 +141,7 @@ def station(uid, sid):
     m = re.search(r"href='([^']+)'", d.get("minute_from_election_station") or "")
     return (R + urllib.parse.quote(m.group(1))) if m else None
 
-def save_pdf(uid, sid, link, b=None):
+def save_pdf(uid, sid, link, b=None, izvor="rezultati", rik_vreme=None):
     s = UNITS[uid]["st"][sid]; hist = INDEX.setdefault(uid, {}).setdefault(sid, [])
     if hist and hist[-1]["link"] == link: return False
     b = b or getbin(link)
@@ -150,6 +153,8 @@ def save_pdf(uid, sid, link, b=None):
     with open(os.path.join(fd, fn), "wb") as f: f.write(b)
     mirror(os.path.join("2026", uid, fn))
     hist.append(dict(link=link, sha=sha, file=f"2026/{uid}/{fn}", at=now().strftime("%d.%m. %H:%M"), bytes=len(b)))
+    REV.zapisi(POSAO, "preuzet", opstina_id=uid, opstina=UNITS[uid]["name"], bm=s["n"], sid=sid, izvor=izvor, rik_vreme=rik_vreme,
+               link=link, sha256=sha, bajtova=len(b), fajl=f"2026/{uid}/{fn}", zamena=len(hist) > 1)
     if len(hist) > 1: log("!!! ZAMENJEN ZAPISNIK:", UNITS[uid]["name"], "BM", s["n"], fn)
     return True
 
@@ -172,7 +177,9 @@ def baza_opstina(uid):
             pick = next((l for t, l in files if "РГ-2" in t or "RG-2" in t or "раду бирачког" in t), files[0][1] if files else None)
             try: sid = byn.get(int(str(r.get("election_station_number", "")).strip()))
             except ValueError: sid = None
-            if sid and pick: out.append((sid, R + urllib.parse.quote(pick)))
+            if sid and pick:
+                rv = next((x.get("date") for x in ex if isinstance(x, dict) and pick in x.get("extfile", "")), None) if isinstance(ex, list) else None
+                out.append((sid, R + urllib.parse.quote(pick), rv))
         pages = [int(x) for x in re.findall(r'data-page="(\d+)"', d.get("pagination") or "")]
         if not rec or page >= max(pages + [1]): return out
         page += 1
@@ -182,13 +189,14 @@ def baza_krug():
     nov = 0
     with ThreadPoolExecutor(A.threads) as ex:
         lists = list(ex.map(baza_opstina, units))
-    todo = [(u, sid, l) for u, L in zip(units, lists) if L for sid, l in L if sid not in INDEX.get(u, {})]
+    todo = [(u, sid, l, rv) for u, L in zip(units, lists) if L for sid, l, rv in L if sid not in INDEX.get(u, {})]
     with ThreadPoolExecutor(A.threads) as ex:  # preuzimanje paralelno, upis u INDEX samo ovde (glavna nit)
-        for (u, sid, l), b in ex.map(lambda t: (t, getbin(t[2])), todo):
-            if b and save_pdf(u, sid, l, b):
+        for (u, sid, l, rv), b in ex.map(lambda t: (t, getbin(t[2])), todo):
+            if b and save_pdf(u, sid, l, b, izvor="baza", rik_vreme=rv):
                 nov += 1
                 if time.time() - _LASTIX[0] > 30: save_index(); mirror("index.json"); _LASTIX[0] = time.time()
     if None in lists: log("baza zapisnika: bez odgovora za", lists.count(None), "opština")
+    REV.zapisi(POSAO, "baza_procitana", opstina=len(units), bez_odgovora=lists.count(None), u_bazi=sum(len(L) for L in lists if L), novih=nov)
     return len(units), nov
 if A.proba_baza:
     if not ZAP: sys.exit("baza zapisnika isključena (--sim ili prazan --zap-parent)")
@@ -234,6 +242,9 @@ while now() < UNTIL:
     total = sum(len(v) for v in INDEX.values())
     interval = 30.0 if total >= sum(len(u["st"]) for u in UNITS.values()) else (max(1.0, interval / 2) if new else min(5.0, interval * 1.5))
     log(f"krug: upita {len(todo)}, novih zapisnika {new}, ukupno sačuvano {total}, sledeći za {interval:.1f} min")
-    flush_logs()
+    REV.zapisi(POSAO, "krug", pocetak=datetime.datetime.fromtimestamp(t0, TZ).isoformat(timespec="seconds"), trajanje_s=round(time.time() - t0),
+               opstina_sa_rezultatima=sum(1 for p in ag.values() if p), rik_bez_odgovora=sum(1 for p in ag.values() if p is None),
+               upita=len(todo), novih=new, ukupno=total, sledeci_min=interval)
+    flush_logs(); REV.posalji()
     time.sleep(max(5, t0 + interval * 60 - time.time()))
-log("kraj"); flush_logs(True)
+log("kraj"); flush_logs(True); REV.zapisi(POSAO, "kraj"); REV.posalji(True)

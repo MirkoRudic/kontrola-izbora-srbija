@@ -380,6 +380,10 @@ def _pad(t, v, tb):
     except Exception: pass
     sys.__excepthook__(t, v, tb)
 sys.excepthook = _pad
+import revizija as REV
+POSAO = "rik_live" + ("-proba" if A.sim else "")
+if os.name == "nt": REV.LOCAL = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "..", "revizija")
+REV.zapisi(POSAO, "start", minuta=A.minutes, rezerva=bool(A.standby))
 log(f"start: {'PROBA ' if A.sim else ''}{'rezerva ' if A.standby else ''}minuta {A.minutes}")
 while time.time() < deadline:
     if A.standby:
@@ -425,6 +429,9 @@ while time.time() < deadline:
             if apply(uid, sid, r, t):
                 changed.add(uid); part.add(uid)
                 if not was and r: new += 1
+                rb = LU[uid]["bm"].get(sid) or {}
+                REV.zapisi(POSAO, "rezultat" if (not was and r) else "promena", opstina_id=uid, sid=sid, bm=UNITS[uid]["st"][sid].get("n"),
+                           obradjeno=bool(rb.get("processed")), zapisnik=rb.get("zap"))
             if part and time.time() - tpart >= 180:
                 try:
                     tp = stamp(); sp = write(part, tp)
@@ -448,6 +455,10 @@ while time.time() < deadline:
     elif new: interval = max(1.0, interval / 2)
     else: interval = min(5.0, interval * 1.5)
     if A.fast: interval = min(interval, 1.0)
+    REV.zapisi(POSAO, "krug", pocetak=datetime.datetime.fromtimestamp(t0, now().tzinfo).isoformat(timespec="seconds"), trajanje_s=round(time.time() - t0),
+               opstina_proverenih=sum(1 for a in ags.values() if a is not None), rik_bez_odgovora=sum(1 for a in ags.values() if a is None),
+               upita=len(todo), novih=new, gresaka=err, promenjeno_opstina=len(changed), obradjeno=s["meta"]["processed"], ukupno=total)
+    if not A.no_push: REV.posalji()
     log(f"krug: upita {len(todo)} novih {new} greške {err} promenjeno opština {len(changed)} obrađeno {s['meta']['processed']}/{total} trajanje {time.time()-t0:.0f}s sledeći za {interval:.1f} min")
     flush_logs()
     nxt = t0 + interval * 60
@@ -455,5 +466,6 @@ while time.time() < deadline:
     time.sleep(max(5, nxt - time.time()))
 if PENDING: push(f"Uživo: obrađeno {summary(stamp())['meta']['processed']}/{total} BM ({stamp()})")
 log("kraj kruga (isteklo vreme)")
-flush_logs(True)
+flush_logs(True); REV.zapisi(POSAO, "kraj")
+if not A.no_push: REV.posalji(True)
 log("kraj")
