@@ -18,6 +18,7 @@ ap.add_argument('--max', type=int, default=0)
 ap.add_argument('--until', default=None)
 ap.add_argument('--liste', type=int, default=19)
 A = ap.parse_args()
+Q_KOL = None
 D = os.path.join(A.dir, A.izbori); IXF = os.path.join(D, "index.json"); OUT = os.path.join(D, "citanje.json"); LOGF = os.path.join(D, "citanje_log.txt")
 UNTIL = datetime.datetime.fromisoformat(A.until) if A.until else None
 def log(*a):
@@ -49,6 +50,9 @@ def q_tab(a, b):
     return ("Isečak srpskog izbornog zapisnika, tabela 11.5: broj glasova koje je dobila svaka izborna lista. Svaki red ima redni broj liste "
             f"(levo) i rukom upisan broj glasova (desno). Pročitaj redove {a} do {b}. Crtica ili prazno polje = 0. Ako je broj precrtan i pored upisan drugi, važi novi. "
             'Vrati SAMO JSON gde je ključ redni broj liste, a vrednost broj glasova, npr. {"' + str(a) + '": 151, "' + str(a + 1) + '": 0, ...}. Nečitko = null.')
+Q_KOL_T = ("Slika ima dve kolone iz tabele srpskog izbornog zapisnika: levo je redni broj izborne liste (1 do {n}), desno je rukom upisan broj glasova za tu listu, u istom redu. "
+         "Pročitaj broj glasova za svaki red, redom od 1 do {n}. Crtica, kosa crta ili prazno polje = 0. Ako je broj precrtan i pored upisan drugi, važi novi. "
+         'Vrati SAMO JSON: {{"glasovi": [niz od tačno {n} celih brojeva, redom za liste 1 do {n}]}}.')
 def render(path, dpi):
     pdf = P.PdfDocument(path); n = len(pdf); ims = [pdf[i].render(scale=dpi / 72).to_pil() for i in range(min(n, 2))]; pdf.close(); return n, ims
 def citaj(path, dpi):
@@ -59,11 +63,24 @@ def citaj(path, dpi):
         levo = im.crop((0, int(H * .12), int(W * .50), int(H * .90)))
         tabA = im.crop((int(W * .50), int(H * .04), W, int(H * .45))); tabB = im.crop((int(W * .50), int(H * .30), W, int(H * .75))); orient = "polozeno"
     L = ask(levo, Q_LEVO)
-    h = (A.liste + 1) // 2
-    T = {}; T.update(ask(tabA, q_tab(1, h))); T.update({k: v for k, v in ask(tabB, q_tab(h + 1, A.liste)).items() if k not in T or T[k] is None})
     z = {k: toint(L.get(k)) for k in ("bm", "upisani", "izasli", "u_kutiji", "nevazeci", "vazeci")}
-    lists = {str(i): toint(T.get(str(i))) for i in range(1, A.liste + 1)}
-    return dict(strana=n, orijentacija=orient, dpi=dpi, **z, liste=lists)
+    lists = None; nacin = "kolona"
+    if orient == "polozeno":  # 4.11.: samo kolona rednih brojeva + kolona glasova (bez naziva lista) – model se ne zbunjuje tekstom
+        y0, y1 = int(H * .085), int(H * .72)
+        a = im.crop((int(W * .505), y0, int(W * .565), y1)); b = im.crop((int(W * .86), y0, int(W * .985), y1))
+        from PIL import Image
+        c = Image.new("RGB", (a.width + b.width + 40, max(a.height, b.height)), "white"); c.paste(a, (0, 0)); c.paste(b, (a.width + 40, 0))
+        T = ask(c, Q_KOL)
+        v = T.get("glasovi") if isinstance(T, dict) else None
+        if isinstance(v, list) and len(v) == A.liste: lists = {str(i + 1): toint(x) for i, x in enumerate(v)}
+    if lists is None:
+        nacin = "tabela"; h = (A.liste + 1) // 2
+        T = {}; T.update(ask(tabA, q_tab(1, h))); T.update({k: v for k, v in ask(tabB, q_tab(h + 1, A.liste)).items() if k not in T or T[k] is None})
+        lists = {str(i): toint(T.get(str(i))) for i in range(1, A.liste + 1)}
+    # prazna/nečitka polja: ako sa njima = 0 zbir tačno daje važeće, to su crtice
+    if z.get("vazeci") is not None and any(x is None for x in lists.values()) and sum(x or 0 for x in lists.values()) == z["vazeci"]:
+        lists = {k: (x or 0) for k, x in lists.items()}
+    return dict(strana=n, orijentacija=orient, dpi=dpi, nacin=nacin, **z, liste=lists)
 def provera(r):
     v, iv, uk = r.get("vazeci"), r.get("nevazeci"), r.get("u_kutiji")
     L = r["liste"]; poz = []
@@ -74,6 +91,7 @@ def provera(r):
     if None in (v, iv, uk) or uk != v + iv: poz.append(f"u kutiji {uk} ≠ nevažeći {iv} + važeći {v}")
     if r.get("izasli") is not None and r.get("upisani") is not None and r["izasli"] > r["upisani"]: poz.append("izašlo više od upisanih")
     return poz
+Q_KOL = Q_KOL_T.format(n=A.liste)
 IX = json.load(open(IXF, encoding="utf-8"))
 RES = json.load(open(OUT, encoding="utf-8")) if os.path.exists(OUT) else {}
 def rg2(v):
