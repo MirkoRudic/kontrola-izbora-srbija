@@ -1,4 +1,4 @@
-<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261102000917"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
+<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261103230905"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
 
 :root{
   --bg:#f4f2ec; --panel:#fffdf8; --ink:#1c2228; --muted:#5f6973; --line:#d9d4c7; --soft:#ebe7dc;
@@ -530,11 +530,13 @@ table thead th{vertical-align:middle!important}
  </div>
  </div>
 <script>
+/* 3.11.: aplikacija radi samo sa korena sajta (pogrešan relativni link vodi na prazan ekran) */
+if(!/^\/(index\.html)?$/.test(location.pathname)){location.replace('/'+location.search+location.hash);}
 const $=s=>document.querySelector(s);
 const fmt=n=>n==null?'—':n.toLocaleString('sr-Latn-RS');
 const pct=(a,b,d=1)=>(a==null||!b)?'—':(100*a/b).toLocaleString('sr-Latn-RS',{minimumFractionDigits:d,maximumFractionDigits:d})+' %';
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const uFix=u=>{let d=u;try{d=decodeURI(u)}catch(e){}return encodeURI(d).replace(/%25([0-9A-Fa-f]{2})/g,'%$1')};
+const uFix=u=>{if(typeof u==='string'&&u.startsWith('/'))u='https://www.rik.parlament.gov.rs'+u;/* 3.11.: relativni linkovi RIK-a (Biblioteka 2023) */let d=u;try{d=decodeURI(u)}catch(e){}return encodeURI(d).replace(/%25([0-9A-Fa-f]{2})/g,'%$1')};
 const link=(u,t)=>u?`<a href="${uFix(u)}" target="_blank" rel="noopener">${t}</a>`:'';
 // greške u pregledaču -> /api/greska (najviše 6 po otvaranju strane)
 let NERR=0;const REPORTED=new Set();
@@ -827,7 +829,7 @@ const t2Wait=()=>`<div class="t2 t2e">${Date.now()<Date.parse('2026-10-25T20:00:
 function top2Html(z){if(!z||!z.valid||!z.lists)return t2Wait();
   const t=z.lists.map((v,i)=>({i:i+1,v:v||0})).filter(x=>x.v>0).sort((a,b)=>b.v-a.v).slice(0,2).sort((a,b)=>a.i-b.i);if(!t.length)return t2Wait();
   const mx=Math.max(...t.map(x=>x.v)),pc=v=>(100*v/z.valid).toLocaleString('sr-Latn-RS',{minimumFractionDigits:1,maximumFractionDigits:1})+' %';
-  return `<div class="t2" role="img" aria-label="${t.map(x=>esc(S26[x.i-1])+' '+pc(x.v)).join(', ')}">${t.map(x=>`<div class="t2b"><div class="t2v">${pc(x.v)}</div><div class="t2t"><div class="t2f" style="height:${Math.max(3,100*x.v/mx).toFixed(1)}%;background:${COL26[x.i-1]}"></div></div><div class="t2l"><b title="${esc(S26[x.i-1])}">${esc(S26[x.i-1])}</b><span>lista ${x.i}</span></div></div>`).join('')}</div>`}
+  return `<div class="t2" role="img" aria-label="${t.map(x=>esc(S26[x.i-1])+' '+pc(x.v)).join(', ')}">${t.map(x=>`<div class="t2b"><div class="t2v">${pc(x.v)}</div><div class="t2t"><div class="t2f" style="height:${Math.max(3,100*x.v/mx).toFixed(1)}%;background:${COL26[x.i-1]}"></div></div><div class="t2l"><b title="${esc(S26[x.i-1])}">${x.i===3?'SL':esc(S26[x.i-1])}</b><span>lista ${x.i}</span></div></div>`).join('')}</div>`}
 function progHtml(mob){const D=progData();if(!D)return '';const {c,done,n}=D,m=LIVE.meta;
   const sim=m&&m.sim?'<div class="note"><b>PROBA:</b> ovo su rezultati iz 2023. pušteni kao da stižu uživo, radi testa.</div>':'';
   const pre='';
@@ -1507,7 +1509,7 @@ function shareData(){const r=_SHR;if(!r)return null;const o=btab==="2026"?r.z:r.
   return {app:'Srbija',mk,shape:shpPath(),title,cap:cap||title,sub,year:btab,rows:names.map((n,i)=>[n,o.lists[i]||0]),valid:o.valid,invalid:o.invalid,out:o.out,voters:o.voters,note,url:location.href,host:location.host}}
 
 (function(){const m=document.querySelector('meta[name=appv]');if(!m||!location.protocol.startsWith('http'))return;const v0=m.content;
-  const chk=async()=>{try{const r=await fetch('version.txt?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const v=(await r.text()).trim();if(!v||v===v0)return;
+  const chk=async()=>{try{const r=await fetch('/version.txt?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const v=(await r.text()).trim();if(!v||v===v0)return;
     if(document.hidden){location.reload();return}
     if(document.getElementById('newv'))return;const b=document.createElement('button');b.id='newv';b.textContent='Nova verzija aplikacije · Osveži';
     b.style.cssText='position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:100;background:var(--accent);color:var(--accent-ink);border:0;border-radius:20px;padding:9px 16px;font:600 13px var(--sans);box-shadow:0 6px 18px rgba(0,0,0,.3);cursor:pointer';
