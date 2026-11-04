@@ -1,4 +1,4 @@
-<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261103233732"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
+<!doctype html><html lang="sr-Latn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="appv" content="20261104013954"><meta name="robots" content="noindex,nofollow"><title>Kontrola izbora Srbija</title><meta name="description" content="Rezultati izbora 25. 10. 2026 po biračkim mestima za celu Srbiju, poređenje sa 2023, zapisnici i rešenja RIK-a."><meta property="og:type" content="website"><meta property="og:url" content="https://kontrola-izbora-srbija.pages.dev/"><meta property="og:title" content="Kontrola izbora – Srbija"><meta property="og:description" content="Rezultati po biračkim mestima, poređenje sa 2023, zapisnici RIK-a."><meta property="og:image" content="https://kontrola-izbora-srbija.pages.dev/og.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="theme-color" content="#960018"><meta name="apple-mobile-web-app-title" content="Kontrola Srbija"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><style>
 
 :root{
   --bg:#f4f2ec; --panel:#fffdf8; --ink:#1c2228; --muted:#5f6973; --line:#d9d4c7; --soft:#ebe7dc;
@@ -240,6 +240,7 @@ header h1{cursor:pointer}
 .tip div{display:flex;gap:8px;align-items:center;margin:4px 0}.tip>div>i{font-style:normal;width:14px;flex:none;text-align:center;font-weight:800}
 .tip i.tp{color:var(--org)}.tip i.te{color:var(--bad)}.tip i.d{width:11px;height:11px;margin:0 1.5px}
 .ptabs{display:flex;gap:4px;margin:10px 0 -10px}
+ul.kroz{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}ul.kroz li{display:flex;gap:10px;align-items:baseline}ul.kroz li>b{min-width:44px}button.kroz{font:inherit;width:100%;display:grid;grid-template-columns:44px 1fr;gap:2px 10px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer;color:var(--ink)}button.kroz .small{grid-column:2}
 .ptabs.psub{margin:18px 0 -4px;gap:6px;justify-content:flex-start}.ptabs.psub button{flex:0 0 auto!important;font-size:13px!important;padding:7px 14px!important;border:1px solid var(--line);border-radius:999px;box-shadow:none}.ptabs.psub button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);box-shadow:none}
 .ptabs button{flex:1;font:600 14px var(--sans);background:none;border:0;padding:8px 4px;color:var(--muted);border-radius:8px 8px 0 0;cursor:pointer;white-space:nowrap}
 .ptabs button.on{background:var(--soft);color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent)}
@@ -551,11 +552,15 @@ const ST={lvl:'srb',rid:null,uid:null,nas:null,sid:null,view:'main',tab:'rez',fl
 
 // ---------- agregati ----------
 const Z=()=>({voters:0,out:0,valid:0,invalid:0,lists:Array(18).fill(0)});
-function addTo(a,b){if(!b)return a;['voters','out','valid','invalid'].forEach(k=>a[k]+=b[k]||0);(b.lists||[]).forEach((v,i)=>a.lists[i]+=v||0);return a}
-function unitAgg(uid){const u=IDX.units[uid],L=LIVE.u[uid]||{};return {y:u.y23,z:L.done?L.s26:null,zc:L.done?L.s23:null,done:L.done||0,n:u.nbm,m:L.m||0}}
+function addTo(a,b){if(!b)return a;['voters','out','valid','invalid'].forEach(k=>a[k]+=b[k]||0);(b.lists||[]).forEach((v,i)=>a.lists[i]=(a.lists[i]||0)+(v||0));return a}
+/* 4.11.: raniji izbori (2022, 2020) – rezultati pročitani iz zapisnika */
+const OLDY={'2023':['y',()=>IDX.lists23,'17. 12. 2023'],'2022':['y22',()=>IDX.lists22,'3. 4. 2022'],'2020':['y20',()=>IDX.lists20,'21. 6. 2020']};
+const YRS=()=>['2026','2023'].concat(IDX.lists22?['2022']:[],IDX.lists20?['2020']:[]);
+const sumK=(arr,k)=>{let o=null;arr.forEach(x=>{if(x&&x[k]){o=o||Z();addTo(o,x[k]);if(x[k].pr)o.pr=(o.pr||0)+x[k].pr}});return o};
+function unitAgg(uid){const u=IDX.units[uid],L=LIVE.u[uid]||{};return {y:u.y23,y22:u.y22||null,y20:u.y20||null,z:L.done?L.s26:null,zc:L.done?L.s23:null,done:L.done||0,n:u.nbm,m:L.m||0}}
 function groupAgg(uids){const y=Z(),z=Z(),zc=Z();let done=0,n=0,m=0,any=false;
   uids.forEach(id=>{const a=unitAgg(id);addTo(y,a.y);n+=a.n;if(a.z){addTo(z,a.z);addTo(zc,a.zc);done+=a.done;m+=a.m;any=true}});
-  return {y,z:any?z:null,zc:any?zc:null,done,n,m}}
+  const ua=uids.map(unitAgg);return {y,y22:sumK(ua,'y22'),y20:sumK(ua,'y20'),z:any?z:null,zc:any?zc:null,done,n,m}}
 function regUnits(rid){return IDX.regions.find(r=>r.id===rid).units}
 const ALL=()=>Object.keys(IDX.units);
 
@@ -608,18 +613,25 @@ function results(r,notes){
 let btab='2026', bsort=false;
 let _SHR=null;
 function ballot(r,extra){_SHR=r;
-  const tabs=`<div class="tabs" role="tablist"><button role="tab" data-b="2026" aria-selected="${btab==='2026'}">2026</button><button role="tab" data-b="2023" aria-selected="${btab==='2023'}">2023</button></div>`;
+  if(!YRS().includes(btab))btab='2026';const tabs=`<div class="tabs" role="tablist">${YRS().map(y=>`<button role="tab" data-b="${y}" aria-selected="${btab===y}">${y}</button>`).join('')}</div>`;
   let lists,valid,note='';
   if(btab==='2026'){lists=IDX.lists26.map(([k,l],i)=>[l,r.z?(r.z.lists[i]??0):null]);valid=r.z&&r.z.valid;}
-  else{if(!r.y){lists=[];note='Novo BM – nije postojalo na izborima 2023.'}else{lists=IDX.lists23.map((l,i)=>[l,r.y.lists[i]]);valid=r.y.valid}}
+  else{const [k,nm,dt]=OLDY[btab],o=r[k];if(!o){lists=[];note=ST.sid?`Nema podataka za ovo BM na izborima ${dt} (novo BM ili nije povezano sa tadašnjim BM).`:`Nema podataka za izbore ${dt}.`}else{lists=nm().map((l,i)=>[l,o.lists[i]??0]);valid=o.valid}
+    if(btab==='2022'||btab==='2020')note=(note?note+' ':'')+'RIK za ove izbore nema rezultate po biračkim mestima; brojevi su pročitani iz zapisnika biračkih odbora.'+(o&&o.pr?(ST.sid&&o.pr===1?' Zbir glasova lista se ne slaže sa brojem važećih listića'+(o.gz?' već u samom zapisniku (greška biračkog odbora)':'')+'.'+(o.nap?' Napomena čitanja: '+esc(o.nap):''):` Za ${o.pr} BM zbir glasova u zapisniku se ne slaže sa brojem važećih listića.`):'')}
   const max=Math.max(...lists.map(l=>l[1]||0),1), sumL=lists.reduce((a,l)=>a+(l[1]||0),0);
   return `<div style="display:flex;justify-content:space-between;align-items:center"><button class="back2" id="back2"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Nazad</button><button class="more" id="shareb" style="margin-top:6px">PODELI</button></div>${tabs}
   <div class="sec"><h3>Izborni listić ${btab} – svi glasovi</h3>${note?`<div class="small" style="margin-bottom:6px">${note}</div>`:''}${lists.length?`<div class="tbl"><table><thead><tr><th>#</th><th>Lista</th><th style="text-align:right"><button class="sortbtn" id="bsort">Glasova ${bsort?'▼':'↕'}</button></th><th style="text-align:right">%</th></tr></thead><tbody>
   ${lists.map((l,i)=>[l,i]).sort((a,b)=>bsort?((b[0][1]||0)-(a[0][1]||0)||a[1]-b[1]):a[1]-b[1]).map(([l,i])=>`<tr${l[1]?'':' class="zero"'}><td class="n">${i+1}.</td><td>${esc(l[0])}${l[1]!=null?`<div class="bar" style="width:${((l[1]||0)/max*100).toFixed(1)}%"></div>`:''}</td><td class="n">${l[1]==null?'—':fmt(l[1])}</td><td class="n">${l[1]==null?'':pct(l[1],valid)}</td></tr>`).join('')}
-  ${valid!=null?(()=>{const o=btab==='2026'?r.z:r.y;const tr=(l,v,b)=>`<tr class="tot"><td></td><td>${l}</td><td class="n">${fmt(v)}</td><td class="n">${b?pct(v,b):''}</td></tr>`;
+  ${valid!=null?(()=>{const o=btab==='2026'?r.z:r[OLDY[btab][0]];const tr=(l,v,b)=>`<tr class="tot"><td></td><td>${l}</td><td class="n">${fmt(v)}</td><td class="n">${b?pct(v,b):''}</td></tr>`;
     return tr('Važeći listići',valid,o&&o.out)+(o?tr('Nevažeći listići',o.invalid,o.out)+tr('Izašli birači',o.out,o.voters)+tr('Upisani birači',o.voters):'')})():''}
   </tbody></table></div>`:''}</div>${extra||''}`}
 
+/* 4.11.: „Ovo BM kroz izbore” – izlaznost i prva lista po godinama; klik prebacuje listić na tu godinu */
+function kroz(s,b){const rows=[['2026',b,IDX.lists26.map(x=>x[1]),''],['2023',s.y23,IDX.lists23,s.how&&s.how!=='isti broj i naziv'?`BM ${s.n23}`:''],['2022',s.y22,IDX.lists22||[],s.n22&&String(s.n22)!==String(s.n)?`BM ${s.n22}`:''],['2020',s.y20,IDX.lists20||[],s.n20&&String(s.n20)!==String(s.n)?`BM ${s.n20}`:'']].filter(r=>YRS().includes(r[0]));
+  const li=rows.map(([y,o,nm,bm])=>{if(!o||!o.valid)return `<li><b>${y}</b><span class="small">${y==='2026'?'rezultat još nije objavljen':'nema podataka (novo ili nepovezano BM)'}</span></li>`;
+    const i=o.lists.reduce((m,v,k)=>v>(o.lists[m]||0)?k:m,0),p1=v=>(100*v/(o.voters||1)).toLocaleString('sr-Latn-RS',{maximumFractionDigits:1});
+    return `<li><button type="button" class="kroz" data-b="${y}"><b>${y}</b><span>izlaznost ${o.voters?p1(o.out)+' %':'—'}</span><span class="small">prva: ${esc(String(nm[i]||'').split(/ – | - /)[0])} (${pct(o.lists[i],o.valid)})${bm?' · tada '+bm:''}</span></button></li>`}).join('');
+  return `<div class="sec"><h3>Ovo BM kroz izbore</h3><ul class="kroz">${li}</ul></div>`}
 // ---------- mapa ----------
 const svg=$('#map'), W=800, PAD=14; let PRJ=null, VB0=null, vb=null, MOB=innerWidth<700, MAXZ=16;
 const polysOf=g=>!g?[]:g.type==='MultiPolygon'?g.coordinates:[g.coordinates];
@@ -1036,7 +1048,7 @@ function crumbs(){const c=[`<button data-c="srb">Srbija</button>`];
     if(k==='srb')go({lvl:'srb'});else if(k==='reg')go({lvl:'reg',rid:ST.rid});else if(k==='unit')go({lvl:'unit',rid:ST.rid,uid:ST.uid});else go({...ST,sid:null,view:'main'},true)})}
 function stationAgg(U,list){const y=Z(),z=Z(),zc=Z();let done=0,m=0,yAll=0;
   list.forEach(s=>{if(s.y23){addTo(y,s.y23);yAll++}const b=zOf(liveBM(ST.uid,s.sid));if(b){addTo(z,b);done++;if(s.y23){addTo(zc,s.y23);m++}}});
-  return {y:yAll?y:null,z:done?z:null,zc:done?zc:null,partial:done>0&&done<list.length,done,n:list.length,m,yAll}}
+  return {y:yAll?y:null,y22:sumK(list,'y22'),y20:sumK(list,'y20'),z:done?z:null,zc:done?zc:null,partial:done>0&&done<list.length,done,n:list.length,m,yAll}}
 function render(){
   crumbs(); let h='',body=''; if(!ST.tab)ST.tab='rez';
   const kidsF=(rows)=>ST.flt?rows.filter(r=>r.c&&r.c[ST.flt]>0):rows;
@@ -1056,16 +1068,16 @@ function render(){
   } else {const u=IDX.units[ST.uid],U=UF[ST.uid];
     if(!U){h=head(u.name,'Učitavam…');}
     else if(ST.sid){const s=U.stations.find(x=>x.sid===ST.sid),b=zOf(liveBM(ST.uid,s.sid)),g=sigOf(ST.uid,s.sid);
-      const r={y:s.y23,z:b,zc:null,partial:false},docs=odbOf(ST.uid,s);_CR=r;
+      const r={y:s.y23,y22:s.y22||null,y20:s.y20||null,z:b,zc:null,partial:false},docs=odbOf(ST.uid,s);_CR=r;
       h=head(s.nas!=null&&U.naselja[s.nas]&&!fold(U.naselja[s.nas].name).includes(fold(u.short))?U.naselja[s.nas].name:u.short,s.name,s.n,s.adr||'',sigHtml(g),ptabs(g.p,g.ne.length?1:0,docs.filter(isNewD).length,g.x?1:0));
       if(ST.tab==='prim') body=primTab(()=>[[ST.uid,s.sid]]);
       else if(ST.tab==='ne') body=primTab(()=>[[ST.uid,s.sid]],1);
       else if(ST.tab==='pon'&&ST.view==='main') body=ponTab([ST.uid],new Set([s.sid]));
       else if(ST.tab==='odb'){o23Load(ST.uid);body=odbTab(()=>provLine()+boardView(s,docs),{uid:ST.uid,s})}
       else if(ST.view==='dn') body=dnView(dnBM(liveBM(ST.uid,s.sid),zapR(ST.uid,s.sid),oblR(ST.uid,s.sid),zamR(ST.uid,s.sid),resR(ST.uid,s.sid)).map(e=>({...e,l2:`BM ${s.n} · ${esc(placeOf(ST.uid,s.n))}`})));
-      else if(ST.view==='ballot') body=ballot(r,`<div class="sec"><h3>Zapisnici</h3><div class="links col">${zap26(ST.uid,s)}${link(s.z23,'Zapisnik 2023 (PDF, RIK)')}</div>${g.nr.length&&g.nb.length?neNote(g.nr):''}</div>`);
+      else if(ST.view==='ballot') body=ballot(r,`<div class="sec"><h3>Zapisnici</h3><div class="links col">${zap26(ST.uid,s)}${link(s.z23,'Zapisnik 2023 (PDF, RIK)')}${link(s.z22,'Zapisnik 2022 (PDF, RIK)')}${link(s.z20,'Zapisnik 2020 (PDF, RIK)')}</div>${g.nr.length&&g.nb.length?neNote(g.nr):''}</div>`);
       else body=(s.moved?`<div class="note"><b>BM je premešteno:</b> glasa se u opštini ${esc(s.moved)}${s.adr?` (${esc(s.adr)})`:''}. Administrativno pripada opštini ${esc(u.short)}.</div>`:'')+(DESK()?'':status26(b?1:0,1))
-        +results(r,[s.y23&&s.how&&s.how!=='isti broj i naziv'?`2023: BM ${s.n23} – ${esc(s.name23)}.`:'',((PON23||{})[ST.uid]||{})[s.n]?`Glasanje 2023. na ovom BM je poništeno i ponovljeno ${PON23[ST.uid][s.n]}`:''].filter(Boolean).join(' ')+`<div class="links zl">${zap26(ST.uid,s)}${link(s.z23,'Zapisnik 2023 (PDF, RIK)')}</div>`)
+        +results(r,[s.y23&&s.how&&s.how!=='isti broj i naziv'?`2023: BM ${s.n23} – ${esc(s.name23)}.`:'',((PON23||{})[ST.uid]||{})[s.n]?`Glasanje 2023. na ovom BM je poništeno i ponovljeno ${PON23[ST.uid][s.n]}`:''].filter(Boolean).join(' ')+`<div class="links zl">${zap26(ST.uid,s)}${link(s.z23,'Zapisnik 2023 (PDF, RIK)')}${link(s.z22,'Zapisnik 2022 (PDF, RIK)')}${link(s.z20,'Zapisnik 2020 (PDF, RIK)')}</div>`+kroz(s,b))
         +(s.y23?'':'<div class="note" style="margin-top:16px">Ovo biračko mesto nema odgovarajuće BM iz 2023, pa poređenje nije moguće.</div>');
     } else {const list=ST.nas!=null?U.stations.filter(s=>s.nas===ST.nas):U.stations;
       let r;
@@ -1115,6 +1127,7 @@ function render(){
   const shb=$('#shareb');if(shb)shb.onclick=()=>{shareOpen(shareData())};
   const b2=$('#back2');if(b2)b2.onclick=()=>{if(history.state&&history.state.v&&history.state.v!=='main'){history.back();return}ST.view='main';render();toTop()};
   const bs=$('#bsort');if(bs)bs.onclick=()=>{bsort=!bsort;render._keep=true;render()};
+  P.querySelectorAll('button.kroz[data-b]').forEach(b=>b.onclick=()=>{btab=b.dataset.b;ST.view='ballot';render()});
   P.querySelectorAll('.tabs button[data-b]').forEach(b=>b.onclick=()=>{btab=b.dataset.b;keepAnchor('.tabs button[data-b]',()=>{render._keep=true;render()})});
   P.querySelectorAll('.tabs button[data-pt]').forEach(b=>b.onclick=()=>{PT=b.dataset.pt;keepAnchor('.tabs button[data-pt]',()=>{render._keep=true;render()})});
   P.querySelectorAll('select[data-nf]').forEach(x=>x.onchange=()=>{NF=x.value;if(NF!==''&&NF!=='u')NM='';render._keep=true;render()});
@@ -1500,12 +1513,12 @@ async function shareOpen(d){const el=document.createElement('div');el.className=
   ddb.onclick=e=>{e.stopPropagation();ddt(ddm.hidden)};el.addEventListener('click',e=>{if(!e.target.closest('.dd'))ddt(false)});
   ddm.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{sel.value=b.dataset.v;ddm.querySelectorAll('[data-v]').forEach(q=>q.setAttribute('aria-selected',q===b));el.querySelector('.ddl').textContent=b.textContent;ddt(false);show(sel.value)});
   show('slika')}
-function shareData(){const r=_SHR;if(!r)return null;const o=btab==="2026"?r.z:r.y;if(!o)return null;let title,sub='',cap;
+function shareData(){const r=_SHR;if(!r)return null;const o=btab==="2026"?r.z:r[OLDY[btab][0]];if(!o)return null;let title,sub='',cap;
   if(ST.lvl==='srb')title='Srbija';else if(ST.lvl==='reg')title=IDX.regions.find(g=>g.id===ST.rid).name;
   else{const u=IDX.units[ST.uid],U=UF[ST.uid];if(ST.sid){const st=U.stations.find(x=>x.sid===ST.sid);title=`BM ${st.n} · ${st.name}`;cap=`BM ${st.n}, ${/zavod|inostran/i.test(u.short+' '+u.name)&&st.adr?st.adr.split(',')[0].trim()+', '+u.short:u.short}`;sub=u.short+(st.nas!=null&&U.naselja[st.nas]&&!fold(U.naselja[st.nas].name).includes(fold(u.short))?' · '+U.naselja[st.nas].name:'')+(st.adr?' · '+st.adr:'')}
     else if(ST.nas!=null){title=U.naselja[ST.nas].name;sub=u.short;cap=`${title}, ${u.short}`}else title=u.name}
-  const names=btab==='2026'?IDX.lists26.map(([k,l])=>l):IDX.lists23;const m=LIVE.meta;
-  const note=btab==='2026'?((m&&m.sim?'PROBA (rezultati 2023) · ':'')+(r.partial?'Delimični rezultati':'Rezultati')+' sa RIK-a'+(m&&m.checked?' · stanje '+m.checked:'')):'Rezultati RIK-a, parlamentarni izbori 17. 12. 2023.';
+  const names=btab==='2026'?IDX.lists26.map(([k,l])=>l):OLDY[btab][1]();const m=LIVE.meta;
+  const note=btab==='2026'?((m&&m.sim?'PROBA (rezultati 2023) · ':'')+(r.partial?'Delimični rezultati':'Rezultati')+' sa RIK-a'+(m&&m.checked?' · stanje '+m.checked:'')):btab==='2023'?'Rezultati RIK-a, parlamentarni izbori 17. 12. 2023.':`Parlamentarni izbori ${OLDY[btab][2]} · rezultati pročitani iz zapisnika biračkih odbora`;
   let mk=[];if(ST.sid&&btab==='2026'){const g=sigOf(ST.uid,ST.sid);mk=[g.p&&'P',g.ne.length&&'!',g.x&&'✕'].filter(Boolean)}
   return {app:'Srbija',mk,shape:shpPath(),title,cap:cap||title,sub,year:btab,rows:names.map((n,i)=>[n,o.lists[i]||0]),valid:o.valid,invalid:o.invalid,out:o.out,voters:o.voters,note,url:location.href,host:location.host}}
 
