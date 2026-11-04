@@ -1,0 +1,2146 @@
+{
+ "bm": {
+  "bm22": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Nebojša Ivanović",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Nada Milanović",
+     "by": "Novi DSS i Monarhisti - NADA",
+     "key": "NADA"
+    },
+    {
+     "role": "1. član",
+     "name": "Aleksandra Sarić",
+     "by": "IVICA DAČIĆ - Socijalistička partija Srbije (SPS)",
+     "key": "SPS"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Novica Milosavljević",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "2. član",
+     "name": "Božena Vilić",
+     "by": "Poslanici uz studente: za kontrolu izbora",
+     "key": "STUD"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Bojana Milošević",
+     "by": "Zeleno-levi front - Ne davimo Beograd",
+     "key": "ZLF"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Dušan Živanović",
+     "deputy": "Dalibor Matić",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 3,
+     "member": "Milica Stanković Miloradović",
+     "deputy": "Danijela Božanić",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 4,
+     "member": "Mile Arizanović",
+     "deputy": "Milica Đorđević",
+     "list": "RASIM LJAJIĆ – Ljudski (SDP – CDP)",
+     "key": "LJAJIC"
+    },
+    {
+     "no": 5,
+     "member": "Zlatko Minić",
+     "deputy": "Danijel Jović",
+     "list": "Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Nenad Sarić",
+     "deputy": "Goran Ranković",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Siniša Stević",
+     "deputy": "Dalibor Mihajlović",
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    },
+    {
+     "no": 12,
+     "member": "Nenad Jović",
+     "deputy": "Aleksandra Milovanović",
+     "list": "LIBERALNO ZELENA STRANKA-ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 13,
+     "member": "Aleksandar Jović",
+     "deputy": "Dragica Stojanović",
+     "list": "Biram PRAVDU - Biram BUDUĆNOST - Koalicija SNAGA - prof. dr Ferid Bulić",
+     "key": "SNAGA_BULIC"
+    },
+    {
+     "no": 14,
+     "member": "Slobodan Lukić",
+     "deputy": "Ana Ivanović",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA - RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    },
+    {
+     "no": 15,
+     "member": "Kristina Matić",
+     "deputy": "Zoran Stojadinović",
+     "list": "ĆALE OVO JE ZA TEBE – PETAR ĐURIĆ – PREMIJER SRBIJE",
+     "key": "DJURIC"
+    },
+    {
+     "no": 16,
+     "member": "Boban Marković",
+     "deputy": "Jasmina Nikolić",
+     "list": "VLADIMIR GAJIĆ – ALTERNATIVA ZA SRBIJU",
+     "key": "GAJIC"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o razrešenju",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/265/SCAN0005.PDF"
+    },
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/337/SCAN0019.PDF"
+    }
+   ]
+  },
+  "bm01": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Lazar Jojić",
+     "by": "Ekološki ustanak",
+     "key": "EU"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Ivan Čolić",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "1. član",
+     "name": "Miloš Perić",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Miloš Branković",
+     "by": "Načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    },
+    {
+     "role": "2. član",
+     "name": "Nemanja Kostić",
+     "by": "Zeleno-levi front – Ne davimo Beograd",
+     "key": "ZLF"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Andreja Jovanović",
+     "by": "Načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Zoran Perić",
+     "deputy": "Danijela Radovanović",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 3,
+     "member": "Aleksandar Milentijević",
+     "deputy": "Daniel Glid",
+     "list": "Studentska lista – Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 4,
+     "member": "Miodrag Milosavljević",
+     "deputy": "Srećko Stoimirović",
+     "list": "RASIM LJAJIĆ – Ljudski (SDP – CDP)",
+     "key": "LJAJIC"
+    },
+    {
+     "no": 5,
+     "member": "Siniša Milentijević",
+     "deputy": "Nadica Petrović",
+     "list": "Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Dragan Arsić",
+     "deputy": "Sima Grujić",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Nebojša Dragojević",
+     "deputy": "Bojan Obradović",
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    },
+    {
+     "no": 12,
+     "member": "Prvoslav Perić",
+     "deputy": "Saša Marjanović",
+     "list": "LIBERALNO ZELENA STRANKA – ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 14,
+     "member": "Zlatica Cvejić",
+     "deputy": "Saša Milenković",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA – RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    },
+    {
+     "no": 16,
+     "member": "Desimir Filipović",
+     "deputy": null,
+     "list": "VLADIMIR GAJIĆ – ALTERNATIVA ZA SRBIJU",
+     "key": "GAJIC"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/274/SCAN0006.PDF"
+    }
+   ]
+  },
+  "bm04": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Marko Mijailović",
+     "by": "Narodni pokret Srbije – Novo lice Srbije",
+     "key": "NPS"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Aida Rajković",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "1. član",
+     "name": "Maja Maksimović",
+     "by": "Poslanici uz studente: za kontrolu izbora",
+     "key": "STUD"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Sreten Veličković",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "2. član",
+     "name": "Danijela Milošević",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Radiša Veličković",
+     "by": "Socijaldemokratska partija Srbije",
+     "key": "SDPS"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Maja Cvetković",
+     "deputy": null,
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 3,
+     "member": "Konstantin Petrović",
+     "deputy": "Snežana Opanković",
+     "list": "Studentska lista – Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 5,
+     "member": "Ilija Veljković",
+     "deputy": "Radiša Stanisavljević",
+     "list": "Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Vesna Vojinović",
+     "deputy": "Predrag Marinković",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Dušan Mitrović",
+     "deputy": "Predrag Cvejić",
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    },
+    {
+     "no": 12,
+     "member": "Goran Miloradović",
+     "deputy": "Dejan Marković",
+     "list": "LIBERALNO ZELENA STRANKA – ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 13,
+     "member": "Dragan Radosavljević",
+     "deputy": null,
+     "list": "Biram PRAVDU – Biram BUDUĆNOST – Koalicija SNAGA – prof. dr Ferid Bulić",
+     "key": "SNAGA_BULIC"
+    },
+    {
+     "no": 14,
+     "member": "Zoran Jović",
+     "deputy": "David Novaković",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA – RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    },
+    {
+     "no": 16,
+     "member": "Sanja Marjanović",
+     "deputy": "Radivoje Nikolić",
+     "list": "VLADIMIR GAJIĆ – ALTERNATIVA ZA SRBIJU",
+     "key": "GAJIC"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/280/SCAN0007.PDF"
+    }
+   ]
+  },
+  "bm09": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Milovan Mitrović",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Radiša Bećar",
+     "by": "Načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    },
+    {
+     "role": "1. član",
+     "name": "Miloš Stefanović",
+     "by": "Pokret slobodnih građana (PSG) – SDA Sandžaka – PDD",
+     "key": "PSG"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Slobodan Grujić",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "2. član",
+     "name": "Sandra Đuričić Pavlović",
+     "by": "Poslanici uz studente: za kontrolu izbora",
+     "key": "STUD"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Goran Perić",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Nikola Grujić",
+     "deputy": "Zoran Trajilović",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 3,
+     "member": "Nataša Vulićević",
+     "deputy": "Damir Turković",
+     "list": "Studentska lista – Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 5,
+     "member": "Periša Stevanović",
+     "deputy": "Dejan Tomić",
+     "list": "Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": null,
+     "deputy": "Miodrag Pavlović",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 12,
+     "member": "Nemanja Jovanović",
+     "deputy": "Radiša Jonić",
+     "list": "LIBERALNO ZELENA STRANKA – ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 13,
+     "member": "Žarko Vukić",
+     "deputy": "Suzan Marjanović",
+     "list": "Biram PRAVDU – Biram BUDUĆNOST – Koalicija SNAGA – prof. dr Ferid Bulić",
+     "key": "SNAGA_BULIC"
+    },
+    {
+     "no": 14,
+     "member": "Vesna Trajilović",
+     "deputy": "Slobodanka Vukić",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA – RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    },
+    {
+     "no": 15,
+     "member": "Pera Mihajlović",
+     "deputy": "Dragiša Trailović",
+     "list": "ĆALE OVO JE ZA TEBE – PETAR ĐURIĆ – PREMIJER SRBIJE",
+     "key": "DJURIC"
+    },
+    {
+     "no": 16,
+     "member": "Mikica Milenković",
+     "deputy": "Srđan Ivanović",
+     "list": "VLADIMIR GAJIĆ – ALTERNATIVA ZA SRBIJU",
+     "key": "GAJIC"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/283/SCAN0008.PDF"
+    }
+   ]
+  },
+  "bm10": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Toplica Vukašinović",
+     "by": "Novi DSS i Monarhisti – NADA",
+     "key": "NADA"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Goran Nikolić",
+     "by": "SRBIJA CENTAR – SRCE",
+     "key": "SRCE"
+    },
+    {
+     "role": "1. član",
+     "name": "Periša Perić",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Marija Avramović",
+     "by": "Poslanici uz studente: za kontrolu izbora",
+     "key": "STUD"
+    },
+    {
+     "role": "2. član",
+     "name": "Miodrag Janić",
+     "by": "Pokret slobodnih građana (PSG) – SDA Sandžaka – PDD",
+     "key": "PSG"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Dobrica Marković",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Jasna Janković",
+     "deputy": null,
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 3,
+     "member": "Siniša Lazić",
+     "deputy": "Aleksandar Dojnov",
+     "list": "Studentska lista – Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 5,
+     "member": "Zoran Stević",
+     "deputy": "Ankica Paunović",
+     "list": "Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Toplica Trujić",
+     "deputy": "Siniša Zdravković",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Nenad Branković",
+     "deputy": "Dejan Nedeljković",
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    },
+    {
+     "no": 12,
+     "member": "Stanimir Mituljević",
+     "deputy": "Danijela Milojković",
+     "list": "LIBERALNO ZELENA STRANKA – ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 13,
+     "member": "Mikica Trailović",
+     "deputy": "Srećko Nenadović",
+     "list": "Biram PRAVDU – Biram BUDUĆNOST – Koalicija SNAGA – prof. dr Ferid Bulić",
+     "key": "SNAGA_BULIC"
+    },
+    {
+     "no": 14,
+     "member": "Stefan Milojković",
+     "deputy": "Radiša Janković",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA – RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    },
+    {
+     "no": 15,
+     "member": "Jovica Đorđević",
+     "deputy": "Ivan Pavlović",
+     "list": "ĆALE OVO JE ZA TEBE – PETAR ĐURIĆ – PREMIJER SRBIJE",
+     "key": "DJURIC"
+    },
+    {
+     "no": 16,
+     "member": "Dragiša Milenković",
+     "deputy": "Saša Rašković",
+     "list": "VLADIMIR GAJIĆ – ALTERNATIVA ZA SRBIJU",
+     "key": "GAJIC"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/286/SCAN0009.PDF"
+    }
+   ]
+  },
+  "bm33": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Ivica Jovanović",
+     "by": "Poslanička grupa Socijaldemokratska partija Srbije",
+     "key": "SDPS"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Nevena Blagojević",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "1. član",
+     "name": "Srbobran Savić",
+     "by": "Poslanička grupa IVICA DAČIĆ - Socijalistička partija Srbije (SPS)",
+     "key": "SPS"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Svetlana Petrović",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "2. član",
+     "name": "Zoran Lukić",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Ljubivoje Stanojević",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Dragan Dimitrijević",
+     "deputy": "Divna Jakovljević",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 2,
+     "member": "Saša Perić",
+     "deputy": "Nikola Marković",
+     "list": "IVICA DAČIĆ – FAKTOR STABILNOSTI! (SPS, Jedinstvena Srbija, SDPS, Zeleni Srbije)",
+     "key": "SPS"
+    },
+    {
+     "no": 3,
+     "member": "Dušan Aleksić",
+     "deputy": "Mihailo Marković",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 5,
+     "member": "Aleksandar Jovanović",
+     "deputy": "Jelena Katalinić",
+     "list": "Vajdasági Magyar Szövetség – Dr. Pásztor Bálint – Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Stefan Momčilović",
+     "deputy": null,
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 9,
+     "member": "Zoran Živanović",
+     "deputy": "Mikica Stanisavljević",
+     "list": "EVROPSKA SRBIJA – MARINIKA TEPIĆ – ZDRAVKO PONOŠ (SSP, SRCE, Solidarnost – Samoodbrana – Oslobođenje)",
+     "key": "EVROSRB"
+    },
+    {
+     "no": 12,
+     "member": "Bojan Papić",
+     "deputy": "Darko Momčilović",
+     "list": "LIBERALNO ZELENA STRANKA – ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 14,
+     "member": "Marko Radovanović",
+     "deputy": "Marija Miloradović",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA – RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    },
+    {
+     "no": 16,
+     "member": "Nikola Miloradović",
+     "deputy": "Gordana Milošević",
+     "list": "VLADIMIR GAJIĆ – ALTERNATIVA ZA SRBIJU - NARODNA STRANKA, BUNT",
+     "key": "GAJIC"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o razrešenju",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/295/SCAN0010.PDF"
+    },
+    {
+     "title": "Rešenje o razrešenju",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/346/SCAN0022.PDF"
+    },
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/352/SCAN0024.PDF"
+    }
+   ]
+  },
+  "bm11": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Darko Mirković",
+     "by": "Pokret slobodnih građana (PSG) – SDA Sandžaka – PDD",
+     "key": "PSG"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Goran Milosavljević",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "1. član",
+     "name": "Damir Đorđević",
+     "by": "Stranka slobode i pravde",
+     "key": "SSP"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Miloš Golubović",
+     "by": "Socijaldemokratska partija Srbije",
+     "key": "SDPS"
+    },
+    {
+     "role": "2. član",
+     "name": "Dušan Milojković",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Ana Milić",
+     "by": "Poslanici uz studente: za kontrolu izbora",
+     "key": "STUD"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Veliša Misić",
+     "deputy": "Sreten Marković",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 3,
+     "member": "Miško Marković",
+     "deputy": "Bojana Mitrović",
+     "list": "Studentska lista – Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 5,
+     "member": "Ljubiša Golubović",
+     "deputy": "Dejan Pajkić",
+     "list": "Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Ratko Rajić",
+     "deputy": "Dobrica Janković",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 12,
+     "member": "Darko Milojković",
+     "deputy": "Živorad Mituljević",
+     "list": "LIBERALNO ZELENA STRANKA – ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 13,
+     "member": "Zoran Pajkić",
+     "deputy": "Miloš Matić",
+     "list": "Biram PRAVDU – Biram BUDUĆNOST – Koalicija SNAGA – prof. dr Ferid Bulić",
+     "key": "SNAGA_BULIC"
+    },
+    {
+     "no": 14,
+     "member": "Igor Perić",
+     "deputy": "Nikola Trujić",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA – RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    },
+    {
+     "no": 15,
+     "member": "Zoran Petrović",
+     "deputy": "Ivan Žikić",
+     "list": "ĆALE OVO JE ZA TEBE – PETAR ĐURIĆ – PREMIJER SRBIJE",
+     "key": "DJURIC"
+    },
+    {
+     "no": 16,
+     "member": "Darko Perić",
+     "deputy": "Vukica Krivokuća",
+     "list": "VLADIMIR GAJIĆ – ALTERNATIVA ZA SRBIJU",
+     "key": "GAJIC"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/298/SCAN0011.PDF"
+    }
+   ]
+  },
+  "bm12": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Dragan Josić",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Filip Bojadžijevski",
+     "by": "Ekološki ustanak",
+     "key": "EU"
+    },
+    {
+     "role": "1. član",
+     "name": "Jelena Stojanović",
+     "by": "Narodni pokret Srbije – Novo lice Srbije",
+     "key": "NPS"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Marina Mirković",
+     "by": "ALEKSANDAR VUČIĆ – Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "2. član",
+     "name": "Vera Bošković",
+     "by": "Zeleno-levi front – Ne davimo Beograd",
+     "key": "ZLF"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Dragiša Živojinović",
+     "by": "Načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Nataša Aleksić",
+     "deputy": "Milutin Lukić",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 3,
+     "member": "Luka Miljanić",
+     "deputy": "Slavica Subotić",
+     "list": "Studentska lista – Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 5,
+     "member": "Dragan Paunović",
+     "deputy": "Goran Cvejić",
+     "list": "Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Maja Đukić",
+     "deputy": "Aleksandar Rajić",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Marko Milošević",
+     "deputy": null,
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    },
+    {
+     "no": 12,
+     "member": "Zoran Mišić",
+     "deputy": "Aleksandar Perić",
+     "list": "LIBERALNO ZELENA STRANKA – ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 13,
+     "member": "Dalibor Janković",
+     "deputy": "Slavica Arsić",
+     "list": "Biram PRAVDU – Biram BUDUĆNOST – Koalicija SNAGA – prof. dr Ferid Bulić",
+     "key": "SNAGA_BULIC"
+    },
+    {
+     "no": 14,
+     "member": "Slaviša Savić",
+     "deputy": "Milivoje Miloradović",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA – RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    },
+    {
+     "no": 15,
+     "member": "Milorad Antić",
+     "deputy": "Stanko Marković",
+     "list": "ĆALE OVO JE ZA TEBE – PETAR ĐURIĆ – PREMIJER SRBIJE",
+     "key": "DJURIC"
+    },
+    {
+     "no": 16,
+     "member": null,
+     "deputy": "Živorad Perić",
+     "list": "VLADIMIR GAJIĆ – ALTERNATIVA ZA SRBIJU",
+     "key": "GAJIC"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/304/SCAN0012.PDF"
+    }
+   ]
+  },
+  "bm19": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Nenad Belobrđanin",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Miloš Jenić",
+     "by": "Savez vojvođanskih Mađara",
+     "key": "SVM"
+    },
+    {
+     "role": "1. član",
+     "name": "Rale Ilić",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Aleksandar Piletić",
+     "by": "Zeleno-levi front - Ne davimo Beograd",
+     "key": "ZLF"
+    },
+    {
+     "role": "2. član",
+     "name": "Maria Lukić",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Aleksandar Vojinović",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Floarea Janković",
+     "deputy": "Ljubiša Trailović",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 2,
+     "member": "Vasilije Dragojlović",
+     "deputy": "Dalibor Mitrović",
+     "list": "IVICA DAČIĆ – FAKTOR STABILNOSTI!",
+     "key": "SPS"
+    },
+    {
+     "no": 3,
+     "member": "Irina Aćimović",
+     "deputy": "Ivan Stanković",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 4,
+     "member": "Nikola Janošević",
+     "deputy": "Mića Jenkić",
+     "list": "RASIM LJAJIĆ – Ljudski (SDP – CDP)",
+     "key": "LJAJIC"
+    },
+    {
+     "no": 7,
+     "member": "Velizar Paunović",
+     "deputy": "Borislav Mijucić",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o razrešenju",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/310/SCAN0013.PDF"
+    },
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/325/SCAN0016.PDF"
+    }
+   ]
+  },
+  "bm17": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Goran Milošević",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Branko Uzelac",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "1. član",
+     "name": "Nevena Jović",
+     "by": "Novi DSS i Monarhisti - NADA",
+     "key": "NADA"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Igor Vasilijević",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "2. član",
+     "name": "Silvija Ivanović",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Vladan Jevtić",
+     "by": "IVICA DAČIĆ - Socijalistička partija Srbije (SPS)",
+     "key": "SPS"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Zoran Janković",
+     "deputy": "Ivana Nikodijević",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 3,
+     "member": "Saša Rajković",
+     "deputy": "Dragan Mladenović",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 4,
+     "member": "Živorad Obradović",
+     "deputy": null,
+     "list": "RASIM LJAJIĆ – Ljudski (SDP – CDP)",
+     "key": "LJAJIC"
+    },
+    {
+     "no": 5,
+     "member": "Vesna Trandafilović",
+     "deputy": "Bojan Marisavljević",
+     "list": "Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Vlatko Jovanović",
+     "deputy": "Dejan Grujić",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Momčilo Miloradović",
+     "deputy": "Dragan Stokić",
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    },
+    {
+     "no": 12,
+     "member": "Momčilo Colić",
+     "deputy": "Nenad Jovanović",
+     "list": "LIBERALNO ZELENA STRANKA-ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 13,
+     "member": "Biljana Nikodijević",
+     "deputy": null,
+     "list": "Biram PRAVDU - Biram BUDUĆNOST - Koalicija SNAGA - prof. dr Ferid Bulić",
+     "key": "SNAGA_BULIC"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/316/SCAN0014.PDF"
+    }
+   ]
+  },
+  "bm18": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Darijan Perić",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Saša Stevanović",
+     "by": "Pokret slobodnih građana (PSG) - SDA Sandžaka - PDD",
+     "key": "PSG"
+    },
+    {
+     "role": "1. član",
+     "name": "Slađan Grujić",
+     "by": "Savez vojvođanskih Mađara",
+     "key": "SVM"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Dragutin Perić",
+     "by": "SRBIJA CENTAR - SRCE",
+     "key": "SRCE"
+    },
+    {
+     "role": "2. član",
+     "name": "Dobrica Novaković",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Miloš Đorđević",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Danijela Đorđević",
+     "deputy": "Zlatan Paunović",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 2,
+     "member": "Miodrag Jevremović",
+     "deputy": "Leka Ilić",
+     "list": "IVICA DAČIĆ – FAKTOR STABILNOSTI!",
+     "key": "SPS"
+    },
+    {
+     "no": 3,
+     "member": "Goran Dmitrović",
+     "deputy": "Igor Jović",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 4,
+     "member": "Nedeljko Jović",
+     "deputy": null,
+     "list": "RASIM LJAJIĆ – Ljudski (SDP – CDP)",
+     "key": "LJAJIC"
+    },
+    {
+     "no": 5,
+     "member": "Dejan Jovanović",
+     "deputy": null,
+     "list": "Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Aleksandar Novaković",
+     "deputy": "Željko Novaković",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Dušan Radovanović",
+     "deputy": "Danijela Sporin",
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/322/SCAN0015.PDF"
+    }
+   ]
+  },
+  "bm20": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Miroslav Stojadinović",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Borivoje Aleksić",
+     "by": "Socijaldemokratska partija Srbije",
+     "key": "SDPS"
+    },
+    {
+     "role": "1. član",
+     "name": "Aleksandar Andrejić",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Zvezdan Jenkić",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "2. član",
+     "name": "Zoran Trailović",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Mikica Jenić",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Predrag Petrović",
+     "deputy": "Krsta Janković",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 2,
+     "member": "Dušan Petrović",
+     "deputy": "Srećko Janošević",
+     "list": "IVICA DAČIĆ – FAKTOR STABILNOSTI!",
+     "key": "SPS"
+    },
+    {
+     "no": 3,
+     "member": "Nađa Janjić",
+     "deputy": "Božidar Maksimović",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 4,
+     "member": "Nebojša Paunović",
+     "deputy": "Dejan Ilić",
+     "list": "RASIM LJAJIĆ – Ljudski (SDP – CDP)",
+     "key": "LJAJIC"
+    },
+    {
+     "no": 7,
+     "member": "Aleksandar Zogović",
+     "deputy": null,
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/328/SCAN0017.PDF"
+    }
+   ]
+  },
+  "bm21": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Mirko Rudić",
+     "by": "Zeleno-levi front - Ne davimo Beograd",
+     "key": "ZLF"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Radiša Milovanović",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "1. član",
+     "name": "Stevan Jović",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Tatjana Milanović",
+     "by": "Narodni pokret Srbije - Novo lice Srbije",
+     "key": "NPS"
+    },
+    {
+     "role": "2. član",
+     "name": "Igor Pavlović",
+     "by": "Novi DSS i Monarhisti - NADA",
+     "key": "NADA"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Boban Miloradović",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Aleksandar Miloradović",
+     "deputy": "Oliver Lazarević",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 3,
+     "member": "Ivana Krnjaić",
+     "deputy": "Vladan Stojaković",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 4,
+     "member": "Zoran Milojević",
+     "deputy": "Daliborka Ilić",
+     "list": "RASIM LJAJIĆ – Ljudski (SDP – CDP)",
+     "key": "LJAJIC"
+    },
+    {
+     "no": 5,
+     "member": "Dobrivoje Nikolić",
+     "deputy": "Milica Ranković",
+     "list": "Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Miloš Savić",
+     "deputy": "Aleksandar Marković",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Predrag Marković",
+     "deputy": "Đorđe Pavlović",
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    },
+    {
+     "no": 12,
+     "member": "Lidija Grujić",
+     "deputy": "Miluče Miloradović",
+     "list": "LIBERALNO ZELENA STRANKA-ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 13,
+     "member": "Srboljub Stojanović",
+     "deputy": "Nadica Đokić",
+     "list": "Biram PRAVDU - Biram BUDUĆNOST - Koalicija SNAGA - prof. dr Ferid Bulić",
+     "key": "SNAGA_BULIC"
+    },
+    {
+     "no": 14,
+     "member": "Ivica Lazić",
+     "deputy": "Miloš Milojević",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA - RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    },
+    {
+     "no": 15,
+     "member": "Jovana Matić",
+     "deputy": "Danijel Nikolić",
+     "list": "ĆALE OVO JE ZA TEBE – PETAR ĐURIĆ – PREMIJER SRBIJE",
+     "key": "DJURIC"
+    },
+    {
+     "no": 16,
+     "member": "Milomir Jović",
+     "deputy": "Anđela Nedeljković",
+     "list": "VLADIMIR GAJIĆ – ALTERNATIVA ZA SRBIJU",
+     "key": "GAJIC"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/331/SCAN0018.PDF"
+    }
+   ]
+  },
+  "bm27": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Anđelija Petrović",
+     "by": "Poslanička grupa Poslanici uz studente: za kontrolu izbora",
+     "key": "STUD"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Goran Rajković",
+     "by": "Poslanička grupa IVICA DAČIĆ - Socijalistička partija Srbije (SPS)",
+     "key": "SPS"
+    },
+    {
+     "role": "1. član",
+     "name": "Dušan Živanović",
+     "by": "Poslanička grupa Stranka slobode i pravde",
+     "key": "SSP"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Živojin Milenković",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "2. član",
+     "name": "Radiša Čičić",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Dragiša Kitić",
+     "by": "Poslanička grupa Savez vojvođanskih Mađara",
+     "key": "SVM"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Darko Stojanović",
+     "deputy": "Velizar Avramović",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 3,
+     "member": "Veljko Petrović",
+     "deputy": "Aleksandar Ljuboja",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 5,
+     "member": "Jasna Bocokić",
+     "deputy": "Slavica Brkić",
+     "list": "Vajdasági Magyar Szövetség – Dr. Pásztor Bálint – Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Jovica Lazarević",
+     "deputy": "Milica Carić",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Neboiša Parkić",
+     "deputy": "Nevena Tomić",
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/340/SCAN0020.PDF"
+    },
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/385/SCAN0003.PDF"
+    }
+   ]
+  },
+  "bm29": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Mane Bezarević",
+     "by": "Poslanička grupa Poslanici uz studente: za kontrolu izbora",
+     "key": "STUD"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Novica Vujčić",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "1. član",
+     "name": "Branislav Mitrović",
+     "by": "Poslanička grupa Socijaldemokratska partija Srbije",
+     "key": "SDPS"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Saša Paunović",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "2. član",
+     "name": "Dejan Jovanović",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Siniša Anić",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Nebojša Trailović",
+     "deputy": "Zvonko Novaković",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 2,
+     "member": "Denis Trailović",
+     "deputy": "Andrijan Andrejić",
+     "list": "IVICA DAČIĆ – FAKTOR STABILNOSTI! (SPS, Jedinstvena Srbija, SDPS, Zeleni Srbije)",
+     "key": "SPS"
+    },
+    {
+     "no": 3,
+     "member": "Zdenka Stefanović",
+     "deputy": "Vojislav Petrović",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 4,
+     "member": "Zoran Raduljević",
+     "deputy": "Novica Rajčić",
+     "list": "RASIM LJAJIĆ – Ljudski (SDP – CDP)",
+     "key": "LJAJIC"
+    },
+    {
+     "no": 5,
+     "member": "Radiša Đorđević",
+     "deputy": "Stefan Adrejić",
+     "list": "Vajdasági Magyar Szövetség – Dr. Pásztor Bálint – Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Slaviša Grujić",
+     "deputy": "Dobrica Trailović",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 12,
+     "member": "Miloš Paunović",
+     "deputy": "Željko Simić",
+     "list": "LIBERALNO ZELENA STRANKA – ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 13,
+     "member": "Siniša Stojanović",
+     "deputy": "Miroslav Paunović",
+     "list": "Biram PRAVDU - Biram BUDUĆNOST - Koalicija SNAGA - prof. dr Ferid Bulić - Vasilios Provelegios",
+     "key": "SNAGA_BULIC"
+    },
+    {
+     "no": 14,
+     "member": "Rumenka Aranđelović",
+     "deputy": "Nebojša Ilić",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA – RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    },
+    {
+     "no": 15,
+     "member": "Robert Ilić",
+     "deputy": null,
+     "list": "ĆALE OVO JE ZA TEBE – PETAR ĐURIĆ – PREMIJER SRBIJE",
+     "key": "DJURIC"
+    },
+    {
+     "no": 16,
+     "member": "Marija Milošević",
+     "deputy": "Nataša Jovanović",
+     "list": "VLADIMIR GAJIĆ – ALTERNATIVA ZA SRBIJU - NARODNA STRANKA, BUNT",
+     "key": "GAJIC"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/343/SCAN0021.PDF"
+    }
+   ]
+  },
+  "bm32": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Slađana Janković",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Živorad Ilić",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    },
+    {
+     "role": "1. član",
+     "name": "Marko Ranković",
+     "by": "Poslanička grupa IVICA DAČIĆ - Socijalistička partija Srbije (SPS)",
+     "key": "SPS"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Mladen Lukić",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "2. član",
+     "name": "Ivan Ilić",
+     "by": "Poslanička grupa SRBIJA CENTAR - SRCE",
+     "key": "SRCE"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Živadin Novaković",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Daroslava Ilić Dimitrijević",
+     "deputy": "Aleksandar Petrović",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 2,
+     "member": "Dalibor Marković",
+     "deputy": "Miloš Marković",
+     "list": "IVICA DAČIĆ – FAKTOR STABILNOSTI! (SPS, Jedinstvena Srbija, SDPS, Zeleni Srbije)",
+     "key": "SPS"
+    },
+    {
+     "no": 3,
+     "member": "Gordan Tuba",
+     "deputy": "Isidora Pejdo",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 5,
+     "member": "Aleksandar Vitković",
+     "deputy": "Zlatomir Stojadinović",
+     "list": "Vajdasági Magyar Szövetség – Dr. Pásztor Bálint – Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Svetlana Jakovljević",
+     "deputy": "Milica Blagojević",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 9,
+     "member": "Mališa Stanković",
+     "deputy": "Gordana Ranisavljević",
+     "list": "EVROPSKA SRBIJA – MARINIKA TEPIĆ – ZDRAVKO PONOŠ (SSP, SRCE, Solidarnost – Samoodbrana – Oslobođenje)",
+     "key": "EVROSRB"
+    },
+    {
+     "no": 12,
+     "member": "Zorica Lukić",
+     "deputy": "Jelena Stanković",
+     "list": "LIBERALNO ZELENA STRANKA – ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 13,
+     "member": "Jovanka Marković",
+     "deputy": "Zoran Lakić",
+     "list": "Biram PRAVDU - Biram BUDUĆNOST - Koalicija SNAGA - prof. dr Ferid Bulić - Vasilios Provelegios",
+     "key": "SNAGA_BULIC"
+    },
+    {
+     "no": 14,
+     "member": "Stevana Ignjatović",
+     "deputy": "Živorad Stojadinović",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA – RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    },
+    {
+     "no": 16,
+     "member": "Novica Simić",
+     "deputy": null,
+     "list": "VLADIMIR GAJIĆ – ALTERNATIVA ZA SRBIJU - NARODNA STRANKA, BUNT",
+     "key": "GAJIC"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/349/SCAN0023.PDF"
+    }
+   ]
+  },
+  "bm37": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Marija Radovanović",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Rade Manojlović",
+     "by": "Poslanička grupa Narodni pokret Srbije - Novo lice Srbije",
+     "key": "NPS"
+    },
+    {
+     "role": "1. član",
+     "name": "Georgiu Ana-Maria",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Danijel Demonjić",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "2. član",
+     "name": "Života Miloradović",
+     "by": "Poslanička grupa IVICA DAČIĆ - Socijalistička partija Srbije (SPS)",
+     "key": "SPS"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Danijela Blagojević",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Žaklina Carić",
+     "deputy": "Slaviša Milovanović",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 2,
+     "member": "Bojan Danilović",
+     "deputy": "Radomir Petrović",
+     "list": "IVICA DAČIĆ – FAKTOR STABILNOSTI! (SPS, Jedinstvena Srbija, SDPS, Zeleni Srbije)",
+     "key": "SPS"
+    },
+    {
+     "no": 3,
+     "member": "Nebojša Stojanović",
+     "deputy": "Jelena Radenković",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 5,
+     "member": "Pavle Marković",
+     "deputy": "Aleksandra Milovanović",
+     "list": "Vajdasági Magyar Szövetség – Dr. Pásztor Bálint – Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Saša Obradović",
+     "deputy": "Dejan Radojević",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Vesna Andrić",
+     "deputy": "Goran Marković",
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    },
+    {
+     "no": 9,
+     "member": "Lazar Marković",
+     "deputy": "Petar Marković",
+     "list": "EVROPSKA SRBIJA – MARINIKA TEPIĆ – ZDRAVKO PONOŠ (SSP, SRCE, Solidarnost – Samoodbrana – Oslobođenje)",
+     "key": "EVROSRB"
+    },
+    {
+     "no": 12,
+     "member": "Srđan Milanović",
+     "deputy": "Milan Živković",
+     "list": "LIBERALNO ZELENA STRANKA – ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 14,
+     "member": "Milorad Milovanović",
+     "deputy": "Sanja Lukić",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA – RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/355/SCAN0025.PDF"
+    }
+   ]
+  },
+  "bm26": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Dragoslav Nikolić",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Violeta Bogdanović",
+     "by": "Poslanička grupa Zeleno-levi front - Ne davimo Beograd",
+     "key": "ZLF"
+    },
+    {
+     "role": "1. član",
+     "name": "Goran Gobeljić",
+     "by": "Poslanička grupa Ekološki ustanak",
+     "key": "EU"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Emina Marković",
+     "by": "Poslanička grupa Novi DSS i Monarhisti - NADA",
+     "key": "NADA"
+    },
+    {
+     "role": "2. član",
+     "name": "Vladan Mikuljević",
+     "by": "Poslanička grupa Socijaldemokratska partija Srbije",
+     "key": "SDPS"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Miroslav Đorđević",
+     "by": "Poslanička grupa ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Dragiša Avramović",
+     "deputy": "Slađan Stanković",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 2,
+     "member": "Branislav Strainović",
+     "deputy": null,
+     "list": "IVICA DAČIĆ – FAKTOR STABILNOSTI! (SPS, Jedinstvena Srbija, SDPS, Zeleni Srbije)",
+     "key": "SPS"
+    },
+    {
+     "no": 3,
+     "member": "Jovana Tomić",
+     "deputy": "Smiljana Bogdanović",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 5,
+     "member": "Ljubiša Petrović",
+     "deputy": "Boban Nikolić",
+     "list": "Vajdasági Magyar Szövetség – Dr. Pásztor Bálint – Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Zoran Mogić",
+     "deputy": "Miodrag Todorović",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Dejan Mikuljević",
+     "deputy": "Slađana Avramović Lavro",
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/370/SCAN0000.PDF"
+    }
+   ]
+  },
+  "bm14": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Maja Zdravković",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Jugoslav Ilić",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "1. član",
+     "name": "Mirjana Radenković",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Natalija Obradović",
+     "by": "Stranka slobode i pravde",
+     "key": "SSP"
+    },
+    {
+     "role": "2. član",
+     "name": "Lana Janković",
+     "by": "Novi DSS i Monarhisti - NADA",
+     "key": "NADA"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Dejan Blagojević",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Zorica Colić",
+     "deputy": "Slavimir Branković",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 3,
+     "member": "Marko Milojković",
+     "deputy": "Aleksandra Kalinović",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 4,
+     "member": "Dragoslav Colić",
+     "deputy": null,
+     "list": "RASIM LJAJIĆ – Ljudski (SDP – CDP)",
+     "key": "LJAJIC"
+    },
+    {
+     "no": 5,
+     "member": "Svetlana Mariničić",
+     "deputy": "Dragoslav Vesić",
+     "list": "Savez vojvođanskih Mađara – dr Balint Pastor",
+     "key": "SVM"
+    },
+    {
+     "no": 7,
+     "member": "Ivan Stević",
+     "deputy": "Živorad Mihajlović",
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Predrag Ignjatović",
+     "deputy": "Marina Mikuljević",
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    },
+    {
+     "no": 9,
+     "member": "Miloš Obradović",
+     "deputy": null,
+     "list": "EVROPSKA SRBIJA – MARINIKA TEPIĆ – ZDRAVKO PONOŠ",
+     "key": "EVROSRB"
+    },
+    {
+     "no": 12,
+     "member": "Žaklina Arsić",
+     "deputy": null,
+     "list": "LIBERALNO ZELENA STRANKA-ZA SLOBODNU I ČISTIJU SRBIJU",
+     "key": "LZS"
+    },
+    {
+     "no": 14,
+     "member": "Milena Milojković",
+     "deputy": "Zdravko Aleksić",
+     "list": "STRANKA RUSKO-SRPSKOG JEDINSTVA - RUSI I SRBI BRAĆA ZAUVEK",
+     "key": "RUSI_SRBI"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/376/SCAN0001.PDF"
+    }
+   ]
+  },
+  "bm24": {
+   "stalni": [
+    {
+     "role": "predsednik",
+     "name": "Milorad Obradović",
+     "by": "SRBIJA CENTAR - SRCE",
+     "key": "SRCE"
+    },
+    {
+     "role": "zamenik predsednika",
+     "name": "Vesna Milanović",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "1. član",
+     "name": "Momčilo Anđelković",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    },
+    {
+     "role": "zamenik 1. člana",
+     "name": "Svetislav Milovanović",
+     "by": "načelnik Opštinske uprave opštine Žabari",
+     "key": "ADMIN"
+    },
+    {
+     "role": "2. član",
+     "name": "Dragan Aleksić",
+     "by": "IVICA DAČIĆ - Socijalistička partija Srbije (SPS)",
+     "key": "SPS"
+    },
+    {
+     "role": "zamenik 2. člana",
+     "name": "Saša Đorđević",
+     "by": "ALEKSANDAR VUČIĆ - Srbija ne sme da stane",
+     "key": "SNS"
+    }
+   ],
+   "prosireni": [
+    {
+     "no": 1,
+     "member": "Dragan Đorđević",
+     "deputy": "Zlatan Đorđević",
+     "list": "ALEKSANDAR VUČIĆ – UJEDINJENA SRBIJA",
+     "key": "SNS"
+    },
+    {
+     "no": 3,
+     "member": "David Mikuljević",
+     "deputy": "Jovan Pamučar",
+     "list": "Studentska lista - Studenti pobeđuju",
+     "key": "STUD"
+    },
+    {
+     "no": 7,
+     "member": "Stojan Marinović",
+     "deputy": null,
+     "list": "RUSKA STRANKA – SRBIJA U BRIKSU – SLOBODAN NIKOLIĆ",
+     "key": "RUSKA"
+    },
+    {
+     "no": 8,
+     "member": "Zoran Blagojević",
+     "deputy": "Zoran Grujić",
+     "list": "AUTENTIČNA DESNICA – dr MILOŠ JOVANOVIĆ (NADA) – ODVAŽNO SRPSKI!",
+     "key": "AUTDES"
+    }
+   ],
+   "extra_docs": [
+    {
+     "title": "Rešenje o izmeni (prošireni sastav)",
+     "link": "https://www.rik.parlament.gov.rs/extfile/sr/files/additionalDocuments/802/379/SCAN0002.PDF"
+    }
+   ]
+  }
+ }
+}
