@@ -11,7 +11,7 @@ R = {}
 for f in sorted(glob.glob(B + '/rez_*.json')):
     ids = {x['id'] for x in json.load(open(f.replace('rez_', 'serija_')))}
     for r in json.load(open(f)):
-        if r['id'] in ids: R[r['id']] = r
+        if r['id'] in ids and not (r.get('nije_procitano') and r['id'] in R and not R[r['id']].get('nije_procitano')): R[r['id']] = r
 def los(r):
     if r.get('nije_procitano'): return False
     L = r.get('liste') or []

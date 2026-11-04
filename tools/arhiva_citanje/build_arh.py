@@ -20,11 +20,15 @@ R = {}
 for f in sorted(glob.glob(B + '/rez_*.json')):
     ids = {x['id'] for x in json.load(open(f.replace('rez_', 'serija_')))}
     for r in json.load(open(f)):
-        if r['id'] in ids: R[r['id']] = r
+        if r['id'] in ids and not (r.get('nije_procitano') and r['id'] in R and not R[r['id']].get('nije_procitano')): R[r['id']] = r
 for f in sorted(glob.glob(B + '/druga/rez2_*.json')):  # druga runda (veće slike) zamenjuje prvo čitanje
     ids = {x['id'] for x in json.load(open(f.replace('rez2_', 'serija2_')))}
     for r in json.load(open(f)):
         if r['id'] in ids and r.get('vazeci') is not None and r.get('liste'): R[r['id']] = r
+for f in sorted(glob.glob(B + '/zavrsna/rezZ_*.json')):  # završno čitanje (sve strane) za ranije nepročitane
+    ids = {x['id'] for x in json.load(open(f.replace('rezZ_', 'serijaZ_')))}
+    for r in json.load(open(f)):
+        if r['id'] in ids and r.get('vazeci') is not None and r.get('liste') and (r['id'] not in R or R[r['id']].get('nije_procitano') or R[r['id']].get('vazeci') is None): R[r['id']] = r
 def rec(r):
     if r.get('nije_procitano') or r.get('vazeci') is None or not r.get('liste'): return None
     li = [int(x or 0) for x in r['liste']][:len(L)] + [0] * max(0, len(L) - len(r['liste']))
