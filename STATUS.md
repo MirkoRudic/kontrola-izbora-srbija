@@ -14,8 +14,7 @@
 - Stranica/izveštaj za deljenje; gde još ide PODELI.
 - Odluke iz probe 2 koje nisu zatvorene: blaži znak kad se razlikuje samo broj upisanih; oznaka za pogrešan zapisnik na RIK-u; vrste primedbi „Ostalo“; naslov „Razlika (p. p.)“.
 - Grane `o23-izmene-wip`, `uzivo-kopija`: proveriti da li još trebaju (brisanje samo uz Mirkovu dozvolu).
-- Žabari app (MirkoRudic/kontrola-izbora-zabari) nije dokumentovana po R6/R12/R17.
 
 ## Odluke
-- Srbija bez veze ka Žabarima (4.11.).
+- Žabari app izbrisana (27.11.); Srbija bez veze ka Žabarima od 4.11.
 - Ulazni podaci odbora čuvaju se u repou (`tools/ulaz/`).

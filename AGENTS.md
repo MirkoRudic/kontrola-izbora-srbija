@@ -5,7 +5,7 @@ Važe pravila iz `D:\VAJB\vajb-osnova\RULES.md`. Ovde su arhitektura, zamke i iz
 Javni sajt sa rezultatima parlamentarnih izbora po biračkim mestima (BM) za celu Srbiju: 2026, 2023, 2022, 2020.
 - Sajt: kontrola-izbora-srbija.pages.dev (Cloudflare Pages, build output `public/`, bez build koraka).
 - Repo: MirkoRudic/kontrola-izbora-srbija. Laptop folder: `D:\VAJB\kontrolaizbora` (zadaci, podaci, OCR tessdata).
-- Sestrinska app: MirkoRudic/kontrola-izbora-zabari (ista app za jednu opštinu, dugme „Cela opština“). Od 4.11.2026 Srbija nema vezu ka Žabarima.
+- Sestrinska app za Žabare (kontrola-izbora-zabari) je izbrisana (27.11.2026).
 
 ## Arhitektura
 - `public/index.html` — cela app u jednom fajlu (~250 KB, ručno se menja). `public/sw.js`, `manifest.webmanifest` (PWA). `version.txt` = vreme objave.
